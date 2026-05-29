@@ -692,10 +692,11 @@ async function computeTrips(period) {
   }
   await prefetchRoadKm(allPairs);
 
-  for (const { coach, cid, fullName, homeAddr, homeGeo, byDay } of coachDays) {
-    const trips = [];
-    let totalKm = 0;
-    const flags = [];
+for (const { coach, cid, fullName, homeAddr, homeGeo, byDay } of coachDays) {
+  const myEvents = Object.values(byDay).flat();
+  const trips = [];
+  let totalKm = 0;
+  const flags = [];
 
     for (const [dayKey, dayEvs] of Object.entries(byDay)) {
       for (let i = 0; i < dayEvs.length; i++) {
