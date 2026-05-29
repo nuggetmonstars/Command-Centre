@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +70,8 @@ body::before {
 .period-label { font-size:12px; font-weight:800; color:rgba(255,255,255,0.8); }
 .period-btn { background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.3); border-radius:50px; color:#fff; padding:6px 14px; font-size:12px; font-weight:800; cursor:pointer; font-family:var(--font); }
 .period-btn.active { background:var(--yellow); color:#333; border-color:var(--yellow-dark); }
+.period-btn .period-dates { display:block; font-size:10px; font-weight:700; opacity:.7; margin-top:1px; letter-spacing:.3px; }
+.period-btn .period-dates:empty { display:none; }
 .period-inputs { display:flex; gap:8px; align-items:center; }
 .period-inputs input[type=date] { background:rgba(255,255,255,0.2); border:2px solid rgba(255,255,255,0.3); border-radius:10px; color:#fff; padding:6px 12px; font-size:12px; font-weight:700; font-family:var(--font); outline:none; }
 .period-inputs input[type=date]::-webkit-calendar-picker-indicator { filter:invert(1); }
@@ -202,6 +205,49 @@ body::before {
 .pt-warning.within { background:rgba(76,175,80,0.15); color:#90ee90; }
 .pt-warning.unset { background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.5); }
 
+/* PROFITABILITY */
+.profit-summary { background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.2); border-radius:14px; padding:14px 16px; margin-bottom:14px; display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+.profit-view-toggle { display:flex; align-items:center; gap:8px; margin-bottom:12px; flex-wrap:wrap; }
+.pv-btn { background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.85); padding:7px 16px; border-radius:50px; font-size:12px; font-weight:800; cursor:pointer; font-family:var(--font); transition:all 0.15s; }
+.pv-btn:hover { background:rgba(255,255,255,0.22); }
+.pv-btn.active { background:var(--yellow); color:#333; border-color:var(--yellow); box-shadow:0 3px 0 var(--yellow-dark); }
+.pv-hint { font-size:11px; color:rgba(255,255,255,0.55); font-weight:600; margin-left:6px; }
+.profit-summary .ps-item { display:flex; flex-direction:column; }
+.profit-summary .ps-label { font-size:11px; color:rgba(255,255,255,0.6); font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+.profit-summary .ps-val { font-size:22px; font-weight:900; color:#fff; line-height:1.1; }
+.profit-summary .ps-val.margin-good { color:#8DC63F; }
+.profit-summary .ps-val.margin-mid  { color:var(--yellow); }
+.profit-summary .ps-val.margin-bad  { color:#ff9090; }
+
+.profit-grid { display:flex; flex-direction:column; gap:10px; }
+.profit-card {
+  background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.2);
+  border-radius:14px; padding:14px 16px;
+}
+.profit-card.good { border-color:rgba(141,198,63,0.45); background:rgba(141,198,63,0.06); }
+.profit-card.mid  { border-color:rgba(255,215,0,0.4); background:rgba(255,215,0,0.05); }
+.profit-card.bad  { border-color:rgba(227,30,36,0.5); background:rgba(227,30,36,0.08); }
+.profit-card.unset { border-color:rgba(255,255,255,0.15); opacity:0.7; }
+.profit-top { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.profit-margin-big { font-size:30px; font-weight:900; line-height:1; }
+.profit-margin-big.good { color:#8DC63F; }
+.profit-margin-big.mid  { color:var(--yellow); }
+.profit-margin-big.bad  { color:#ff9090; }
+.profit-margin-label { font-size:10px; color:rgba(255,255,255,0.55); font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+.profit-ratio-sub { font-size:14px; font-weight:800; margin-top:3px; opacity:0.85; }
+.profit-ratio-sub.good { color:#8DC63F; }
+.profit-ratio-sub.mid  { color:var(--yellow); }
+.profit-ratio-sub.bad  { color:#ff9090; }
+.profit-ratio-sub.unset { color:rgba(255,255,255,0.4); }
+.profit-breakdown { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px 14px; margin-top:8px; padding-top:10px; border-top:1px solid rgba(255,255,255,0.1); }
+.pb-item { font-size:11px; }
+.pb-label { color:rgba(255,255,255,0.55); font-weight:700; text-transform:uppercase; letter-spacing:.3px; font-size:9px; }
+.pb-val { font-size:14px; font-weight:800; color:#fff; margin-top:1px; }
+.pb-val.rev { color:#8DC63F; }
+.pb-val.cost { color:#ff9090; }
+.pb-val.profit { color:var(--yellow); }
+.pb-note { font-size:10px; color:rgba(255,255,255,0.45); font-weight:600; margin-top:2px; }
+
 /* SECTION HEADER */
 .section-hdr { font-size:12px; font-weight:900; color:rgba(255,255,255,0.6); text-transform:uppercase; letter-spacing:.8px; margin-bottom:10px; margin-top:4px; }
 
@@ -242,6 +288,7 @@ body::before {
     <button class="nav-tab" data-tab="flags">Flags</button>
     <button class="nav-tab" data-tab="trips">Trip Log</button>
     <button class="nav-tab" data-tab="pt-hours">PT Hours</button>
+    <button class="nav-tab" data-tab="profitability">Profitability</button>
     <button class="nav-tab" data-tab="settings">Coach Settings</button>
   </div>
 
@@ -249,9 +296,9 @@ body::before {
     <!-- PERIOD + SETTINGS -->
     <div class="period-bar">
       <span class="period-label">Period:</span>
-      <button class="period-btn active" data-period="fortnight">Current Fortnight</button>
-      <button class="period-btn" data-period="prev-fortnight">Previous Fortnight</button>
-      <button class="period-btn" data-period="month">This Month</button>
+      <button class="period-btn active" data-period="fortnight">Current Fortnight<span class="period-dates" id="dates-fortnight"></span></button>
+      <button class="period-btn" data-period="prev-fortnight">Previous Fortnight<span class="period-dates" id="dates-prev-fortnight"></span></button>
+      <button class="period-btn" data-period="month">This Month<span class="period-dates" id="dates-month"></span></button>
       <button class="period-btn" data-period="custom">Custom</button>
       <div class="period-inputs" id="custom-dates" style="display:none">
         <input type="date" id="date-from">
@@ -285,6 +332,7 @@ body::before {
       <div class="stat-pill"><div class="stat-pill-label">Total Reimbursement</div><div class="stat-pill-val" id="s-pay">—</div></div>
       <div class="stat-pill"><div class="stat-pill-label">Coaches</div><div class="stat-pill-val" id="s-coaches">—</div></div>
       <div class="stat-pill"><div class="stat-pill-label">Sessions</div><div class="stat-pill-val" id="s-sessions">—</div></div>
+      <div class="stat-pill"><div class="stat-pill-label">PT Margin</div><div class="stat-pill-val" id="s-margin">—</div></div>
       <div class="stat-pill" style="cursor:pointer" onclick="window.goToFlags()" title="View flags"><div class="stat-pill-label">Flags</div><div class="stat-pill-val" id="s-flags">—</div></div>
     </div>
 
@@ -294,6 +342,7 @@ body::before {
     <div id="tab-flags" style="display:none"></div>
     <div id="tab-trips" style="display:none"></div>
     <div id="tab-pt-hours" style="display:none"></div>
+    <div id="tab-profitability" style="display:none"></div>
     <div id="tab-settings" style="display:none"></div>
   </div>
 </div>
@@ -301,9 +350,9 @@ body::before {
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-import { getFirestore, collection, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+import { getFirestore, collection, getDocs, query, where, doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
 
-const MAPS_KEY = 'AIzaSyD_MpSn0m96wTjCLUvXBdOLJBF-lPCQ5SE';
+const MAPS_KEY = 'PASTE_YOUR_NEW_API_KEY_HERE';
 const EXCLUDED = ['joel foulds','shane foulds','troy wilson','rhiannon thompson','katie thomas','viki hamawi'];
 
 const app = initializeApp({
@@ -318,13 +367,19 @@ const auth = getAuth(app);
 const db   = getFirestore(app);
 
 // ── PERIOD HELPERS ────────────────────────────────────────────────────────────
-// Fortnights run Thu→Wed, pay day Thursday
-// Current fortnight: Apr 3–16, previous: Mar 20–Apr 2, etc.
+// Fortnights run Fri→Thu, pay day Thursday. Anchor is a known fortnight start.
+// The current fortnight auto-advances based on today's date — no manual updates needed.
 function getFortnightBounds(offset = 0) {
-  // Anchor to the START of the current fortnight: Apr 3 2026 (Thursday)
-  const anchorStart = new Date('2026-04-03T00:00:00');
-  const start = new Date(anchorStart);
-  start.setDate(start.getDate() + offset * 14);
+  // Known Friday that is a fortnight start. Never changes; everything else
+  // is computed from this. If pay-day pattern ever changes, shift this anchor.
+  const ANCHOR = new Date('2026-04-03T00:00:00');
+  const MS_PER_FORTNIGHT = 14 * 24 * 60 * 60 * 1000;
+
+  // Floor → current fortnight is the one that CONTAINS today.
+  const fortnightsElapsed = Math.floor((new Date() - ANCHOR) / MS_PER_FORTNIGHT);
+
+  const start = new Date(ANCHOR);
+  start.setDate(start.getDate() + (fortnightsElapsed + offset) * 14);
   start.setHours(0,0,0,0);
   const end = new Date(start);
   end.setDate(end.getDate() + 13);
@@ -356,6 +411,58 @@ function toDate(v) {
 
 function fmtDate(d) { return d ? d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'}) : '—'; }
 function fmtTime(d) { return d ? d.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'}) : ''; }
+// Short date used inside period buttons. "1 May" / "14 May".
+function fmtDateShort(d) { return d ? d.toLocaleDateString('en-AU',{day:'numeric',month:'short'}) : '—'; }
+// Fills the date ranges into the period buttons. Call on startup + after
+// auto-refresh so the labels stay accurate as the clock advances.
+function updatePeriodLabels() {
+  const cur  = getFortnightBounds(0);
+  const prev = getFortnightBounds(-1);
+  const now  = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthEnd   = new Date(now.getFullYear(), now.getMonth()+1, 0);
+  const elFn   = document.getElementById('dates-fortnight');
+  const elPrev = document.getElementById('dates-prev-fortnight');
+  const elMon  = document.getElementById('dates-month');
+  if (elFn)   elFn.textContent   = `${fmtDateShort(cur.start)} – ${fmtDateShort(cur.end)}`;
+  if (elPrev) elPrev.textContent = `${fmtDateShort(prev.start)} – ${fmtDateShort(prev.end)}`;
+  if (elMon)  elMon.textContent  = `${fmtDateShort(monthStart)} – ${fmtDateShort(monthEnd)}`;
+}
+
+// ── REVENUE & MARGIN ─────────────────────────────────────────────────────────
+// Default PT hourly rate (editable per coach in Coach Settings).
+const DEFAULT_PT_HOURLY = 30.84;
+const SUPER_MULTIPLIER = 1.12; // 12% super on top of base wage
+
+// Session revenue (ex-GST) from start/end/centre name.
+// Rate sheet:
+//   Morning (start < 12:00):    40m=$195, 1h=$230, 1h30=$260, 2h=$290
+//   Afternoon (start >= 12:00): 40m=$175, 1h=$210, 1h30=$240, 2h=$270
+//   Each additional 30 min over 2h: +$30
+// Hope Early Learning: flat $100/hr, min 2 hours (matched by name containing "hope").
+function sessionRevenue(start, end, centreName) {
+  if (!start || !end) return 0;
+  const durationMins = Math.round((end - start) / 60000);
+  if (durationMins <= 0) return 0;
+
+  if (/hope/i.test(centreName || '')) {
+    const hours = Math.max(2, durationMins / 60);
+    return Math.round(hours * 100 * 100) / 100;
+  }
+
+  const isMorning = start.getHours() < 12;
+  const base = isMorning
+    ? { 40: 195, 60: 230, 90: 260, 120: 290 }
+    : { 40: 175, 60: 210, 90: 240, 120: 270 };
+
+  if (durationMins <= 40)       return base[40];
+  if (durationMins <= 60)       return base[60];
+  if (durationMins <= 90)       return base[90];
+  if (durationMins <= 120)      return base[120];
+  // Beyond 2h: $30 per additional 30-min block (round up partials)
+  const extraBlocks = Math.ceil((durationMins - 120) / 30);
+  return base[120] + (extraBlocks * 30);
+}
 function initials(fn,ln) { return ((fn||'').charAt(0)+(ln||'').charAt(0)).toUpperCase(); }
 function avatarColor(name) {
   const cols=['#E31E24','#6BAED6','#8DC63F','#F7941D','#9b59b6','#1abc9c','#e67e22','#e91e63'];
@@ -413,6 +520,29 @@ function getRoadKm(originAddr, destAddr) {
   });
 }
 
+// Prefetch a list of {originAddr, destAddr} pairs in parallel, in batches, so the
+// subsequent computeTrips loop hits a warm distCache and returns instantly instead
+// of awaiting each Distance Matrix call one-at-a-time. Skips pairs already cached.
+async function prefetchRoadKm(pairs, batchSize = 12) {
+  // Dedupe and drop already-cached / incomplete pairs
+  const seen = new Set();
+  const todo = [];
+  for (const p of pairs) {
+    if (!p.originAddr || !p.destAddr) continue;
+    const key = `${p.originAddr}||${p.destAddr}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    if (distCache[key] !== undefined) continue; // already known (incl. null)
+    todo.push(p);
+  }
+  for (let i = 0; i < todo.length; i += batchSize) {
+    const batch = todo.slice(i, i + batchSize);
+    // getRoadKm resolves and writes into distCache itself; we just await the batch
+    await Promise.all(batch.map(p => getRoadKm(p.originAddr, p.destAddr)));
+    saveDistCache(); // persist once per batch (getRoadKm already saved, but this is cheap insurance)
+  }
+}
+
 // Straight line fallback using lat/lng
 function straightLineKm(lat1, lng1, lat2, lng2) {
   const R = 6371;
@@ -425,6 +555,10 @@ function straightLineKm(lat1, lng1, lat2, lng2) {
 // ── RAW DATA ──────────────────────────────────────────────────────────────────
 let RAW = null;
 let COMPUTED = null;
+// Profitability tab only: cached lightweight results for the Scheduled view.
+// Populated on first click of the Scheduled button; cleared on every loadData().
+let COMPUTED_SCHEDULED = null;
+let profitView = 'attended'; // 'attended' | 'scheduled'
 let autoTimer = null;
 let currentPeriod = 'fortnight';
 
@@ -459,6 +593,23 @@ function normaliseActivity(a) {
   return null;
 }
 
+// Resolve the origin for leg i of a sorted day's events, using the same rules
+// the trip builder relies on (first session of day = Home; otherwise Centre→Centre
+// if the gap from the previous session is <=60 min, else reset to Home). Returns
+// {origin, originAddr, originGeo, tripType}. Single source of truth so the parallel
+// prefetch pass and the real compute pass can never drift apart.
+function resolveLegOrigin(dayEvs, i, homeAddr, homeGeo) {
+  if (i === 0) {
+    return { origin:'Home', originAddr:homeAddr, originGeo:homeGeo, tripType:'Home → Centre' };
+  }
+  const prev = dayEvs[i-1];
+  const gapMins = (dayEvs[i].date - prev.end) / 60000;
+  if (gapMins <= 60) {
+    return { origin:prev.centreName, originAddr:prev.centreAddr, originGeo:prev.centreGeo, tripType:'Centre → Centre' };
+  }
+  return { origin:'Home', originAddr:homeAddr, originGeo:homeGeo, tripType:'Home → Centre' };
+}
+
 async function computeTrips(period) {
   const { start, end } = getPeriodBounds(period);
   const { users, events, centres } = RAW;
@@ -488,13 +639,14 @@ async function computeTrips(period) {
 
   const coachResults = [];
 
+  // ── Build per-coach day groupings ONCE, reused for prefetch + compute ────────
+  const coachDays = []; // [{ coach, cid, fullName, homeAddr, homeGeo, byDay }]
   for (const coach of coaches) {
     const cid = coach.id;
     const fullName = `${(coach.firstName||'').trim()} ${(coach.lastName||'').trim()}`;
     const homeAddr = coach.address || null;
     const homeGeo  = coach.addressGeo || null;
 
-    // Get this coach's events
     const myEvents = periodEvents
       .filter(e => (e.coaches||[]).some(c => c.value === cid))
       .map(e => {
@@ -514,48 +666,41 @@ async function computeTrips(period) {
 
     if (!myEvents.length) continue;
 
-    // Group by date
     const byDay = {};
     myEvents.forEach(e => {
       const dayKey = e.date.toLocaleDateString('en-AU');
       (byDay[dayKey] = byDay[dayKey]||[]).push(e);
     });
+    Object.values(byDay).forEach(d => d.sort((a,b)=>a.date-b.date));
 
+    coachDays.push({ coach, cid, fullName, homeAddr, homeGeo, byDay });
+  }
+
+  // ── Prefetch ALL distance pairs in parallel before computing ─────────────────
+  // Uses the same origin-resolution rules as the compute pass (resolveLegOrigin),
+  // so the warm cache below covers exactly the legs the loop will ask for.
+  const allPairs = [];
+  for (const { homeAddr, homeGeo, byDay } of coachDays) {
+    for (const dayEvs of Object.values(byDay)) {
+      for (let i = 0; i < dayEvs.length; i++) {
+        const { originAddr } = resolveLegOrigin(dayEvs, i, homeAddr, homeGeo);
+        if (originAddr && dayEvs[i].centreAddr) {
+          allPairs.push({ originAddr, destAddr: dayEvs[i].centreAddr });
+        }
+      }
+    }
+  }
+  await prefetchRoadKm(allPairs);
+
+  for (const { coach, cid, fullName, homeAddr, homeGeo, byDay } of coachDays) {
     const trips = [];
     let totalKm = 0;
     const flags = [];
 
     for (const [dayKey, dayEvs] of Object.entries(byDay)) {
-      dayEvs.sort((a,b) => a.date - b.date);
-
       for (let i = 0; i < dayEvs.length; i++) {
         const ev = dayEvs[i];
-        let origin, originAddr, originGeo, tripType;
-
-        if (i === 0) {
-          // First session: Home → Centre
-          origin    = 'Home';
-          originAddr = homeAddr;
-          originGeo  = homeGeo;
-          tripType  = 'Home → Centre';
-        } else {
-          // Check time gap
-          const prev = dayEvs[i-1];
-          const gapMins = (ev.date - prev.end) / 60000;
-          if (gapMins <= 60) {
-            // Within 1 hour: Centre → Centre
-            origin    = prev.centreName;
-            originAddr = prev.centreAddr;
-            originGeo  = prev.centreGeo;
-            tripType  = 'Centre → Centre';
-          } else {
-            // Gap > 1 hour: reset, Home → Centre
-            origin    = 'Home';
-            originAddr = homeAddr;
-            originGeo  = homeGeo;
-            tripType  = 'Home → Centre';
-          }
-        }
+        const { origin, originAddr, originGeo, tripType } = resolveLegOrigin(dayEvs, i, homeAddr, homeGeo);
 
         // Calculate distance
         let km = null;
@@ -663,6 +808,44 @@ async function computeTrips(period) {
       reimbursement = Math.round(payableKm * rate * 100) / 100;
     }
 
+    // ── REVENUE & MARGIN (PT coaches only) ─────────────────────────────────
+    // Revenue = sum of session prices (ex-GST) using the rate sheet.
+    let revenue = 0;
+    for (const ev of myEvents) {
+      revenue += sessionRevenue(ev.date, ev.end, ev.centreName);
+    }
+    revenue = Math.round(revenue * 100) / 100;
+
+    // Wage cost (PT only):
+    //   PT employees are paid their CONTRACTED hours regardless of how many
+    //   sessions were delivered — if we only schedule 12h against a 17h
+    //   contract, we still owe 17h. The company eats the gap.
+    //   When they over-deliver (overflow), pay actual sessions + travel time.
+    //   Formula: hoursPaid = max(contractedHours, deliveredHours)
+    //     where deliveredHours = sessionHrs (within contract) or
+    //                            totalFortnightHrs (over contract, incl. travel)
+    // Casuals: no wage cost shown — different pay model, margin not computed.
+    let wageCost = 0;
+    let hoursPaid = 0;
+    let hourlyRate = 0;
+    const sessionHrs = Math.round(totalSessionMins / 60 * 10) / 10;
+    if (coachType === 'pt') {
+      hourlyRate = getCoachHourlyRate(cid);
+      const deliveredHrs = overflowHrs > 0 ? totalFortnightHrs : sessionHrs;
+      // Pay the greater of contracted vs delivered — contracted acts as a floor.
+      hoursPaid = Math.max(contractedHours || 0, deliveredHrs);
+      wageCost = Math.round(hoursPaid * hourlyRate * SUPER_MULTIPLIER * 100) / 100;
+    }
+
+    // Margin = (revenue − wage − travel reimbursement) / revenue
+    // Only meaningful for PT coaches with revenue.
+    let marginPct = null;
+    let profit = null;
+    if (coachType === 'pt' && revenue > 0) {
+      profit = Math.round((revenue - wageCost - reimbursement) * 100) / 100;
+      marginPct = Math.round((profit / revenue) * 1000) / 10; // 1 d.p.
+    }
+
     const state = coach.city || (coach.address?.match(/\b(VIC|NSW|QLD|WA|SA|TAS|ACT|NT)\b/)||[])[1] || 'Unknown';
 
     coachResults.push({
@@ -683,6 +866,13 @@ async function computeTrips(period) {
       totalFortnightHrs: coachType==='pt'?totalFortnightHrs:null,
       overflowHrs: coachType==='pt'?overflowHrs:null,
       overflowKm: coachType==='pt'?overflowKm:null,
+      revenue,
+      wageCost,
+      hoursPaid,
+      sessionHrs: coachType==='pt'?sessionHrs:null,
+      hourlyRate,
+      profit,
+      marginPct,
       trips,
       flags,
       byDay
@@ -957,17 +1147,19 @@ function renderPayroll(coaches, period) {
 
   let html = `<div style="margin-bottom:12px;font-size:12px;color:rgba(255,255,255,0.7);font-weight:700">
     Period: ${fmtDate(bounds.start)} → ${fmtDate(bounds.end)} &nbsp;|&nbsp;
-    Threshold: ${threshold}km/day &nbsp;|&nbsp; Rate: $${rate}/km
+    Threshold: ${threshold}km/day &nbsp;|&nbsp; Rate: $${rate}/km &nbsp;|&nbsp;
+    Margin shown for PT coaches only (Revenue − Wage − Travel) ÷ Revenue
   </div>
   <div class="table-wrap">
   <table class="payroll-table">
     <thead><tr>
       <th>Coach</th><th>State</th><th>Days</th><th>Sessions</th>
       <th>Total KM</th><th>Hours (PT)</th><th>Overflow (PT)</th><th>Payable KM</th><th>Reimbursement</th>
+      <th>Revenue</th><th>Wage</th><th>Margin %</th>
     </tr></thead>
     <tbody>`;
 
-  let totKm=0, totPayable=0, totPay=0, totSess=0;
+  let totKm=0, totPayable=0, totPay=0, totSess=0, totRev=0, totWage=0;
   coaches.forEach(c => {
     const thresh = threshold * c.totalDays;
     const typeLabel = c.coachType==='pt'
@@ -979,6 +1171,14 @@ function renderPayroll(coaches, period) {
     const overflowInfo = c.coachType==='pt'
       ? (c.overflowHrs>0 ? `<span style="color:var(--red)">${c.overflowHrs.toFixed(1)}h over</span>` : '<span style="color:#8DC63F">Within</span>')
       : '—';
+    // Revenue / Wage / Margin cells. Casuals get em-dashes since margin isn't computed for them.
+    const revCell  = c.revenue > 0 ? `$${c.revenue.toFixed(2)}` : '—';
+    const wageCell = c.coachType==='pt' ? `$${c.wageCost.toFixed(2)}` : '—';
+    let marginCell = '—';
+    if (c.marginPct !== null) {
+      const color = c.marginPct >= 60 ? '#8DC63F' : c.marginPct >= 40 ? 'var(--yellow)' : 'var(--red)';
+      marginCell = `<span style="color:${color};font-weight:900">${c.marginPct.toFixed(1)}%</span>`;
+    }
     html += `<tr>
       <td>${c.fullName} ${typeLabel}</td>
       <td>${c.state}</td>
@@ -989,9 +1189,24 @@ function renderPayroll(coaches, period) {
       <td style="font-size:11px">${overflowInfo}</td>
       <td>${c.payableKm}km</td>
       <td style="color:var(--yellow)">$${c.reimbursement.toFixed(2)}</td>
+      <td>${revCell}</td>
+      <td>${wageCell}</td>
+      <td>${marginCell}</td>
     </tr>`;
     totKm+=c.totalKm; totPayable+=c.payableKm; totPay+=c.reimbursement; totSess+=c.totalSessions;
+    totRev += c.revenue || 0;
+    totWage += c.wageCost || 0;
   });
+
+  // Total margin uses PT totals only (since Casuals have no wage tracked here)
+  const ptCoaches = coaches.filter(c => c.coachType==='pt');
+  const ptRev = ptCoaches.reduce((a,c)=>a+(c.revenue||0),0);
+  const ptWage = ptCoaches.reduce((a,c)=>a+(c.wageCost||0),0);
+  const ptReimb = ptCoaches.reduce((a,c)=>a+(c.reimbursement||0),0);
+  const totalMarginPct = ptRev > 0 ? Math.round(((ptRev - ptWage - ptReimb)/ptRev)*1000)/10 : null;
+  const totalMarginCell = totalMarginPct !== null
+    ? `<span style="color:${totalMarginPct>=60?'#8DC63F':totalMarginPct>=40?'var(--yellow)':'var(--red)'};font-weight:900">${totalMarginPct.toFixed(1)}%</span>`
+    : '—';
 
   html += `</tbody><tfoot><tr class="total-row">
     <td colspan="3"><b>TOTAL (${coaches.length} coaches)</b></td>
@@ -1000,6 +1215,9 @@ function renderPayroll(coaches, period) {
     <td></td><td></td>
     <td>${Math.round(totPayable*10)/10}km</td>
     <td>$${totPay.toFixed(2)}</td>
+    <td>$${totRev.toFixed(2)}</td>
+    <td>$${totWage.toFixed(2)}</td>
+    <td>${totalMarginCell}</td>
   </tr></tfoot></table></div>`;
 
   el.innerHTML = html;
@@ -1183,23 +1401,69 @@ function updateStats(coaches) {
   document.getElementById('s-coaches').textContent = coaches.length;
   document.getElementById('s-sessions').textContent= totSess;
   document.getElementById('s-flags').textContent   = totFlags;
+
+  // PT margin pill: aggregate over PT coaches only.
+  const pt = coaches.filter(c => c.coachType==='pt');
+  const ptRev   = pt.reduce((a,c)=>a+(c.revenue||0),0);
+  const ptWage  = pt.reduce((a,c)=>a+(c.wageCost||0),0);
+  const ptReimb = pt.reduce((a,c)=>a+(c.reimbursement||0),0);
+  const marginEl = document.getElementById('s-margin');
+  if (marginEl) {
+    if (ptRev > 0) {
+      const pct = Math.round(((ptRev - ptWage - ptReimb)/ptRev)*1000)/10;
+      marginEl.textContent = pct.toFixed(1)+'%';
+      marginEl.style.color = pct>=60 ? '#2d8b00' : pct>=40 ? '#6b4a00' : '#a00000';
+    } else {
+      marginEl.textContent = '—';
+      marginEl.style.color = '#333';
+    }
+  }
 }
 
-// ── COACH SETTINGS (localStorage) ────────────────────────────────────────────
-function getCoachSettings() {
-  try { return JSON.parse(localStorage.getItem('mm_coach_settings')||'{}'); } catch(e) { return {}; }
+// ── COACH SETTINGS (Firestore-backed, cached in memory) ──────────────────────
+// Settings live in the Firestore collection 'coach-settings' (one doc per coach,
+// doc id = coachId). They're loaded once into COACH_SETTINGS_CACHE at login so the
+// synchronous getters below (called all over payroll/profitability) stay instant.
+// Saves write to the cache immediately AND persist to Firestore so every device
+// and browser sees the same values.
+let COACH_SETTINGS_CACHE = {};
+
+async function loadCoachSettings() {
+  try {
+    const snap = await getDocs(collection(db, 'coach-settings'));
+    const out = {};
+    snap.forEach(d => { out[d.id] = d.data() || {}; });
+    COACH_SETTINGS_CACHE = out;
+  } catch (e) {
+    console.error('Failed to load coach settings from Firestore', e);
+    // Keep whatever is already cached rather than wiping it
+  }
 }
-function saveCoachSetting(coachId, key, value) {
-  const s = getCoachSettings();
-  if (!s[coachId]) s[coachId] = {};
-  s[coachId][key] = value;
-  localStorage.setItem('mm_coach_settings', JSON.stringify(s));
+
+function getCoachSettings() {
+  return COACH_SETTINGS_CACHE;
+}
+
+async function saveCoachSetting(coachId, key, value) {
+  if (!COACH_SETTINGS_CACHE[coachId]) COACH_SETTINGS_CACHE[coachId] = {};
+  COACH_SETTINGS_CACHE[coachId][key] = value;
+  try {
+    // merge:true so updating one field doesn't clobber the others on the doc
+    await setDoc(doc(db, 'coach-settings', coachId), COACH_SETTINGS_CACHE[coachId], { merge: true });
+  } catch (e) {
+    console.error('Failed to save coach setting to Firestore', e);
+    throw e; // let the caller surface the failure
+  }
 }
 function getCoachType(coachId) {
   return getCoachSettings()[coachId]?.type || 'casual';
 }
 function getCoachContractedHours(coachId) {
   return parseFloat(getCoachSettings()[coachId]?.hours || 0);
+}
+function getCoachHourlyRate(coachId) {
+  const v = parseFloat(getCoachSettings()[coachId]?.hourly);
+  return Number.isFinite(v) && v > 0 ? v : DEFAULT_PT_HOURLY;
 }
 
 // ── RENDER SETTINGS TAB ───────────────────────────────────────────────────────
@@ -1223,13 +1487,13 @@ function renderSettings() {
 
   let html = `
     <div style="margin-bottom:12px;font-size:12px;color:rgba(255,255,255,0.7);font-weight:700">
-      Set each coach as Casual or Part Time. For Part Time coaches, enter their contracted fortnightly hours.
-      Settings are saved automatically in your browser.
+      Set each coach as Casual or Part Time. For Part Time coaches, enter contracted fortnightly hours and hourly rate (ex-super; 12% super is added automatically for cost calculations).
+      Settings are saved to the cloud and shared across all devices.
     </div>
     <div class="table-wrap">
     <table class="settings-table">
       <thead><tr>
-        <th>Coach</th><th>State</th><th>Type</th><th>Contracted hrs/fortnight</th><th>Status</th>
+        <th>Coach</th><th>State</th><th>Type</th><th>Contracted hrs/fortnight</th><th>Hourly $ (ex-super)</th><th>Status</th>
       </tr></thead>
       <tbody>`;
 
@@ -1239,6 +1503,7 @@ function renderSettings() {
     const state = c.city || (c.address?.match(/\b(VIC|NSW|QLD|WA|SA|TAS|ACT|NT)\b/)||[])[1] || '?';
     const type = settings[cid]?.type || 'casual';
     const hours = settings[cid]?.hours || '';
+    const hourly = settings[cid]?.hourly || '';
     const isPT = type === 'pt';
 
     html += `<tr>
@@ -1255,6 +1520,12 @@ function renderSettings() {
           value="${hours}" min="0" step="0.5" placeholder="e.g. 40"
           ${isPT?'':'disabled'}
           onchange="window.onHoursChange('${cid}', this.value)">
+      </td>
+      <td>
+        <input type="number" class="coach-hours-input" id="hourly-${cid}"
+          value="${hourly}" min="0" step="0.01" placeholder="${DEFAULT_PT_HOURLY}"
+          ${isPT?'':'disabled'}
+          onchange="window.onHourlyChange('${cid}', this.value)">
         <span class="save-indicator" id="saved-${cid}"></span>
       </td>
       <td><span class="${isPT?'type-pt':'type-casual'}" id="type-label-${cid}">${isPT?'Part Time':'Casual'}</span></td>
@@ -1265,28 +1536,176 @@ function renderSettings() {
   el.innerHTML = html;
 }
 
-window.onTypeChange = function(coachId, type) {
-  saveCoachSetting(coachId, 'type', type);
+window.onTypeChange = async function(coachId, type) {
   const hrsInput = document.getElementById(`hrs-${coachId}`);
+  const hourlyInput = document.getElementById(`hourly-${coachId}`);
   const label = document.getElementById(`type-label-${coachId}`);
   if (hrsInput) hrsInput.disabled = type !== 'pt';
+  if (hourlyInput) hourlyInput.disabled = type !== 'pt';
   if (label) {
     label.textContent = type==='pt'?'Part Time':'Casual';
     label.className = type==='pt'?'type-pt':'type-casual';
   }
-  showSaved(coachId);
+  showSaving(coachId);
+  try { await saveCoachSetting(coachId, 'type', type); showSaved(coachId); refreshComputedViews(); }
+  catch(e){ showSaveFailed(coachId); }
 };
 
-window.onHoursChange = function(coachId, hours) {
-  saveCoachSetting(coachId, 'hours', parseFloat(hours)||0);
-  showSaved(coachId);
+window.onHoursChange = async function(coachId, hours) {
+  showSaving(coachId);
+  try { await saveCoachSetting(coachId, 'hours', parseFloat(hours)||0); showSaved(coachId); refreshComputedViews(); }
+  catch(e){ showSaveFailed(coachId); }
 };
+
+window.onHourlyChange = async function(coachId, hourly) {
+  showSaving(coachId);
+  try { await saveCoachSetting(coachId, 'hourly', parseFloat(hourly)||0); showSaved(coachId); refreshComputedViews(); }
+  catch(e){ showSaveFailed(coachId); }
+};
+
+// Re-render the views whose numbers depend on coach settings, if currently visible
+function refreshComputedViews() {
+  if (document.getElementById('tab-payroll').style.display !== 'none' && typeof renderPayroll === 'function') renderPayroll();
+  if (document.getElementById('tab-profitability').style.display !== 'none') renderProfitability();
+}
+
+function showSaving(coachId) {
+  const el = document.getElementById(`saved-${coachId}`);
+  if (!el) return;
+  el.textContent = 'saving…';
+  el.style.color = 'rgba(255,255,255,0.6)';
+}
+function showSaveFailed(coachId) {
+  const el = document.getElementById(`saved-${coachId}`);
+  if (!el) return;
+  el.textContent = '⚠ not saved';
+  el.style.color = '#ff6b6b';
+  setTimeout(()=>{ if(el){ el.textContent=''; el.style.color=''; } }, 4000);
+}
 
 function showSaved(coachId) {
   const el = document.getElementById(`saved-${coachId}`);
   if (!el) return;
+  el.style.color = '';
   el.textContent = '✓ saved';
   setTimeout(()=>{ if(el) el.textContent=''; }, 2000);
+}
+
+// ── LIGHTWEIGHT SCHEDULED COMPUTE (Profitability tab only) ───────────────────
+// Computes per-coach revenue and wage cost across ALL non-cancelled sessions
+// in the period (Scheduled + Attended). Skips travel-distance work entirely
+// to avoid Distance Matrix API calls for future-session routes that aren't
+// in the local cache (which was the source of the earlier load stall).
+//
+// Returns the same shape as computeTrips so renderProfitability can consume it
+// without changes — but `reimbursement` is always 0 and travel-related fields
+// are zeroed out. PT margin/labour cost figures will exclude travel reimb;
+// that's acceptable because travel reimbursement only kicks in over contract,
+// and you can't reliably forecast over-contract status anyway.
+function computeProfitabilityScheduled(period) {
+  const { start, end } = getPeriodBounds(period);
+  const { users, events, centres } = RAW;
+  const stateFilter = document.getElementById('state-filter').value;
+
+  // Same coach pool as the main pipeline (active, not excluded, state filter applied)
+  const coaches = Object.values(users).filter(u => {
+    if (u.role !== 'coach' || u.status !== 'Active') return false;
+    const name = `${(u.firstName||'').trim()} ${(u.lastName||'').trim()}`.toLowerCase();
+    if (EXCLUDED.includes(name)) return false;
+    if (stateFilter) {
+      const s = u.city || (u.address?.match(/\b(VIC|NSW|QLD|WA|SA|TAS|ACT|NT)\b/)||[])[1];
+      if (s !== stateFilter) return false;
+    }
+    return true;
+  });
+
+  // Filter events: in period, NOT cancelled. Anything else counts (Scheduled, Attended, etc.)
+  const periodEvents = events.filter(e => {
+    const st = e.sessionStatus;
+    if (st === 'Cancelled' || st === 'cancelled') return false;
+    const d = toDate(e.start);
+    return d && d >= start && d <= end;
+  });
+
+  const coachResults = [];
+  for (const coach of coaches) {
+    const cid = coach.id;
+    const fullName = `${(coach.firstName||'').trim()} ${(coach.lastName||'').trim()}`;
+    const coachType = getCoachType(cid);
+    const contractedHours = getCoachContractedHours(cid);
+
+    // Per-coach session list
+    const myEvents = periodEvents
+      .filter(e => (e.coaches||[]).some(c => c.value === cid))
+      .map(e => {
+        const centre = centres[e.educationCenter] || {};
+        return {
+          date: toDate(e.start),
+          end:  toDate(e.end),
+          centreName: centre.name || e.educationCenter || '',
+        };
+      })
+      .filter(e => e.date && e.end);
+
+    // Session totals
+    let totalSessionMins = 0;
+    for (const ev of myEvents) totalSessionMins += (ev.end - ev.date) / 60000;
+    const sessionHrs = Math.round(totalSessionMins / 60 * 10) / 10;
+
+    // Revenue
+    let revenue = 0;
+    for (const ev of myEvents) revenue += sessionRevenue(ev.date, ev.end, ev.centreName);
+    revenue = Math.round(revenue * 100) / 100;
+
+    // Wage (PT only) — same contracted-floor rule as the attended pipeline.
+    // Travel is excluded entirely so overflow is calculated on session hours
+    // alone (a conservative under-estimate for over-contract cases).
+    let wageCost = 0;
+    let hoursPaid = 0;
+    let hourlyRate = 0;
+    let overflowHrs = 0;
+    if (coachType === 'pt') {
+      hourlyRate = getCoachHourlyRate(cid);
+      overflowHrs = contractedHours > 0 ? Math.max(0, sessionHrs - contractedHours) : 0;
+      hoursPaid = Math.max(contractedHours || 0, sessionHrs);
+      wageCost = Math.round(hoursPaid * hourlyRate * SUPER_MULTIPLIER * 100) / 100;
+    }
+
+    const profit = (coachType === 'pt') ? revenue - wageCost : null;
+    const marginPct = (coachType === 'pt' && revenue > 0) ? Math.round((profit / revenue) * 1000) / 10 : null;
+
+    coachResults.push({
+      id: cid,
+      firstName: coach.firstName || '',
+      lastName: coach.lastName || '',
+      fullName,
+      name: fullName, // keep both — main pipeline uses fullName, some code reads .name
+      profilePic: coach.profilePic || null,
+      state: coach.city || (coach.address?.match(/\b(VIC|NSW|QLD|WA|SA|TAS|ACT|NT)\b/)||[])[1] || 'Unknown',
+      coachType,
+      contractedHours,
+      totalSessions: myEvents.length,
+      totalDays: new Set(myEvents.map(e => e.date.toDateString())).size,
+      totalKm: 0,           // not computed in scheduled view
+      payableKm: 0,         // not computed in scheduled view
+      reimbursement: 0,     // not computed in scheduled view
+      totalFortnightHrs: coachType==='pt' ? sessionHrs : null,
+      overflowHrs: coachType==='pt' ? overflowHrs : null,
+      overflowKm: coachType==='pt' ? 0 : null,
+      revenue,
+      wageCost,
+      hoursPaid,
+      sessionHrs: coachType==='pt' ? sessionHrs : null,
+      hourlyRate,
+      profit,
+      marginPct,
+      trips: [],
+      flags: [],
+      byDay: {},
+    });
+  }
+
+  return coachResults;
 }
 
 async function loadData() {
@@ -1295,19 +1714,54 @@ async function loadData() {
   });
   const coaches = await computeTrips(currentPeriod);
   COMPUTED = coaches;
+  // Invalidate scheduled cache — recomputed next time user clicks Scheduled.
+  COMPUTED_SCHEDULED = null;
   updateStats(coaches);
   renderOverview(coaches);
   renderPayroll(coaches, currentPeriod);
   renderFlags(coaches);
   renderTripLog(coaches);
+  // Re-render whichever live-data tab is currently visible (PT Hours / Profitability)
+  // so auto-refresh updates the view without needing to click off and back.
+  if (document.getElementById('tab-pt-hours').style.display !== 'none') renderPTHours();
+  if (document.getElementById('tab-profitability').style.display !== 'none') renderProfitability();
 }
+
+// ── PROFITABILITY VIEW TOGGLE ────────────────────────────────────────────────
+// Swap the Profitability tab between Attended actuals (uses main COMPUTED) and
+// Scheduled forecast (uses lightweight computeProfitabilityScheduled, which
+// skips travel entirely so it can't stall on cold-cache Distance Matrix calls).
+window.setProfitView = function(view) {
+  if (view !== 'attended' && view !== 'scheduled') return;
+  if (profitView === view) return;
+  profitView = view;
+  // Scheduled compute is sync + cheap (no API calls), so just run it inline
+  // the first time. Cache persists until next loadData().
+  if (view === 'scheduled' && !COMPUTED_SCHEDULED && RAW) {
+    try {
+      COMPUTED_SCHEDULED = computeProfitabilityScheduled(currentPeriod);
+    } catch (err) {
+      console.error('[profit] scheduled compute failed:', err);
+      profitView = 'attended';
+      alert('Scheduled view failed — check console. Reverting to Attended.');
+      return;
+    }
+  }
+  try {
+    renderProfitability();
+  } catch (err) {
+    console.error('[profit] render failed:', err);
+    profitView = 'attended';
+    renderProfitability();
+  }
+};
 
 // ── SCROLL TO FLAG SECTION ───────────────────────────────────────────────────
 window.scrollToFlag = function(section) {
   // Switch to flags tab first
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector('[data-tab="flags"]').classList.add('active');
-  ['overview','payroll','flags','trips','pt-hours','settings'].forEach(t=>{
+  ['overview','payroll','flags','trips','pt-hours','profitability','settings'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t==='flags'?'block':'none';
   });
   // Then scroll to section
@@ -1320,7 +1774,7 @@ window.scrollToFlag = function(section) {
 window.goToFlags = function() {
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector('[data-tab="flags"]').classList.add('active');
-  ['overview','payroll','flags','trips','pt-hours','settings'].forEach(t=>{
+  ['overview','payroll','flags','trips','pt-hours','profitability','settings'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t==='flags'?'block':'none';
   });
   if (COMPUTED) renderFlags(COMPUTED);
@@ -1440,10 +1894,165 @@ function renderPTHours() {
   });
 }
 
+// ── RENDER PROFITABILITY TAB ─────────────────────────────────────────────────
+// Per-PT-coach financial breakdown: Revenue (centre billings) vs Cost (wage+super+travel).
+// View toggle: 'attended' uses COMPUTED (full pipeline incl. travel reimb).
+//              'scheduled' uses COMPUTED_SCHEDULED (lightweight, no travel).
+function renderProfitability() {
+  const el = document.getElementById('tab-profitability');
+  // Pick the right cache. Fall back to attended if scheduled cache is missing
+  // (shouldn't happen — setProfitView populates it before calling us).
+  const source = profitView === 'scheduled' ? COMPUTED_SCHEDULED : COMPUTED;
+  if (!source) { el.innerHTML='<div class="empty">Load data first — select a period and wait for calculation</div>'; return; }
+
+  const bounds = getPeriodBounds(currentPeriod);
+  const ptCoaches = source.filter(c => c.coachType === 'pt');
+
+  // Toggle sits at the top of the tab body so it's always visible.
+  const toggleHtml = `
+    <div class="profit-view-toggle">
+      <button class="pv-btn ${profitView==='attended'?'active':''}" onclick="window.setProfitView('attended')">Attended</button>
+      <button class="pv-btn ${profitView==='scheduled'?'active':''}" onclick="window.setProfitView('scheduled')">Scheduled</button>
+      <span class="pv-hint">${profitView==='scheduled' ? 'Forecast — all non-cancelled sessions in period (travel excluded)' : 'Actuals — attended sessions only (incl. travel)'}</span>
+    </div>`;
+
+  if (!ptCoaches.length) {
+    el.innerHTML = toggleHtml + '<div class="empty">No Part Time coaches set up — go to Coach Settings to mark coaches as Part Time</div>';
+    return;
+  }
+
+  // ── Summary totals (PT only) ─────────────────────────────────────────────
+  const totRev   = ptCoaches.reduce((a,c)=>a+(c.revenue||0),0);
+  const totWage  = ptCoaches.reduce((a,c)=>a+(c.wageCost||0),0);
+  const totReimb = ptCoaches.reduce((a,c)=>a+(c.reimbursement||0),0);
+  const totCost  = totWage + totReimb;
+  const totProfit = totRev - totCost;
+  const totMargin = totRev > 0 ? (totProfit / totRev) : null;
+  const totRatio = totCost > 0 ? (totRev / totCost) : null;
+  // Labour Cost Ratio = cost ÷ revenue. Lower is better.
+  //   < 0.40 → green (business keeps >60%)
+  //   0.40–0.50 → orange
+  //   > 0.50 → red (coach takes more than half)
+  const totLabourRatio = totRev > 0 ? (totCost / totRev) : null;
+  const totLabourClass = totLabourRatio === null ? ''
+    : totLabourRatio < 0.40 ? 'margin-good'
+    : totLabourRatio <= 0.50 ? 'margin-mid'
+    : 'margin-bad';
+  const fmtMargin = m => m === null ? '—' : m.toFixed(2);
+  // Ratio = revenue ÷ cost. e.g. $1000 rev on $200 cost = 5.0×. >1.0 = profitable.
+  const fmtRatio  = r => r === null ? '—' : r.toFixed(1) + '×';
+  const fmtLabour = r => r === null ? '—' : r.toFixed(2);
+
+  let html = `
+    <div style="margin-bottom:12px;font-size:12px;color:rgba(255,255,255,0.7);font-weight:700">
+      Period: ${fmtDate(bounds.start)} → ${fmtDate(bounds.end)} &nbsp;|&nbsp;
+      Labour Cost = Total Cost ÷ Revenue (lower is better) &nbsp;|&nbsp; PT coaches only
+    </div>
+    <div class="profit-summary">
+      <div class="ps-item"><div class="ps-label">Total Revenue</div><div class="ps-val" style="color:#8DC63F">$${totRev.toFixed(2)}</div></div>
+      <div class="ps-item"><div class="ps-label">Total Cost</div><div class="ps-val" style="color:#ff9090">$${totCost.toFixed(2)}</div></div>
+      <div class="ps-item"><div class="ps-label">Net Profit</div><div class="ps-val" style="color:var(--yellow)">$${totProfit.toFixed(2)}</div></div>
+      <div class="ps-item"><div class="ps-label">Labour Cost</div><div class="ps-val ${totLabourClass}">${fmtLabour(totLabourRatio)}</div></div>
+      <div class="ps-item"><div class="ps-label">Profit Margin</div><div class="ps-val">${fmtMargin(totMargin)}</div></div>
+      <div class="ps-item"><div class="ps-label">Rev : Cost</div><div class="ps-val">${fmtRatio(totRatio)}</div></div>
+      <div class="ps-item"><div class="ps-label">PT Coaches</div><div class="ps-val">${ptCoaches.length}</div></div>
+    </div>
+    <div class="profit-grid">`;
+
+  // Sort by labour cost ratio ascending so the most efficient coaches (lowest
+  // share of revenue going to wages) surface first. Nulls sink to bottom.
+  const sorted = ptCoaches.slice().sort((a,b) => {
+    const aCost = (a.wageCost||0) + (a.reimbursement||0);
+    const bCost = (b.wageCost||0) + (b.reimbursement||0);
+    const aL = a.revenue > 0 ? aCost / a.revenue : Infinity;
+    const bL = b.revenue > 0 ? bCost / b.revenue : Infinity;
+    return aL - bL;
+  });
+
+  sorted.forEach(c => {
+    const inits = initials(c.firstName, c.lastName);
+    const color = avatarColor(c.fullName);
+    const photoHtml = c.profilePic
+      ? `<img class="pt-img" src="${c.profilePic}" onerror="this.style.display='none';this.nextSibling.style.display='flex'" alt="${c.fullName}"><div class="pt-avatar" style="display:none;background:${color}33;color:${color}">${inits}</div>`
+      : `<div class="pt-avatar" style="background:${color}33;color:${color}">${inits}</div>`;
+
+    // Cost breakdown: base wage = hoursPaid × hourlyRate, super = base × 0.12
+    const baseWage = Math.round((c.hoursPaid||0) * (c.hourlyRate||0) * 100) / 100;
+    const superCost = Math.round((c.wageCost - baseWage) * 100) / 100;
+    const totalCoachCost = c.wageCost + c.reimbursement;
+    const profitDollars = (c.revenue||0) - totalCoachCost;
+
+    // ── LABOUR COST RATIO (primary metric on card) ──────────────────────────
+    // = total cost ÷ revenue. e.g. $300 cost on $1000 rev → 0.30
+    // Lower is better: < 0.40 green, 0.40–0.50 orange, > 0.50 red.
+    const labourDec = c.revenue > 0 ? (totalCoachCost / c.revenue) : null;
+    const tier = labourDec === null ? 'unset'
+      : labourDec < 0.40 ? 'good'
+      : labourDec <= 0.50 ? 'mid'
+      : 'bad';
+    const labourDisplay = labourDec === null ? '—' : labourDec.toFixed(2);
+
+    // Secondary metrics for the breakdown grid
+    const marginDec = c.revenue > 0 ? ((c.revenue - c.wageCost - c.reimbursement) / c.revenue) : null;
+    const marginDisplay = marginDec === null ? '—' : marginDec.toFixed(2);
+    // Ratio = revenue ÷ cost. Independent of margin sign; null when no cost yet.
+    const ratioDec = totalCoachCost > 0 ? ((c.revenue||0) / totalCoachCost) : null;
+    const ratioDisplay = ratioDec === null ? '—' : ratioDec.toFixed(1) + '×';
+
+    const hourlyShown = c.hourlyRate ? `$${c.hourlyRate.toFixed(2)}/hr` : '—';
+    // hoursNote explains which rule fired: over contract, contracted floor, or matched
+    let hoursNote;
+    if (c.hoursPaid <= 0) {
+      hoursNote = 'No paid hours this period';
+    } else if (c.overflowHrs > 0) {
+      hoursNote = `${c.hoursPaid.toFixed(1)}h paid @ ${hourlyShown} (over contract — incl. travel)`;
+    } else if (c.contractedHours > 0 && c.hoursPaid >= c.contractedHours) {
+      // hoursPaid is the contracted floor; delivered was less or equal
+      const sessHrs = c.sessionHrs || 0;
+      hoursNote = sessHrs < c.contractedHours
+        ? `${c.hoursPaid.toFixed(1)}h paid @ ${hourlyShown} (contracted floor — ${sessHrs.toFixed(1)}h delivered)`
+        : `${c.hoursPaid.toFixed(1)}h paid @ ${hourlyShown} (contracted)`;
+    } else {
+      hoursNote = `${c.hoursPaid.toFixed(1)}h paid @ ${hourlyShown}`;
+    }
+
+    html += `
+      <div class="profit-card ${tier}">
+        <div class="profit-top">
+          ${photoHtml}
+          <div>
+            <div class="pt-name">${c.fullName}</div>
+            <div class="pt-state">${c.state} · ${c.totalSessions} sessions · ${c.totalDays} days</div>
+          </div>
+          <div class="pt-score-area">
+            <div class="profit-margin-big ${tier}">${labourDisplay}</div>
+            <div class="profit-margin-label">Labour Cost</div>
+            <div class="profit-ratio-sub ${tier}">${ratioDisplay}</div>
+          </div>
+        </div>
+        <div class="profit-breakdown">
+          <div class="pb-item"><div class="pb-label">Sessions</div><div class="pb-val">${c.totalSessions}</div></div>
+          <div class="pb-item"><div class="pb-label">Revenue</div><div class="pb-val rev">$${(c.revenue||0).toFixed(2)}</div></div>
+          <div class="pb-item"><div class="pb-label">Wage (base)</div><div class="pb-val">$${baseWage.toFixed(2)}</div><div class="pb-note">${hoursNote}</div></div>
+          <div class="pb-item"><div class="pb-label">Super (12%)</div><div class="pb-val">$${superCost.toFixed(2)}</div></div>
+          <div class="pb-item"><div class="pb-label">Travel</div><div class="pb-val">$${(c.reimbursement||0).toFixed(2)}</div><div class="pb-note">${c.totalKm}km · payable ${c.payableKm}km</div></div>
+          <div class="pb-item"><div class="pb-label">Total Cost</div><div class="pb-val cost">$${totalCoachCost.toFixed(2)}</div></div>
+          <div class="pb-item"><div class="pb-label">Profit $</div><div class="pb-val profit">$${profitDollars.toFixed(2)}</div></div>
+          <div class="pb-item"><div class="pb-label">Labour Cost</div><div class="pb-val ${tier==='good'?'rev':tier==='bad'?'cost':'profit'}">${labourDisplay}</div></div>
+          <div class="pb-item"><div class="pb-label">Profit Margin</div><div class="pb-val">${marginDisplay}</div></div>
+          <div class="pb-item"><div class="pb-label">Rev : Cost</div><div class="pb-val">${ratioDisplay}</div></div>
+        </div>
+      </div>`;
+  });
+
+  html += '</div>';
+  el.innerHTML = toggleHtml + html;
+}
+
 async function fullRefresh() {
   const btn=document.getElementById('refresh-btn');
   if(btn) btn.classList.add('spinning');
-  try { await loadRaw(); await loadData(); updateLastUpdated(); }
+  try { updatePeriodLabels(); await Promise.all([loadCoachSettings(), loadRaw()]); await loadData(); updateLastUpdated(); }
   finally { if(btn) btn.classList.remove('spinning'); }
 }
 
@@ -1451,7 +2060,8 @@ onAuthStateChanged(auth, async user => {
   if (user) {
     document.getElementById('login-screen').style.display='none';
     document.getElementById('app').style.display='block';
-    await loadRaw();
+    updatePeriodLabels();
+    await Promise.all([loadCoachSettings(), loadRaw()]);
     await loadData();
     updateLastUpdated();
     autoTimer = setInterval(fullRefresh, 10*60*1000);
@@ -1486,11 +2096,12 @@ document.querySelectorAll('.nav-tab').forEach(btn=>{
     document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
     btn.classList.add('active');
     const tab=btn.dataset.tab;
-    ['overview','payroll','flags','trips','pt-hours','settings'].forEach(t=>{
+    ['overview','payroll','flags','trips','pt-hours','profitability','settings'].forEach(t=>{
       document.getElementById('tab-'+t).style.display=t===tab?'block':'none';
     });
     if(tab==='settings') renderSettings();
     if(tab==='pt-hours') renderPTHours();
+    if(tab==='profitability') renderProfitability();
   });
 });
 
@@ -1510,6 +2121,6 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
   document.getElementById(id).addEventListener('change',()=>{ if(RAW) loadData(); });
 });
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_MpSn0m96wTjCLUvXBdOLJBF-lPCQ5SE&libraries=geometry" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=PASTE_YOUR_NEW_API_KEY_HERE&libraries=geometry" async defer></script>
 </body>
 </html>
