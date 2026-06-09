@@ -1069,7 +1069,7 @@ async function computeTrips(period) {
 
     // Calculate total session hours from events
     let totalSessionMins = 0;
-    for (const ev of myEvents) {
+    for (const ev of Object.values(byDay).flat()) {
       if (ev.end && ev.date) totalSessionMins += (ev.end - ev.date) / 60000;
     }
 
@@ -1116,7 +1116,7 @@ async function computeTrips(period) {
     // ── REVENUE & MARGIN (PT coaches only) ─────────────────────────────────
     // Revenue = sum of session prices (ex-GST) using the rate sheet.
     let revenue = 0;
-    for (const ev of myEvents) {
+    for (const ev of Object.values(byDay).flat()) {
       revenue += sessionRevenue(ev.date, ev.end, ev.centreName);
     }
     revenue = Math.round(revenue * 100) / 100;
@@ -1162,7 +1162,7 @@ async function computeTrips(period) {
       profilePic: coach.profilePic||null,
       homeAddr,
       totalKm,
-      totalSessions: myEvents.length,
+      totalSessions: Object.values(byDay).flat().length,
       totalDays: Object.keys(byDay).length,
       payableKm: Math.round(payableKm*10)/10,
       reimbursement,
