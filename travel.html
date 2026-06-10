@@ -560,6 +560,35 @@ h1,h2,h3,h4,h5,.mf,
 .flags-banner h4, .flags-list { color: var(--ink); }
 
 /* generic emoji "logo-star" sizing kept; replaced in markup with PNG */
+
+/* ---- Coach-row text legibility on coloured rows ---- */
+.cr-name { color:#fff !important; font-size:18px !important; }
+.cr-sub  { color:#fff !important; font-size:13px !important; font-weight:800 !important; }
+.cr-stat { color:rgba(255,255,255,0.92) !important; font-size:13px !important; font-weight:800 !important; }
+.cr-stat b { color:#fff !important; }
+.cr-km   { color:#fff !important; font-size:24px !important; }
+.cr-pay  { color:#fff !important; font-size:14px !important; font-weight:800 !important; }
+.cr-rank { color:#fff !important; font-size:22px !important; }
+
+/* ---- Profitability: white card blocks, dark readable text ---- */
+.profit-card, .profit-summary { background:#fff !important; border:3px solid var(--lightblue) !important; box-shadow: var(--shadow) !important; opacity:1 !important; }
+.profit-card.good  { border-color:var(--green) !important; background:#f1faec !important; }
+.profit-card.mid   { border-color:var(--yellow) !important; background:#fffbe8 !important; }
+.profit-card.bad   { border-color:var(--red) !important; background:#fff0ef !important; }
+.profit-card.unset { border-color:var(--lightblue) !important; }
+.pt-name { color:var(--ink) !important; font-size:18px !important; }
+.pt-state { color:var(--blue) !important; font-size:13px !important; font-weight:800 !important; }
+.profit-margin-label, .profit-summary .ps-label, .pb-label { color:var(--blue) !important; font-size:13px !important; font-weight:800 !important; }
+.pb-val, .pb-note { color:var(--ink) !important; font-size:14px !important; font-weight:800 !important; }
+.pb-note { font-weight:700 !important; opacity:0.85; }
+.profit-summary .ps-val { color:var(--ink) !important; font-size:24px !important; }
+.profit-breakdown { border-top-color:var(--line) !important; }
+.profit-margin-big.good, .profit-ratio-sub.good, .ps-val.margin-good, .margin-good, .pb-val.rev { color:#4a9e2f !important; }
+.profit-margin-big.mid, .profit-ratio-sub.mid, .ps-val.margin-mid, .margin-mid { color:#c79a00 !important; }
+.profit-margin-big.bad, .profit-ratio-sub.bad, .ps-val.margin-bad, .margin-bad, .pb-val.cost { color:var(--red) !important; }
+.profit-margin-big { font-size:32px !important; }
+.profit-ratio-sub { font-size:15px !important; }
+
 </style>
 </head>
 <body>
