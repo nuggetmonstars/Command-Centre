@@ -113,18 +113,6 @@
       display: block;
     }
     
-    .login-loading {
-      color: var(--blue);
-      font-style: italic;
-      font-size: 13px;
-      margin-top: 15px;
-      display: none;
-    }
-    
-    .login-loading.show {
-      display: block;
-    }
-    
     .topbar {
       position: sticky;
       top: 0;
@@ -350,7 +338,6 @@
       <input type="password" id="loginPassword" placeholder="Password" class="login-input">
       <button id="loginBtn" class="btn login-btn">Sign In</button>
       <div id="loginError" class="login-error"></div>
-      <div id="loginLoading" class="login-loading">Signing in...</div>
     </div>
   </div>
   
@@ -383,20 +370,16 @@
       </div>
       
       <div class="meetings-list" id="meetingsList">
-        <div class="no-meetings">Loading meetings...</div>
+        <div class="no-meetings">Loading...</div>
       </div>
     </div>
   </div>
 
-  <script type="module">
-    import initializeApp from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
-    import getFirestore from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
-    import getAuth from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-
-    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js');
-    const { getFirestore, collection, query, where, getDocs, addDoc, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js');
-    const { getAuth, signInWithEmailAndPassword, onAuthStateChanged } = await import('https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js');
-    
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js"></script>
+  
+  <script>
     const firebaseConfig = {
       apiKey: 'AIzaSyDnCwqImZp2LwWR0eGpUbPCBzVfbNRCnxk',
       authDomain: 'mini-monstars-au.firebaseapp.com',
@@ -406,176 +389,119 @@
       appId: '1:1031486213533:web:a11e8f1b8f7f5d7e8c1a2b'
     };
     
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
     
     let currentUser = null;
     let allCoaches = [];
     let allStates = new Set();
     let meetings = [];
     
-    document.getElementById('loginBtn').addEventListener('click', async function() {
+    document.getElementById('loginBtn').addEventListener('click', function() {
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       
       if (!email || !password) {
-        showLoginError('Please enter email and password');
+        showError('Enter email and password');
         return;
       }
       
-      document.getElementById('loginLoading').classList.add('show');
-      document.getElementById('loginError').classList.remove('show');
-      
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        console.log('Sign in successful');
-      } catch (e) {
-        console.error('Sign in error:', e);
-        showLoginError(e.message);
-        document.getElementById('loginLoading').classList.remove('show');
-      }
+      auth.signInWithEmailAndPassword(email, password).catch(e => {
+        showError(e.message);
+      });
     });
     
-    function showLoginError(msg) {
-      const errorDiv = document.getElementById('loginError');
-      errorDiv.textContent = msg;
-      errorDiv.classList.add('show');
+    function showError(msg) {
+      const err = document.getElementById('loginError');
+      err.textContent = msg;
+      err.classList.add('show');
     }
     
-    onAuthStateChanged(auth, async function(user) {
+    auth.onAuthStateChanged(user => {
       if (user) {
         currentUser = user;
-        console.log('User signed in:', user.email);
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('appScreen').style.display = 'block';
-        await loadCoaches();
-        await loadMeetings();
+        loadCoaches();
+        loadMeetings();
       } else {
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('appScreen').style.display = 'none';
       }
     });
     
-    async function loadCoaches() {
-      try {
-        const usersRef = collection(db, 'users');
-        const q = query(usersRef, where('role', '==', 'coach'), where('status', '==', 'Active'));
-        const snapshot = await getDocs(q);
-        
-        console.log('Coaches query returned:', snapshot.size);
-        
+    function loadCoaches() {
+      db.collection('users').where('role', '==', 'coach').where('status', '==', 'Active').get().then(snapshot => {
         allCoaches = [];
         allStates.clear();
         
         snapshot.forEach(doc => {
           const data = doc.data();
-          const firstName = data.firstName || '';
-          const lastName = data.lastName || '';
-          const state = data.city || '';
-          
-          console.log('Coach:', firstName, lastName, state);
-          
           allCoaches.push({
             id: doc.id,
-            firstName: firstName,
-            lastName: lastName,
-            state: state,
-            fullName: (firstName + ' ' + lastName).trim()
+            firstName: data.firstName || '',
+            lastName: data.lastName || '',
+            state: data.city || '',
+            fullName: ((data.firstName || '') + ' ' + (data.lastName || '')).trim()
           });
-          
-          if (state) allStates.add(state);
+          if (data.city) allStates.add(data.city);
         });
         
-        console.log('Loaded', allCoaches.length, 'coaches');
         allCoaches.sort((a, b) => a.fullName.localeCompare(b.fullName));
         renderCoachFilters();
-      } catch (e) {
-        console.error('Error loading coaches:', e);
-        document.getElementById('meetingsList').innerHTML = '<div class="no-meetings">Error: ' + e.message + '</div>';
-      }
+      }).catch(e => {
+        console.error('Error:', e);
+        document.getElementById('meetingsList').innerHTML = '<div class="no-meetings">Error loading coaches</div>';
+      });
     }
     
     function renderCoachFilters() {
       const stateSelect = document.getElementById('stateSelect');
-      const coachSelect = document.getElementById('coachSelect');
-      
-      const states = Array.from(allStates).sort();
-      states.forEach(state => {
-        const option = document.createElement('option');
-        option.value = state;
-        option.textContent = state;
-        stateSelect.appendChild(option);
+      Array.from(allStates).sort().forEach(state => {
+        const opt = document.createElement('option');
+        opt.value = state;
+        opt.textContent = state;
+        stateSelect.appendChild(opt);
       });
       
       stateSelect.addEventListener('change', updateCoachList);
-      coachSelect.addEventListener('change', filterMeetings);
+      document.getElementById('coachSelect').addEventListener('change', filterMeetings);
     }
     
     function updateCoachList() {
-      const selectedState = document.getElementById('stateSelect').value;
+      const state = document.getElementById('stateSelect').value;
       const coachSelect = document.getElementById('coachSelect');
-      
       coachSelect.innerHTML = '<option value="">Select Coach</option>';
       
-      let filteredCoaches = allCoaches;
-      if (selectedState) {
-        filteredCoaches = allCoaches.filter(c => c.state === selectedState);
-      }
-      
-      filteredCoaches.forEach(coach => {
-        const option = document.createElement('option');
-        option.value = coach.id;
-        option.textContent = coach.fullName;
-        coachSelect.appendChild(option);
+      allCoaches.filter(c => !state || c.state === state).forEach(coach => {
+        const opt = document.createElement('option');
+        opt.value = coach.id;
+        opt.textContent = coach.fullName;
+        coachSelect.appendChild(opt);
       });
       
       filterMeetings();
     }
     
-    async function loadMeetings() {
-      try {
-        const meetingsRef = collection(db, 'one-on-one-meetings');
-        const snapshot = await getDocs(meetingsRef);
-        
+    function loadMeetings() {
+      db.collection('one-on-one-meetings').get().then(snapshot => {
         meetings = [];
         snapshot.forEach(doc => {
-          const data = doc.data();
-          meetings.push({
-            id: doc.id,
-            state: data.state,
-            coachId: data.coachId,
-            date: data.date,
-            checkIn: data.checkIn || {},
-            wins: data.wins || [],
-            metrics: data.metrics || [],
-            issues: data.issues || [],
-            feedback: data.feedback || '',
-            development: data.development || [],
-            futureFocus: data.futureFocus || [],
-            openDiscussion: data.openDiscussion || '',
-            recordingLink: data.recordingLink || ''
-          });
+          meetings.push(Object.assign({id: doc.id}, doc.data()));
         });
-        
         meetings.sort((a, b) => new Date(b.date) - new Date(a.date));
         filterMeetings();
-      } catch (e) {
-        console.error('Error loading meetings:', e);
-      }
+      }).catch(e => console.error('Error loading meetings:', e));
     }
     
     function filterMeetings() {
-      const selectedState = document.getElementById('stateSelect').value;
-      const selectedCoach = document.getElementById('coachSelect').value;
+      const state = document.getElementById('stateSelect').value;
+      const coach = document.getElementById('coachSelect').value;
       
       let filtered = meetings;
-      if (selectedState) {
-        filtered = filtered.filter(m => m.state === selectedState);
-      }
-      if (selectedCoach) {
-        filtered = filtered.filter(m => m.coachId === selectedCoach);
-      }
+      if (state) filtered = filtered.filter(m => m.state === state);
+      if (coach) filtered = filtered.filter(m => m.coachId === coach);
       
       renderMeetings(filtered);
     }
@@ -588,54 +514,53 @@
         return;
       }
       
-      container.innerHTML = list.map(meeting => {
-        const date = new Date(meeting.date).toLocaleDateString('en-AU', {day: 'numeric', month: 'long', year: 'numeric'});
-        const coachName = getCoachName(meeting.coachId);
-        const bodyHTML = renderMeetingDetail(meeting);
-        return '<div class="meeting-card" data-id="' + meeting.id + '"><div class="meeting-card-header" onclick="toggleMeeting(\'' + meeting.id + '\'')"><div class="date">' + date + '</div><div class="coach">' + coachName + ' • ' + meeting.state + '</div></div><div class="meeting-card-body">' + bodyHTML + '</div></div>';
+      container.innerHTML = list.map(m => {
+        const date = new Date(m.date).toLocaleDateString('en-AU', {day: 'numeric', month: 'long', year: 'numeric'});
+        const coach = allCoaches.find(c => c.id === m.coachId);
+        const name = coach ? coach.fullName : 'Unknown';
+        return '<div class="meeting-card" data-id="' + m.id + '"><div class="meeting-card-header" onclick="toggleMeeting(\'' + m.id + '\'')"><div class="date">' + date + '</div><div class="coach">' + name + ' • ' + m.state + '</div></div><div class="meeting-card-body">' + formatDetail(m) + '</div></div>';
       }).join('');
     }
     
-    function getCoachName(coachId) {
-      const coach = allCoaches.find(c => c.id === coachId);
-      return coach ? coach.fullName : 'Unknown Coach';
-    }
-    
-    function renderMeetingDetail(meeting) {
-      const winsHTML = (meeting.wins || []).map(w => '<li>' + w + '</li>').join('');
-      const metricsHTML = (meeting.metrics || []).map(m => '<li>' + m + '</li>').join('');
-      const issuesHTML = (meeting.issues || []).map(i => '<li>' + i + '</li>').join('');
-      const devHTML = (meeting.development || []).map(d => '<li>' + d + '</li>').join('');
-      const focusHTML = (meeting.futureFocus || []).map(f => '<li>' + f + '</li>').join('');
+    function formatDetail(m) {
+      const wins = (m.wins || []).map(w => '<li>' + w + '</li>').join('');
+      const metrics = (m.metrics || []).map(x => '<li>' + x + '</li>').join('');
+      const issues = (m.issues || []).map(i => '<li>' + i + '</li>').join('');
+      const dev = (m.development || []).map(d => '<li>' + d + '</li>').join('');
+      const focus = (m.futureFocus || []).map(f => '<li>' + f + '</li>').join('');
       
-      return '<div class="meeting-section"><div class="section-title">Check-In</div><p><strong>Update:</strong> ' + (meeting.checkIn.personalUpdate || '—') + '</p><p><strong>Battery:</strong> ' + (meeting.checkIn.battery || '—') + '%</p></div><div class="meeting-section"><div class="section-title">Wins</div><ul class="bullet-list">' + winsHTML + '</ul></div><div class="meeting-section"><div class="section-title">Metrics</div><ul class="bullet-list">' + metricsHTML + '</ul></div><div class="meeting-section"><div class="section-title">Issues</div><ul class="bullet-list">' + issuesHTML + '</ul></div><div class="meeting-section"><div class="section-title">Feedback</div><p>' + (meeting.feedback || '—') + '</p></div><div class="meeting-section"><div class="section-title">Development</div><ul class="bullet-list">' + devHTML + '</ul></div><div class="meeting-section"><div class="section-title">Focus</div><ul class="bullet-list">' + focusHTML + '</ul></div><div class="meeting-section"><div class="section-title">Open Discussion</div><p>' + (meeting.openDiscussion || '—') + '</p></div>';
+      return '<div class="meeting-section"><div class="section-title">Check-In</div><p><strong>Update:</strong> ' + (m.checkIn?.personalUpdate || '—') + '</p><p><strong>Battery:</strong> ' + (m.checkIn?.battery || '—') + '%</p></div>' +
+        '<div class="meeting-section"><div class="section-title">Wins</div><ul class="bullet-list">' + wins + '</ul></div>' +
+        '<div class="meeting-section"><div class="section-title">Metrics</div><ul class="bullet-list">' + metrics + '</ul></div>' +
+        '<div class="meeting-section"><div class="section-title">Issues</div><ul class="bullet-list">' + issues + '</ul></div>' +
+        '<div class="meeting-section"><div class="section-title">Feedback</div><p>' + (m.feedback || '—') + '</p></div>' +
+        '<div class="meeting-section"><div class="section-title">Development</div><ul class="bullet-list">' + dev + '</ul></div>' +
+        '<div class="meeting-section"><div class="section-title">Focus</div><ul class="bullet-list">' + focus + '</ul></div>' +
+        '<div class="meeting-section"><div class="section-title">Open Discussion</div><p>' + (m.openDiscussion || '—') + '</p></div>';
     }
     
-    window.toggleMeeting = function(id) {
-      const card = document.querySelector('[data-id="' + id + '"]');
-      card.classList.toggle('expanded');
-    };
+    function toggleMeeting(id) {
+      document.querySelector('[data-id="' + id + '"]').classList.toggle('expanded');
+    }
     
-    document.getElementById('newMeetingBtn').addEventListener('click', createNewMeeting);
-    
-    async function createNewMeeting() {
+    document.getElementById('newMeetingBtn').addEventListener('click', function() {
       const state = document.getElementById('stateSelect').value;
-      const coachId = document.getElementById('coachSelect').value;
+      const coach = document.getElementById('coachSelect').value;
       const date = document.getElementById('meetingDate').value;
       
-      if (!state || !coachId || !date) {
-        alert('Please select State, Coach, and Date');
+      if (!state || !coach || !date) {
+        alert('Select State, Coach, Date');
         return;
       }
       
-      const newMeeting = {
+      db.collection('one-on-one-meetings').add({
         state: state,
-        coachId: coachId,
+        coachId: coach,
         date: date,
         createdBy: currentUser.email,
         recordingLink: '',
         handbookLink: '',
-        checkIn: { personalUpdate: '', battery: 50 },
+        checkIn: {personalUpdate: '', battery: 50},
         wins: [],
         metrics: [],
         issues: [],
@@ -643,20 +568,13 @@
         development: [],
         futureFocus: [],
         openDiscussion: '',
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      };
-      
-      try {
-        await addDoc(collection(db, 'one-on-one-meetings'), newMeeting);
-        console.log('Meeting created');
-        await loadMeetings();
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        loadMeetings();
         document.getElementById('meetingDate').value = '';
-      } catch (e) {
-        console.error('Error:', e);
-        alert('Error: ' + e.message);
-      }
-    }
+      }).catch(e => alert('Error: ' + e.message));
+    });
   </script>
 </body>
 </html>
