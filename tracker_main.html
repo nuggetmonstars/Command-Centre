@@ -125,9 +125,36 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
 .lbar{height:9px;background:#eef4f7;border-radius:30px;overflow:hidden;margin-top:5px}
 .lfill{height:100%;border-radius:30px}
 @media(max-width:768px){.g2,.g4,.g5{grid-template-columns:1fr}.cgrid{grid-template-columns:1fr}}
+/* ── LOGIN (auth gate) ── */
+#login-screen{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;background:var(--yellow)}
+.login-box{background:rgba(255,255,255,0.97);border-radius:24px;padding:40px 36px;width:360px;box-shadow:0 20px 60px rgba(0,0,0,0.25);text-align:center}
+.login-logo-text{font-family:'MarkerFelt',cursive;font-size:28px;color:var(--red);letter-spacing:1px;line-height:1;margin-bottom:4px}
+.login-logo-star{color:#d9af00}
+.login-sub{font-family:'Pencil',cursive;font-size:11px;color:#7a8a96;margin-bottom:28px;letter-spacing:3px;text-transform:uppercase}
+.login-box label{display:block;text-align:left;font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);margin-bottom:5px;text-transform:uppercase;letter-spacing:1px}
+.login-box input{display:block;width:100%;border:2px solid var(--lightblue);border-radius:11px;padding:10px 14px;font-size:14px;margin-bottom:14px;font-family:'Pencil',cursive;color:var(--ink);background:#fbfdff;outline:none;transition:border-color .15s}
+.login-box input:focus{border-color:var(--blue)}
+.login-btn{width:100%;background:var(--yellow);color:#333;border:none;border-radius:50px;padding:12px;font-size:15px;cursor:pointer;font-family:'MarkerFelt',cursive;letter-spacing:.5px;box-shadow:0 4px 0 #d9af00;transition:transform .1s,box-shadow .1s}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 5px 0 #d9af00}
+.login-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9af00}
+.login-err{color:var(--red);font-size:12px;margin-top:8px;font-weight:700;display:none}
+.signout-btn{font-family:'MarkerFelt',cursive;background:var(--red);color:#fff;border:none;border-radius:30px;padding:7px 16px;font-size:12px;cursor:pointer}
 </style>
 </head>
 <body>
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo-text">MINI MONST<span class="login-logo-star">&#9733;</span>RS</div>
+    <div class="login-sub">Equipment Tracker</div>
+    <label>Email</label>
+    <input type="email" id="em" placeholder="you@minimonstars.com" autocomplete="email">
+    <label>Password</label>
+    <input type="password" id="pw" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password">
+    <button class="login-btn" id="login-btn">SIGN IN</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+<div id="app" style="display:none">
 <div class="stripe"></div>
 <header>
   <div class="brand">
@@ -135,6 +162,7 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
     <div><div class="bn">MINI MONST<span class="star">&#9733;</span>RS</div><div class="bs">Equipment Tracker</div></div>
     <div class="live"><div class="dot"></div>LIVE</div>
   </div>
+  <button class="signout-btn" id="signout-btn">Sign out</button>
 </header>
 <nav>
   <button class="nt on" onclick="goTab('overview',this)">Overview</button>
@@ -307,6 +335,7 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
     </div>
   </div>
 </div>
+</div><!-- /#app -->
 
 <script>
 var SC = {"VIC":"#CC0000","WA":"#6699CC","SA":"#b8930a","NSW":"#5588bb","QLD":"#c47a0a"};
@@ -613,7 +642,9 @@ function doTransfer() {
     }
     if (!found) ti.push(name + ":" + qty);
     xferHistory.unshift({item:name,qty:qty,from:from.name,to:to.name,prog:prog,date:todayISO()});
+    if (window.__persistTransfer) window.__persistTransfer(xferHistory[0], true);
   }
+  if (window.__persistCoach) { window.__persistCoach(from); window.__persistCoach(to); }
   resetXfer();
   renderCoaches(); renderOverview(); renderHistory();
   alert("Transfer complete!");
@@ -684,6 +715,7 @@ function removeItem(prog, idx) {
   for (var i = 0; i < COACHES.length; i++) { if (COACHES[i].id === editingId) { c = COACHES[i]; break; } }
   if (!c || !c.eq[prog]) return;
   c.eq[prog].splice(idx, 1);
+  if (window.__persistCoach) window.__persistCoach(c);
   openEdit(editingId);
 }
 
@@ -697,6 +729,7 @@ function addNewItem() {
   if (!name) return;
   if (!c.eq[prog]) c.eq[prog] = [];
   c.eq[prog].push(name + ":" + qty);
+  if (window.__persistCoach) window.__persistCoach(c);
   document.getElementById("ni-n").value = "";
   document.getElementById("ni-q").value = "";
   openEdit(editingId);
@@ -720,6 +753,7 @@ function saveEdit() {
     }
   }
   c.notes = document.getElementById("em-notes").value;
+  if (window.__persistCoach) window.__persistCoach(c);
   closeM();
   renderCoaches(); renderOverview();
 }
@@ -736,6 +770,7 @@ function logOrder() {
     ordered: ord, received: document.getElementById("lo-rec").value || "",
     notes: document.getElementById("lo-notes").value
   });
+  if (window.__persistOrder) window.__persistOrder(ORDERS[0]);
   var ids = ["lo-item","lo-sup","lo-ord","lo-rec","lo-notes","lo-qty","lo-cost"];
   for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).value = "";
   renderLeadTimes(); renderOverview();
@@ -746,7 +781,7 @@ function markReceived(id) {
   for (var i = 0; i < ORDERS.length; i++) { if (ORDERS[i].id === id) { o = ORDERS[i]; break; } }
   if (!o) return;
   var d = prompt("Date received (YYYY-MM-DD):", todayISO());
-  if (d) { o.received = d; renderLeadTimes(); }
+  if (d) { o.received = d; if (window.__persistOrder) window.__persistOrder(o); renderLeadTimes(); }
 }
 
 function delOrder(id) {
@@ -754,6 +789,7 @@ function delOrder(id) {
   var newOrders = [];
   for (var i = 0; i < ORDERS.length; i++) { if (ORDERS[i].id !== id) newOrders.push(ORDERS[i]); }
   ORDERS = newOrders;
+  if (window.__deleteOrder) window.__deleteOrder(id);
   renderLeadTimes(); renderOverview();
 }
 
@@ -1033,6 +1069,8 @@ function addIntake() {
   if (!found) list.push(item + ":" + qty);
   if (MINS[item] === undefined) MINS[item] = 0;
   xferHistory.push({qty:qty,item:item,from:"Supplier: " + supplier,to:"Stockroom",prog:prog,state:"ALL",date:date});
+  if (window.__persistCoach) window.__persistCoach(stock);
+  if (window.__persistTransfer) window.__persistTransfer(xferHistory[xferHistory.length - 1], false);
   document.getElementById("si-sup").value = "";
   document.getElementById("si-item").value = "";
   document.getElementById("si-qty").value = "";
@@ -1071,6 +1109,184 @@ window.addEventListener('load', function() {
   renderIntake();
 });
 
+</script>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
+import { getFirestore, collection, getDocs, doc, setDoc, addDoc, deleteDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+
+const app = initializeApp({
+  apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
+  authDomain: "mini-monstars-au.firebaseapp.com",
+  projectId: "mini-monstars-au",
+  storageBucket: "mini-monstars-au.appspot.com",
+  messagingSenderId: "1020303504267",
+  appId: "1:1020303504267:web:9d7417231c76b0f351b58e"
+});
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+const EQUIP = "tracker-equipment";
+const XFERS = "tracker-transfers";
+const ORDS  = "tracker-orders";
+
+let dbReady = false;        // gate writes until data is loaded/seeded
+let seqHi = 0, seqLo = 0;   // transfer ordering (front = highest seq)
+let ordHi = 0, ordLo = 0;   // order ordering (front = highest seq)
+
+// ---- serialisers (preserve the in-memory shape exactly) ----
+function coachDocId(c) { return c.id || "stockroom"; }
+function coachToDoc(c) {
+  return {
+    id: (c.id == null ? null : c.id),
+    name: c.name,
+    state: c.state,
+    condition: (c.condition == null ? null : c.condition),
+    eq: c.eq || {},
+    notes: c.notes || "",
+    idx: (c.idx == null ? 0 : c.idx)
+  };
+}
+function docToCoach(id, x) {
+  const c = { name: x.name, state: x.state, eq: x.eq || {}, notes: x.notes || "", idx: x.idx || 0, _docId: id };
+  if (x.condition != null) c.condition = x.condition;
+  if (x.id != null) c.id = x.id;
+  return c;
+}
+function xferToDoc(e) {
+  return { qty: e.qty, item: e.item, from: e.from, to: e.to, prog: e.prog,
+           state: (e.state == null ? "ALL" : e.state), date: (e.date == null ? "" : e.date), seq: e._seq };
+}
+function ordToDoc(o) {
+  return { id: o.id, item: o.item, supplier: o.supplier, qty: o.qty || 0, cost: o.cost || 0,
+           ordered: o.ordered || "", received: o.received || "", notes: o.notes || "", seq: o._seq };
+}
+
+// ---- batched seed of the current hardcoded arrays ----
+async function commitInChunks(ops) {
+  for (let i = 0; i < ops.length; i += 400) {
+    const batch = writeBatch(db);
+    ops.slice(i, i + 400).forEach(op => batch.set(op.ref, op.data));
+    await batch.commit();
+  }
+}
+async function seedFromMemory() {
+  const ops = [];
+  const N = window.COACHES.length;
+  for (let i = 0; i < N; i++) {
+    const c = window.COACHES[i];
+    c.idx = i; c._docId = coachDocId(c);
+    ops.push({ ref: doc(db, EQUIP, c._docId), data: coachToDoc(c) });
+  }
+  const T = window.xferHistory.length;
+  for (let i = 0; i < T; i++) {
+    const e = window.xferHistory[i];
+    e._seq = T - i;                                   // front of array = highest seq
+    ops.push({ ref: doc(collection(db, XFERS)), data: xferToDoc(e) });
+  }
+  seqHi = T; seqLo = T > 0 ? 1 : 0;
+  const M = window.ORDERS.length;
+  for (let i = 0; i < M; i++) {
+    const o = window.ORDERS[i];
+    o._seq = M - i;
+    ops.push({ ref: doc(db, ORDS, o.id), data: ordToDoc(o) });
+  }
+  ordHi = M; ordLo = M > 0 ? 1 : 0;
+  await commitInChunks(ops);
+}
+
+// ---- load Firestore into the in-memory arrays ----
+async function loadFromDb() {
+  const cs = await getDocs(collection(db, EQUIP));
+  const coaches = [];
+  cs.forEach(d => coaches.push(docToCoach(d.id, d.data())));
+  coaches.sort((a, b) => a.idx - b.idx);
+  window.COACHES = coaches;
+
+  const ts = await getDocs(collection(db, XFERS));
+  const xfers = [];
+  ts.forEach(d => { const x = d.data(); xfers.push({ qty: x.qty, item: x.item, from: x.from, to: x.to, prog: x.prog, state: x.state, date: x.date, _seq: x.seq || 0 }); });
+  xfers.sort((a, b) => b._seq - a._seq);             // reproduce array order (front = highest seq)
+  window.xferHistory = xfers;
+  seqHi = xfers.length ? xfers[0]._seq : 0;
+  seqLo = xfers.length ? xfers[xfers.length - 1]._seq : 0;
+
+  const os = await getDocs(collection(db, ORDS));
+  const orders = [];
+  os.forEach(d => { const x = d.data(); orders.push({ id: x.id, item: x.item, supplier: x.supplier, qty: x.qty, cost: x.cost, ordered: x.ordered, received: x.received, notes: x.notes, _seq: x.seq || 0 }); });
+  orders.sort((a, b) => b._seq - a._seq);
+  window.ORDERS = orders;
+  ordHi = orders.length ? orders[0]._seq : 0;
+  ordLo = orders.length ? orders[orders.length - 1]._seq : 0;
+}
+
+function rerenderAll() {
+  window.populateSels();
+  window.renderOverview();
+  window.renderCoaches();
+  window.renderStock("all");
+  window.renderLeadTimes();
+  window.renderHistory();
+  window.renderIntake();
+  window.buildTotals();
+  window.calcStats();
+}
+
+async function initData() {
+  const snap = await getDocs(collection(db, EQUIP));
+  if (snap.empty) {
+    await seedFromMemory();      // first run: hardcoded arrays become the seed
+  }
+  await loadFromDb();            // always read back from Firestore — it is the source of truth
+  rerenderAll();
+  dbReady = true;
+}
+
+// ---- persistence helpers called from the existing mutating functions ----
+window.__persistCoach = function (c) {
+  if (!dbReady || !c) return;
+  if (!c._docId) c._docId = coachDocId(c);
+  setDoc(doc(db, EQUIP, c._docId), coachToDoc(c)).catch(e => console.error("persistCoach", e));
+};
+window.__persistTransfer = function (e, atFront) {
+  if (!dbReady || !e) return;
+  e._seq = atFront ? ++seqHi : --seqLo;
+  addDoc(collection(db, XFERS), xferToDoc(e)).catch(err => console.error("persistTransfer", err));
+};
+window.__persistOrder = function (o) {
+  if (!dbReady || !o) return;
+  if (o._seq == null) o._seq = ++ordHi;
+  setDoc(doc(db, ORDS, o.id), ordToDoc(o)).catch(e => console.error("persistOrder", e));
+};
+window.__deleteOrder = function (id) {
+  if (!dbReady || !id) return;
+  deleteDoc(doc(db, ORDS, id)).catch(e => console.error("deleteOrder", e));
+};
+
+// ---- auth gate ----
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    document.getElementById('signout-btn').title = user.email;
+    try { await initData(); }
+    catch (e) { console.error("initData", e); }
+  } else {
+    dbReady = false;
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+  }
+});
+
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const err = document.getElementById('login-err');
+  err.style.display = 'none';
+  try { await signInWithEmailAndPassword(auth, document.getElementById('em').value, document.getElementById('pw').value); }
+  catch (e) { err.textContent = 'Invalid email or password.'; err.style.display = 'block'; }
+});
+document.getElementById('pw').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('login-btn').click(); });
+document.getElementById('signout-btn').addEventListener('click', () => signOut(auth));
 </script>
 </body>
 </html>
