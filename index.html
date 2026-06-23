@@ -4829,6 +4829,7 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
           // Refresh the highlighted pill
           document.querySelectorAll('.month-pill').forEach(function(p){ p.classList.remove('selected'); });
           pill.classList.add('selected');
+          renderMonthlyTarget(mi);
           renderLeaderboard();
           // Scroll the leaderboard into view
           document.querySelector('[data-panel="leaderboard"] .panel-h').scrollIntoView({behavior: 'smooth', block: 'start'});
