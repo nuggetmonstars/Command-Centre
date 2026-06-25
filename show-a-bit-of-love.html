@@ -870,7 +870,11 @@ function cardHTML(c){
   const tl=timelineOf(c);
   const dotcls=st==="paused"?"paused":tier;
   const pillcls=st==="notice"?"notice":st==="reminder"?"paused":st==="paused"?"paused":tier;
-  const pilltxt=st==="notice"?"Notice":st==="reminder"?"Call due":st==="paused"?"Paused":st==="saved"?"Saved":tierLabel(tier);
+  let pilltxt=st==="notice"?"Notice":st==="reminder"?"Call due":st==="paused"?"Paused":st==="saved"?"Saved":tierLabel(tier);
+  // New-relationship situation labels (display only — engine-emitted situations).
+  const SIT_LABEL={new_coach_cadence:"New coach · call due",new_centre_cadence:"New centre · call due",new_coach_positive:"New coach · positive"};
+  if(st!=="saved"&&SIT_LABEL[c.situation])pilltxt=SIT_LABEL[c.situation];
+  if(st==="saved"&&(c.signals||[]).some(s=>s&&s.t&&s.t.indexOf("2+ positive since new coach")>-1))pilltxt="Saved · new coach";
   let head="";
   if(st==="saved")head=`<div class="pausedback">Saved off the list: <b>${c.savedDate||""}</b></div>`;
   return `<div class="card ${st} ${tier} ${open?"open":""}" data-name="${c.name}">
