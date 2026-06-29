@@ -583,6 +583,28 @@
   .signout-btn:hover{filter:brightness(1.08)}
 
 </style>
+<style>
+  /* Saved tab — distinct green tab + lean record cards (was saved-centres.html) */
+  .tt-btn.tt-saved{border-color:var(--green);color:#3c7a2a}
+  .tt-btn.tt-saved:hover:not(.on){background:#eef8e8}
+  .tt-btn.tt-saved.on{background:var(--green);color:#fff;border-color:var(--green);box-shadow:3px 4px 0 rgba(111,192,79,0.22)}
+  .tt-btn.tt-saved.on .tt-badge{background:#fff;color:#3c7a2a}
+  #saved-list{max-width:1000px}
+  .sv-card{background:var(--white);border:3px solid var(--green);border-radius:18px;padding:15px 18px;margin-bottom:14px;box-shadow:var(--shadow);opacity:.98}
+  .sv-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .sv-name{font-family:'MarkerFelt',cursive;color:var(--red);font-size:21px;line-height:1.05}
+  .sv-sub{color:var(--ink);font-size:13px;margin-top:3px} .sv-sub b{color:var(--blue)}
+  .sv-date{color:var(--ink);font-size:14px;margin:9px 0 4px} .sv-date b{color:#3c7a2a}
+  .prov{font-family:'MarkerFelt',cursive;font-size:12px;padding:5px 13px;border-radius:30px;white-space:nowrap;align-self:flex-start}
+  .prov-mgr{background:var(--green);color:#fff;border:2px solid var(--green)}
+  .prov-eng{background:#fff;color:#3c7a2a;border:2px dashed var(--green)}
+  .sv-toggle{font-family:'Pencil',cursive;background:#f1faec;border:2px solid var(--green);color:#3c7a2a;border-radius:30px;padding:5px 14px;font-size:12px;cursor:pointer;margin-top:6px}
+  .sv-hist{display:none;flex-direction:column;gap:6px;margin-top:10px}
+  .sv-hist.open{display:flex}
+  .sv-foot{margin-top:12px;display:flex;justify-content:flex-end}
+  .reopenbtn{font-family:'MarkerFelt',cursive;background:var(--blue);color:#fff;border:none;border-radius:30px;padding:9px 22px;font-size:14px;cursor:pointer;box-shadow:var(--shadow)}
+  .reopenbtn:hover{background:#176fa8}
+</style>
 </head>
 <body>
 <div id="login-screen">
@@ -618,6 +640,7 @@
     <div class="toptabs" id="toptabs">
       <button class="tt-btn on" data-top="watchlist">&#10084; Show a Bit of Love</button>
       <button class="tt-btn" data-top="churn">&#128201; Churn 2026 <span class="tt-badge" id="tt-churn-badge"></span></button>
+      <button class="tt-btn tt-saved" data-top="saved">&#128156; Saved <span class="tt-badge" id="tt-saved-badge"></span></button>
     </div>
 
     <div id="watchlist-view">
@@ -628,6 +651,10 @@
     </div>
     <div id="churn-view">
       <div class="churn-section" id="churn-section"></div>
+    </div>
+    <div id="saved-view">
+      <div style="margin:2px 0 14px;color:var(--ink);font-size:14px;background:var(--white);border:3px solid var(--green);border-radius:14px;padding:10px 14px;box-shadow:var(--shadow);max-width:1000px">The wins &mdash; centres saved off the watchlist, with their full red &rarr; orange &rarr; green &rarr; saved history. <b>Reopen</b> sends one back to the active Show a Bit of Love list.</div>
+      <div id="saved-list"></div>
     </div>
   </div>
   </div><!-- /zoomroot -->
@@ -768,10 +795,12 @@ function renderTiles(){
     {cls:"blue",num:f("reminder"),lbl:"Cadence reminders",sub:"Call due, no concerns"},
     {cls:"amber",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="amber").length,lbl:"Yellow \u00B7 Watch",sub:"Watchlist"}
   ];
-  // Saved tile is now a LINK to the dedicated Saved Centres page.
-  const savedTile=`<a class="tile saved" href="saved-centres.html" style="text-decoration:none;cursor:pointer"><div class="num">${savedN}</div><div class="lbl">Saved</div><div class="sub">View saved centres \u2192</div></a>`;
+  // Saved tile switches to the Saved tab IN-PAGE (no navigation away).
+  const savedTile=`<div class="tile saved" id="saved-tile" style="cursor:pointer"><div class="num">${savedN}</div><div class="lbl">Saved</div><div class="sub">Open Saved tab \u2192</div></div>`;
   document.getElementById("tiles").innerHTML=tiles.map(t=>
     `<div class="tile ${t.cls}"><div class="num">${t.num}</div><div class="lbl">${t.lbl}</div><div class="sub">${t.sub}</div></div>`).join("")+savedTile;
+  const stile=document.getElementById("saved-tile");
+  if(stile) stile.onclick=()=>{ activeTopTab="saved"; renderTopTabs(); window.scrollTo({top:0,behavior:"smooth"}); };
 }
 
 function tierLabel(t){return{red:"Red",amber:"Yellow",green:"Green",paused:"Paused"}[t]||t;}
@@ -1226,12 +1255,87 @@ function wireManagerWatch(){
 
 // ============================ CHURN SECTION v3 ============================
 
+// ===== Saved tab (brought in from the old saved-centres.html — reuses eff/cssId/
+// fmtDateAU/store/persistOverride already defined in this file) =====
+function savedDateOf(c){return (store[c.name]&&store[c.name].savedDate)||c.savedDate||"";}
+
+// Provenance is checked on the RAW layers before the merge hides it.
+function savedProvenance(c){
+  const s=store[c.name];
+  if(s && s.state_==="saved") return {cls:"prov-mgr",txt:"Saved by manager"};
+  if(c.state_==="saved")      return {cls:"prov-eng",txt:"Auto-saved by engine"};
+  return {cls:"prov-eng",txt:"Auto-saved by engine"};
+}
+
+function savedHistory(c){
+  const s=store[c.name]||{};
+  const all=(c.history||[]).concat(s.history||[]).slice()
+    .sort((a,b)=>String(b.date||"").localeCompare(String(a.date||"")));
+  if(!all.length) return '<div class="tl-empty">No history yet.</div>';
+  return all.map(function(h){
+    const src = h.source || (h.who==="Manager"?"manager":h.who==="Agent"?"agent":"manager");
+    const who = h.who || (h.source==="agent"?"Agent":h.source==="manager"?"Manager":(h.source||"-"));
+    const st  = h.state || h.action || "";
+    const reason = h.reason || (h.from?("Reopened from "+h.from):"");
+    return '<div class="hist-item hist-'+src+'"><div class="hist-meta"><span class="hist-date">'+fmtDateAU(h.date)+'</span><span class="hist-source">'+who+'</span>'+(h.tier?'<span class="hist-tier tier-'+h.tier+'">'+h.tier+'</span>':'')+(st?'<span class="hist-state">'+st+'</span>':'')+'</div><div class="hist-reason">'+reason+'</div></div>';
+  }).join("");
+}
+
+function savedCardHTML(c){
+  const prov=savedProvenance(c);
+  const sd=fmtDateAU(savedDateOf(c));
+  const hid="sh-"+cssId(c.name);
+  return '<div class="sv-card">'
+    +'<div class="sv-top"><div><div class="sv-name">'+c.name+'</div><div class="sv-sub"><b>'+(c.mgr||"-")+'</b> · '+(c.state||"")+'</div></div>'
+    +'<span class="prov '+prov.cls+'">'+prov.txt+'</span></div>'
+    +'<div class="sv-date">Saved <b>'+(sd||"-")+'</b></div>'
+    +'<button class="sv-toggle" data-toggle="'+hid+'">Show history ▾</button>'
+    +'<div class="sv-hist" id="'+hid+'">'+savedHistory(c)+'</div>'
+    +'<div class="sv-foot"><button class="reopenbtn" data-reopen="'+c.name+'">Reopen</button></div>'
+    +'</div>';
+}
+
+function savedCentres(){
+  return CENTRES.filter(function(c){return eff(c).state_==="saved";})
+    .sort(function(a,b){return String(savedDateOf(b)).localeCompare(String(savedDateOf(a)))||a.name.localeCompare(b.name);});
+}
+
+function renderSaved(){
+  const host=document.getElementById("saved-list");
+  if(!host) return;
+  const saved=savedCentres();
+  if(!saved.length){host.innerHTML='<div class="empty">No saved centres yet.</div>';return;}
+  host.innerHTML=saved.map(savedCardHTML).join("");
+  wireSaved(host);
+}
+
+function wireSaved(root){
+  root.querySelectorAll("[data-toggle]").forEach(function(b){b.onclick=function(){
+    const el=document.getElementById(b.dataset.toggle);
+    if(el){el.classList.toggle("open");b.textContent=el.classList.contains("open")?"Hide history ▴":"Show history ▾";}
+  };});
+  root.querySelectorAll("[data-reopen]").forEach(function(b){b.onclick=function(){
+    const n=b.dataset.reopen;
+    store[n]=store[n]||{};
+    store[n].state_="watch";
+    store[n].keepActive=true;                       // makes the reopen stick (Part 2 reads this)
+    store[n].history=store[n].history||[];
+    store[n].history.unshift({date:new Date().toISOString().slice(0,10),who:"Manager",action:"reopened",from:"saved"});
+    window.persistOverride && window.persistOverride(n);
+    renderAll();   // refresh Saved list AND the active Show a Bit of Love view + counts
+  };});
+}
+
 function renderTopTabs(){
   document.querySelectorAll("#toptabs .tt-btn").forEach(el=>{
     el.classList.toggle("on", el.dataset.top===activeTopTab);
   });
   document.getElementById("watchlist-view").style.display = activeTopTab==="watchlist" ? "" : "none";
   document.getElementById("churn-view").style.display = activeTopTab==="churn" ? "" : "none";
+  const sv = document.getElementById("saved-view"); if(sv) sv.style.display = activeTopTab==="saved" ? "" : "none";
+  // Saved tab badge = live saved count
+  const sb = document.getElementById("tt-saved-badge");
+  if(sb){ const n = savedCentres().length; sb.textContent = n; }
   // Update the churn badge with count of uncategorised
   const badge = document.getElementById("tt-churn-badge");
   if(badge && window.CHURN_DATA){
@@ -1592,7 +1696,7 @@ function monthFullLabel(key){
 }
 
 
-function renderAll(){renderTabs();renderTiles();renderSections();renderChurn();renderTopTabs();wireTopTabs();}
+function renderAll(){renderTabs();renderTiles();renderSections();renderChurn();renderSaved();renderTopTabs();wireTopTabs();}
 
 /* zoom */
 const ZOOM=[75,90,100,110,125,150,175,200];let zl=100;const zr=document.getElementById("zoomroot");
