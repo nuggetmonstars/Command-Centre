@@ -720,12 +720,15 @@ function eff(c){const s=store[c.name]||{};return{tier:s.tier||c.tier,state_:s.st
 function timelineOf(c){const extra=(store[c.name]&&store[c.name].timelineExtra)||[];return extra.concat(c.timeline||[]);}
 
 function visibleCentres(){
-  return CENTRES.filter(c=>activeTab==="All"?true:c.mgr===activeTab);
+  // Saved centres live on saved-centres.html now — exclude them from every active
+  // section / tile here.
+  return CENTRES.filter(c=>activeTab==="All"?true:c.mgr===activeTab).filter(c=>eff(c).state_!=="saved");
 }
 
 function renderTabs(){
-  const counts={};MGRS.forEach(m=>counts[m]=CENTRES.filter(c=>c.mgr===m).length);
-  const tabs=[{k:"All",n:CENTRES.length}].concat(MGRS.map(m=>({k:m,n:counts[m]})));
+  const act=CENTRES.filter(c=>eff(c).state_!=="saved");   // saved centres counted on their own page
+  const counts={};MGRS.forEach(m=>counts[m]=act.filter(c=>c.mgr===m).length);
+  const tabs=[{k:"All",n:act.length}].concat(MGRS.map(m=>({k:m,n:counts[m]})));
   document.getElementById("tabs").innerHTML=tabs.map(t=>
     `<div class="tab ${t.k===activeTab?'active':''}" data-tab="${t.k}">${t.k}<span class="cnt">${t.n}</span></div>`).join("");
   document.querySelectorAll("#tabs .tab").forEach(el=>el.onclick=()=>{activeTab=el.dataset.tab;renderAll();});
@@ -735,21 +738,20 @@ function renderTabs(){
 
 
 function renderSecTabs(){
-  const v = CENTRES.filter(c=>activeTab==="All"?true:c.mgr===activeTab);
   const eff_=eff;
+  // Saved centres are excluded here — they have their own page (saved-centres.html).
+  const v = CENTRES.filter(c=>activeTab==="All"?true:c.mgr===activeTab).filter(c=>eff_(c).state_!=="saved");
   const counts={
     all: v.length,
     notice: v.filter(c=>eff_(c).state_==="notice").length,
     watch:  v.filter(c=>eff_(c).state_==="watch").length,
     reminder:v.filter(c=>eff_(c).state_==="reminder").length,
-    saved:  v.filter(c=>eff_(c).state_==="saved").length,
   };
   const tabs=[
     {k:"all",lbl:"All", n:counts.all},
     {k:"notice",lbl:"⚠️ Notice", n:counts.notice},
     {k:"watch",lbl:"❤ Watchlist", n:counts.watch},
     {k:"reminder",lbl:"⏰ Reminders", n:counts.reminder},
-    {k:"saved",lbl:"✅ Saved", n:counts.saved},
   ];
   document.getElementById("sectabs").innerHTML=tabs.map(t=>`<button class="stab ${activeSection===t.k?'on':''}" data-sec="${t.k}">${t.lbl} <span class="tn">${t.n}</span></button>`).join("");
   document.querySelectorAll("#sectabs .stab").forEach(el=>el.onclick=()=>{activeSection=el.dataset.sec;renderSecTabs();renderSections();});
@@ -758,15 +760,18 @@ function renderSecTabs(){
 function renderTiles(){
   const v=visibleCentres();
   const f=(st)=>v.filter(c=>eff(c).state_===st).length;
+  // Saved centres are counted from the full list (they're excluded from `v`).
+  const savedN=CENTRES.filter(c=>eff(c).state_==="saved").length;
   const tiles=[
     {cls:"notice",num:f("notice"),lbl:"Given notice",sub:"Save process"},
     {cls:"red",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="red").length,lbl:"Red \u00B7 Urgent",sub:"Watchlist"},
     {cls:"blue",num:f("reminder"),lbl:"Cadence reminders",sub:"Call due, no concerns"},
-    {cls:"amber",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="amber").length,lbl:"Yellow \u00B7 Watch",sub:"Watchlist"},
-    {cls:"saved",num:f("saved"),lbl:"Saved",sub:"Win record"}
+    {cls:"amber",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="amber").length,lbl:"Yellow \u00B7 Watch",sub:"Watchlist"}
   ];
+  // Saved tile is now a LINK to the dedicated Saved Centres page.
+  const savedTile=`<a class="tile saved" href="saved-centres.html" style="text-decoration:none;cursor:pointer"><div class="num">${savedN}</div><div class="lbl">Saved</div><div class="sub">View saved centres \u2192</div></a>`;
   document.getElementById("tiles").innerHTML=tiles.map(t=>
-    `<div class="tile ${t.cls}"><div class="num">${t.num}</div><div class="lbl">${t.lbl}</div><div class="sub">${t.sub}</div></div>`).join("");
+    `<div class="tile ${t.cls}"><div class="num">${t.num}</div><div class="lbl">${t.lbl}</div><div class="sub">${t.sub}</div></div>`).join("")+savedTile;
 }
 
 function tierLabel(t){return{red:"Red",amber:"Yellow",green:"Green",paused:"Paused"}[t]||t;}
@@ -970,8 +975,8 @@ function cssId(s){return s.replace(/[^a-z0-9]/gi,'_');}
 const SECTIONS=[
   {key:"notice",badge:"notice",title:"\u26A0\uFE0F Given Notice",hint:"4-session save process. Work it now."},
   {key:"watch",badge:"watch",title:"\u2764 Watchlist",hint:"Red plus yellow centres being actively worked."},
-  {key:"reminder",badge:"reminder",title:"\u23F0 Cadence Reminders",hint:"Healthy centres, just due for a check-in call."},
-  {key:"saved",badge:"saved",title:"\u2705 Saved",hint:"Came off the list. Kept as a record of wins."}
+  {key:"reminder",badge:"reminder",title:"\u23F0 Cadence Reminders",hint:"Healthy centres, just due for a check-in call."}
+  // Saved centres moved to saved-centres.html \u2014 no Saved section here.
 ];
 
 function renderSections(){
@@ -1025,7 +1030,24 @@ function renderSections(){
       rows = harder.concat(cappedSofts);
     }
     html+=`<div class="sec"><div class="sec-head"><span class="badge ${s.badge}">${rows.length}</span><h3>${s.title}</h3><span class="hint">${s.hint}</span></div>`;
-    if(!rows.length){html+=`<div class="empty">Nothing here right now.</div>`;}
+    if(s.key==="reminder"){
+      // Three-way split (display only) by the engine-emitted `situation` tag.
+      const groups=[
+        {lbl:"⏰ Cadence reminders", test:c=>c.situation!=="new_coach_cadence"&&c.situation!=="new_centre_cadence"},
+        {lbl:"🧑‍🏫 New coach — call due", test:c=>c.situation==="new_coach_cadence"},
+        {lbl:"🏫 New centre — call due", test:c=>c.situation==="new_centre_cadence"},
+      ];
+      if(!rows.length){html+=`<div class="empty">Nothing here right now.</div>`;}
+      else{
+        groups.forEach(g=>{
+          const gr=rows.filter(g.test);
+          if(!gr.length) return;   // hide empty group header
+          html+=`<h4 style="font-family:'MarkerFelt',cursive;color:var(--blue);font-size:18px;margin:14px 0 6px">${g.lbl} <span style="font-size:13px;opacity:.65">(${gr.length})</span></h4>`;
+          html+=`<div class="grid">${gr.map(cardHTML).join("")}</div>`;
+        });
+      }
+    }
+    else if(!rows.length){html+=`<div class="empty">Nothing here right now.</div>`;}
     else{html+=`<div class="grid">${rows.map(cardHTML).join("")}</div>`;}
     html+=`</div>`;
   });
@@ -1589,8 +1611,9 @@ function adaptLive(rows){
     name: c.name, mgr: c.mgr, state: c.state,
     cadence: c.cadence || "—",
     coach: c.coach || "—",
-    state_: (c.state_ === "notice" || c.state_ === "reminder") ? c.state_ : "watch",
+    state_: (c.state_ === "notice" || c.state_ === "reminder" || c.state_ === "saved") ? c.state_ : "watch",
     tier: c.tier || "amber",
+    savedDate: c.savedDate || "",
     noticeReason: c.noticeReason || "",
     sessionsLeft: c.sessionsLeft,
     lastContactDays: (c.lastContactDays === null ? undefined : c.lastContactDays),
@@ -1679,6 +1702,7 @@ async function loadOverrides(){
     if(o.history) cur.history = o.history;
     if(o.mgrNotes) cur.mgrNotes = o.mgrNotes;
     if(o.timelineExtra) cur.timelineExtra = o.timelineExtra;
+    if(o.keepActive) cur.keepActive = o.keepActive;
     window.store[o.name] = cur;
   });
 }
@@ -1695,6 +1719,7 @@ async function persistOverride(name){
   if(sObj.history && sObj.history.length) data.history = sObj.history;
   if(sObj.mgrNotes && sObj.mgrNotes.length) data.mgrNotes = sObj.mgrNotes;
   if(sObj.timelineExtra && sObj.timelineExtra.length) data.timelineExtra = sObj.timelineExtra;
+  if(sObj.keepActive) data.keepActive = sObj.keepActive;
   try { await setDoc(doc(db, OVERRIDES, slug(name)), data); }
   catch(e){ console.error('persistOverride failed for', name, e); }
 }
