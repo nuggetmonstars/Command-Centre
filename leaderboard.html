@@ -5711,7 +5711,7 @@ const auth = getAuth(app);
 const COLLECTION = "sales-entries";
 
 /* ==== crm_engine.js (v7) — salesCount = T-Cl historical + new CRM direct sales
-       (source!=="seed") + conversions. Historical unchanged (team 940, Bek 53). ==== */
+       (source!=="seed") + conversions; per-day d.sales mirrors this. Team 940. ==== */
 /* ============================================================
    CRM ENGINE v2 — merges three Firestore sources into:
    (a) the leaderboard DATA object (same shape the renderer needs)
@@ -5851,6 +5851,7 @@ function buildEverything(sales, offers, activity, asOf){
     // sale DETAILS per day (centre + points) for the daily recap, from the points ledger events
     r.events.filter(e=>e.kind==="sale"||e.kind==="conversion").forEach(e=>{
       const d=dayMap[e.date]||blank(e.date);
+      if(e.source!=="seed") d.sales+=1;   // new direct sale / conversion counts on its day; T-Cl already covers historical
       d.saleDetails=d.saleDetails||[]; d.saleDetails.push({centre:e.centre,points:e.points});
       dayMap[e.date]=d; });
     const loggedDays=Object.values(dayMap).sort((a,b)=>a.date<b.date?1:-1);
