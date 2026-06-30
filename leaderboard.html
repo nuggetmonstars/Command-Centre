@@ -1721,6 +1721,15 @@ h1,h2,h3,h4,h5,.mf,
 .flags-banner h4, .flags-list { color: var(--ink); }
 
 /* generic emoji "logo-star" sizing kept; replaced in markup with PNG */
+  #zoombar{position:fixed;right:18px;bottom:18px;z-index:80;background:rgba(36,55,70,0.97);border:3px solid var(--yellow);border-radius:40px;padding:8px 10px;display:flex;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,0.28)}
+  #zoombar .zlabel{font-family:'MarkerFelt',cursive;color:var(--yellow);font-size:12px;padding:0 6px 0 4px;text-transform:uppercase}
+  #zoombar .zbtn{font-family:'Pencil',cursive;font-size:14px;border:2px solid var(--lightblue);background:#fff;color:var(--blue);border-radius:30px;padding:6px 12px;cursor:pointer;line-height:1}
+  #zoombar .zbtn:hover{background:#eef9ff}
+  #zoombar .zbtn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  #zoombar .zstep{font-weight:bold;min-width:42px;text-align:center;font-size:15px}
+  #zoombar .zsep{width:2px;height:22px;background:rgba(255,255,255,0.25);margin:0 3px}
+  @media (max-width:760px){#zoombar .zlabel,#zoombar .preset{display:none}}
+  #zoomroot{transform-origin:top left;width:100%}
 </style>
 </head>
 <body>
@@ -2105,6 +2114,7 @@ h1,h2,h3,h4,h5,.mf,
 </div>
 
 <div id="leaderboard-view" class="view" style="display: none;">
+<div id="zoomroot">
 <div class="view-back-bar"><button onclick="showView('cc')" class="view-back-btn">← Back to Command Centre</button></div>
 
 
@@ -2307,6 +2317,7 @@ h1,h2,h3,h4,h5,.mf,
 
 
 
+</div><!-- /zoomroot -->
 </div>
 
 <script type="module">
@@ -6251,6 +6262,29 @@ onAuthStateChanged(auth, (user) => { if (user) startSales(); });
 // Safety net: board is gated behind login anyway, but if no user resolves, still
 // build it from the static payload so it's never blank.
 setTimeout(() => { if (!__salesStarted && window.__initSales) { __salesStarted = true; window.__initSales(); renderTopTabs(); restoreTab(); } }, 7000);
+</script>
+  <div id="zoombar">
+    <span class="zlabel">&#128065; Zoom</span>
+    <button class="zbtn" id="zMinus">A&#8722;</button>
+    <span class="zstep zbtn" id="zNow" title="Reset to 100%">100%</span>
+    <button class="zbtn" id="zPlus">A+</button>
+    <span class="zsep"></span>
+    <button class="zbtn preset" data-z="75">75%</button>
+    <button class="zbtn preset" data-z="100">100%</button>
+    <button class="zbtn preset" data-z="125">125%</button>
+    <button class="zbtn preset" data-z="150">150%</button>
+    <button class="zbtn preset" data-z="200">200%</button>
+  </div>
+<script>
+/* zoom (copied verbatim from show-a-bit-of-love.html) */
+const ZOOM=[75,90,100,110,125,150,175,200];let zl=100;const zr=document.getElementById("zoomroot");
+function applyZoom(){const s=zl/100;zr.style.transform="scale("+s+")";zr.style.width=(100/s)+"%";document.getElementById("zNow").textContent=zl+"%";document.querySelectorAll("#zoombar .preset").forEach(b=>b.classList.toggle("active",+b.dataset.z===zl));}
+function nidx(){let bi=0,bd=1e9;ZOOM.forEach((v,i)=>{const d=Math.abs(v-zl);if(d<bd){bd=d;bi=i;}});return bi;}
+document.getElementById("zPlus").onclick=()=>{zl=ZOOM[Math.min(ZOOM.length-1,nidx()+1)];applyZoom();};
+document.getElementById("zMinus").onclick=()=>{zl=ZOOM[Math.max(0,nidx()-1)];applyZoom();};
+document.getElementById("zNow").onclick=()=>{zl=100;applyZoom();};
+document.querySelectorAll("#zoombar .preset").forEach(b=>b.onclick=()=>{zl=+b.dataset.z;applyZoom();});
+applyZoom();
 </script>
 </body>
 </html>
