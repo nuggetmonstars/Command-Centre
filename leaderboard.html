@@ -31,11 +31,13 @@
   --shadow-lg: 5px 7px 0 rgba(0,0,0,0.12);
   --font: 'Pencil', cursive;
   --mf: 'MarkerFelt', cursive;
+  --maxw: 1320px;   /* content width dial */
+  --fs: 1.22;       /* text size dial (~+22%) */
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 h1,h2,h3,.mf{font-family:var(--mf);color:var(--red);}
 
-html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: hidden; }
+html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: hidden; font-size: calc(16px * var(--fs)); }
 
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -985,7 +987,7 @@ body::before {
 
 /* body::before removed (owned by parent) */
 
-.lb-page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 32px 20px 80px; }
+.lb-page { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: 32px 20px 80px; }
 
 /* LOGO */
 .logo-wrap { text-align: center; margin-bottom: 18px; }
@@ -1012,8 +1014,8 @@ body::before {
 /* KPI PILLS */
 .kpis { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 22px; }
 .kpi { background: var(--yellow); border-radius: 999px; padding: 16px 20px; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.18); border: 2px solid var(--yellow-dark); }
-.kpi-label { font-size: 10px; font-weight: 900; color: var(--navy); letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.75; }
-.kpi-value { font-size: 28px; font-weight: 900; color: var(--navy); line-height: 1; margin-top: 4px; }
+.kpi-label { font-size: calc(10px * var(--fs)); font-weight: 900; color: var(--navy); letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.75; }
+.kpi-value { font-size: calc(28px * var(--fs)); font-weight: 900; color: var(--navy); line-height: 1; margin-top: 4px; }
 .kpi-sub { font-size: 10px; font-weight: 700; color: var(--navy); opacity: 0.65; margin-top: 4px; }
 
 /* FILTERS */
@@ -1028,15 +1030,15 @@ body::before {
 
 /* TABS */
 .tabs { display: flex; gap: 4px; background: rgba(255,255,255,0.18); border: 2px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 4px; margin: 0 auto 24px; max-width: 760px; backdrop-filter: blur(6px); }
-.tab { flex: 1; padding: 11px 16px; border: 0; background: transparent; color: rgba(255,255,255,0.85); font-family: var(--font); font-weight: 800; font-size: 13px; cursor: pointer; border-radius: 999px; transition: all .15s; letter-spacing: 0.3px; }
+.tab { flex: 1; padding: 11px 16px; border: 0; background: transparent; color: rgba(255,255,255,0.85); font-family: var(--font); font-weight: 800; font-size: calc(13px * var(--fs)); cursor: pointer; border-radius: 999px; transition: all .15s; letter-spacing: 0.3px; }
 .tab:hover { color: #fff; background: rgba(255,255,255,0.12); }
 .tab.active { background: #fff; color: var(--navy); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
 /* PANEL */
-.panel { background: #fff; border-radius: 24px; padding: 26px; box-shadow: 0 12px 40px rgba(0,0,0,0.18); display: none; }
+.panel { background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 12px 40px rgba(0,0,0,0.18); display: none; }
 .panel.active { display: block; }
-.panel-h { font-size: 20px; font-weight: 900; color: var(--navy); margin-bottom: 4px; }
-.panel-h-sub { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 20px; }
+.panel-h { font-size: calc(20px * var(--fs)); font-weight: 900; color: var(--navy); margin-bottom: 4px; }
+.panel-h-sub { font-size: calc(13px * var(--fs)); color: var(--muted); font-weight: 600; margin-bottom: 20px; }
 
 /* TIER GROUPS — minimal section headers; banners do the talking */
 .tier-section { margin-bottom: 18px; }
@@ -1223,10 +1225,10 @@ body::before {
   display: grid; grid-template-columns: 50px 1fr auto auto; gap: 14px; align-items: center;
 }
 .rep-card-h:hover { background: #fafafa; }
-.rep-card-name { font-size: 18px; font-weight: 900; color: var(--navy); }
-.rep-card-tagline { font-size: 11px; color: var(--muted); font-weight: 700; margin-top: 2px; }
+.rep-card-name { font-size: calc(18px * var(--fs)); font-weight: 900; color: var(--navy); }
+.rep-card-tagline { font-size: calc(11px * var(--fs)); color: var(--muted); font-weight: 700; margin-top: 2px; }
 .rep-card-tagline span { display: inline-block; margin-right: 10px; }
-.rep-card-tier-pill { font-size: 10px; font-weight: 900; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px; text-transform: uppercase; }
+.rep-card-tier-pill { font-size: calc(10px * var(--fs)); font-weight: 900; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.5px; text-transform: uppercase; }
 .rep-card-chev { font-size: 14px; color: var(--muted); transition: transform 0.18s; }
 .rep-card.open .rep-card-chev { transform: rotate(180deg); }
 .rep-card-body { display: none; padding: 0 22px 22px; }
@@ -1234,8 +1236,8 @@ body::before {
 
 .rep-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 18px; }
 .rep-stat-mini { padding: 10px 12px; background: #f7fafc; border-radius: 10px; }
-.rep-stat-mini-l { font-size: 9px; font-weight: 900; color: var(--muted); letter-spacing: 0.6px; text-transform: uppercase; }
-.rep-stat-mini-v { font-size: 18px; font-weight: 900; color: var(--navy); margin-top: 3px; }
+.rep-stat-mini-l { font-size: calc(9px * var(--fs)); font-weight: 900; color: var(--muted); letter-spacing: 0.6px; text-transform: uppercase; }
+.rep-stat-mini-v { font-size: calc(18px * var(--fs)); font-weight: 900; color: var(--navy); margin-top: 3px; }
 
 .comm-tracker { background: #f7fafc; border-radius: 12px; padding: 14px 16px; margin-bottom: 18px; }
 .comm-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
@@ -1271,14 +1273,14 @@ body::before {
 }
 .ledger-row.crossing { background: linear-gradient(90deg, rgba(255,215,0,0.18), rgba(255,215,0,0.04)); }
 .ledger-row.crossing .ledger-centre { font-weight: 900; }
-.ledger-date { font-size: 11px; color: var(--muted); font-weight: 800; padding-top: 1px; }
+.ledger-date { font-size: calc(11px * var(--fs)); color: var(--muted); font-weight: 800; padding-top: 1px; }
 .ledger-centre { font-weight: 800; color: var(--navy); white-space: normal; word-break: break-word; line-height: 1.35; }
 .ledger-start { font-size: 11px; font-weight: 800; color: var(--slate); white-space: normal; word-break: break-word; line-height: 1.35; }
 .ledger-start.tbc { color: #a0aec0; font-style: italic; font-weight: 700; }
 .ledger-city { font-size: 10px; font-weight: 900; padding: 2px 6px; border-radius: 4px; background: #edf2f7; color: var(--slate); text-align: center; align-self: start; margin-top: 1px; }
 .ledger-pts { font-weight: 900; color: var(--navy); text-align: right; padding-top: 1px; }
 .ledger-pts.zero { color: #cbd5e0; }
-.ledger-running { font-size: 11px; color: var(--muted); font-weight: 700; text-align: right; padding-top: 2px; }
+.ledger-running { font-size: calc(11px * var(--fs)); color: var(--muted); font-weight: 700; text-align: right; padding-top: 2px; }
 .ledger-flag { text-align: center; cursor: help; padding-top: 1px; }
 .ledger-section-hdr { padding: 10px 14px; font-size: 10px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
 .ledger-section-hdr.earned { background: linear-gradient(90deg, rgba(255,215,0,0.25), rgba(255,215,0,0.08)); color: #7b341e; border-bottom: 1px solid var(--line); }
@@ -1313,7 +1315,7 @@ body::before {
 .feed-pts { font-weight: 900; color: var(--navy); text-align: right; padding-top: 2px; }
 .feed-empty { text-align: center; padding: 40px; color: var(--muted); font-size: 13px; font-weight: 700; }
 
-.foot { text-align: center; margin-top: 28px; font-size: 11px; color: rgba(255,255,255,0.75); font-weight: 700; }
+.foot { text-align: center; margin-top: 28px; font-size: calc(11px * var(--fs)); color: rgba(255,255,255,0.75); font-weight: 700; }
 
 @media (max-width: 900px) {
   .row { grid-template-columns: 48px minmax(0, 1fr) auto; gap: 10px; padding: 10px 12px; min-height: 0; }
@@ -2115,6 +2117,11 @@ h1,h2,h3,h4,h5,.mf,
   <div class="logo-sub">Sales Leaderboard</div>
 </div>
 
+<div class="tabs" id="crm-toptabs"></div>
+
+<div id="tab-reps"></div>
+
+<div id="tab-board" style="display:none">
 <div class="goal-banner">
   <div class="goal-row">
     <div class="goal-label">Annual Goal</div>
@@ -2192,6 +2199,33 @@ h1,h2,h3,h4,h5,.mf,
 <section class="panel active" data-panel="leaderboard">
   <div class="panel-h">Team Standings · <span id="period-label" style="color:var(--sky);">—</span></div>
   <div class="panel-h-sub">Click any banner to expand · tier flips with the period filter</div>
+
+  <div id="add-sale" style="background:rgba(36,55,70,0.04); border:2px dashed rgba(36,55,70,0.18); border-radius:16px; padding:14px 16px; margin-bottom:20px;">
+    <div class="panel-h" style="font-size:15px; margin-bottom:8px;">➕ Add a sale</div>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+      <select class="filter-select" id="as-rep" style="min-width:110px;"></select>
+      <input class="filter-input" id="as-centre" placeholder="Centre name…" style="min-width:200px;">
+      <input class="filter-input" id="as-date" type="date" style="min-width:150px;">
+      <select class="filter-select" id="as-session">
+        <option value="1hr+ weekly">1hr+ weekly · 10</option>
+        <option value="40min weekly">40min weekly · 8</option>
+        <option value="1hr+ fortnightly">1hr+ fortnightly · 5</option>
+        <option value="40min fortnightly">40min fortnightly · 4</option>
+        <option value="Offer">Offer · 1</option>
+      </select>
+      <select class="filter-select" id="as-city">
+        <option value="M">Melbourne · M</option>
+        <option value="S">Sydney · S</option>
+        <option value="B">Brisbane · B</option>
+        <option value="P">Perth · P</option>
+        <option value="A">Adelaide · A</option>
+      </select>
+      <span id="as-points" style="font-weight:900; color:var(--navy); padding:0 4px;">10 pts</span>
+      <button id="as-submit" style="background:var(--navy); color:#fff; border:none; border-radius:50px; padding:9px 20px; font-size:13px; font-weight:800; font-family:var(--font); cursor:pointer;">Add sale</button>
+      <span id="as-msg" style="font-size:12px; font-weight:700; margin-left:6px;"></span>
+    </div>
+  </div>
+
   <div id="tiers"></div>
 </section>
 
@@ -2263,6 +2297,7 @@ h1,h2,h3,h4,h5,.mf,
   </div>
   <div class="feed-list" id="feed-list"></div>
 </section>
+</div><!-- /#tab-board -->
 
 <div class="foot">Mini Monstars · Sales Leaderboard · Last refreshed <span id="refresh-date">—</span></div>
 
@@ -4733,7 +4768,7 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
 });
 </script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_MpSn0m96wTjCLUvXBdOLJBF-lPCQ5SE&libraries=geometry" async defer></script>
 <script id="payload-data" type="application/json">{"as_of": "4 May 2026", "current_month_idx": 4, "current_month_label": "May 2026", "month_labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], "eligibility_threshold": 50, "commission_threshold": 100, "commission_rate": 0.08, "annual_goal": 2160, "team_ytd_total": 593.5, "team_sales": 90.0, "team_trials": 22.0, "team_calls": 2636.0, "phone_number": "+61 485 051 283", "reps": [{"name": "Nug", "sales": 60.0, "sales_by_city": {"A": 1.0, "P": 2.0, "B": 20.0, "S": 10.0, "M": 27.0}, "trials": 15.0, "trials_by_city": {"A": 1.0, "P": 0.0, "B": 4.0, "S": 2.0, "M": 8.0}, "tcc": 1012.0, "tcc_by_city": {"A": 83.0, "P": 88.0, "B": 323.0, "S": 128.0, "M": 388.0}, "top_territory": "Melbourne", "top_territory_code": "M", "daily": [{"date": "2026-01-06", "tcc": 0.0, "tp": 17.5}, {"date": "2026-01-07", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-08", "tcc": 0.0, "tp": 0.0}, {"date": "2026-06-09", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-12", "tcc": 34.0, "tp": 18.0}, {"date": "2026-01-13", "tcc": 22.0, "tp": 5.0}, {"date": "2026-01-14", "tcc": 26.0, "tp": 5.0}, {"date": "2026-01-15", "tcc": 18.0, "tp": 10.0}, {"date": "2026-01-16", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-19", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-20", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-21", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-22", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-23", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-27", "tcc": 29.0, "tp": 5.0}, {"date": "2026-01-28", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-29", "tcc": 0.0, "tp": 0.0}, {"date": "2026-01-30", "tcc": 0.0, "tp": 0.0}, {"date": "2026-02-02", "tcc": 30.0, "tp": 5.0}, {"date": "2026-02-03", "tcc": 22.0, "tp": 0.0}, {"date": "2026-02-04", "tcc": 50.0, "tp": 10.0}, {"date": "2026-02-05", "tcc": 42.0, "tp": 0}, {"date": "2026-02-06", "tcc": 21.0, "tp": 0}, {"date": "2026-02-09", "tcc": 15.0, "tp": 0}, {"date": "2026-02-10", "tcc": 33.0, "tp": 10.0}, {"date": "2026-02-11", "tcc": 31.0, "tp": 12.5}, {"date": "2026-02-12", "tcc": 0.0, "tp": 0.0}, {"date": "2026-02-13", "tcc": 18.0, "tp": 10.0}, {"date": "2026-02-16", "tcc": 32.0, "tp": 20.0}, {"date": "2026-02-17", "tcc": 8.0, "tp": 7.5}, {"date": "2026-02-18", "tcc": 28.0, "tp": 10.0}, {"date": "2026-02-19", "tcc": 9.0, "tp": 20.0}, {"date": "2026-02-20", "tcc": 0.0, "tp": 0.0}, {"date": "2026-02-23", "tcc": 0.0, "tp": 0.0}, {"date": "2026-02-24", "tcc": 15.0, "tp": 2.5}, {"date": "2026-02-25", "tcc": 18.0, "tp": 0.0}, {"date": "2026-02-26", "tcc": 10.0, "tp": 5.0}, {"date": "2026-02-27", "tcc": 14.0, "tp": 0.0}, {"date": "2026-03-02", "tcc": 20.0, "tp": 2.0}, {"date": "2026-03-03", "tcc": 30.0, "tp": 0.0}, {"date": "2026-03-04", "tcc": 3.0, "tp": 0.0}, {"date": "2026-03-05", "tcc": 13.0, "tp": 10.0}, {"date": "2026-03-06", "tcc": 30.0, "tp": 15.0}, {"date": "2026-03-10", "tcc": 0.0, "tp": 0.0}, {"date": "2026-03-11", "tcc": 8.0, "tp": 0.0}, {"date": "2026-03-12", "tcc": 23.0, "tp": 5.0}, {"date": "2026-03-13", "tcc": 22.0, "tp": 0.0}, {"date": "2026-03-16", "tcc": 21.0, "tp": 0.0}, {"date": "2026-03-17", "tcc": 19.0, "tp": 5.0}, {"date": "2026-03-18", "tcc": 26.0, "tp": 0.0}, {"date": "2026-03-19", "tcc": 0, "tp": 0}, {"date": "2026-03-20", "tcc": 23.0, "tp": 0.0}, {"date": "2026-03-23", "tcc": 21.0, "tp": 0.0}, {"date": "2026-03-24", "tcc": 43.0, "tp": 10.0}, {"date": "2026-03-25", "tcc": 10.0, "tp": 20.0}, {"date": "2026-03-26", "tcc": 9.0, "tp": 8.0}, {"date": "2026-03-27", "tcc": 10.0, "tp": 10.0}, {"date": "2026-03-30", "tcc": 20.0, "tp": 8.0}, {"date": "2026-03-31", "tcc": 12.0, "tp": 0.0}, {"date": "2026-04-01", "tcc": 16.0, "tp": 20.0}, {"date": "2026-04-02", "tcc": 6.0, "tp": 17.5}, {"date": "2026-04-07", "tcc": 3.0, "tp": 0.0}, {"date": "2026-04-08", "tcc": 22.0, "tp": 0.0}, {"date": "2026-04-09", "tcc": 17.0, "tp": 0.0}, {"date": "2026-04-10", "tcc": 25.0, "tp": 1.0}, {"date": "2026-04-13", "tcc": 0, "tp": 0}, {"date": "2026-04-14", "tcc": 28.0, "tp": 25.0}, {"date": "2026-04-15", "tcc": 0, "tp": 0}, {"date": "2026-04-16", "tcc": 0, "tp": 0}, {"date": "2026-04-17", "tcc": 0.0, "tp": 0.0}, {"date": "2026-04-20", "tcc": 0.0, "tp": 0.0}, {"date": "2026-04-21", "tcc": 0.0, "tp": 0.0}, {"date": "2026-04-22", "tcc": 0.0, "tp": 0.0}, {"date": "2026-04-23", "tcc": 0.0, "tp": 0.0}, {"date": "2026-04-24", "tcc": 0.0, "tp": 0}, {"date": "2026-04-27", "tcc": 0, "tp": 0}, {"date": "2026-04-28", "tcc": 7.0, "tp": 26.0}], "sales_ledger": [{"date": "2026-01-06", "centre": "Mayfields", "city": null, "city_full": "", "points": 17.5, "running_total": 17.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-01-12", "centre": "Eden Academy Clyde / Enchanted Forest", "city": "M", "city_full": "Melbourne", "points": 18.0, "running_total": 35.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-01-13", "centre": "Eden Academy Kerrisdale", "city": "B", "city_full": "Brisbane", "points": 5.0, "running_total": 40.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-01-14", "centre": "Little Grass Hoppers x5 (One Offs potentially onging)", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 45.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-01-15", "centre": "Yarra Junction", "city": "M", "city_full": "Melbourne", "points": 10.0, "running_total": 55.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-01-27", "centre": "Imagine Andergrove", "city": "B", "city_full": "Brisbane", "points": 5.0, "running_total": 60.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-02", "centre": "Sparrow Wyndham Vale waters", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 65.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-04", "centre": "Mount Pleasant Green Leaves", "city": "P", "city_full": "Perth", "points": 10.0, "running_total": 75.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-10", "centre": "Eden Academy Oxley Rd", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 85.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-11", "centre": "Eden Academy Parafield Gardens /", "city": "B", "city_full": "Brisbane", "points": 12.5, "running_total": 98.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-13", "centre": "Banyo - Journey Early Learning", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 108.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true, "crossed_100": true}, {"date": "2026-02-16", "centre": "Fernvale - Journey Early Learning / Cuddly Heathmont", "city": "B", "city_full": "Brisbane", "points": 20.0, "running_total": 128.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-17", "centre": "Reservoir Great Beginnings - Eden Academy Doreen", "city": "M", "city_full": "Melbourne", "points": 7.5, "running_total": 135.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-18", "centre": "Edge Early Learning - Eagleby", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 145.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-19", "centre": "Ringwood Childcare Centre / Eden Academy Park Ridge", "city": "B", "city_full": "Brisbane", "points": 20.0, "running_total": 165.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-24", "centre": "Whiz Kidz Craigieburn (4 week trial)***", "city": "M", "city_full": "Melbourne", "points": 2.5, "running_total": 168.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-26", "centre": "Sparrow Sommerville Cottage", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 173.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-02", "centre": "Burpengary East Happy Hearts (4 week trial)***", "city": "B", "city_full": "Brisbane", "points": 2.0, "running_total": 175.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-05", "centre": "Highpoint Kinderhaven / Cloudberry", "city": "M", "city_full": "Melbourne", "points": 10.0, "running_total": 185.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-06", "centre": "Journey - Wallan Central / Kids Academy Early Learning Runcorn", "city": "B", "city_full": "Brisbane", "points": 15.0, "running_total": 200.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-12", "centre": "WOL Thornbury", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 205.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-17", "centre": "Busy Bees Kensington", "city": "P", "city_full": "Perth", "points": 5.0, "running_total": 210.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-24", "centre": "Journey Early Learning - Dakabin", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 220.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-25", "centre": "Skippys - Gracemere / Busy Bees Preston East", "city": "B", "city_full": "Brisbane", "points": 20.0, "running_total": 240.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-26", "centre": "Kids Academy Runcorn", "city": "B", "city_full": "Brisbane", "points": 8.0, "running_total": 248.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-27", "centre": "Lyrebird ELC", "city": "M", "city_full": "Melbourne", "points": 10.0, "running_total": 258.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-30", "centre": "Journey - Riverhills", "city": "B", "city_full": "Brisbane", "points": 8.0, "running_total": 266.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-01", "centre": "Frenchville and charlseton", "city": "B", "city_full": "Brisbane", "points": 20.0, "running_total": 286.0, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-02", "centre": "Whiz Kidz Craigieburn (4 week trial - signed on)", "city": "M", "city_full": "Melbourne", "points": 17.5, "running_total": 303.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-10", "centre": "Gumboots Werribee*", "city": "M", "city_full": "Melbourne", "points": 1.0, "running_total": 304.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-14", "centre": "Kool Kidz NSW 4 week paid trial - Littel zebras x2 sparrow victora point", "city": "B", "city_full": "Brisbane", "points": 25.0, "running_total": 329.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-28", "centre": "Mini Me ELC x4 / Werribee ELC (Imagine)", "city": "S", "city_full": "Sydney", "points": 26.0, "running_total": 355.5, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}], "has_session_dates": false, "monthly": [60.5, 112.5, 93.0, 89.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ytd_total": 355.5, "ytd_avg": 71.1, "current_month": 0.0, "eligible": true, "reason": "YTD avg 71.10 ≥ 50", "tier": "gold", "is_new_rep": false, "rank": 1, "start_date": "2026-01-06", "fair_avg": 88.88, "months_active": 4.78, "days_active": 115}, {"name": "Bek", "sales": 30.0, "sales_by_city": {"A": 1.0, "P": 2.0, "B": 11.0, "S": 4.0, "M": 12.0}, "trials": 7.0, "trials_by_city": {"A": 0.0, "P": 2.0, "B": 0.0, "S": 1.0, "M": 4.0}, "tcc": 1572.0, "tcc_by_city": {"A": 95.0, "P": 98.0, "B": 268.0, "S": 297.0, "M": 817.0}, "top_territory": "Melbourne", "top_territory_code": "M", "daily": [{"date": "2026-01-28", "tcc": 16.0, "tp": 0.0}, {"date": "2026-01-29", "tcc": 27.0, "tp": 0.0}, {"date": "2026-01-30", "tcc": 21.0, "tp": 0.0}, {"date": "2026-02-02", "tcc": 23.0, "tp": 0.0}, {"date": "2026-02-03", "tcc": 26.0, "tp": 0.0}, {"date": "2026-02-04", "tcc": 29.0, "tp": 0.0}, {"date": "2026-02-05", "tcc": 27.0, "tp": 0.5}, {"date": "2026-02-06", "tcc": 21.0, "tp": 4.0}, {"date": "2026-02-10", "tcc": 33.0, "tp": 0.0}, {"date": "2026-02-11", "tcc": 42.0, "tp": 0.0}, {"date": "2026-02-12", "tcc": 39.0, "tp": 5.0}, {"date": "2026-02-13", "tcc": 37.0, "tp": 0.0}, {"date": "2026-02-17", "tcc": 31.0, "tp": 0.0}, {"date": "2026-02-18", "tcc": 38.0, "tp": 10.0}, {"date": "2026-02-19", "tcc": 35.0, "tp": 0.0}, {"date": "2026-02-20", "tcc": 10.0, "tp": 28.0}, {"date": "2026-02-23", "tcc": 13.0, "tp": 0.0}, {"date": "2026-02-24", "tcc": 55.0, "tp": 0.0}, {"date": "2026-02-25", "tcc": 30.0, "tp": 10.0}, {"date": "2026-02-26", "tcc": 36.0, "tp": 0.0}, {"date": "2026-02-27", "tcc": 43.0, "tp": 0.0}, {"date": "2026-03-03", "tcc": 33.0, "tp": 4.0}, {"date": "2026-03-04", "tcc": 30.0, "tp": 0.0}, {"date": "2026-03-05", "tcc": 24.0, "tp": 10.0}, {"date": "2026-03-06", "tcc": 23.0, "tp": 0.0}, {"date": "2026-03-10", "tcc": 29.0, "tp": 5.0}, {"date": "2026-03-11", "tcc": 37.0, "tp": 0.0}, {"date": "2026-03-12", "tcc": 29.0, "tp": 0.0}, {"date": "2026-03-13", "tcc": 23.0, "tp": 5.0}, {"date": "2026-03-16", "tcc": 9.0, "tp": 0.0}, {"date": "2026-03-17", "tcc": 28.0, "tp": 5.0}, {"date": "2026-03-18", "tcc": 18.0, "tp": 5.0}, {"date": "2026-03-19", "tcc": 34.0, "tp": 0.0}, {"date": "2026-03-20", "tcc": 35.0, "tp": 0.0}, {"date": "2026-03-23", "tcc": 4.0, "tp": 5.0}, {"date": "2026-03-24", "tcc": 36.0, "tp": 0.0}, {"date": "2026-03-25", "tcc": 20.0, "tp": 5.0}, {"date": "2026-03-26", "tcc": 37.0, "tp": 0.0}, {"date": "2026-03-27", "tcc": 25.0, "tp": 0.0}, {"date": "2026-03-30", "tcc": 10.0, "tp": 0.0}, {"date": "2026-03-31", "tcc": 33.0, "tp": 5.0}, {"date": "2026-04-01", "tcc": 39.0, "tp": 5.0}, {"date": "2026-04-07", "tcc": 48.0, "tp": 5.0}, {"date": "2026-04-08", "tcc": 19.0, "tp": 15.0}, {"date": "2026-04-09", "tcc": 8.0, "tp": 0.0}, {"date": "2026-04-14", "tcc": 30.0, "tp": 0.75}, {"date": "2026-04-15", "tcc": 29.0, "tp": 24.0}, {"date": "2026-04-16", "tcc": 20.0, "tp": 18.0}, {"date": "2026-04-21", "tcc": 41.0, "tp": 0}, {"date": "2026-04-22", "tcc": 42.0, "tp": 0.0}, {"date": "2026-04-23", "tcc": 24.0, "tp": 9.0}, {"date": "2026-04-24", "tcc": 29.0, "tp": 0.0}, {"date": "2026-04-28", "tcc": 40.0, "tp": 0.0}, {"date": "2026-04-29", "tcc": 31.0, "tp": 0.0}, {"date": "2026-04-30", "tcc": 23.0, "tp": 5.0}], "sales_ledger": [{"date": "2026-04-23", "centre": "Nido Trafalgar (FN)", "city": "P", "city_full": "Perth", "points": 4.0, "running_total": 173.3, "flag": null, "start_raw": "TBC", "start_iso": null, "start_tbc": true}, {"date": "2026-04-23", "centre": "Sparrow EL Thornlie (FN)", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 178.3, "flag": null, "start_raw": "TBC", "start_iso": null, "start_tbc": true}, {"date": "2026-04-21", "centre": "Sparrow EL Stratford - booked 4 weeks", "city": "M", "city_full": "Melbourne", "points": 0, "running_total": 169.3, "flag": "Points pending", "start_raw": "7/5 - 28/5", "start_iso": null, "start_tbc": false}, {"date": "2026-04-16", "centre": "Busy Bees Campbelltown", "city": "S", "city_full": "Sydney", "points": 8.0, "running_total": 159.3, "flag": null, "start_raw": "Term 3", "start_iso": null, "start_tbc": true}, {"date": "2026-04-16", "centre": "Aspire White Hills", "city": "M", "city_full": "Melbourne", "points": 10.0, "running_total": 169.3, "flag": null, "start_raw": "TBC", "start_iso": null, "start_tbc": true}, {"date": "2026-04-15", "centre": "Busy Bees Belmont", "city": "M", "city_full": "Melbourne", "points": 8.0, "running_total": 135.3, "flag": null, "start_raw": "28/5/26", "start_iso": "2026-05-28", "start_tbc": false}, {"date": "2026-04-15", "centre": "Aspire Wollert", "city": "M", "city_full": "Melbourne", "points": 8.0, "running_total": 143.3, "flag": null, "start_raw": "22/4/26", "start_iso": "2026-04-22", "start_tbc": false}, {"date": "2026-04-15", "centre": "Happy Hearts Petrie", "city": "M", "city_full": "Melbourne", "points": 8.0, "running_total": 151.3, "flag": null, "start_raw": "5/7/2026", "start_iso": "2026-07-05", "start_tbc": false}, {"date": "2026-04-14", "centre": "Nido Early Learning Black Forest", "city": "A", "city_full": "Adelaide", "points": 0.8, "running_total": 127.3, "flag": null, "start_raw": "19/7, 25/9, 1/10", "start_iso": null, "start_tbc": false}, {"date": "2026-04-08", "centre": "Moreton Drive EL Centre (WK)", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 121.5, "flag": null, "start_raw": "TBC", "start_iso": null, "start_tbc": true}, {"date": "2026-04-08", "centre": "Story House EL Centre Maitland", "city": "S", "city_full": "Sydney", "points": 5.0, "running_total": 126.5, "flag": null, "start_raw": "5/6/2026", "start_iso": "2026-06-05", "start_tbc": false}, {"date": "2026-04-07", "centre": "Eden Academy Maddingley", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 111.5, "flag": null, "start_raw": "5/1/2026", "start_iso": "2026-01-05", "start_tbc": false}, {"date": "2026-03-31", "centre": "Aspire Thornhill Park", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 106.5, "flag": null, "start_raw": "29/4/26", "start_iso": "2026-04-29", "start_tbc": false}, {"date": "2026-03-25", "centre": "Community Kids Berwick Early Learning Centre", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 101.5, "flag": null, "start_raw": "5/1/2026", "start_iso": "2026-01-05", "start_tbc": false, "crossed_100": true}, {"date": "2026-03-23", "centre": "Sparrow Early Learning Bayswater", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 96.5, "flag": null, "start_raw": "30/4/26", "start_iso": "2026-04-30", "start_tbc": false}, {"date": "2026-03-18", "centre": "Kidzplay & Learning Centre West (1.5hrs FN)", "city": "B", "city_full": "Brisbane", "points": 5.0, "running_total": 91.5, "flag": null, "start_raw": "4/8/2026", "start_iso": "2026-08-04", "start_tbc": false}, {"date": "2026-03-17", "centre": "Nido Early School Clyde North FN 40min or 1hr TBC⚠ city inferred", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 86.5, "flag": null, "start_raw": "13/4/26", "start_iso": "2026-04-13", "start_tbc": false}, {"date": "2026-03-13", "centre": "Guardian Childcare & Education Augustine Heights", "city": "B", "city_full": "Brisbane", "points": 5.0, "running_total": 81.5, "flag": null, "start_raw": "20/4/26", "start_iso": "2026-04-20", "start_tbc": false}, {"date": "2026-03-10", "centre": "Busy Bees at Geelong West (1.5hrs FN)", "city": "M", "city_full": "Melbourne", "points": 5.0, "running_total": 76.5, "flag": null, "start_raw": "23/4/26", "start_iso": "2026-04-23", "start_tbc": false}, {"date": "2026-03-05", "centre": "Story House EL Bligh Park", "city": "S", "city_full": "Sydney", "points": 10.0, "running_total": 71.5, "flag": null, "start_raw": "3/9/2026", "start_iso": "2026-09-03", "start_tbc": false}, {"date": "2026-03-03", "centre": "Sparrow EL Somerville", "city": "M", "city_full": "Melbourne", "points": 4.0, "running_total": 61.5, "flag": null, "start_raw": "4/7/2026", "start_iso": "2026-07-04", "start_tbc": false}, {"date": "2026-02-25", "centre": "Stellar Early Learning & Kindergarten", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 57.5, "flag": null, "start_raw": "17/3/26", "start_iso": "2026-03-17", "start_tbc": false}, {"date": "2026-02-20", "centre": "Guardian Underwood", "city": "B", "city_full": "Brisbane", "points": 9.3, "running_total": 47.5, "flag": null, "start_raw": "3/9/2026", "start_iso": "2026-09-03", "start_tbc": false}, {"date": "2026-02-18", "centre": "Sparrow EL Eagleby (weekly)", "city": "B", "city_full": "Brisbane", "points": 10.0, "running_total": 19.5, "flag": null, "start_raw": "3/5/2026", "start_iso": "2026-05-03", "start_tbc": false}, {"date": "2026-02-12", "centre": "Sparrow EL Swanbourne (fortnight)", "city": "P", "city_full": "Perth", "points": 5.0, "running_total": 9.5, "flag": null, "start_raw": "23/2/26", "start_iso": "2026-02-23", "start_tbc": false}, {"date": "2026-02-06", "centre": "Sparrow EL Ashgrove (fortnight)", "city": "B", "city_full": "Brisbane", "points": 4.0, "running_total": 4.5, "flag": null, "start_raw": "23/2/26", "start_iso": "2026-02-23", "start_tbc": false}, {"date": "2026-02-05", "centre": "Sparrow EL Coolum (one off)", "city": "B", "city_full": "Brisbane", "points": 0.5, "running_total": 0.5, "flag": null, "start_raw": "21/4/26", "start_iso": "2026-04-21", "start_tbc": false}], "has_session_dates": true, "monthly": [0.0, 39.5, 49.0, 81.75, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ytd_total": 170.25, "ytd_avg": 34.05, "current_month": 0.0, "eligible": false, "reason": "0.00 pts curr / 34.05 YTD avg", "tier": "blue", "is_new_rep": false, "rank": 2, "start_date": "2026-01-23", "fair_avg": 56.75, "months_active": 3, "days_active": 98}, {"name": "Lisa", "sales": 0, "sales_by_city": {"A": 0, "P": 0, "B": 0, "S": 0, "M": 0}, "trials": 0, "trials_by_city": {"A": 0, "P": 0, "B": 0, "S": 0, "M": 0}, "tcc": 20.0, "tcc_by_city": {"A": 2.0, "P": 0.0, "B": 3.0, "S": 8.0, "M": 7.0}, "top_territory": "Sydney", "top_territory_code": "S", "daily": [{"date": "2026-01-28", "tcc": 20.0, "tp": 0}, {"date": "2026-01-29", "tcc": 15.0, "tp": 0}, {"date": "2026-01-30", "tcc": 28.0, "tp": 0}, {"date": "2026-02-02", "tcc": 19.0, "tp": 0}, {"date": "2026-02-03", "tcc": 19.0, "tp": 0}, {"date": "2026-02-04", "tcc": 22.0, "tp": 0}, {"date": "2026-02-05", "tcc": 21.0, "tp": 0}, {"date": "2026-02-06", "tcc": 21.0, "tp": 0}, {"date": "2026-02-09", "tcc": 14.0, "tp": 0}, {"date": "2026-02-10", "tcc": 14.0, "tp": 0}, {"date": "2026-02-11", "tcc": 16.0, "tp": 0}, {"date": "2026-02-12", "tcc": 12.0, "tp": 0}, {"date": "2026-02-13", "tcc": 23.0, "tp": 0}, {"date": "2026-02-16", "tcc": 20.0, "tp": 0}, {"date": "2026-02-17", "tcc": 19.0, "tp": 0}, {"date": "2026-02-18", "tcc": 24.0, "tp": 0}, {"date": "2026-02-19", "tcc": 16.0, "tp": 0}, {"date": "2026-02-20", "tcc": 26.0, "tp": 0.25}, {"date": "2026-02-23", "tcc": 27.0, "tp": 0}, {"date": "2026-02-24", "tcc": 38.0, "tp": 10.0}, {"date": "2026-02-25", "tcc": 43.0, "tp": 0}, {"date": "2026-02-26", "tcc": 30.0, "tp": 0}, {"date": "2026-02-27", "tcc": 45.0, "tp": 0}, {"date": "2026-03-02", "tcc": 26.0, "tp": 0}, {"date": "2026-03-03", "tcc": 27.0, "tp": 0}, {"date": "2026-03-04", "tcc": 29.0, "tp": 0}, {"date": "2026-03-05", "tcc": 36.0, "tp": 0}, {"date": "2026-03-06", "tcc": 40.0, "tp": 0}, {"date": "2026-03-10", "tcc": 33.0, "tp": 0}, {"date": "2026-03-11", "tcc": 32.0, "tp": 0}, {"date": "2026-03-12", "tcc": 37.0, "tp": 0}, {"date": "2026-03-13", "tcc": 26.0, "tp": 0}, {"date": "2026-03-16", "tcc": 35.0, "tp": 0}, {"date": "2026-03-17", "tcc": 29.0, "tp": 0}, {"date": "2026-03-18", "tcc": 27.0, "tp": 0}, {"date": "2026-03-19", "tcc": 29.0, "tp": 0}, {"date": "2026-03-20", "tcc": 31.0, "tp": 0}, {"date": "2026-03-23", "tcc": 46.0, "tp": 0}, {"date": "2026-03-24", "tcc": 32.0, "tp": 0}, {"date": "2026-03-25", "tcc": 29.0, "tp": 0}, {"date": "2026-03-26", "tcc": 35.0, "tp": 0}, {"date": "2026-03-27", "tcc": 40.0, "tp": 0}, {"date": "2026-03-30", "tcc": 29.0, "tp": 10.0}, {"date": "2026-03-31", "tcc": 37.0, "tp": 0}, {"date": "2026-04-01", "tcc": 34.0, "tp": 0}, {"date": "2026-04-02", "tcc": 38.0, "tp": 0}, {"date": "2026-04-07", "tcc": 35.0, "tp": 0}, {"date": "2026-04-08", "tcc": 40.0, "tp": 0}, {"date": "2026-04-09", "tcc": 30.0, "tp": 0}, {"date": "2026-04-10", "tcc": 39.0, "tp": 10.0}, {"date": "2026-04-13", "tcc": 32.0, "tp": 0}, {"date": "2026-04-14", "tcc": 37.0, "tp": 0}, {"date": "2026-04-15", "tcc": 45.0, "tp": 2.5}, {"date": "2026-04-16", "tcc": 32.0, "tp": 0}, {"date": "2026-04-17", "tcc": 29.0, "tp": 0}, {"date": "2026-04-20", "tcc": 34.0, "tp": 0}, {"date": "2026-04-21", "tcc": 41.0, "tp": 0}, {"date": "2026-04-22", "tcc": 0, "tp": 0}, {"date": "2026-04-23", "tcc": 0, "tp": 0}, {"date": "2026-04-24", "tcc": 0, "tp": 0}, {"date": "2026-04-27", "tcc": 0, "tp": 0}], "sales_ledger": [{"date": "2026-02-19", "centre": "Truganina Nido Early Learning", "city": null, "city_full": "", "points": 0, "running_total": 0.0, "flag": "0 pts", "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-20", "centre": "Bright Minds Academy Cranebrook.", "city": null, "city_full": "", "points": 0.25, "running_total": 0.25, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-02-24", "centre": "Story House Early Learning McDowall Village", "city": null, "city_full": "", "points": 10.0, "running_total": 10.25, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-03-30", "centre": "Aspire Kalkallo", "city": null, "city_full": "", "points": 10.0, "running_total": 20.25, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-10", "centre": "Treehouse Childcare & Early Learning Centre", "city": null, "city_full": "", "points": 10.0, "running_total": 30.25, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}, {"date": "2026-04-15", "centre": "Aspire Cranbourne East", "city": null, "city_full": "", "points": 2.5, "running_total": 32.75, "flag": null, "start_raw": "", "start_iso": null, "start_tbc": true}], "has_session_dates": false, "monthly": [0.0, 35.25, 10.0, 12.5, 10.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ytd_total": 67.75, "ytd_avg": 13.55, "current_month": 10.0, "eligible": false, "reason": "4 consecutive months <50", "tier": "red", "is_new_rep": false, "rank": 3, "start_date": "2026-01-06", "fair_avg": 16.94, "months_active": 4, "days_active": 115}, {"name": "Carolyn", "sales": 0.0, "sales_by_city": {"A": 0.0, "P": 0.0, "B": 0.0, "S": 0.0, "M": 0.0}, "trials": 0.0, "trials_by_city": {"A": 0.0, "P": 0.0, "B": 0.0, "S": 0.0, "M": 0.0}, "tcc": 32.0, "tcc_by_city": {"A": 0.0, "P": 0.0, "B": 2.0, "S": 16.0, "M": 14.0}, "top_territory": "Sydney", "top_territory_code": "S", "daily": [{"date": "2026-04-29", "tcc": 8.0, "tp": 0.0}, {"date": "2026-04-30", "tcc": 24.0, "tp": 0.0}], "sales_ledger": [], "has_session_dates": false, "monthly": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "ytd_total": 0.0, "ytd_avg": 0.0, "current_month": 0.0, "eligible": false, "reason": "New rep — just started", "tier": "red", "is_new_rep": true, "rank": 4, "start_date": "2026-04-27", "fair_avg": 0.0, "months_active": 0, "days_active": 4}], "team_flags": ["⚠️ Carolyn has 0 points logged across both centres (29/4, 30/4) — data entry pending", "⚠️ Lisa: 1 centre(s) logged with 0 points", "⚠️ Bek: 1 centre(s) flagged 'needs pts' in source"], "tier_thresholds": {"gold": 70, "green": 50, "blue": 30}}</script><script>
-(function(){
+window.__initSales = function(){
   var DATA = JSON.parse(document.getElementById('payload-data').textContent);
   var THRESH = DATA.eligibility_threshold;
   var CUR_IDX = DATA.current_month_idx;
@@ -5299,6 +5334,27 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
     });
     body.appendChild(sg);
 
+    // CRM activity stats from the engine (r.metrics); guarded for the static fallback
+    var m = r.metrics || {};
+    var sg2 = document.createElement('div'); sg2.className = 'rep-stats-grid';
+    if (r._inactive) sg2.style.opacity = '0.55';
+    var mc = m.momChange;
+    [
+      ['Total Calls', (m.totalCalls!=null? String(m.totalCalls):'—')],
+      ['Calls / Sale', (m.callsPerSale!=null? String(m.callsPerSale):'—')],
+      ['Conversion %', (m.conversionRate!=null? m.conversionRate+'%':'—')],
+      ['Offers', (m.offersCount!=null? String(m.offersCount):'—')],
+      ['Avg Calls/Day', (m.avgCallsPerDay!=null? String(m.avgCallsPerDay):'—')],
+      ['This Month', (m.thisMonthPts!=null? ((mc>0?'▲ ':mc<0?'▼ ':'')+m.thisMonthPts):'—'), (mc>0?'var(--green)':mc<0?'var(--red)':null)]
+    ].forEach(function(s){
+      var d = document.createElement('div'); d.className = 'rep-stat-mini';
+      var l = document.createElement('div'); l.className = 'rep-stat-mini-l'; l.textContent = s[0];
+      var v = document.createElement('div'); v.className = 'rep-stat-mini-v'; v.textContent = s[1];
+      if (s[2]) v.style.color = s[2];
+      d.appendChild(l); d.appendChild(v); sg2.appendChild(d);
+    });
+    body.appendChild(sg2);
+
     // commission tracker
     var ct = document.createElement('div'); ct.className = 'comm-tracker';
     var cth = document.createElement('div'); cth.className = 'comm-h';
@@ -5461,12 +5517,12 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
   document.getElementById('f-territory').addEventListener('change', function(e){ filterState.territory = e.target.value; renderLeaderboard(); });
   document.getElementById('f-sort').addEventListener('change', function(e){ filterState.sort = e.target.value; renderLeaderboard(); });
 
-  document.querySelectorAll('.tab').forEach(function(tab){
+  document.querySelectorAll('#tab-board .tab').forEach(function(tab){
     tab.addEventListener('click', function(){
-      document.querySelectorAll('.tab').forEach(function(t){ t.classList.remove('active'); });
-      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      document.querySelectorAll('#tab-board .tab').forEach(function(t){ t.classList.remove('active'); });
+      document.querySelectorAll('#tab-board .panel').forEach(function(p){ p.classList.remove('active'); });
       tab.classList.add('active');
-      document.querySelector('[data-panel="' + tab.dataset.tab + '"]').classList.add('active');
+      document.querySelector('#tab-board [data-panel="' + tab.dataset.tab + '"]').classList.add('active');
     });
   });
   document.querySelectorAll('.feed-btn').forEach(function(btn){
@@ -5477,11 +5533,58 @@ document.querySelectorAll('.period-btn[data-period]').forEach(btn=>{
     });
   });
 
+  // ---- LIVE DATA + ADD-A-SALE hooks (additive; render code below is unchanged) ----
+  // Swap in a freshly-built DATA object and re-render in place (idempotent subset:
+  // the standings/tables/feed re-render from DATA; the one-time month strip + event
+  // wiring above are NOT re-run, so nothing duplicates).
+  window.__setDATA = function(d){ DATA = d; THRESH = DATA.eligibility_threshold; CUR_IDX = DATA.current_month_idx; };
+  window.__rerenderSales = function(){
+    var ga = document.getElementById('goal-actual');
+    if (ga) ga.textContent = Number(DATA.team_ytd_total).toLocaleString(undefined, {maximumFractionDigits: 1});
+    renderLeaderboard(); renderStatusTable(); renderRepsTab(); renderFeed('all');
+  };
+  (function __wireAddSale(){
+    var POINTS = {"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
+    var repSel = document.getElementById('as-rep');
+    if (repSel) repSel.innerHTML = DATA.reps.map(function(r){ return '<option value="'+r.name+'">'+r.name+'</option>'; }).join('');
+    var dateEl = document.getElementById('as-date'); if (dateEl && !dateEl.value) dateEl.value = new Date().toISOString().slice(0,10);
+    var sessEl = document.getElementById('as-session'), ptsEl = document.getElementById('as-points');
+    function preview(){ if (sessEl && ptsEl) ptsEl.textContent = (POINTS[sessEl.value]||0) + ' pts'; }
+    if (sessEl) sessEl.addEventListener('change', preview); preview();
+    var msgEl = document.getElementById('as-msg');
+    function msg(t,c){ if (msgEl){ msgEl.textContent = t; msgEl.style.color = c || 'var(--muted)'; } }
+    var btn = document.getElementById('as-submit'); if (!btn) return;
+    btn.addEventListener('click', async function(){
+      var rep    = (document.getElementById('as-rep')||{}).value;
+      var centre = ((document.getElementById('as-centre')||{}).value || '').trim();
+      var date   = (document.getElementById('as-date')||{}).value;
+      var session= (document.getElementById('as-session')||{}).value;
+      var city   = (document.getElementById('as-city')||{}).value;
+      if (!rep || !centre || !date){ msg('Rep, centre and date are required.', '#c0392b'); return; }
+      if (!window.__sales || !window.__db || !window.__loadLiveData){ msg('Not connected — sign in and reload.', '#c0392b'); return; }
+      var points = POINTS[session];
+      btn.disabled = true; msg('Saving…', 'var(--muted)');
+      try {
+        await window.__sales.addDoc(
+          window.__sales.collection(window.__db, window.__sales.COLLECTION),
+          { rep:rep, centre:centre, date:date, sessionType:session, points:points, city:city, citySplit:{[city]:points}, startDate:null, source:"crm" }
+        );
+        var live = await window.__loadLiveData();
+        window.__setDATA(live);
+        document.getElementById('payload-data').textContent = JSON.stringify(live);
+        window.__rerenderSales();
+        var ce = document.getElementById('as-centre'); if (ce) ce.value = '';
+        msg('Added '+points+' pts · '+rep+' · '+centre+' ✓', '#1a8b3a');
+      } catch(e){ console.error('add sale failed', e); msg('Save failed: '+((e&&e.message)||e), '#c0392b'); }
+      finally { btn.disabled = false; }
+    });
+  })();
+
   renderLeaderboard();
   renderStatusTable();
   renderRepsTab();
   renderFeed('all');
-})();
+};
 </script>
 
 <script>
@@ -5518,5 +5621,635 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 </script>
 
+<style>
+/* CRM tab — new patterns, styled ONLY with the file's existing CSS vars/colours */
+#crm-toptabs { margin-bottom: 4px; }
+.crm-strip { display:flex; flex-wrap:wrap; gap:12px; }
+.crm-tile { flex:1; min-width:120px; background:var(--navy); border-radius:14px; padding:14px 16px; text-align:center; }
+.crm-tile-v { font-size:26px; font-weight:900; color:var(--yellow); font-family:var(--font); line-height:1; }
+.crm-tile-l { font-size:11px; font-weight:800; color:#fff; opacity:.85; text-transform:uppercase; letter-spacing:.5px; margin-top:5px; }
+.crm-switch { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+.crm-form { display:none; }
+.crm-form.active { display:block; }
+.crm-row { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; margin-bottom:12px; }
+.crm-field { display:flex; flex-direction:column; gap:4px; }
+.crm-label { font-size:10px; font-weight:900; color:var(--muted); text-transform:uppercase; letter-spacing:.6px; }
+.crm-grid { width:100%; border-collapse:collapse; }
+.crm-grid th, .crm-grid td { padding:7px 8px; text-align:center; font-size:15px; }
+.crm-grid th { font-size:13px; font-weight:900; color:var(--muted); text-transform:uppercase; }
+.crm-grid td:first-child, .crm-grid th:first-child { text-align:left; font-weight:800; color:var(--navy); }
+.crm-grid input { width:60px; text-align:center; padding:7px 6px; font-size:15px; border:1px solid var(--line); border-radius:6px; font-family:var(--font); }
+.crm-rowtot { font-weight:900; color:var(--navy); }
+.crm-btn { background:var(--navy); color:#fff; border:none; border-radius:999px; padding:9px 18px; font-weight:800; font-size:13px; font-family:var(--font); cursor:pointer; }
+.crm-btn.alt { background:var(--white); color:var(--navy); border:1px solid var(--line); }
+.crm-btn.active { background:var(--yellow); color:var(--navy); }
+.crm-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.crm-col { background:#f7fafc; border-radius:12px; padding:10px; }
+.crm-col-h { font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; color:var(--navy); }
+.crm-card { background:var(--white); border-radius:10px; border-left:4px solid var(--line); box-shadow:var(--shadow); padding:9px 11px; margin-bottom:8px; }
+.crm-card.pending { border-left-color:var(--orange); }
+.crm-card.ongoing { border-left-color:var(--green); }
+.crm-card.lost { border-left-color:var(--red); }
+.crm-card-name { font-weight:800; color:var(--navy); font-size:13px; }
+.crm-card-meta { font-size:11px; color:var(--muted); font-weight:700; margin-top:2px; }
+.crm-card-actions { display:flex; gap:6px; margin-top:7px; }
+.crm-mini { font-size:11px; padding:5px 10px; border-radius:999px; cursor:pointer; border:none; font-weight:800; font-family:var(--font); }
+.crm-mini.conv { background:var(--green); color:#fff; }
+.crm-mini.lost { background:var(--red); color:#fff; }
+.crm-convert { display:none; margin-top:7px; gap:6px; flex-wrap:wrap; }
+.crm-convert.open { display:flex; }
+.crm-dash { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; }
+.crm-rep { background:var(--white); border-radius:14px; border-left:5px solid var(--line); box-shadow:var(--shadow); padding:14px 16px; }
+.crm-rep.tier-gold { border-left-color:var(--yellow); }
+.crm-rep.tier-green { border-left-color:var(--green); }
+.crm-rep.tier-blue { border-left-color:var(--sky); }
+.crm-rep.tier-red { border-left-color:var(--red); }
+.crm-rep.inactive { opacity:.5; }
+.crm-rep-h { display:flex; justify-content:space-between; align-items:baseline; }
+.crm-rep-name { font-size:16px; font-weight:900; color:var(--navy); }
+.crm-rep-ytd { font-size:20px; font-weight:900; color:var(--navy); font-family:var(--font); }
+.crm-rep-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:10px; }
+.crm-rep-stat { background:#f7fafc; border-radius:8px; padding:7px 8px; }
+.crm-rep-stat-l { font-size:8.5px; font-weight:900; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+.crm-rep-stat-v { font-size:15px; font-weight:900; color:var(--navy); margin-top:2px; }
+.crm-msg { font-size:12px; font-weight:800; margin-left:8px; align-self:center; }
+.tab.is-inactive { color:var(--muted); opacity:.6; }
+.tab.is-inactive.active { opacity:1; }
+.crm-tabdiv { width:2px; align-self:stretch; background:var(--line); margin:0 4px; border-radius:2px; }
+.crm-rep-head { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
+.crm-rep-title { font-family:var(--mf); font-size:calc(26px * var(--fs)); color:var(--navy); line-height:1; }
+.crm-day { border-bottom:1px solid var(--line); }
+.crm-day:last-child { border-bottom:0; }
+.crm-day-row { display:flex; align-items:center; gap:14px; padding:9px 4px; flex-wrap:wrap; }
+.crm-day-toggle { background:none; border:none; cursor:pointer; font-size:13px; color:var(--muted); font-weight:900; width:18px; }
+.crm-day-date { font-weight:900; color:var(--navy); min-width:96px; }
+.crm-day-stat { font-size:calc(12px * var(--fs)); color:var(--muted); font-weight:700; }
+.crm-day-stat b { color:var(--navy); }
+.crm-day-del { margin-left:auto; background:none; border:none; color:var(--red); font-weight:900; font-size:16px; cursor:pointer; }
+.crm-day-grid { display:none; padding:0 4px 12px; }
+.crm-day-grid.open { display:block; }
+</style>
+<script type="module">
+import { initializeApp, getApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
+  authDomain: "mini-monstars-au.firebaseapp.com",
+  projectId: "mini-monstars-au",
+  storageBucket: "mini-monstars-au.appspot.com",
+  messagingSenderId: "1020303504267",
+  appId: "1:1020303504267:web:9d7417231c76b0f351b58e"
+};
+// Reuse the app the page already initialised (10.12.5) so Firestore shares the
+// page's signed-in auth (rules require request.auth != null). Only initialise
+// if somehow none exists yet.
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const COLLECTION = "sales-entries";
+
+/* ==== crm_engine.js (v7) — salesCount = T-Cl historical + new CRM direct sales
+       (source!=="seed") + conversions. Historical unchanged (team 940, Bek 53). ==== */
+/* ============================================================
+   CRM ENGINE v2 — merges three Firestore sources into:
+   (a) the leaderboard DATA object (same shape the renderer needs)
+   (b) per-rep activity metrics + conversion ratios
+   Sources:
+     sales-entries  : {rep, centre, date, points, city, citySplit, sessionType}
+     offer-centres  : {rep, centre, city, offerDate, status, sessionType, conversionDate}
+                      status ∈ "pending" | "ongoing" | "lost"
+     daily-activity : {rep, date, counts:{TCC:{A,P,B,S,M}, NC:{...}, ...}}
+   ============================================================ */
+const SESSION_POINTS={"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
+const CITY_FULL={A:"Adelaide",P:"Perth",B:"Brisbane",S:"Sydney",M:"Melbourne"};
+const MONTH_LABELS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const TIER_THRESHOLDS={gold:70,green:50,blue:30};
+const ELIG=50,COMMISSION_THRESHOLD=100,COMMISSION_RATE=0.08,ANNUAL_GOAL=2160;
+const CALL_CATS=["TCC","NC","NC-NA","NC-In","NC-N In","FUC","FUC-NA","FUC-NIn","FU-RC"];
+const CITIES=["A","P","B","S","M"];
+const INACTIVE=new Set(["Lisa","Jade"]);
+const r2=n=>Math.round(n*100)/100;
+
+/* Convert all three sources into a flat list of dated point-events per rep,
+   plus pipeline + activity tallies. */
+function buildPointEvents(sales, offers){
+  const ev=[]; // {rep,date,centre,points,city,kind}
+  sales.forEach(s=>{
+    if(!s.date) return;
+    ev.push({rep:s.rep,date:s.date,centre:s.centre,points:Number(s.points)||0,
+             city:s.city||pickCity(s.citySplit),kind:"sale",source:s.source||"crm"});
+  });
+  offers.forEach(o=>{
+    if(o.offerDate){
+      ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer"});
+    }
+    if(o.status==="ongoing" && o.conversionDate && o.sessionType){
+      const remain=(SESSION_POINTS[o.sessionType]||0)-1;
+      if(remain>0) ev.push({rep:o.rep,date:o.conversionDate,centre:o.centre,points:remain,
+                            city:o.city||null,kind:"conversion"});
+    }
+  });
+  return ev;
+}
+function pickCity(split){
+  if(!split) return null; let best=-1,c=null;
+  Object.entries(split).forEach(([k,v])=>{ if((Number(v)||0)>best){best=Number(v)||0;c=best>0?k:c;} });
+  return c;
+}
+
+function buildEverything(sales, offers, activity, asOf){
+  const events=buildPointEvents(sales, offers);
+  const repNames=new Set([...events.map(e=>e.rep),...offers.map(o=>o.rep),...activity.map(a=>a.rep)]);
+  const byRep={};
+  repNames.forEach(n=>byRep[n]={name:n,events:[],monthly:Array(12).fill(0),
+    sales_by_city:{A:0,P:0,B:0,S:0,M:0},tcc_by_city:{A:0,P:0,B:0,S:0,M:0},
+    totalCalls:0,totalNewCalls:0,totalReCalls:0,tclSales:0,callCats:{},offersCount:0,ongoingCount:0,lostCount:0,pendingCount:0,
+    directSales:0,newDirectSales:0,activeDays:new Set()});
+  CALL_CATS.forEach(cat=>repNames.forEach(n=>byRep[n].callCats[cat]=0));
+
+  // point events
+  events.filter(e=>e.date).sort((a,b)=>a.date<b.date?-1:1).forEach(e=>{
+    const r=byRep[e.rep]; if(!r) return;
+    const d=new Date(e.date+"T00:00:00"); if(isNaN(d)) return;
+    r.events.push(e); r.monthly[d.getMonth()]+=e.points;
+    if(e.city && r.sales_by_city[e.city]!==undefined) r.sales_by_city[e.city]+=e.points;
+    if(e.kind==="sale"){ r.directSales++; if(e.source!=="seed") r.newDirectSales++; }
+  });
+  // pipeline tallies
+  offers.forEach(o=>{ const r=byRep[o.rep]; if(!r)return; r.offersCount++;
+    if(o.status==="ongoing") r.ongoingCount++; else if(o.status==="lost") r.lostCount++; else r.pendingCount++; });
+  // activity tallies (full model: counts[CAT][STATE])
+  const sumCat=(counts,cat)=>{ const o=(counts||{})[cat]||{}; return Object.values(o).reduce((a,b)=>a+(Number(b)||0),0); };
+  activity.forEach(a=>{ const r=byRep[a.rep]; if(!r)return;
+    if(a.date) r.activeDays.add(a.date);
+    r.tclSales = (r.tclSales||0) + (Number(a.sales)||0);   // T-Cl daily sales count
+    const c=a.counts||{};
+    r.totalCalls   += sumCat(c,"TCC");
+    r.totalNewCalls+= sumCat(c,"NC");
+    r.totalReCalls += sumCat(c,"FUC");
+    CALL_CATS.forEach(cat=>{ r.callCats[cat]=(r.callCats[cat]||0)+sumCat(c,cat); });
+    CITIES.forEach(st=>{ const tcc=(c["TCC"]||{}); r.tcc_by_city[st]+=Number(tcc[st])||0; });
+  });
+
+  const monthsElapsed=asOf.getMonth()+1;
+  const reps=Object.values(byRep).map(r=>{
+    let running=0;
+    const sales_ledger=r.events.map(e=>{ running=r2(running+e.points);
+      return {date:e.date,centre:e.centre,city:e.city||null,city_full:e.city?CITY_FULL[e.city]||"":"",
+        points:e.points,running_total:running,kind:e.kind,
+        flag:null,start_raw:"",start_iso:null,start_tbc:true};
+    });
+    const ytd_total=r2(r.monthly.reduce((a,b)=>a+b,0));
+    const ds=r.events.map(e=>e.date).filter(Boolean).sort();
+    const start_date=ds[0]||null;
+    let months_active=1,days_active=0;
+    if(start_date){ const sd=new Date(start_date+"T00:00:00");
+      months_active=r2(Math.max((asOf-sd)/(1000*60*60*24*30.4375),1));
+      days_active=Math.round((asOf-sd)/86400000); }
+    const ytd_avg=r2(ytd_total/monthsElapsed);
+    const fair_avg=r2(ytd_total/Math.max(months_active,1));
+    const inactive=INACTIVE.has(r.name);
+    const tier=fair_avg>=TIER_THRESHOLDS.gold?"gold":fair_avg>=TIER_THRESHOLDS.green?"green":fair_avg>=TIER_THRESHOLDS.blue?"blue":"red";
+    const eligible=!inactive&&fair_avg>=ELIG;
+    const salesCount = (r.tclSales||0) + (r.newDirectSales||0) + r.ongoingCount; // T-Cl historical + new CRM direct sales + conversions
+    const callsPerSale=salesCount?r2(r.totalCalls/salesCount):null;
+    const callsPerOffer=r.offersCount?r2(r.totalCalls/r.offersCount):null;
+    const pointsPerSale=salesCount?r2(ytd_total/salesCount):null;
+    const salePerDay=r.activeDays.size?r2(salesCount/r.activeDays.size):null;
+    const decided=r.ongoingCount+r.lostCount;
+    const conversionRate=decided?r2(100*r.ongoingCount/decided):null;
+    // --- richer stats ---
+    const interested    = r.callCats["NC-In"]||0;
+    const notInterested = r.callCats["NC-N In"]||0;
+    const pickupRate    = r.totalNewCalls ? r2(100*interested/r.totalNewCalls) : null;       // % of new calls interested
+    const followUpRatio = r.totalCalls ? r2(100*r.totalReCalls/r.totalCalls) : null;          // % of calls that were follow-ups
+    const avgCallsPerDay= r.activeDays.size ? r2(r.totalCalls/r.activeDays.size) : null;
+    const pointsPerCall = r.totalCalls ? r2(ytd_total/r.totalCalls) : null;
+    const thisMonthPts  = r2(r.monthly[asOf.getMonth()]);
+    const lastMonthPts  = asOf.getMonth()>0 ? r2(r.monthly[asOf.getMonth()-1]) : 0;
+    const momChange     = r2(thisMonthPts - lastMonthPts);
+
+    const top=Object.entries(r.sales_by_city).sort((a,b)=>b[1]-a[1])[0];
+    const top_code=top&&top[1]>0?top[0]:"M";
+    const daily=buildDaily(r.events);
+    // logged days: EVERY day with activity, plus any day with derived sales/offers
+    const blank=d=>({date:d,counts:{},totalCalls:0,totalNewCalls:0,totalReCalls:0,sales:0,offers:0,saleDetails:[],_id:null});
+    const dayMap={};
+    activity.filter(a=>a.rep===r.name && a.date).forEach(a=>{
+      const d=dayMap[a.date]||blank(a.date);
+      d.counts=a.counts||{}; d._id=a.id||a._id||null;
+      d.totalCalls+=sumCat(a.counts,"TCC");
+      d.totalNewCalls+=sumCat(a.counts,"NC");
+      d.totalReCalls+=sumCat(a.counts,"FUC");
+      d.sales+=Number(a.sales)||0;            // T-Cl sales that day
+      dayMap[a.date]=d;
+    });
+    offers.filter(o=>o.rep===r.name && o.offerDate).forEach(o=>{
+      const d=dayMap[o.offerDate]||blank(o.offerDate); d.offers+=1; dayMap[o.offerDate]=d; });
+    // sale DETAILS per day (centre + points) for the daily recap, from the points ledger events
+    r.events.filter(e=>e.kind==="sale"||e.kind==="conversion").forEach(e=>{
+      const d=dayMap[e.date]||blank(e.date);
+      d.saleDetails=d.saleDetails||[]; d.saleDetails.push({centre:e.centre,points:e.points});
+      dayMap[e.date]=d; });
+    const loggedDays=Object.values(dayMap).sort((a,b)=>a.date<b.date?1:-1);
+    let bestCallDay=null;
+    loggedDays.forEach(d=>{ if(d.totalCalls>0 && (!bestCallDay || d.totalCalls>bestCallDay.calls)) bestCallDay={date:d.date,calls:d.totalCalls}; });
+    return {name:r.name,sales:salesCount,sales_by_city:r.sales_by_city,trials:r.offersCount,
+      trials_by_city:{A:0,P:0,B:0,S:0,M:0},tcc:r.totalCalls,tcc_by_city:r.tcc_by_city,
+      top_territory:CITY_FULL[top_code],top_territory_code:top_code,daily,sales_ledger,
+      has_session_dates:false,monthly:r.monthly,ytd_total,ytd_avg,current_month:r2(r.monthly[asOf.getMonth()]),
+      eligible,reason:eligible?`YTD avg ${ytd_avg.toFixed(2)} ≥ 50`:`${ytd_avg.toFixed(2)} YTD avg`,
+      tier,is_new_rep:(days_active<=14&&ytd_total<30&&!inactive),start_date,fair_avg,months_active,days_active,
+      _inactive:inactive,
+      // NEW activity metrics
+      loggedDays,metrics:{totalCalls:r.totalCalls,totalNewCalls:r.totalNewCalls,totalReCalls:r.totalReCalls,callCats:r.callCats,offersCount:r.offersCount,
+        pending:r.pendingCount,ongoing:r.ongoingCount,lost:r.lostCount,directSales:r.directSales,
+        salesCount,callsPerSale,callsPerOffer,pointsPerSale,salePerDay,conversionRate,
+        activeDays:r.activeDays.size,
+        interested,notInterested,pickupRate,followUpRatio,avgCallsPerDay,pointsPerCall,
+        thisMonthPts,lastMonthPts,momChange,bestCallDay}};
+  });
+  reps.sort((a,b)=>b.ytd_total-a.ytd_total);
+  reps.forEach((r,i)=>{r.rank=i+1;r.displayRank=i+1;});
+  const team_ytd_total=r2(reps.reduce((a,r)=>a+r.ytd_total,0));
+  return {
+    as_of:asOf.toLocaleDateString("en-AU",{day:"numeric",month:"long",year:"numeric"}),
+    current_month_idx:asOf.getMonth(),current_month_label:`${MONTH_LABELS[asOf.getMonth()]} ${asOf.getFullYear()}`,
+    month_labels:MONTH_LABELS,eligibility_threshold:ELIG,commission_threshold:COMMISSION_THRESHOLD,
+    commission_rate:COMMISSION_RATE,annual_goal:ANNUAL_GOAL,team_ytd_total,
+    team_sales:r2(reps.reduce((a,r)=>a+r.metrics.salesCount,0)),team_trials:0,
+    team_calls:reps.reduce((a,r)=>a+r.metrics.totalCalls,0),
+    phone_number:"+61 485 051 283",reps,team_flags:[],tier_thresholds:TIER_THRESHOLDS};
+}
+function buildDaily(events){
+  const byDate={};
+  events.forEach(e=>{ if(!e.date)return; byDate[e.date]=(byDate[e.date]||0)+e.points; });
+  return Object.keys(byDate).sort().map(d=>({date:d,tcc:0,tp:byDate[d]}));
+}
+if(typeof module!=="undefined") module.exports={buildEverything,buildPointEvents,SESSION_POINTS};
+
+/* ==== seed: 97 historical entries (only written if the collection is empty) ==== */
+const SALES_SEED = [{"date":"2026-01-06","centre":"Mayfields x 4","points":17.5,"city":"","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":"2026-02-02","rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-01-12","centre":"Eden Academy Clyde / Enchanted Forest","points":18.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":8.0,"S":0.0,"M":10.0},"startDate":"2026-02-02","rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-01-13","centre":"Eden Academy Kerrisdale","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":"2026-11-02","rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-01-14","centre":"Little Grass Hoppers x5 (One Offs potentially onging)","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-03-03","rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-01-15","centre":"Yarra Junction","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":"2026-02-02","rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-01-27","centre":"Imagine Andergrove","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-02","centre":"Sparrow Wyndham Vale waters","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-04","centre":"Mount Pleasant Green Leaves","points":10.0,"city":"P","citySplit":{"A":0.0,"P":10.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-10","centre":"Eden Academy Oxley Rd","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-11","centre":"Eden Academy Parafield Gardens /","points":12.5,"city":"B","citySplit":{"A":2.5,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-13","centre":"Banyo - Journey Early Learning","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-16","centre":"Fernvale - Journey Early Learning / Cuddly Heathmont","points":20.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-17","centre":"Reservoir Great Beginnings - Eden Academy Doreen","points":7.5,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":7.5},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-18","centre":"Edge Early Learning - Eagleby","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-19","centre":"Ringwood Childcare Centre / Eden Academy Park Ridge","points":20.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-24","centre":"Whiz Kidz Craigieburn (4 week trial)***","points":2.5,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":2.5},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-26","centre":"Sparrow Sommerville Cottage","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-02","centre":"Burpengary East Happy Hearts (4 week trial)***","points":2.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":2.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-05","centre":"Highpoint Kinderhaven / Cloudberry","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-06","centre":"Journey - Wallan Central / Kids Academy Early Learning Runcorn","points":15.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-12","centre":"WOL Thornbury","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-17","centre":"Busy Bees Kensington","points":5.0,"city":"P","citySplit":{"A":0.0,"P":5.0,"B":0.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-24","centre":"Journey Early Learning - Dakabin","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-25","centre":"Skippys - Gracemere / Busy Bees Preston East","points":20.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-26","centre":"Kids Academy Runcorn","points":8.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":8.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-27","centre":"Lyrebird ELC","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-03-30","centre":"Journey - Riverhills","points":8.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":8.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-04-01","centre":"Frenchville and charlseton","points":20.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-04-02","centre":"Whiz Kidz Craigieburn (4 week trial - signed on)","points":17.5,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":17.5},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-04-10","centre":"Gumboots Werribee*","points":1.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":1.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-04-14","centre":"Kool Kidz NSW 4 week paid trial - Littel zebras x2 sparrow victora point","points":25.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":15.0,"S":10.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-04-28","centre":"Mini Me ELC x4 / Werribee ELC (Imagine)","points":26.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":16.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-05","centre":"Active Kids Greenbank","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-07","centre":"Journey Early learning Lara /Where we Grow - Gembrook (offer)*","points":3.5,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":3.5},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-14","centre":"Whittleses Journey / HH Wooloongong","points":9.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":1.0,"M":8.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-15","centre":"Green Leaves North Shore","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-18","centre":"Goodstart Green Point","points":1.25,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":1.25,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-21","centre":"PEAK Childcare and Kindergarten","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-05-22","centre":"** Eden Academy Mountain Creek","points":1.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":1.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-06-03","centre":"Gembrook Where we Grow","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-06-10","centre":"Eden Academy Werribee","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-06-11","centre":"Journey Early Learning Werribee / Eden Academy Newport","points":11.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":11.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-06-12","centre":"Whiz Kidz - confirmed from Offer x4","points":65.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":65.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-06-24","centre":"Smart Play Caboolture","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Nug","sessionType":"","source":"seed"},{"date":"2026-02-05","centre":"Sparrow EL Coolum (one off)","points":0.5,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":0.5,"S":0.0,"M":0.0},"startDate":"2026-04-21","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-02-06","centre":"Sparrow EL Ashgrove (fortnight)","points":4.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":4.0,"S":0.0,"M":0.0},"startDate":"2026-02-23","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-02-12","centre":"Sparrow EL Swanbourne (fortnight)","points":5.0,"city":"P","citySplit":{"A":0.0,"P":5.0,"B":0.0,"S":0.0,"M":0.0},"startDate":"2026-02-23","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-02-18","centre":"Sparrow EL Eagleby (weekly)","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":"2026-05-03","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-02-20","centre":"Guardian Underwood (WK)","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":"2026-09-03","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-02-25","centre":"Stellar Early Learning & Kindergarten","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":"2026-03-17","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-03","centre":"Sparrow EL Somerville","points":4.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":4.0},"startDate":"2026-07-04","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-05","centre":"Story House EL Bligh Park","points":10.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":10.0,"M":0.0},"startDate":"2026-09-03","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-10","centre":"Busy Bees at Geelong West (1.5hrs FN)","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-04-23","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-13","centre":"Guardian Augustine Heights","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":"2026-04-20","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-17","centre":"Nido Early School Clyde North (FN)","points":5.0,"city":"","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":"2026-04-13","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-18","centre":"Kidzplay & Learning Centre West (1.5hrs FN)","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":"2026-08-04","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-23","centre":"Sparrow Early Learning Bayswater","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-04-30","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-25","centre":"Community Kids Berwick Early Learning Centre","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-01-05","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-03-31","centre":"Aspire Thornhill Park","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-04-29","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-01","centre":"Discovery Bay Rowville","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-05-05","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-07","centre":"Eden Academy Maddingley","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-01-05","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-08","centre":"Moreton Drive EL Centre (WK)/Story House Maitland (FN)","points":15.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":5.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-14","centre":"Nido Early Learning Black Forest","points":0.75,"city":"A","citySplit":{"A":0.75,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-15","centre":"Busy Bees Belmont / Aspire Wollert / Happy Hearts Petrie","points":24.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":4.0,"S":0.0,"M":20.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-16","centre":"Busy Bees Campbelltown / Aspire White Hills","points":18.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":8.0,"M":10.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-21","centre":"Sparrow EL Stratford - booked 4 weeks","points":0.0,"city":"","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-23","centre":"Nido Trafalgar (FN) / Sparrow EL Thornlie (FN)","points":9.0,"city":"M","citySplit":{"A":0.0,"P":4.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-04-30","centre":"Bask EL Toowoomba (FN 2hrs)","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":"2026-12-05","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-01","centre":"Rosemont Cottage Eco / **Learn and Laugh Wyoming","points":6.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":6.0,"S":0.0,"M":0.0},"startDate":"2026-05-13","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-08","centre":"CherubsEL and Kindergarten","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":"2026-05-18","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-11","centre":"Sparrow Upper Coomera / **Grow Darling Heights","points":6.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":6.0,"S":0.0,"M":0.0},"startDate":"2026-07-16","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-12","centre":"Green Leaves Port Macquarie","points":10.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":10.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-15","centre":"Guardian Coopers Plains / Guardian Moorooka","points":15.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":15.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-19","centre":"Armstrong Creek East Childrens Centre","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-07-16","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-21","centre":"Creations Education Academy","points":4.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":4.0,"M":0.0},"startDate":"2026-04-06","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-22","centre":"Grow Darling Heights (GYM) - (Offer accepted)","points":9.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":9.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-27","centre":"Aspire Pakenham","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-10-06","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-28","centre":"*Goodstart Gateshead","points":1.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":1.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-01","centre":"Grow Darling Heights (Music)","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":"2026-06-16","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-02","centre":"*Bluebird Berwick / Highfields Central","points":11.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":1.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-04","centre":"Carlisle Adventist Early Learning Centre (2027)","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-05","centre":"*Wilsonton Heights ELC - FN / *Guardian Rochedale South","points":2.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":2.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-19","centre":"Holmesville Playhouse Pre School","points":4.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":4.0,"M":0.0},"startDate":"2026-07-17","rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-22","centre":"Wilsonton (Offer accepted)","points":3.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":3.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-23","centre":"Guardian Nth Mackay / *Bask EL Toowoomba City","points":9.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":9.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-26","centre":"Goodstart Grovedale / * Green Leaves Sth Ripley / Juniors Journey Gateshead","points":15.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":4.0,"M":10.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-06-29","centre":"Westbrook Gardens EL / Journey EL Sale","points":18.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":8.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Bek","sessionType":"","source":"seed"},{"date":"2026-05-15","centre":"Great Beginnings epsom","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-05-20","centre":"Bug a lug indoor","points":8.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":8.0},"startDate":"2026-02-06","rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-05-27","centre":"Villiage Early Education Bendigo","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-05-28","centre":"Shine Bright Maiden Gully","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":"2026-02-07","rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-05-29","centre":"Creative Garden Early Learning Group","points":5.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":5.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-11","centre":"Brighhouse early learning / Goodstart bendigo / Joruney Early Learning - lucas rise","points":19.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":19.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-12","centre":"**Little Peoples Early Learning Centre Gwynneville","points":1.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":1.0,"M":0.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-17","centre":"Kindy Korner Childrens Services - John Street","points":10.0,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":10.0,"M":0.0},"startDate":"2026-07-21","rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-22","centre":"Journey Early Learning Centre lucas","points":1.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":1.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-25","centre":"Billy buttons elc south morang","points":0.25,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":0.25},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-29","centre":"Good start early Learning wendouree","points":1.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":1.0},"startDate":null,"rep":"Carolyn","sessionType":"","source":"seed"},{"date":"2026-06-11","centre":"Sunnyville","points":2.5,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":2.5,"S":0.0,"M":0.0},"startDate":null,"rep":"Jade","sessionType":"","source":"seed"},{"date":"2026-02-09","centre":"Oak on South","points":5.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":5.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-02-13","centre":"Green Leaves Early Learning Mount Pleasent","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-02-19","centre":"Truganina Nido Early Learning","points":0.0,"city":"","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-02-20","centre":"Bright Minds Academy Cranebrook.","points":0.25,"city":"S","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.25,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-02-24","centre":"Story House Early Learning McDowall Village","points":10.0,"city":"B","citySplit":{"A":0.0,"P":0.0,"B":10.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-02-26","centre":"Story House Early Learning Geelong","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-03-30","centre":"Aspire Kalkallo","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-04-10","centre":"Treehouse Childcare & Early Learning Centre","points":10.0,"city":"A","citySplit":{"A":10.0,"P":0.0,"B":0.0,"S":0.0,"M":0.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-04-15","centre":"Aspire Cranbourne East","points":2.5,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":2.5},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"},{"date":"2026-05-04","centre":"Aspire Atherstone Estate (Strathtulloh)","points":10.0,"city":"M","citySplit":{"A":0.0,"P":0.0,"B":0.0,"S":0.0,"M":10.0},"startDate":null,"rep":"Lisa","sessionType":"","source":"seed"}];
+const DAILY_SEED = [{"rep":"Nug","date":"2026-01-12","counts":{"TCC":{"A":5.0,"B":15.0,"S":4.0,"M":10.0},"FUC":{"A":5.0,"B":15.0,"S":4.0,"M":10.0},"FUC-NA":{"B":1.0,"M":4.0},"FU-RC":{"A":5.0,"B":8.0,"S":4.0,"M":4.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-01-13","counts":{"TCC":{"A":1.0,"B":11.0,"M":10.0},"FUC":{"A":1.0,"B":11.0,"M":10.0},"FUC-NA":{"B":2.0,"M":1.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":1.0,"B":1.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-01-14","counts":{"TCC":{"A":1.0,"P":1.0,"B":10.0,"S":2.0,"M":12.0},"FUC":{"A":1.0,"P":1.0,"B":10.0,"S":2.0,"M":12.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":5.0,"S":1.0,"M":3.0}},"sales":5,"source":"seed"},{"rep":"Nug","date":"2026-01-15","counts":{"TCC":{"A":3.0,"B":6.0,"S":4.0,"M":5.0},"NC":{"S":1.0},"NC-In":{"S":1.0},"FUC":{"A":3.0,"B":6.0,"S":3.0,"M":5.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"B":4.0},"FU-RC":{"A":2.0,"S":2.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-01-27","counts":{"TCC":{"A":5.0,"P":4.0,"B":7.0,"S":4.0,"M":7.0},"FUC":{"A":5.0,"P":4.0,"B":7.0,"S":4.0,"M":7.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":3.0,"P":2.0,"B":3.0,"S":3.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-02","counts":{"TCC":{"A":1.0,"P":1.0,"B":13.0,"S":3.0,"M":12.0},"FUC":{"A":1.0,"P":1.0,"B":13.0,"S":3.0,"M":12.0},"FUC-NA":{"P":1.0,"B":1.0,"S":2.0,"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"P":1.0,"B":2.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-03","counts":{"TCC":{"A":1.0,"B":12.0,"S":2.0,"M":7.0},"FUC":{"A":1.0,"B":12.0,"S":2.0,"M":7.0},"FUC-NA":{"B":1.0,"S":1.0,"M":3.0},"FUC-NIn":{"B":2.0,"M":1.0},"FU-RC":{"B":7.0,"S":1.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-02-04","counts":{"TCC":{"A":3.0,"P":8.0,"B":14.0,"S":4.0,"M":21.0},"NC":{"P":1.0,"B":1.0,"M":3.0},"NC-In":{"M":1.0},"NC-N In":{"M":2.0},"FUC":{"A":3.0,"P":7.0,"B":13.0,"S":4.0,"M":18.0},"FUC-NA":{"B":1.0,"M":1.0},"FUC-NIn":{"B":3.0,"S":2.0,"M":1.0},"FU-RC":{"A":1.0,"P":5.0,"B":11.0,"S":1.0,"M":9.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-05","counts":{"TCC":{"A":2.0,"P":3.0,"B":15.0,"S":12.0,"M":10.0},"NC":{"B":9.0,"M":3.0},"NC-NA":{"B":1.0},"NC-In":{"B":6.0,"M":2.0},"FUC":{"A":2.0,"P":3.0,"B":6.0,"S":12.0,"M":7.0},"FU-RC":{"A":2.0,"P":1.0,"B":2.0,"S":9.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-02-06","counts":{"TCC":{"P":14.0,"B":6.0,"M":1.0},"NC":{"P":13.0},"NC-In":{"P":11.0},"NC-N In":{"P":2.0},"FUC":{"P":1.0,"B":6.0,"M":1.0},"FU-RC":{"P":1.0,"B":7.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-02-09","counts":{"TCC":{"A":3.0,"P":3.0,"B":8.0,"M":1.0},"FUC":{"A":3.0,"P":3.0,"B":8.0,"M":1.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":1.0,"P":3.0,"B":5.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-02-10","counts":{"TCC":{"A":29.0,"B":1.0,"S":1.0,"M":2.0},"NC":{"A":27.0},"NC-In":{"A":25.0},"NC-N In":{"A":1.0},"FUC":{"A":2.0,"B":1.0,"S":1.0,"M":2.0},"FU-RC":{"A":1.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-11","counts":{"TCC":{"A":6.0,"B":6.0,"S":2.0,"M":17.0},"NC":{"A":6.0,"M":10.0},"NC-NA":{"M":1.0},"NC-In":{"A":2.0,"M":7.0},"NC-N In":{"A":3.0},"FUC":{"B":6.0,"S":2.0,"M":7.0},"FUC-NA":{"B":1.0},"FU-RC":{"B":2.0,"S":2.0,"M":5.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-02-13","counts":{"TCC":{"P":2.0,"B":6.0,"S":1.0,"M":9.0},"NC":{"A":3.0},"NC-In":{"A":1.0},"NC-N In":{"A":1.0},"FUC":{"P":2.0,"B":6.0,"S":1.0,"M":6.0},"FUC-NA":{"B":2.0,"M":2.0},"FU-RC":{"P":2.0,"B":1.0,"S":1.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-16","counts":{"TCC":{"A":9.0,"P":4.0,"B":7.0,"S":1.0,"M":11.0},"NC":{"M":3.0},"NC-In":{"M":2.0},"NC-N In":{"M":1.0},"FUC":{"A":9.0,"P":4.0,"B":7.0,"S":1.0,"M":8.0},"FUC-NIn":{"M":1.0},"FU-RC":{"A":6.0,"P":4.0,"S":1.0,"M":3.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-02-17","counts":{"TCC":{"B":3.0,"S":2.0,"M":3.0},"FUC":{"B":3.0,"S":2.0,"M":3.0},"FUC-NA":{"S":1.0},"FU-RC":{"B":2.0,"S":1.0,"M":1.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-02-18","counts":{"TCC":{"P":4.0,"B":11.0,"S":2.0,"M":11.0},"NC":{"M":1.0},"NC-N In":{"M":1.0},"FUC":{"P":4.0,"B":11.0,"S":2.0,"M":10.0},"FUC-NA":{"P":2.0,"M":1.0},"FUC-NIn":{"P":1.0,"M":1.0},"FU-RC":{"P":1.0,"B":8.0,"S":1.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-19","counts":{"TCC":{"B":5.0,"M":4.0},"NC":{"M":1.0},"NC-N In":{"M":1.0},"FUC":{"B":5.0,"M":3.0},"FUC-NIn":{"B":2.0},"FU-RC":{"B":2.0,"M":1.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-02-24","counts":{"TCC":{"A":1.0,"B":6.0,"M":8.0},"FUC":{"A":1.0,"B":6.0,"M":8.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"A":1.0,"M":1.0},"FU-RC":{"B":5.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-25","counts":{"TCC":{"B":5.0,"S":7.0,"M":6.0},"FUC":{"B":5.0,"S":7.0,"M":6.0},"FUC-NIn":{"B":1.0,"S":1.0},"FU-RC":{"B":3.0,"S":3.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-02-26","counts":{"TCC":{"B":3.0,"S":2.0,"M":5.0},"FUC":{"B":3.0,"S":2.0,"M":5.0},"FU-RC":{"B":2.0,"S":2.0,"M":3.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-02-27","counts":{"TCC":{"B":5.0,"M":9.0},"NC":{"M":5.0},"NC-In":{"M":2.0},"FUC":{"B":2.0,"M":4.0},"FUC-NA":{"M":1.0},"FU-RC":{"B":2.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-02","counts":{"TCC":{"A":1.0,"B":7.0,"S":2.0,"M":10.0},"FUC":{"A":1.0,"B":7.0,"S":2.0,"M":10.0},"FUC-NA":{"B":2.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"B":4.0,"S":1.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-03","counts":{"TCC":{"A":1.0,"P":1.0,"B":12.0,"S":3.0,"M":13.0},"FUC":{"A":1.0,"P":1.0,"B":12.0,"S":3.0,"M":13.0},"FUC-NA":{"B":1.0,"M":2.0},"FUC-NIn":{"A":1.0,"B":1.0},"FU-RC":{"B":9.0,"S":2.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-04","counts":{"TCC":{"B":1.0,"S":1.0,"M":1.0},"FUC":{"B":1.0,"S":1.0,"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-05","counts":{"TCC":{"A":1.0,"B":2.0,"S":1.0,"M":9.0},"FUC":{"A":1.0,"B":2.0,"S":1.0,"M":9.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"A":1.0,"M":5.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-03-06","counts":{"TCC":{"A":5.0,"P":6.0,"B":9.0,"S":2.0,"M":8.0},"FUC":{"A":5.0,"P":6.0,"B":9.0,"S":2.0,"M":8.0},"FUC-NA":{"S":1.0,"M":1.0},"FUC-NIn":{"A":1.0},"FU-RC":{"A":4.0,"P":4.0,"B":8.0,"S":1.0,"M":6.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-03-11","counts":{"TCC":{"B":7.0,"S":1.0},"FUC":{"B":7.0,"S":1.0},"FUC-NIn":{"B":1.0},"FU-RC":{"B":4.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-12","counts":{"TCC":{"A":4.0,"B":6.0,"S":2.0,"M":11.0},"FUC":{"A":4.0,"B":6.0,"S":2.0,"M":11.0},"FUC-NIn":{"M":2.0},"FU-RC":{"A":4.0,"B":5.0,"S":1.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-13","counts":{"TCC":{"P":2.0,"B":4.0,"M":16.0},"FUC":{"P":2.0,"B":4.0,"M":16.0},"FU-RC":{"B":5.0,"M":12.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-16","counts":{"TCC":{"P":1.0,"B":2.0,"S":6.0,"M":12.0},"FUC":{"P":1.0,"B":2.0,"S":6.0,"M":12.0},"FUC-NIn":{"P":1.0},"FU-RC":{"S":2.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-17","counts":{"TCC":{"P":1.0,"B":4.0,"S":4.0,"M":10.0},"FUC":{"P":1.0,"B":4.0,"S":4.0,"M":10.0},"FUC-NIn":{"B":1.0,"S":1.0},"FU-RC":{"B":3.0,"S":3.0,"M":9.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-18","counts":{"TCC":{"P":5.0,"B":5.0,"S":2.0,"M":14.0},"FUC":{"P":5.0,"B":5.0,"S":2.0,"M":14.0},"FUC-NA":{"S":1.0},"FU-RC":{"P":4.0,"B":5.0,"S":1.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-20","counts":{"TCC":{"P":23.0},"NC":{"P":23.0},"NC-NA":{"B":2.0},"NC-In":{"B":17.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-23","counts":{"TCC":{"P":3.0,"B":6.0,"S":7.0,"M":5.0},"NC":{"S":1.0},"NC-In":{"S":1.0},"FUC":{"P":2.0,"B":6.0,"S":7.0,"M":5.0},"FUC-NA":{"B":1.0,"S":3.0,"M":1.0},"FU-RC":{"B":3.0,"S":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-03-24","counts":{"TCC":{"B":28.0,"S":6.0,"M":9.0},"NC":{"B":14.0},"NC-NA":{"B":2.0},"NC-In":{"B":8.0},"NC-N In":{"B":2.0},"FUC":{"B":14.0,"S":6.0,"M":9.0},"FUC-NA":{"S":1.0,"M":2.0},"FU-RC":{"B":10.0,"S":3.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-25","counts":{"TCC":{"B":1.0,"S":2.0,"M":7.0},"FUC":{"B":1.0,"S":2.0,"M":7.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":1.0,"M":3.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-03-26","counts":{"TCC":{"A":1.0,"B":3.0,"M":5.0},"FUC":{"A":1.0,"B":3.0,"M":5.0},"FU-RC":{"B":2.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-27","counts":{"TCC":{"P":1.0,"B":3.0,"M":6.0},"NC":{"M":1.0},"NC-In":{"P":1.0,"B":3.0,"M":5.0},"NC-N In":{"B":1.0},"FUC":{"P":1.0,"B":3.0,"M":5.0},"FUC-NA":{"B":1.0},"FU-RC":{"B":1.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-30","counts":{"TCC":{"B":14.0,"M":6.0},"FUC":{"B":14.0,"M":6.0},"FU-RC":{"B":12.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-03-31","counts":{"TCC":{"P":1.0,"B":1.0,"S":6.0,"M":7.0},"NC":{"S":5.0,"M":4.0},"FUC":{"P":1.0,"B":1.0,"S":1.0,"M":3.0},"FU-RC":{"P":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-01","counts":{"TCC":{"B":7.0,"M":9.0},"NC":{"M":4.0},"NC-In":{"M":3.0},"FUC":{"B":7.0,"M":5.0},"FUC-NIn":{"B":2.0},"FU-RC":{"B":4.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-02","counts":{"TCC":{"S":1.0,"M":5.0},"FUC":{"S":1.0,"M":5.0},"FU-RC":{"S":1.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-07","counts":{"TCC":{"B":1.0,"S":1.0,"M":1.0},"FUC":{"B":1.0,"S":1.0,"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-08","counts":{"TCC":{"B":2.0,"S":10.0,"M":10.0},"NC":{"S":5.0,"M":5.0},"FUC":{"B":2.0,"S":5.0,"M":5.0},"FU-RC":{"S":5.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-09","counts":{"TCC":{"B":3.0,"S":4.0,"M":10.0},"NC":{"S":1.0,"M":2.0},"NC-In":{"S":1.0,"M":2.0},"FUC":{"B":3.0,"S":3.0,"M":8.0},"FU-RC":{"B":2.0,"S":2.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-10","counts":{"TCC":{"B":14.0,"S":4.0,"M":7.0},"NC":{"B":2.0,"S":1.0,"M":1.0},"NC-In":{"B":1.0,"S":1.0,"M":1.0},"FUC":{"B":12.0,"S":3.0,"M":6.0},"FUC-NA":{"B":1.0,"M":1.0},"FUC-NIn":{"B":1.0,"S":1.0},"FU-RC":{"B":11.0,"S":2.0,"M":3.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-04-14","counts":{"TCC":{"B":5.0,"S":8.0,"M":12.0},"NC":{"S":3.0,"M":3.0},"NC-NA":{"S":2.0,"M":2.0},"NC-In":{"M":1.0},"NC-N In":{"S":1.0},"FUC":{"B":5.0,"S":5.0,"M":9.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":1.0,"S":2.0,"M":7.0}},"sales":8,"source":"seed"},{"rep":"Nug","date":"2026-04-27","counts":{"TCC":{"S":1.0,"M":10.0},"NC":{"S":1.0,"M":10.0},"NC-In":{"M":8.0},"NC-N In":{"M":2.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-04-28","counts":{"TCC":{"B":1.0,"S":2.0,"M":4.0},"NC":{"M":2.0},"NC-In":{"M":2.0},"FUC":{"B":1.0,"S":2.0,"M":2.0},"FU-RC":{"S":1.0,"M":2.0}},"sales":5,"source":"seed"},{"rep":"Nug","date":"2026-04-30","counts":{"TCC":{"B":4.0,"S":5.0,"M":5.0},"FUC":{"B":4.0,"S":5.0,"M":5.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":4.0,"S":4.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-01","counts":{"TCC":{"S":1.0},"FUC":{"S":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-05","counts":{"TCC":{"B":5.0,"S":2.0,"M":7.0},"FUC":{"B":5.0,"S":2.0,"M":7.0},"FUC-NIn":{"B":1.0},"FU-RC":{"B":4.0,"S":2.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-05-07","counts":{"TCC":{"B":11.0,"M":12.0},"FUC":{"B":11.0,"M":12.0},"FUC-NA":{"M":2.0},"FU-RC":{"B":8.0,"M":7.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-05-08","counts":{"TCC":{"B":9.0,"S":6.0,"M":4.0},"FUC":{"B":9.0,"S":6.0,"M":4.0},"FUC-NA":{"S":3.0},"FUC-NIn":{"B":4.0,"S":1.0},"FU-RC":{"B":4.0,"S":2.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-11","counts":{"TCC":{"B":3.0,"M":2.0},"FUC":{"B":3.0,"M":2.0},"FU-RC":{"B":3.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-12","counts":{"TCC":{"P":4.0,"B":4.0,"S":2.0,"M":1.0},"FUC":{"P":4.0,"B":4.0,"S":2.0,"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"P":3.0,"B":3.0,"S":1.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-13","counts":{"TCC":{"B":2.0,"M":8.0},"FUC":{"B":2.0,"M":8.0},"FU-RC":{"M":7.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-14","counts":{"TCC":{"S":1.0,"M":2.0},"FUC":{"S":1.0,"M":2.0},"FU-RC":{"M":1.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-05-15","counts":{"TCC":{"B":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-05-18","counts":{"TCC":{"P":2.0,"B":9.0,"S":3.0,"M":3.0},"FUC":{"P":2.0,"B":9.0,"S":3.0,"M":3.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":8.0,"S":2.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-05-20","counts":{"TCC":{"B":5.0,"S":2.0,"M":9.0},"FUC":{"B":5.0,"S":2.0,"M":9.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"S":2.0,"M":1.0},"FU-RC":{"B":5.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-21","counts":{"TCC":{"B":5.0,"M":5.0},"FUC":{"B":5.0,"M":5.0},"FU-RC":{"B":5.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-05-22","counts":{"TCC":{"B":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-05-25","counts":{"TCC":{"B":5.0,"S":2.0,"M":9.0},"FUC":{"B":5.0,"S":2.0,"M":9.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"B":5.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-05-27","counts":{"TCC":{"B":2.0,"M":4.0},"FUC":{"B":2.0,"M":4.0},"FU-RC":{"B":1.0,"M":3.0}},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-05-28","counts":{"TCC":{"B":5.0,"S":2.0,"M":9.0},"FUC":{"B":5.0,"S":2.0,"M":9.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"B":5.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-06-01","counts":{"TCC":{"A":1.0,"B":6.0,"S":3.0,"M":5.0},"NC":{"M":1.0},"NC-In":{"M":1.0},"FUC":{"A":1.0,"B":6.0,"S":3.0,"M":4.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":1.0,"B":3.0,"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-06-03","counts":{"TCC":{"M":1.0},"FUC":{"M":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-06-04","counts":{"TCC":{"B":5.0,"M":6.0},"FUC":{"B":5.0,"M":6.0},"FUC-NIn":{"B":1.0},"FU-RC":{"B":3.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-06-09","counts":{"TCC":{"P":2.0,"B":5.0,"M":6.0},"NC":{"M":1.0},"NC-In":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Nug","date":"2026-06-10","counts":{"TCC":{"S":1.0,"M":2.0},"FUC":{"S":1.0,"M":2.0},"FU-RC":{"S":1.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-06-11","counts":{},"sales":2,"source":"seed"},{"rep":"Nug","date":"2026-06-24","counts":{"TCC":{"B":1.0}},"sales":1,"source":"seed"},{"rep":"Nug","date":"2026-06-29","counts":{"TCC":{"B":1.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-01-28","counts":{"TCC":{"B":2.0,"S":8.0,"M":6.0},"NC":{"B":2.0,"S":6.0,"M":6.0},"NC-NA":{"S":2.0,"M":1.0},"NC-In":{"B":2.0,"S":5.0,"M":5.0},"FUC":{"S":2.0},"FUC-NIn":{"S":1.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-01-29","counts":{"TCC":{"B":1.0,"S":13.0,"M":13.0},"NC":{"B":1.0,"S":8.0,"M":7.0},"NC-NA":{"M":1.0},"NC-In":{"B":1.0,"S":7.0,"M":4.0},"NC-N In":{"S":2.0,"M":4.0},"FUC":{"S":5.0,"M":6.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"S":4.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-01-30","counts":{"TCC":{"B":3.0,"S":13.0,"M":5.0},"NC":{"B":3.0,"S":10.0,"M":4.0},"NC-In":{"B":3.0,"S":9.0,"M":4.0},"NC-N In":{"S":2.0},"FUC":{"S":3.0,"M":1.0},"FU-RC":{"S":2.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-02","counts":{"TCC":{"A":6.0,"S":15.0,"M":2.0},"NC":{"A":6.0,"S":13.0},"NC-NA":{"A":2.0,"S":1.0},"NC-In":{"A":1.0,"S":12.0},"NC-N In":{"A":3.0},"FUC":{"S":2.0,"M":2.0},"FUC-NA":{"S":1.0},"FU-RC":{"S":2.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-03","counts":{"TCC":{"A":2.0,"B":3.0,"S":19.0,"M":2.0},"NC":{"B":3.0,"S":11.0},"NC-NA":{"S":1.0},"NC-In":{"B":2.0,"S":10.0},"NC-N In":{"B":1.0,"S":1.0},"FUC":{"A":2.0,"S":8.0,"M":2.0},"FUC-NIn":{"S":1.0},"FU-RC":{"A":2.0,"S":6.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-04","counts":{"TCC":{"B":7.0,"S":20.0,"M":2.0},"NC":{"B":5.0,"S":10.0,"M":1.0},"NC-NA":{"S":2.0},"NC-In":{"B":3.0,"S":9.0,"M":1.0},"NC-N In":{"B":2.0,"S":2.0},"FUC":{"B":2.0,"S":10.0,"M":1.0},"FUC-NA":{"B":1.0,"S":1.0,"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":1.0,"S":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-05","counts":{"TCC":{"B":16.0,"S":7.0,"M":4.0},"NC":{"B":13.0,"S":1.0,"M":3.0},"NC-NA":{"B":1.0},"NC-In":{"B":4.0,"S":1.0,"M":3.0},"NC-N In":{"B":5.0},"FUC":{"B":3.0,"S":6.0,"M":1.0},"FUC-NIn":{"B":1.0},"FU-RC":{"B":5.0,"S":6.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-02-06","counts":{"TCC":{"B":3.0,"S":8.0,"M":10.0},"NC":{"M":6.0},"NC-In":{"M":5.0},"NC-N In":{"M":1.0},"FUC":{"B":3.0,"S":8.0,"M":4.0},"FUC-NA":{"S":2.0,"M":2.0},"FUC-NIn":{"B":1.0,"S":2.0},"FU-RC":{"B":1.0,"S":4.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-02-10","counts":{"TCC":{"A":1.0,"P":7.0,"B":2.0,"S":11.0,"M":7.0},"NC":{"P":7.0,"S":1.0,"M":5.0},"NC-NA":{"P":1.0,"S":1.0,"M":1.0},"NC-In":{"P":6.0,"M":2.0},"NC-N In":{"M":2.0},"FUC":{"A":1.0,"B":2.0,"S":11.0,"M":7.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"B":2.0,"S":2.0,"M":1.0},"FU-RC":{"A":1.0,"S":7.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-11","counts":{"TCC":{"A":1.0,"P":15.0,"B":8.0,"S":17.0,"M":1.0},"NC":{"P":13.0,"B":5.0,"S":10.0},"NC-NA":{"P":1.0,"B":1.0,"S":2.0},"NC-In":{"P":10.0,"B":4.0,"S":7.0},"NC-N In":{"P":2.0,"S":1.0},"FUC":{"A":1.0,"P":2.0,"B":3.0,"S":7.0,"M":1.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"P":2.0,"B":3.0,"S":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-12","counts":{"TCC":{"A":23.0,"P":9.0,"B":1.0,"S":6.0},"NC":{"A":18.0,"P":5.0},"NC-NA":{"A":2.0,"P":1.0},"NC-In":{"A":13.0,"P":4.0},"NC-N In":{"A":3.0},"FUC":{"A":5.0,"P":4.0,"B":1.0,"S":6.0},"FUC-NA":{"P":1.0},"FU-RC":{"A":5.0,"P":3.0,"B":1.0,"S":6.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-02-13","counts":{"TCC":{"A":6.0,"P":2.0,"B":1.0,"S":3.0,"M":24.0},"NC":{"B":1.0,"M":19.0},"NC-NA":{"M":1.0},"NC-In":{"B":1.0,"M":12.0},"NC-N In":{"M":6.0},"FUC":{"A":6.0,"P":2.0,"S":3.0,"M":5.0},"FUC-NA":{"A":2.0},"FUC-NIn":{"A":1.0,"P":1.0},"FU-RC":{"A":3.0,"P":2.0,"S":3.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-17","counts":{"TCC":{"A":6.0,"B":7.0,"S":13.0,"M":5.0},"NC":{"B":7.0},"NC-In":{"B":7.0},"FUC":{"A":6.0,"S":13.0,"M":5.0},"FUC-NA":{"A":1.0,"S":3.0},"FU-RC":{"A":4.0,"S":9.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-18","counts":{"TCC":{"A":2.0,"B":24.0,"S":6.0,"M":6.0},"NC":{"A":1.0,"B":22.0,"M":1.0},"NC-In":{"B":15.0,"M":1.0},"NC-N In":{"B":6.0},"FUC":{"A":1.0,"B":2.0,"S":6.0,"M":5.0},"FUC-NA":{"B":1.0,"S":1.0},"FUC-NIn":{"B":1.0,"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"S":4.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-02-19","counts":{"TCC":{"A":5.0,"P":4.0,"B":11.0,"S":8.0,"M":7.0},"NC":{"A":4.0,"P":3.0,"B":7.0,"S":1.0,"M":3.0},"NC-In":{"P":3.0,"B":4.0,"S":1.0,"M":1.0},"NC-N In":{"A":4.0,"B":3.0,"M":2.0},"FUC":{"A":1.0,"P":1.0,"B":4.0,"S":7.0,"M":4.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"B":3.0,"M":2.0},"FU-RC":{"A":1.0,"P":1.0,"B":1.0,"S":6.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-20","counts":{"TCC":{"B":2.0,"S":6.0,"M":2.0},"FUC":{"B":2.0,"S":6.0,"M":2.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"S":3.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-23","counts":{"TCC":{"A":1.0,"P":1.0,"B":7.0,"S":2.0,"M":2.0},"FUC":{"A":1.0,"P":1.0,"B":7.0,"S":2.0,"M":2.0},"FUC-NIn":{"A":1.0,"B":1.0,"M":1.0},"FU-RC":{"P":1.0,"B":6.0,"S":2.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-24","counts":{"TCC":{"P":7.0,"B":9.0,"S":7.0,"M":32.0},"NC":{"M":27.0},"NC-NA":{"M":4.0},"NC-In":{"M":20.0},"NC-N In":{"M":3.0},"FUC":{"P":7.0,"B":9.0,"S":7.0,"M":5.0},"FUC-NIn":{"P":1.0,"B":1.0,"S":1.0,"M":2.0},"FU-RC":{"P":6.0,"B":6.0,"S":6.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-25","counts":{"TCC":{"P":4.0,"B":8.0,"S":11.0,"M":15.0},"NC":{"M":7.0},"NC-NA":{"M":1.0},"NC-In":{"M":3.0},"NC-N In":{"M":3.0},"FUC":{"P":4.0,"B":8.0,"S":11.0,"M":8.0},"FUC-NA":{"P":1.0,"S":2.0},"FUC-NIn":{"P":2.0,"B":1.0,"S":2.0,"M":3.0},"FU-RC":{"P":1.0,"B":6.0,"S":7.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-02-26","counts":{"TCC":{"A":4.0,"B":2.0,"S":9.0,"M":21.0},"NC":{"M":11.0},"NC-NA":{"M":3.0},"NC-In":{"M":7.0},"NC-N In":{"M":1.0},"FUC":{"A":4.0,"B":2.0,"S":9.0,"M":10.0},"FUC-NA":{"S":3.0,"M":1.0},"FUC-NIn":{"S":2.0,"M":2.0},"FU-RC":{"A":4.0,"B":2.0,"S":4.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-02-27","counts":{"TCC":{"A":1.0,"P":2.0,"B":1.0,"S":7.0,"M":32.0},"NC":{"M":18.0},"NC-NA":{"S":3.0,"M":4.0},"NC-In":{"M":8.0},"NC-N In":{"M":6.0},"FUC":{"A":1.0,"P":2.0,"B":1.0,"S":7.0,"M":14.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"M":4.0},"FU-RC":{"A":1.0,"P":2.0,"B":1.0,"S":4.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-03","counts":{"TCC":{"B":1.0,"S":5.0,"M":27.0},"NC":{"M":5.0},"NC-NA":{"M":1.0},"NC-In":{"M":3.0},"NC-N In":{"M":2.0},"FUC":{"B":1.0,"S":5.0,"M":22.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"B":1.0,"M":10.0},"FU-RC":{"S":4.0,"M":11.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-04","counts":{"TCC":{"A":1.0,"P":6.0,"B":7.0,"M":16.0},"NC":{"M":11.0},"NC-NA":{"M":2.0},"NC-In":{"M":4.0},"NC-N In":{"M":4.0},"FUC":{"A":1.0,"P":6.0,"B":7.0,"M":5.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"P":2.0,"B":2.0,"M":3.0},"FU-RC":{"A":1.0,"P":4.0,"B":4.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-05","counts":{"TCC":{"A":5.0,"P":1.0,"B":1.0,"S":4.0,"M":13.0},"NC":{"M":5.0},"NC-NA":{"M":2.0},"NC-In":{"M":1.0},"NC-N In":{"M":2.0},"FUC":{"A":5.0,"P":1.0,"B":1.0,"S":4.0,"M":8.0},"FUC-NA":{"A":2.0,"P":1.0,"M":1.0},"FUC-NIn":{"A":2.0},"FU-RC":{"A":1.0,"B":1.0,"S":3.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-06","counts":{"TCC":{"A":1.0,"B":1.0,"S":6.0,"M":15.0},"NC":{"M":10.0},"NC-NA":{"M":3.0},"NC-In":{"M":5.0},"NC-N In":{"M":2.0},"FUC":{"A":1.0,"B":1.0,"S":6.0,"M":5.0},"FUC-NA":{"S":3.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"B":1.0,"S":2.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-10","counts":{"TCC":{"A":1.0,"P":2.0,"B":2.0,"S":5.0,"M":19.0},"NC":{"M":5.0},"NC-NA":{"M":1.0},"NC-In":{"M":4.0},"FUC":{"A":1.0,"P":2.0,"B":2.0,"S":5.0,"M":14.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"P":1.0,"S":3.0,"M":5.0},"FU-RC":{"A":1.0,"P":1.0,"B":2.0,"S":2.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-11","counts":{"TCC":{"A":1.0,"B":23.0,"S":3.0,"M":10.0},"NC":{"B":19.0,"M":4.0},"NC-NA":{"B":1.0},"NC-In":{"B":13.0,"M":1.0},"NC-N In":{"B":5.0,"M":1.0},"FUC":{"A":1.0,"B":4.0,"S":3.0,"M":6.0},"FUC-NA":{"A":1.0,"M":1.0},"FUC-NIn":{"B":3.0,"S":1.0},"FU-RC":{"B":1.0,"S":2.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-12","counts":{"TCC":{"A":2.0,"B":8.0,"S":3.0,"M":16.0},"NC":{"B":3.0,"M":3.0},"NC-NA":{"B":1.0,"M":1.0},"NC-In":{"B":1.0,"M":1.0},"NC-N In":{"B":1.0,"M":1.0},"FUC":{"A":2.0,"B":5.0,"S":3.0,"M":13.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"B":2.0,"S":1.0,"M":4.0},"FU-RC":{"A":2.0,"B":3.0,"S":2.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-13","counts":{"TCC":{"A":2.0,"B":6.0,"M":15.0},"NC":{"M":13.0},"NC-NA":{"M":2.0},"NC-In":{"M":9.0},"NC-N In":{"M":2.0},"FUC":{"A":2.0,"B":6.0,"M":2.0},"FUC-NA":{"A":1.0,"M":1.0},"FUC-NIn":{"B":2.0},"FU-RC":{"A":1.0,"B":3.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-16","counts":{"TCC":{"P":8.0,"S":1.0},"FUC":{"P":8.0,"S":1.0},"FUC-NA":{"P":1.0},"FUC-NIn":{"P":2.0,"S":1.0},"FU-RC":{"P":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-17","counts":{"TCC":{"A":1.0,"B":2.0,"S":5.0,"M":20.0},"NC":{"M":6.0},"NC-NA":{"M":1.0},"NC-In":{"M":2.0},"NC-N In":{"M":3.0},"FUC":{"A":1.0,"B":2.0,"S":5.0,"M":14.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"B":2.0,"S":2.0,"M":4.0},"FU-RC":{"A":1.0,"S":3.0,"M":8.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-18","counts":{"TCC":{"A":2.0,"P":3.0,"B":6.0,"M":7.0},"FUC":{"A":2.0,"P":3.0,"B":6.0,"M":7.0},"FUC-NA":{"P":1.0},"FUC-NIn":{"A":1.0,"P":1.0,"B":1.0,"M":2.0},"FU-RC":{"A":1.0,"P":1.0,"B":4.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-19","counts":{"TCC":{"A":2.0,"B":6.0,"M":26.0},"NC":{"M":10.0},"NC-NA":{"M":2.0},"NC-In":{"M":5.0},"NC-N In":{"M":3.0},"FUC":{"A":2.0,"B":6.0,"M":16.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"B":2.0,"M":5.0},"FU-RC":{"A":2.0,"B":3.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-20","counts":{"TCC":{"B":3.0,"S":1.0,"M":31.0},"NC":{"M":26.0},"NC-NA":{"M":3.0},"NC-In":{"M":16.0},"NC-N In":{"M":7.0},"FUC":{"B":3.0,"S":1.0,"M":5.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"B":2.0,"M":3.0},"FU-RC":{"S":1.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-23","counts":{"TCC":{"P":1.0,"B":1.0,"M":2.0},"FUC":{"P":1.0,"B":1.0,"M":2.0},"FUC-NIn":{"P":1.0},"FU-RC":{"B":1.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-24","counts":{"TCC":{"A":1.0,"P":2.0,"B":2.0,"M":31.0},"NC":{"M":16.0},"NC-NA":{"M":1.0},"NC-In":{"M":8.0},"NC-N In":{"M":6.0},"FUC":{"A":1.0,"P":2.0,"B":2.0,"M":15.0},"FUC-NA":{"P":1.0,"M":2.0},"FUC-NIn":{"P":1.0,"B":1.0,"M":2.0},"FU-RC":{"A":1.0,"B":1.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-25","counts":{"TCC":{"A":1.0,"B":8.0,"S":1.0,"M":10.0},"NC":{"M":1.0},"NC-In":{"M":1.0},"FUC":{"A":1.0,"B":8.0,"S":1.0,"M":9.0},"FUC-NA":{"M":1.0},"FU-RC":{"A":1.0,"B":8.0,"S":1.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-03-26","counts":{"TCC":{"B":7.0,"S":2.0,"M":28.0},"NC":{"M":13.0},"NC-In":{"M":8.0},"NC-N In":{"M":5.0},"FUC":{"B":7.0,"S":2.0,"M":15.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"S":1.0,"M":8.0},"FU-RC":{"B":7.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-27","counts":{"TCC":{"B":3.0,"S":1.0,"M":21.0},"NC":{"M":9.0},"NC-NA":{"M":3.0},"NC-In":{"M":6.0},"FUC":{"B":3.0,"S":1.0,"M":12.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":3.0,"S":1.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-30","counts":{"TCC":{"B":5.0,"S":3.0,"M":3.0},"FUC":{"B":4.0,"S":3.0,"M":3.0},"FUC-NA":{"B":1.0,"S":1.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":2.0,"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-03-31","counts":{"TCC":{"A":1.0,"B":1.0,"S":2.0,"M":29.0},"NC":{"M":14.0},"NC-NA":{"M":1.0},"NC-In":{"M":10.0},"NC-N In":{"M":3.0},"FUC":{"A":1.0,"B":1.0,"S":2.0,"M":15.0},"FUC-NA":{"M":6.0},"FU-RC":{"A":1.0,"B":1.0,"S":2.0,"M":8.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-04-01","counts":{"TCC":{"A":3.0,"B":3.0,"S":6.0,"M":27.0},"NC":{"M":7.0},"NC-In":{"M":7.0},"FUC":{"A":3.0,"B":3.0,"S":6.0,"M":20.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"A":3.0,"B":3.0,"S":5.0,"M":17.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-07","counts":{"TCC":{"B":3.0,"S":8.0,"M":37.0},"NC":{"M":19.0},"NC-NA":{"M":1.0},"NC-In":{"M":12.0},"NC-N In":{"M":6.0},"FUC":{"B":3.0,"S":8.0,"M":18.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"S":2.0,"M":1.0},"FU-RC":{"B":3.0,"S":5.0,"M":14.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-04-08","counts":{"TCC":{"B":2.0,"S":3.0,"M":14.0},"FUC":{"B":2.0,"S":3.0,"M":14.0},"FUC-NA":{"M":1.0},"FU-RC":{"B":1.0,"S":2.0,"M":13.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-04-09","counts":{"TCC":{"B":2.0,"M":6.0},"FUC":{"B":2.0,"M":6.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-14","counts":{"TCC":{"A":2.0,"P":3.0,"B":1.0,"S":4.0,"M":20.0},"FUC":{"A":2.0,"P":3.0,"B":1.0,"S":4.0,"M":20.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"P":1.0,"M":1.0},"FU-RC":{"A":1.0,"P":2.0,"B":1.0,"S":4.0,"M":18.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-04-15","counts":{"TCC":{"A":2.0,"B":4.0,"S":1.0,"M":22.0},"FUC":{"A":2.0,"B":4.0,"S":1.0,"M":22.0},"FUC-NA":{"S":1.0,"M":1.0},"FUC-NIn":{"A":1.0,"B":1.0,"M":4.0},"FU-RC":{"A":1.0,"B":2.0,"M":15.0}},"sales":3,"source":"seed"},{"rep":"Bek","date":"2026-04-16","counts":{"TCC":{"B":3.0,"S":1.0,"M":16.0},"NC":{"M":3.0},"NC-In":{"M":3.0},"FUC":{"B":3.0,"S":1.0,"M":13.0},"FUC-NA":{"B":1.0,"M":2.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":2.0,"M":9.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-04-21","counts":{"TCC":{"A":2.0,"P":5.0,"B":1.0,"S":7.0,"M":26.0},"NC":{"A":2.0,"P":5.0},"NC-In":{"A":2.0,"P":4.0},"NC-N In":{"P":1.0},"FUC":{"B":1.0,"S":7.0,"M":26.0},"FUC-NA":{"S":3.0,"M":3.0},"FUC-NIn":{"M":3.0},"FU-RC":{"B":1.0,"S":4.0,"M":19.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-04-22","counts":{"TCC":{"A":3.0,"P":12.0,"S":2.0,"M":25.0},"NC":{"P":12.0,"S":1.0,"M":13.0},"NC-NA":{"M":3.0},"NC-In":{"P":11.0,"S":1.0,"M":7.0},"NC-N In":{"P":1.0,"M":3.0},"FUC":{"A":3.0,"S":1.0,"M":12.0},"FUC-NA":{"A":1.0,"M":1.0},"FUC-NIn":{"M":3.0},"FU-RC":{"A":2.0,"S":1.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-23","counts":{"TCC":{"A":1.0,"P":2.0,"S":4.0,"M":17.0},"NC":{"A":1.0,"S":1.0,"M":10.0},"NC-NA":{"M":1.0},"NC-In":{"A":1.0,"S":1.0,"M":9.0},"FUC":{"P":2.0,"S":3.0,"M":7.0},"FUC-NIn":{"M":1.0},"FU-RC":{"P":1.0,"S":3.0,"M":5.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-04-24","counts":{"TCC":{"A":1.0,"S":3.0,"M":25.0},"NC":{"M":16.0},"NC-NA":{"M":5.0},"NC-In":{"M":6.0},"NC-N In":{"M":5.0},"FUC":{"A":1.0,"S":3.0,"M":9.0},"FUC-NA":{"S":2.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-28","counts":{"TCC":{"A":1.0,"S":5.0,"M":34.0},"NC":{"S":1.0,"M":21.0},"NC-NA":{"M":2.0},"NC-In":{"M":10.0},"NC-N In":{"S":1.0,"M":9.0},"FUC":{"A":1.0,"S":4.0,"M":13.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"M":3.0},"FU-RC":{"A":1.0,"S":4.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-29","counts":{"TCC":{"A":1.0,"P":2.0,"B":22.0,"S":1.0,"M":5.0},"NC":{"B":22.0},"NC-NA":{"B":4.0},"NC-In":{"B":12.0},"NC-N In":{"B":6.0},"FUC":{"A":1.0,"P":2.0,"S":1.0,"M":5.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"A":1.0,"P":2.0,"S":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-04-30","counts":{"TCC":{"B":16.0,"S":1.0,"M":6.0},"NC":{"B":13.0},"NC-In":{"B":11.0},"NC-N In":{"B":2.0},"FUC":{"B":3.0,"S":1.0,"M":6.0},"FU-RC":{"B":2.0,"S":1.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-01","counts":{"TCC":{"B":6.0,"S":2.0,"M":14.0},"NC":{"B":1.0},"NC-In":{"B":1.0},"FUC":{"B":5.0,"S":2.0,"M":14.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"B":1.0,"M":2.0},"FU-RC":{"B":4.0,"S":1.0,"M":9.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-05-05","counts":{"TCC":{"A":3.0,"P":2.0,"B":17.0,"S":2.0,"M":13.0},"NC":{"B":12.0},"NC-NA":{"B":2.0},"NC-In":{"B":8.0},"NC-N In":{"B":2.0},"FUC":{"A":3.0,"P":2.0,"B":5.0,"S":2.0,"M":13.0},"FUC-NA":{"B":2.0,"S":1.0,"M":2.0},"FUC-NIn":{"P":1.0,"M":1.0},"FU-RC":{"A":3.0,"P":1.0,"B":3.0,"S":1.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-06","counts":{"TCC":{"P":6.0,"B":5.0,"M":7.0},"NC":{"B":3.0},"NC-In":{"B":3.0},"FUC":{"P":6.0,"B":5.0,"M":7.0},"FUC-NA":{"P":2.0},"FUC-NIn":{"P":2.0,"M":2.0},"FU-RC":{"P":2.0,"B":5.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-07","counts":{"TCC":{"A":1.0,"P":2.0,"B":12.0,"S":5.0,"M":10.0},"NC":{"B":7.0,"S":3.0},"NC-In":{"B":4.0,"S":2.0},"NC-N In":{"B":4.0},"FUC":{"A":1.0,"P":2.0,"B":5.0,"S":2.0,"M":10.0},"FUC-NA":{"P":1.0,"B":1.0,"S":1.0,"M":2.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":1.0,"P":1.0,"B":2.0,"S":1.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-08","counts":{"TCC":{"B":5.0,"S":8.0,"M":15.0},"NC":{"S":5.0},"NC-NA":{"S":1.0},"NC-In":{"S":3.0},"NC-N In":{"S":1.0},"FUC":{"B":5.0,"S":3.0,"M":15.0},"FUC-NA":{"B":1.0,"M":1.0},"FUC-NIn":{"B":1.0,"M":2.0},"FU-RC":{"B":2.0,"S":3.0,"M":12.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-11","counts":{"TCC":{"B":2.0,"S":4.0,"M":11.0},"FUC":{"B":2.0,"S":4.0,"M":11.0},"FUC-NA":{"S":1.0,"M":2.0},"FU-RC":{"S":3.0,"M":9.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-05-12","counts":{"TCC":{"P":5.0,"B":5.0,"S":12.0,"M":5.0},"NC":{"S":6.0},"NC-NA":{"S":2.0},"NC-In":{"S":4.0},"FUC":{"P":5.0,"B":5.0,"S":6.0,"M":5.0},"FUC-NIn":{"P":1.0,"B":2.0},"FU-RC":{"P":4.0,"B":3.0,"S":5.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-13","counts":{"TCC":{"P":2.0,"B":2.0,"S":28.0,"M":5.0},"NC":{"S":25.0},"NC-NA":{"S":3.0},"NC-In":{"S":17.0},"NC-N In":{"S":5.0},"FUC":{"P":2.0,"B":2.0,"S":3.0,"M":5.0},"FUC-NA":{"S":2.0},"FUC-NIn":{"M":2.0},"FU-RC":{"P":2.0,"B":2.0,"S":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-14","counts":{"TCC":{"A":1.0,"P":5.0,"B":16.0,"S":3.0,"M":12.0},"FUC":{"A":1.0,"P":5.0,"B":16.0,"S":3.0,"M":12.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"P":1.0,"B":1.0},"FU-RC":{"A":1.0,"P":4.0,"B":15.0,"S":3.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-15","counts":{"TCC":{"A":2.0,"B":12.0,"S":6.0,"M":8.0},"NC":{"S":3.0},"NC-NA":{"S":1.0},"NC-In":{"S":1.0},"NC-N In":{"S":1.0},"FUC":{"A":2.0,"B":12.0,"S":3.0,"M":8.0},"FUC-NA":{"M":1.0},"FU-RC":{"A":2.0,"B":10.0,"S":3.0,"M":7.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-05-18","counts":{"TCC":{"B":2.0,"S":3.0,"M":5.0},"FUC":{"B":2.0,"S":3.0,"M":5.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":2.0,"S":3.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-19","counts":{"TCC":{"A":1.0,"P":3.0,"B":8.0,"S":20.0,"M":9.0},"NC":{"S":15.0},"NC-NA":{"S":1.0},"NC-In":{"S":14.0},"FUC":{"A":1.0,"P":3.0,"B":8.0,"S":5.0,"M":9.0},"FUC-NA":{"B":1.0,"S":2.0},"FUC-NIn":{"B":1.0,"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"P":3.0,"B":6.0,"S":2.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-20","counts":{"TCC":{"P":1.0,"B":4.0,"S":23.0,"M":6.0},"NC":{"S":9.0},"NC-NA":{"S":1.0},"NC-In":{"S":8.0},"FUC":{"P":1.0,"B":4.0,"S":14.0,"M":6.0},"FUC-NA":{"S":2.0,"M":1.0},"FUC-NIn":{"S":3.0,"M":1.0},"FU-RC":{"P":1.0,"B":4.0,"S":9.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-21","counts":{"TCC":{"B":7.0,"S":11.0,"M":4.0},"NC":{"S":4.0},"NC-NA":{"S":1.0},"NC-In":{"S":3.0},"FUC":{"B":7.0,"S":7.0,"M":4.0},"FUC-NA":{"B":2.0,"S":1.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"B":5.0,"S":4.0,"M":3.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-22","counts":{"TCC":{"B":4.0,"S":22.0,"M":6.0},"NC":{"S":17.0},"NC-NA":{"S":2.0},"NC-In":{"S":14.0},"NC-N In":{"S":1.0},"FUC":{"B":4.0,"S":5.0,"M":6.0},"FUC-NA":{"S":2.0,"M":2.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":4.0,"S":3.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-25","counts":{"TCC":{"A":3.0,"B":2.0,"S":2.0,"M":4.0},"FUC":{"A":3.0,"B":2.0,"S":2.0,"M":4.0},"FUC-NIn":{"A":1.0,"B":1.0,"M":1.0},"FU-RC":{"A":2.0,"B":1.0,"S":2.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-26","counts":{"TCC":{"A":1.0,"P":3.0,"B":1.0,"S":31.0,"M":7.0},"NC":{"S":9.0},"NC-NA":{"S":2.0},"NC-In":{"S":6.0},"NC-N In":{"S":1.0},"FUC":{"A":1.0,"P":3.0,"B":1.0,"S":22.0,"M":7.0},"FUC-NA":{"P":1.0,"S":2.0,"M":1.0},"FUC-NIn":{"S":5.0},"FU-RC":{"A":1.0,"P":2.0,"B":1.0,"S":15.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-05-27","counts":{"TCC":{"S":33.0,"M":5.0},"NC":{"S":12.0},"NC-NA":{"S":2.0},"NC-In":{"S":5.0},"NC-N In":{"S":5.0},"FUC":{"S":21.0,"M":5.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"S":4.0,"M":2.0},"FU-RC":{"S":16.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-28","counts":{"TCC":{"B":4.0,"S":6.0,"M":1.0},"FUC":{"B":4.0,"S":6.0,"M":1.0},"FUC-NA":{"B":1.0},"FU-RC":{"B":3.0,"S":4.0,"M":1.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-05-29","counts":{"TCC":{"A":1.0,"B":5.0,"S":16.0,"M":7.0},"NC":{"B":2.0},"NC-In":{"B":1.0},"NC-N In":{"B":1.0},"FUC":{"A":1.0,"B":3.0,"S":16.0,"M":7.0},"FUC-NA":{"S":4.0},"FUC-NIn":{"M":1.0},"FU-RC":{"A":1.0,"B":3.0,"S":12.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-06-01","counts":{"TCC":{"A":2.0,"S":5.0,"M":2.0},"FUC":{"A":2.0,"S":5.0,"M":2.0},"FUC-NIn":{"S":2.0},"FU-RC":{"A":2.0,"S":3.0,"M":2.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-06-02","counts":{"TCC":{"A":1.0,"P":7.0,"B":8.0,"S":27.0,"M":8.0},"NC":{"S":9.0},"NC-NA":{"S":1.0},"NC-In":{"S":7.0},"NC-N In":{"S":1.0},"FUC":{"A":1.0,"P":7.0,"B":8.0,"S":18.0,"M":8.0},"FUC-NA":{"P":1.0,"S":2.0,"M":1.0},"FUC-NIn":{"S":2.0,"M":1.0},"FU-RC":{"A":1.0,"P":6.0,"B":7.0,"S":14.0,"M":5.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-06-03","counts":{"TCC":{"B":10.0,"S":5.0,"M":4.0},"NC":{"B":4.0},"NC-NA":{"B":2.0},"NC-In":{"B":2.0},"FUC":{"B":6.0,"S":5.0,"M":4.0},"FUC-NA":{"S":1.0,"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":6.0,"S":4.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-06-04","counts":{"TCC":{"B":11.0,"S":7.0,"M":3.0},"FUC":{"B":11.0,"S":7.0,"M":3.0},"FU-RC":{"B":10.0,"S":7.0,"M":3.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-06-05","counts":{"TCC":{"B":10.0,"S":6.0,"M":2.0},"FUC":{"B":10.0,"S":6.0,"M":2.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":8.0,"S":5.0,"M":2.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-06-19","counts":{"TCC":{"B":4.0,"S":1.0},"FUC":{"B":4.0,"S":1.0},"FU-RC":{"B":4.0}},"sales":1,"source":"seed"},{"rep":"Bek","date":"2026-06-22","counts":{"TCC":{"B":12.0,"S":9.0,"M":4.0},"FUC":{"B":12.0,"S":9.0,"M":4.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":11.0,"S":8.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-06-23","counts":{"TCC":{"B":8.0,"S":6.0,"M":13.0},"FUC":{"B":8.0,"S":6.0,"M":13.0},"FUC-NA":{"S":1.0,"M":1.0},"FUC-NIn":{"S":3.0,"M":3.0},"FU-RC":{"B":6.0,"S":2.0,"M":9.0}},"sales":2,"source":"seed"},{"rep":"Bek","date":"2026-06-24","counts":{"TCC":{"A":2.0,"P":3.0,"B":5.0,"S":3.0,"M":16.0},"FUC":{"A":2.0,"P":3.0,"B":5.0,"S":3.0,"M":16.0},"FUC-NA":{"S":3.0},"FU-RC":{"A":2.0,"P":3.0,"B":5.0,"S":3.0,"M":13.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-06-25","counts":{"TCC":{"A":1.0,"B":13.0,"S":3.0,"M":15.0},"FUC":{"A":1.0,"B":13.0,"S":3.0,"M":15.0},"FUC-NA":{"B":1.0,"M":2.0},"FUC-NIn":{"S":1.0,"M":3.0},"FU-RC":{"A":1.0,"B":12.0,"S":2.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Bek","date":"2026-06-26","counts":{"TCC":{"A":1.0,"B":5.0,"S":8.0,"M":9.0},"FUC":{"A":1.0,"B":5.0,"S":8.0,"M":9.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"S":4.0},"FU-RC":{"A":1.0,"B":3.0,"S":3.0,"M":8.0}},"sales":3,"source":"seed"},{"rep":"Bek","date":"2026-06-29","counts":{"TCC":{"P":2.0,"B":4.0,"S":6.0,"M":8.0},"FUC":{"P":2.0,"B":4.0,"S":6.0,"M":8.0},"FUC-NIn":{"P":1.0},"FU-RC":{"P":1.0,"B":3.0,"S":6.0,"M":7.0}},"sales":2,"source":"seed"},{"rep":"Carolyn","date":"2026-04-29","counts":{"TCC":{"S":1.0,"M":7.0},"NC":{"M":7.0},"NC-In":{"M":7.0},"FUC":{"S":1.0},"FU-RC":{"S":1.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-04-30","counts":{"TCC":{"B":2.0,"S":15.0,"M":7.0},"NC":{"B":2.0,"S":15.0,"M":7.0},"NC-NA":{"B":1.0,"S":4.0,"M":2.0},"NC-In":{"B":1.0,"S":8.0,"M":4.0},"NC-N In":{"S":1.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-01","counts":{"TCC":{"B":1.0,"S":10.0,"M":1.0},"NC":{"S":17.0},"NC-NA":{"S":4.0},"NC-In":{"S":10.0},"NC-N In":{"S":6.0},"FUC":{"S":1.0,"M":2.0},"FUC-NA":{"B":1.0,"S":1.0},"FU-RC":{"S":5.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-04-05","counts":{"TCC":{"S":36.0},"NC":{"S":28.0},"NC-NA":{"S":3.0},"NC-In":{"S":26.0},"NC-N In":{"S":4.0},"FUC":{"S":8.0},"FUC-NA":{"S":3.0},"FUC-NIn":{"S":1.0},"FU-RC":{"S":5.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-05","counts":{"TCC":{"S":33.0,"M":4.0},"NC":{"S":17.0,"M":17.0},"NC-NA":{"S":5.0},"NC-In":{"S":14.0},"NC-N In":{"S":2.0},"FUC":{"S":20.0,"M":4.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"S":4.0},"FU-RC":{"S":7.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-05","counts":{"TCC":{"S":12.0,"M":5.0},"NC":{"A":15.0,"S":15.0},"NC-NA":{"S":3.0},"NC-In":{"S":11.0},"NC-N In":{"S":1.0},"FUC":{"S":12.0,"M":5.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"S":3.0},"FU-RC":{"S":6.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-07","counts":{"TCC":{"B":1.0,"S":35.0},"NC":{"S":11.0,"M":9.0},"NC-NA":{"S":4.0},"NC-In":{"S":5.0},"NC-N In":{"S":2.0},"FUC":{"B":1.0,"S":24.0},"FUC-NA":{"S":4.0},"FUC-NIn":{"B":1.0,"S":1.0},"FU-RC":{"S":18.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-08","counts":{"TCC":{"S":22.0},"NC":{"S":7.0},"NC-NA":{"S":1.0},"NC-In":{"S":3.0},"FUC":{"S":15.0},"FUC-NA":{"S":3.0},"FUC-NIn":{"S":2.0},"FU-RC":{"S":13.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-11","counts":{"TCC":{"S":38.0,"M":2.0},"NC":{"S":11.0},"NC-NA":{"S":2.0},"NC-In":{"S":9.0},"FUC":{"S":38.0,"M":2.0},"FUC-NA":{"S":9.0,"M":9.0},"FUC-NIn":{"S":9.0,"M":1.0},"FU-RC":{"S":10.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-12","counts":{"TCC":{"S":42.0},"NC":{"S":10.0},"NC-NA":{"S":1.0},"NC-In":{"S":10.0},"FUC":{"S":32.0},"FUC-NA":{"S":10.0},"FUC-NIn":{"S":9.0},"FU-RC":{"S":13.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-13","counts":{"TCC":{"S":24.0,"M":11.0},"NC":{"M":11.0},"NC-NA":{"M":1.0},"NC-In":{"M":6.0},"NC-N In":{"M":4.0},"FUC":{"S":24.0},"FUC-NA":{"S":4.0},"FUC-NIn":{"S":5.0},"FU-RC":{"S":14.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-15","counts":{"TCC":{"S":32.0,"M":9.0},"FUC":{"S":32.0,"M":9.0},"FUC-NA":{"S":3.0,"M":4.0},"FUC-NIn":{"S":9.0,"M":1.0},"FU-RC":{"S":16.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-05-18","counts":{"TCC":{"S":19.0,"M":26.0},"NC":{"M":10.0},"NC-NA":{"M":3.0},"NC-In":{"M":6.0},"NC-N In":{"M":1.0},"FUC":{"S":19.0,"M":16.0},"FUC-NA":{"S":5.0,"M":7.0},"FUC-NIn":{"S":5.0,"M":2.0},"FU-RC":{"S":8.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-19","counts":{"TCC":{"S":20.0,"M":14.0},"FUC":{"S":20.0,"M":14.0},"FUC-NA":{"S":4.0,"M":3.0},"FUC-NIn":{"S":5.0,"M":3.0},"FU-RC":{"S":11.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-20","counts":{"TCC":{"S":14.0,"M":19.0},"NC":{"M":6.0},"NC-NA":{"M":2.0},"NC-In":{"M":3.0},"NC-N In":{"M":1.0},"FUC":{"S":14.0,"M":13.0},"FUC-NA":{"S":6.0,"M":2.0},"FUC-NIn":{"S":2.0},"FU-RC":{"S":6.0,"M":10.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-05-21","counts":{"TCC":{"S":18.0,"M":23.0},"NC":{"M":14.0},"NC-NA":{"M":4.0},"NC-In":{"M":6.0},"NC-N In":{"M":4.0},"FUC":{"S":18.0,"M":9.0},"FUC-NA":{"S":3.0,"M":3.0},"FUC-NIn":{"S":3.0,"M":3.0},"FU-RC":{"S":13.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-22","counts":{"TCC":{"S":9.0,"M":34.0},"NC":{"M":17.0},"NC-NA":{"M":8.0},"NC-In":{"M":7.0},"NC-N In":{"M":3.0},"FUC":{"S":9.0,"M":17.0},"FUC-NA":{"S":3.0,"M":1.0},"FUC-NIn":{"S":2.0,"M":2.0},"FU-RC":{"S":7.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-25","counts":{"TCC":{"S":11.0,"M":33.0},"NC":{"M":9.0},"NC-NA":{"M":1.0},"NC-In":{"M":7.0},"NC-N In":{"M":1.0},"FUC":{"S":11.0,"M":25.0},"FUC-NA":{"S":2.0,"M":5.0},"FUC-NIn":{"S":3.0,"M":1.0},"FU-RC":{"S":9.0,"M":14.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-26","counts":{"TCC":{"S":17.0,"M":30.0},"NC":{"M":7.0},"NC-NA":{"M":2.0},"NC-In":{"M":2.0},"NC-N In":{"M":3.0},"FUC":{"S":17.0,"M":23.0},"FUC-NA":{"S":3.0,"M":6.0},"FUC-NIn":{"S":3.0,"M":7.0},"FU-RC":{"S":9.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-27","counts":{"TCC":{"S":7.0,"M":24.0},"NC":{"M":9.0},"NC-NA":{"M":3.0},"NC-In":{"M":2.0},"NC-N In":{"M":4.0},"FUC":{"S":7.0,"M":15.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"S":2.0,"M":1.0},"FU-RC":{"S":5.0,"M":10.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-05-28","counts":{"TCC":{"S":16.0,"M":23.0},"FUC":{"S":16.0,"M":23.0},"FUC-NA":{"S":2.0,"M":7.0},"FUC-NIn":{"S":1.0,"M":3.0},"FU-RC":{"S":13.0,"M":10.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-05-29","counts":{"TCC":{"S":7.0,"M":21.0},"NC":{"M":10.0},"NC-In":{"S":6.0},"FUC":{"A":18.0,"S":7.0,"M":11.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"M":2.0},"FU-RC":{"S":5.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-01-06","counts":{"TCC":{"S":8.0,"M":37.0},"NC":{"M":13.0},"NC-NA":{"M":4.0},"NC-In":{"M":6.0},"NC-N In":{"M":3.0},"FUC":{"S":8.0,"M":24.0},"FUC-NA":{"S":2.0,"M":4.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"S":5.0,"M":23.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-02-06","counts":{"TCC":{"S":10.0,"M":38.0},"NC":{"M":14.0},"NC-NA":{"M":2.0},"NC-In":{"M":7.0},"NC-N In":{"M":3.0},"FUC":{"S":10.0,"M":24.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"S":2.0,"M":1.0},"FU-RC":{"S":7.0,"M":20.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-03-06","counts":{"TCC":{"S":6.0,"M":34.0},"NC":{"M":16.0},"NC-NA":{"M":2.0},"NC-In":{"M":10.0},"NC-N In":{"M":4.0},"FUC":{"S":6.0,"M":18.0},"FUC-NA":{"S":1.0,"M":7.0},"FUC-NIn":{"S":2.0,"M":3.0},"FU-RC":{"S":3.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-04-06","counts":{"TCC":{"S":10.0,"M":29.0},"FUC":{"S":10.0,"M":29.0},"FUC-NA":{"M":5.0},"FUC-NIn":{"S":3.0,"M":5.0},"FU-RC":{"S":7.0,"M":19.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-05-06","counts":{"TCC":{"S":10.0,"M":41.0},"NC":{"M":14.0},"NC-NA":{"M":3.0},"NC-In":{"M":10.0},"NC-N In":{"M":1.0},"FUC":{"S":10.0,"M":27.0},"FUC-NA":{"S":1.0,"M":5.0},"FUC-NIn":{"S":1.0,"M":3.0},"FU-RC":{"S":8.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-09","counts":{"TCC":{"S":4.0,"M":42.0},"NC":{"M":10.0},"NC-NA":{"M":3.0},"NC-In":{"M":7.0},"FUC":{"S":4.0,"M":32.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"S":2.0,"M":2.0},"FU-RC":{"S":1.0,"M":25.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-10","counts":{"TCC":{"S":9.0,"M":23.0},"NC":{"M":7.0},"NC-In":{"M":6.0},"NC-N In":{"M":1.0},"FUC":{"S":9.0,"M":23.0},"FUC-NA":{"S":1.0,"M":1.0},"FUC-NIn":{"S":2.0,"M":4.0},"FU-RC":{"S":5.0,"M":19.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-11","counts":{"TCC":{"S":2.0,"M":23.0},"FUC":{"S":2.0,"M":23.0},"FUC-NA":{"M":5.0},"FUC-NIn":{"M":2.0},"FU-RC":{"S":2.0,"M":12.0}},"sales":3,"source":"seed"},{"rep":"Carolyn","date":"2026-06-12","counts":{"TCC":{"S":6.0,"M":30.0},"FUC":{"S":6.0,"M":30.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"M":4.0},"FU-RC":{"S":4.0,"M":21.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-06-16","counts":{"TCC":{"S":11.0,"M":28.0},"NC":{"M":5.0},"NC-NA":{"M":1.0},"NC-In":{"M":3.0},"NC-N In":{"M":1.0},"FUC":{"S":11.0,"M":23.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"S":1.0,"M":3.0},"FU-RC":{"S":9.0,"M":23.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-17","counts":{"TCC":{"S":6.0,"M":30.0},"NC":{"S":4.0,"M":11.0},"NC-NA":{"M":3.0},"NC-In":{"S":4.0,"M":7.0},"NC-N In":{"M":2.0},"FUC":{"S":2.0,"M":19.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"M":15.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-06-18","counts":{"TCC":{"S":15.0,"M":26.0},"FUC":{"S":15.0,"M":26.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"S":5.0,"M":3.0},"FU-RC":{"S":8.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-19","counts":{"TCC":{"S":15.0,"M":29.0},"NC":{"S":10.0,"M":2.0},"NC-NA":{"S":2.0},"NC-In":{"S":5.0},"NC-N In":{"S":3.0,"M":2.0},"FUC":{"S":5.0,"M":27.0},"FUC-NA":{"M":4.0},"FUC-NIn":{"M":5.0},"FU-RC":{"S":5.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-22","counts":{"TCC":{"A":5.0,"S":5.0,"M":21.0},"NC":{"A":5.0},"NC-In":{"A":5.0},"FUC":{"S":5.0,"M":21.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"M":3.0},"FU-RC":{"S":4.0,"M":15.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-06-23","counts":{"TCC":{"A":2.0,"S":12.0,"M":30.0},"FUC":{"A":2.0,"S":12.0,"M":30.0},"FUC-NA":{"S":2.0,"M":5.0},"FUC-NIn":{"S":2.0,"M":10.0},"FU-RC":{"A":2.0,"S":8.0,"M":15.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-24","counts":{"TCC":{"A":11.0,"S":18.0,"M":29.0},"NC":{"A":11.0},"NC-NA":{"A":4.0},"NC-In":{"A":4.0},"NC-N In":{"A":4.0},"FUC":{"S":18.0,"M":29.0},"FUC-NA":{"S":4.0,"M":4.0},"FUC-NIn":{"S":6.0,"M":11.0},"FU-RC":{"S":8.0,"M":13.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-25","counts":{"TCC":{"S":7.0,"M":8.0},"FUC":{"S":7.0,"M":8.0},"FUC-NIn":{"S":1.0,"M":2.0},"FU-RC":{"S":5.0,"M":5.0}},"sales":1,"source":"seed"},{"rep":"Carolyn","date":"2026-06-26","counts":{"TCC":{"A":4.0,"S":13.0,"M":7.0},"FUC":{"A":4.0,"S":13.0,"M":7.0},"FUC-NIn":{"S":3.0},"FU-RC":{"A":3.0,"S":10.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Carolyn","date":"2026-06-29","counts":{"TCC":{"A":16.0,"S":10.0,"M":16.0},"NC":{"A":7.0},"NC-NA":{"A":1.0},"NC-In":{"A":2.0},"NC-N In":{"A":4.0},"FUC":{"A":9.0,"S":10.0,"M":16.0},"FUC-NA":{"A":2.0,"M":3.0},"FUC-NIn":{"A":4.0,"S":2.0,"M":5.0},"FU-RC":{"A":3.0,"S":8.0,"M":7.0}},"sales":1,"source":"seed"},{"rep":"Jade","date":"2026-05-26","counts":{"TCC":{"B":2.0,"S":6.0,"M":4.0},"NC":{"B":2.0,"S":6.0,"M":4.0},"NC-NA":{"S":1.0,"M":3.0},"NC-In":{"B":2.0,"S":5.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-05-28","counts":{"TCC":{"B":1.0,"S":11.0,"M":16.0},"NC":{"B":1.0,"S":11.0,"M":16.0},"NC-NA":{"S":2.0,"M":4.0},"NC-In":{"B":1.0,"S":8.0,"M":9.0},"NC-N In":{"S":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-05-29","counts":{"TCC":{"B":8.0,"S":9.0,"M":12.0},"NC":{"B":8.0,"S":9.0,"M":12.0},"NC-NA":{"B":2.0,"S":2.0,"M":2.0},"NC-In":{"B":6.0,"S":5.0,"M":8.0},"NC-N In":{"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-01","counts":{"TCC":{"B":4.0,"S":8.0,"M":8.0},"NC":{"B":1.0,"S":2.0,"M":2.0},"NC-In":{"B":1.0,"S":2.0,"M":1.0},"NC-N In":{"M":1.0},"FUC":{"B":3.0,"S":6.0,"M":6.0},"FUC-NA":{"S":1.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":2.0,"S":5.0,"M":5.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-02","counts":{"TCC":{"B":8.0,"S":6.0,"M":7.0},"NC":{"B":8.0,"S":2.0,"M":4.0},"NC-In":{"B":5.0,"S":2.0,"M":4.0},"NC-N In":{"B":3.0},"FUC":{"S":4.0,"M":3.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"S":1.0},"FU-RC":{"S":2.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-03","counts":{"TCC":{"B":16.0,"S":4.0,"M":3.0},"NC":{"B":14.0},"NC-NA":{"B":1.0},"NC-In":{"B":10.0},"NC-N In":{"B":3.0},"FUC":{"B":2.0,"S":4.0,"M":3.0},"FUC-NA":{"S":2.0,"M":1.0},"FU-RC":{"B":2.0,"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-04","counts":{"TCC":{"B":7.0,"S":10.0,"M":9.0},"NC":{"B":2.0,"S":4.0,"M":7.0},"NC-NA":{"M":5.0},"NC-In":{"B":2.0,"S":3.0,"M":2.0},"NC-N In":{"S":1.0},"FUC":{"B":5.0,"S":6.0,"M":2.0},"FUC-NA":{"B":1.0,"S":1.0,"M":1.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":4.0,"S":4.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-05","counts":{"TCC":{"B":14.0,"S":8.0,"M":6.0},"NC":{"B":10.0,"S":1.0,"M":1.0},"NC-NA":{"B":1.0},"NC-In":{"B":6.0,"S":1.0},"NC-N In":{"B":3.0},"FUC":{"B":4.0,"S":7.0,"M":5.0},"FUC-NA":{"S":2.0,"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":4.0,"S":5.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-09","counts":{"TCC":{"B":13.0,"S":2.0,"M":4.0},"NC":{"B":8.0,"M":1.0},"NC-NA":{"B":1.0},"NC-In":{"B":5.0,"M":1.0},"NC-N In":{"B":2.0},"FUC":{"B":5.0,"S":2.0,"M":4.0},"FUC-NA":{"B":1.0,"M":1.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":3.0,"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-10","counts":{"TCC":{"B":14.0,"S":18.0,"M":6.0},"NC":{"B":7.0,"S":18.0,"M":2.0},"NC-NA":{"B":2.0,"S":1.0,"M":2.0},"NC-In":{"B":4.0,"S":13.0},"NC-N In":{"B":1.0,"S":4.0},"FUC":{"B":7.0,"M":6.0},"FUC-NA":{"M":1.0},"FUC-NIn":{"B":2.0,"M":1.0},"FU-RC":{"B":5.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-11","counts":{"TCC":{"B":6.0,"S":17.0,"M":6.0},"NC":{"B":1.0,"S":14.0},"NC-NA":{"S":3.0},"NC-In":{"B":1.0,"S":8.0},"NC-N In":{"S":3.0},"FUC":{"B":5.0,"S":3.0,"M":6.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"B":5.0,"S":2.0,"M":3.0}},"sales":1,"source":"seed"},{"rep":"Jade","date":"2026-06-12","counts":{"TCC":{"B":11.0,"S":24.0,"M":6.0},"NC":{"B":1.0,"S":19.0,"M":1.0},"NC-NA":{"B":1.0,"S":5.0,"M":1.0},"NC-In":{"S":10.0},"NC-N In":{"S":4.0},"FUC":{"B":10.0,"S":5.0,"M":5.0},"FUC-NA":{"B":4.0,"S":2.0,"M":3.0},"FUC-NIn":{"B":3.0,"S":1.0},"FU-RC":{"B":3.0,"S":2.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-15","counts":{"TCC":{"B":12.0,"S":17.0,"M":8.0},"NC":{"B":1.0,"S":5.0,"M":2.0},"NC-NA":{"B":1.0,"S":2.0,"M":1.0},"NC-In":{"S":2.0,"M":1.0},"NC-N In":{"S":1.0},"FUC":{"B":11.0,"S":12.0,"M":6.0},"FUC-NA":{"B":1.0,"S":2.0,"M":2.0},"FUC-NIn":{"B":1.0,"S":3.0},"FU-RC":{"B":9.0,"S":7.0,"M":4.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-16","counts":{"TCC":{"B":4.0,"S":13.0,"M":11.0},"NC":{"S":6.0,"M":8.0},"NC-NA":{"S":3.0,"M":1.0},"NC-In":{"S":2.0,"M":7.0},"NC-N In":{"S":1.0},"FUC":{"B":4.0,"S":7.0,"M":3.0},"FUC-NA":{"S":3.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":4.0,"S":4.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-17","counts":{"TCC":{"B":2.0,"S":6.0,"M":26.0},"NC":{"B":1.0,"S":1.0,"M":24.0},"NC-NA":{"S":1.0,"M":6.0},"NC-In":{"B":1.0,"M":17.0},"NC-N In":{"M":1.0},"FUC":{"B":1.0,"S":5.0,"M":2.0},"FUC-NA":{"S":1.0,"M":1.0},"FU-RC":{"B":1.0,"S":4.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-18","counts":{"TCC":{"B":5.0,"S":13.0,"M":1.0},"NC":{"S":2.0,"M":20.0},"NC-NA":{"S":1.0,"M":3.0},"NC-In":{"S":1.0,"M":13.0},"NC-N In":{"M":4.0},"FUC":{"B":5.0,"S":11.0,"M":1.0},"FUC-NA":{"B":1.0,"S":2.0,"M":1.0},"FU-RC":{"B":4.0,"S":9.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-19","counts":{"TCC":{"B":9.0,"S":9.0,"M":19.0},"NC":{"S":1.0,"M":19.0},"NC-NA":{"S":1.0,"M":3.0},"NC-In":{"M":14.0},"NC-N In":{"M":2.0},"FUC":{"B":9.0,"S":8.0},"FUC-NA":{"B":2.0,"S":1.0},"FU-RC":{"B":7.0,"S":7.0}},"sales":0,"source":"seed"},{"rep":"Jade","date":"2026-06-22","counts":{"TCC":{"B":2.0,"S":14.0,"M":9.0},"NC":{"M":1.0},"NC-In":{"M":1.0},"FUC":{"B":2.0,"S":14.0,"M":8.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":1.0,"S":8.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-01-28","counts":{"TCC":{"A":2.0,"B":3.0,"S":8.0,"M":7.0},"NC":{"A":2.0,"B":3.0,"S":8.0,"M":7.0},"NC-NA":{"A":1.0},"NC-In":{"A":1.0,"B":3.0,"S":8.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-01-29","counts":{"TCC":{"B":4.0,"S":6.0,"M":5.0},"NC":{"B":4.0,"S":6.0,"M":5.0},"NC-In":{"B":4.0,"S":5.0,"M":5.0},"NC-N In":{"S":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-01-30","counts":{"TCC":{"A":4.0,"B":5.0,"S":6.0,"M":13.0},"NC":{"A":4.0,"B":5.0,"S":6.0,"M":13.0},"NC-In":{"A":4.0,"B":2.0,"S":3.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-02","counts":{"TCC":{"A":2.0,"B":2.0,"S":9.0,"M":6.0},"NC-NA":{"S":2.0},"NC-N In":{"S":2.0},"FUC":{"A":4.0,"B":2.0,"S":3.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-03","counts":{"TCC":{"A":3.0,"B":1.0,"S":3.0,"M":12.0},"NC":{"A":3.0,"B":1.0,"S":3.0,"M":12.0},"NC-NA":{"S":1.0,"M":1.0},"NC-N In":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-04","counts":{"TCC":{"A":3.0,"B":3.0,"S":9.0,"M":7.0},"NC":{"A":3.0,"B":3.0,"S":9.0,"M":7.0},"NC-NA":{"B":1.0,"S":1.0,"M":1.0},"NC-In":{"A":3.0,"B":3.0,"S":9.0,"M":7.0},"FUC":{"A":3.0,"B":2.0,"S":8.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-05","counts":{"TCC":{"A":4.0,"P":1.0,"S":8.0,"M":8.0},"NC-NA":{"S":2.0},"NC-In":{"A":4.0,"P":1.0,"S":5.0,"M":7.0},"NC-N In":{"S":2.0,"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-06","counts":{"TCC":{"B":6.0,"S":9.0,"M":6.0},"NC":{"B":5.0,"S":8.0,"M":6.0},"NC-NA":{"S":1.0},"NC-In":{"B":5.0,"S":8.0,"M":6.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-09","counts":{"TCC":{"P":1.0,"B":4.0,"S":4.0,"M":5.0},"NC":{"P":1.0,"B":4.0,"S":4.0,"M":5.0},"NC-NA":{"S":1.0},"NC-In":{"B":4.0,"S":4.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-02-10","counts":{"TCC":{"B":2.0,"S":6.0,"M":6.0},"NC-NA":{"M":1.0},"NC-In":{"M":1.0},"NC-N In":{"M":1.0},"FUC":{"B":1.0,"S":6.0,"M":3.0},"FUC-NA":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-11","counts":{"TCC":{"B":3.0,"S":6.0,"M":7.0},"NC":{"M":2.0},"NC-NA":{"M":1.0},"NC-In":{"M":2.0},"FUC":{"B":2.0,"S":6.0,"M":1.0},"FUC-NA":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-12","counts":{"TCC":{"P":2.0,"B":3.0,"S":2.0,"M":5.0},"NC":{"M":1.0},"NC-NA":{"P":1.0,"S":1.0},"NC-In":{"S":1.0},"FUC":{"P":1.0,"B":3.0,"S":1.0,"M":5.0},"FUC-NA":{"P":1.0,"S":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-13","counts":{"TCC":{"P":1.0,"B":1.0,"S":7.0,"M":14.0},"NC":{"P":3.0},"NC-NA":{"P":1.0,"M":1.0},"FUC":{"P":1.0,"S":7.0,"M":13.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-02-16","counts":{"TCC":{"B":3.0,"S":2.0,"M":15.0},"NC":{"M":1.0},"NC-NA":{"S":1.0,"M":2.0},"FUC":{"B":3.0,"S":1.0,"M":12.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-17","counts":{"TCC":{"B":3.0,"S":5.0,"M":11.0},"NC-NA":{"B":1.0,"S":2.0},"NC-In":{"M":1.0},"FUC":{"B":1.0,"S":2.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-18","counts":{"TCC":{"P":2.0,"B":6.0,"M":16.0},"NC-NA":{"B":1.0,"M":3.0},"NC-In":{"M":1.0},"NC-N In":{"M":2.0},"FUC":{"P":2.0,"B":5.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-19","counts":{"TCC":{"B":4.0,"S":4.0,"M":8.0},"NC-NA":{"B":2.0,"S":3.0},"FUC":{"B":2.0,"S":1.0,"M":6.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-02-20","counts":{"TCC":{"P":1.0,"B":1.0,"S":9.0,"M":15.0},"FUC":{"P":1.0,"B":1.0,"S":6.0,"M":13.0},"FUC-NA":{"B":1.0},"FUC-NIn":{"S":1.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-23","counts":{"TCC":{"P":1.0,"B":5.0,"S":8.0,"M":13.0},"NC-NA":{"M":1.0},"NC-In":{"S":2.0},"NC-N In":{"M":1.0},"FUC":{"P":1.0,"B":5.0,"S":4.0,"M":9.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"S":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-24","counts":{"TCC":{"P":1.0,"B":5.0,"S":10.0,"M":22.0},"NC-NA":{"M":3.0},"NC-In":{"S":1.0},"NC-N In":{"M":2.0},"FUC":{"P":1.0,"B":5.0,"S":7.0,"M":7.0},"FUC-NA":{"S":2.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-02-25","counts":{"TCC":{"B":6.0,"S":12.0,"M":25.0},"NC-In":{"M":1.0},"FUC":{"B":6.0,"M":18.0},"FUC-NA":{"S":2.0,"M":3.0},"FUC-NIn":{"M":2.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-02-26","counts":{"TCC":{"P":3.0,"B":6.0,"S":5.0,"M":17.0},"NC":{"S":2.0},"NC-NA":{"M":1.0},"NC-In":{"S":1.0,"M":1.0},"FUC":{"P":3.0,"B":4.0,"S":2.0,"M":11.0},"FUC-NA":{"B":1.0,"M":4.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-02-27","counts":{"TCC":{"A":5.0,"P":6.0,"B":5.0,"S":4.0,"M":25.0},"NC":{"A":1.0,"M":2.0},"NC-NA":{"A":1.0,"P":1.0,"B":1.0,"S":1.0,"M":4.0},"FUC":{"A":3.0,"P":4.0,"B":4.0,"S":3.0,"M":13.0},"FUC-NA":{"P":1.0,"S":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-02","counts":{"TCC":{"A":2.0,"B":2.0,"S":4.0,"M":18.0},"NC-In":{"M":1.0},"NC-N In":{"S":2.0},"FUC":{"A":2.0,"S":2.0,"M":15.0},"FUC-NA":{"B":1.0,"M":2.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-03","counts":{"TCC":{"A":2.0,"B":2.0,"M":21.0},"NC":{"M":7.0},"NC-NA":{"A":2.0,"M":2.0},"FUC":{"B":4.0,"M":6.0},"FUC-NA":{"M":5.0},"FUC-NIn":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-04","counts":{"TCC":{"B":1.0,"M":28.0},"NC":{"B":1.0,"M":6.0},"NC-NA":{"M":2.0},"FUC":{"M":16.0},"FUC-NA":{"M":3.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-05","counts":{"TCC":{"P":12.0,"M":24.0},"NC":{"P":7.0,"M":10.0},"NC-In":{"P":1.0,"B":1.0},"NC-N In":{"M":1.0},"FUC":{"P":2.0,"M":10.0},"FUC-NA":{"P":2.0,"M":2.0},"FUC-NIn":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-06","counts":{"TCC":{"S":36.0,"M":4.0},"NC":{"S":26.0},"NC-NA":{"S":5.0},"NC-In":{"S":2.0},"NC-N In":{"S":3.0},"FUC":{"M":4.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-10","counts":{"TCC":{"B":2.0,"S":19.0,"M":12.0},"NC":{"S":5.0,"M":3.0},"NC-NA":{"S":2.0},"NC-In":{"S":4.0},"FUC":{"B":1.0,"S":8.0,"M":6.0},"FUC-NA":{"B":1.0,"M":3.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-11","counts":{"TCC":{"P":6.0,"B":3.0,"S":6.0,"M":17.0},"NC":{"M":3.0},"NC-NA":{"B":1.0,"S":2.0},"NC-In":{"M":3.0},"NC-N In":{"M":2.0},"FUC":{"P":6.0,"B":2.0,"S":4.0,"M":8.0},"FUC-NIn":{"M":1.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-12","counts":{"TCC":{"B":8.0,"S":11.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-13","counts":{"TCC":{"P":3.0,"B":5.0,"S":7.0,"M":11.0},"NC":{"P":3.0,"M":1.0},"NC-NA":{"P":1.0},"NC-In":{"P":1.0},"FUC":{"B":5.0,"S":7.0,"M":10.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"S":1.0},"FU-RC":{"P":2.0,"B":5.0,"S":5.0,"M":7.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-16","counts":{"TCC":{"P":4.0,"B":3.0,"S":10.0,"M":18.0},"FUC":{"P":4.0,"B":3.0,"S":8.0,"M":15.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"S":2.0},"FU-RC":{"P":4.0,"B":3.0,"S":8.0,"M":15.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-17","counts":{"TCC":{"B":1.0,"S":7.0,"M":21.0},"FUC":{"B":1.0,"S":7.0,"M":18.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":1.0,"S":7.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-18","counts":{"TCC":{"P":4.0,"B":2.0,"S":9.0,"M":12.0},"FUC":{"P":2.0,"B":2.0,"S":9.0,"M":11.0},"FUC-NA":{"P":2.0,"M":2.0},"FU-RC":{"P":2.0,"B":2.0,"S":9.0,"M":11.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-19","counts":{"TCC":{"P":5.0,"B":2.0,"S":2.0,"M":20.0},"NC":{"B":2.0,"S":2.0,"M":1.0},"NC-In":{"M":2.0},"NC-N In":{"S":1.0},"FUC":{"P":5.0,"M":19.0},"FUC-NA":{"P":2.0,"B":2.0,"S":1.0,"M":2.0},"FU-RC":{"P":3.0,"M":16.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-20","counts":{"TCC":{"P":2.0,"S":8.0,"M":21.0},"FUC":{"P":2.0,"S":8.0,"M":21.0},"FUC-NA":{"S":2.0,"M":1.0},"FUC-NIn":{"M":1.0},"FU-RC":{"P":2.0,"S":6.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-23","counts":{"TCC":{"A":10.0,"B":8.0,"S":7.0,"M":21.0},"FUC":{"M":21.0},"FUC-NA":{"A":2.0},"FUC-NIn":{"A":3.0,"S":2.0},"FU-RC":{"A":5.0,"B":8.0,"S":5.0,"M":21.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-24","counts":{"TCC":{"P":5.0,"B":8.0,"S":12.0,"M":10.0},"FUC":{"P":3.0,"B":8.0,"S":9.0,"M":8.0},"FUC-NA":{"P":2.0,"S":2.0,"M":1.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"P":3.0,"B":8.0,"S":9.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-25","counts":{"TCC":{"A":1.0,"P":2.0,"B":3.0,"S":5.0,"M":18.0},"FUC":{"A":1.0,"P":1.0,"B":3.0,"S":5.0,"M":18.0},"FUC-NA":{"P":1.0},"FU-RC":{"A":1.0,"P":1.0,"B":3.0,"S":5.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-26","counts":{"TCC":{"A":5.0,"P":5.0,"B":10.0,"S":5.0,"M":10.0},"FUC":{"A":3.0,"P":5.0,"B":8.0,"S":5.0,"M":8.0},"FUC-NA":{"A":2.0,"B":1.0,"M":2.0},"FUC-NIn":{"B":1.0},"FU-RC":{"A":3.0,"P":5.0,"B":8.0,"S":5.0,"M":8.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-27","counts":{"TCC":{"S":2.0,"M":28.0},"NC":{"M":4.0},"NC-In":{"M":4.0},"FUC":{"S":2.0,"M":28.0},"FUC-NIn":{"M":2.0},"FU-RC":{"S":2.0,"M":28.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-03-30","counts":{"TCC":{"A":1.0,"B":2.0,"S":1.0,"M":25.0},"FUC":{"A":1.0,"B":2.0,"S":1.0,"M":25.0},"FUC-NA":{"A":1.0,"M":3.0},"FUC-NIn":{"S":1.0},"FU-RC":{"B":1.0,"M":22.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-03-31","counts":{"TCC":{"A":2.0,"P":1.0,"B":3.0,"S":3.0,"M":14.0},"NC":{"M":7.0},"NC-NA":{"M":2.0},"NC-In":{"M":5.0},"FUC":{"A":2.0,"P":1.0,"B":2.0,"S":3.0,"M":16.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"A":2.0,"P":1.0,"B":2.0,"S":3.0,"M":16.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-01","counts":{"TCC":{"B":8.0,"S":8.0,"M":18.0},"FUC":{"B":10.0,"S":1.0,"M":24.0},"FUC-NA":{"S":1.0,"M":3.0},"FUC-NIn":{"M":2.0},"FU-RC":{"B":1.0,"M":19.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-02","counts":{"TCC":{"B":8.0,"S":10.0,"M":20.0},"NC":{"M":20.0},"NC-NA":{"M":2.0},"NC-In":{"M":18.0},"FUC":{"M":18.0},"FUC-NA":{"M":2.0},"FU-RC":{"P":1.0,"B":1.0,"M":16.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-07","counts":{"TCC":{"B":2.0,"S":5.0,"M":18.0},"NC":{"M":9.0},"NC-NA":{"M":1.0},"NC-In":{"M":7.0},"NC-N In":{"M":1.0},"FUC":{"B":2.0,"S":5.0,"M":15.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"M":1.0},"FU-RC":{"B":2.0,"S":5.0,"M":18.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-08","counts":{"TCC":{"M":40.0},"FUC":{"M":36.0},"FUC-NA":{"M":3.0},"FU-RC":{"M":36.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-09","counts":{"TCC":{"A":2.0,"B":3.0,"S":2.0,"M":17.0},"NC":{"M":6.0},"NC-NA":{"M":1.0},"NC-In":{"M":4.0},"NC-N In":{"M":1.0},"FUC":{"A":2.0,"B":2.0,"S":1.0,"M":14.0},"FUC-NA":{"S":1.0,"M":2.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"A":2.0,"B":2.0,"S":1.0,"M":14.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-10","counts":{"TCC":{"A":1.0,"P":4.0,"S":3.0,"M":22.0},"NC":{"M":9.0},"NC-NA":{"M":2.0},"NC-In":{"M":5.0},"NC-N In":{"M":2.0},"FUC":{"P":3.0,"S":2.0,"M":17.0},"FUC-NA":{"P":1.0,"S":1.0,"M":3.0},"FUC-NIn":{"M":2.0},"FU-RC":{"P":3.0,"S":2.0,"M":17.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-04-13","counts":{"TCC":{"M":32.0},"NC":{"M":4.0},"NC-NA":{"M":1.0},"NC-In":{"M":2.0},"NC-N In":{"M":1.0},"FUC":{"M":28.0},"FUC-NA":{"M":3.0},"FUC-NIn":{"M":1.0},"FU-RC":{"M":24.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-14","counts":{"TCC":{"B":3.0,"S":6.0,"M":28.0},"NC":{"M":8.0},"NC-NA":{"M":2.0},"NC-In":{"M":6.0},"FUC":{"B":3.0,"S":2.0,"M":10.0},"FUC-NA":{"S":2.0,"M":1.0},"FUC-NIn":{"B":1.0,"M":1.0},"FU-RC":{"B":3.0,"S":3.0,"M":10.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-15","counts":{"TCC":{"A":2.0,"P":2.0,"S":1.0,"M":40.0},"FUC":{"A":2.0,"P":1.0,"S":1.0,"M":37.0},"FUC-NA":{"P":1.0,"M":2.0},"FU-RC":{"A":2.0,"P":1.0,"S":1.0,"M":37.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-04-16","counts":{"TCC":{"B":6.0,"M":26.0},"FUC":{"B":5.0,"M":26.0},"FUC-NA":{"B":1.0},"FU-RC":{"B":5.0,"M":26.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-17","counts":{"TCC":{"M":29.0},"NC":{"M":4.0},"NC-In":{"M":4.0},"FUC":{"M":25.0},"FUC-NA":{"M":3.0},"FU-RC":{"M":22.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-20","counts":{"TCC":{"B":2.0,"S":2.0,"M":30.0},"FUC":{"B":2.0,"M":29.0},"FUC-NA":{"S":2.0},"FU-RC":{"B":2.0,"M":29.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-21","counts":{"TCC":{"B":4.0,"M":37.0},"FUC":{"B":4.0,"M":37.0},"FUC-NA":{"M":4.0},"FUC-NIn":{"M":2.0},"FU-RC":{"B":4.0,"M":37.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-22","counts":{"TCC":{"B":2.0,"S":2.0,"M":32.0},"FUC":{"B":2.0,"S":2.0,"M":32.0},"FUC-NA":{"S":2.0},"FU-RC":{"S":2.0,"M":32.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-23","counts":{"TCC":{"M":30.0},"NC":{"M":3.0},"NC-In":{"M":3.0},"FUC":{"M":30.0},"FUC-NA":{"M":2.0},"FU-RC":{"M":30.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-24","counts":{"TCC":{"B":5.0,"S":5.0,"M":30.0},"FUC":{"B":5.0,"S":5.0,"M":30.0},"FUC-NA":{"B":1.0,"S":1.0,"M":1.0},"FU-RC":{"B":5.0,"S":5.0,"M":30.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-27","counts":{"TCC":{"A":2.0,"B":2.0,"S":6.0,"M":31.0},"NC":{"M":3.0},"NC-NA":{"M":1.0},"NC-In":{"M":2.0},"FUC":{"A":2.0,"B":2.0,"S":3.0,"M":31.0},"FUC-NIn":{"A":1.0},"FU-RC":{"A":1.0,"B":2.0,"S":3.0,"M":32.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-28","counts":{"TCC":{"A":1.0,"B":1.0,"M":25.0},"FUC":{"A":1.0,"B":1.0,"M":25.0},"FUC-NIn":{"M":2.0},"FU-RC":{"A":1.0,"B":1.0,"M":25.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-04-30","counts":{"TCC":{"M":33.0},"FUC":{"M":33.0},"FUC-NA":{"M":1.0},"FU-RC":{"M":33.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-05-01","counts":{"TCC":{"B":2.0,"S":7.0,"M":30.0},"FUC":{"B":2.0,"S":7.0,"M":30.0},"FUC-NIn":{"S":3.0},"FU-RC":{"B":2.0,"S":4.0,"M":30.0}},"sales":0,"source":"seed"},{"rep":"Lisa","date":"2026-05-04","counts":{"TCC":{"A":1.0,"M":36.0},"FUC":{"A":1.0,"M":36.0},"FUC-NA":{"M":2.0},"FUC-NIn":{"S":1.0,"M":1.0},"FU-RC":{"A":1.0,"M":33.0}},"sales":1,"source":"seed"},{"rep":"Lisa","date":"2026-05-05","counts":{"TCC":{"A":1.0,"B":2.0,"S":3.0,"M":22.0},"FUC":{"A":1.0,"B":2.0,"S":3.0,"M":22.0},"FUC-NA":{"M":4.0},"FU-RC":{"A":1.0,"B":2.0,"S":3.0,"M":18.0}},"sales":0,"source":"seed"}];
+
+async function seedCollection(name, docs){
+  for(let i=0;i<docs.length;i+=450){
+    const batch=writeBatch(db);
+    docs.slice(i,i+450).forEach(e=>batch.set(doc(collection(db,name)),e));
+    await batch.commit();
+  }
+}
+async function deleteAll(name){
+  const snap=await getDocs(collection(db,name));
+  const ids=snap.docs.map(d=>d.id);
+  for(let i=0;i<ids.length;i+=450){
+    const batch=writeBatch(db);
+    ids.slice(i,i+450).forEach(id=>batch.delete(doc(db,name,id)));
+    await batch.commit();
+  }
+  return ids.length;
+}
+async function seedIfEmpty(){
+  const snap = await getDocs(collection(db, "sales-entries"));
+  if (!snap.empty) return false;
+  await seedCollection("sales-entries", SALES_SEED);
+  const ds = await getDocs(collection(db, "daily-activity"));
+  if (ds.empty) await seedCollection("daily-activity", DAILY_SEED);
+  return true;
+}
+// ONE-TIME admin reseed (run __crmReseed() in the console): WIPE all three CRM
+// collections, then write the v7 seeds. offer-centres is left empty.
+async function crmReseed(){
+  if(!confirm("WIPE sales-entries + daily-activity + offer-centres and re-seed from v7?\nThis deletes all current CRM data.")) return;
+  const a=await deleteAll("sales-entries"), b=await deleteAll("daily-activity"), c=await deleteAll("offer-centres");
+  await seedCollection("sales-entries", SALES_SEED);
+  await seedCollection("daily-activity", DAILY_SEED);
+  console.log(`[crmReseed] deleted ${a}+${b}+${c}; wrote ${SALES_SEED.length} sales + ${DAILY_SEED.length} daily.`);
+  alert(`Re-seeded: ${SALES_SEED.length} sales, ${DAILY_SEED.length} daily days. Reloading…`);
+  location.reload();
+}
+window.__crmReseed = crmReseed;
+// Read all three collections and build the DATA object (+ metrics) via the engine.
+async function loadAll(){
+  await seedIfEmpty();                                   // seeds sales-entries only if empty
+  const [salesSnap, offersSnap, actSnap] = await Promise.all([
+    getDocs(collection(db,"sales-entries")),
+    getDocs(collection(db,"offer-centres")),
+    getDocs(collection(db,"daily-activity")),
+  ]);
+  const sales    = salesSnap.docs.map(d=>({id:d.id,...d.data()}));
+  const offers   = offersSnap.docs.map(d=>({id:d.id,...d.data()}));
+  const activity = actSnap.docs.map(d=>({id:d.id,...d.data()}));
+  const DATA = buildEverything(sales, offers, activity, new Date());
+  window.__CRM = { DATA, sales, offers, activity };      // for the CRM tab to render
+  return DATA;
+}
+
+// Expose for the existing renderer + forms
+window.__loadLiveData = loadAll;     // the board's add-sale form reloads via this
+window.__db = db;
+window.__sales = { collection, addDoc, deleteDoc, updateDoc, doc, COLLECTION };
+
+/* ============================================================
+   CRM v2 — one tab per rep + logged-days history. Renders from
+   window.__CRM using the file's existing classes + crm-* helpers
+   (styled with the page's CSS vars only). No new fonts/colours.
+   ============================================================ */
+const CRM_SESSIONS = {"1hr+ weekly":10,"40min weekly":8,"1hr+ fortnightly":5,"40min fortnightly":4};
+const CRM_CITIES   = ["A","P","B","S","M"];
+const CRM_CITYNAME = {A:"Adelaide",P:"Perth",B:"Brisbane",S:"Sydney",M:"Melbourne"};
+const CRM_CATS     = ["TCC","NC","NC-NA","NC-In","NC-N In","FUC","FUC-NA","FUC-NIn","FU-RC"];
+const CRM_TIERBG   = {gold:"var(--yellow)",green:"var(--green)",blue:"var(--sky)",red:"var(--red)"};
+function crmEsc(s){ return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function crmSel(s){ return String(s).replace(/(["\\])/g,"\\$1"); }   // safe value inside [attr="..."]
+function crmNum(n){ if(n==null) return "—"; const x=Math.round(Number(n)*100)/100; return String(x); }
+function crmMsg(el,t,err){ if(el){ el.textContent=t; el.style.color=err?"var(--red)":"var(--muted)"; } }
+function repSlug(name){ return "tab-rep-"+String(name).replace(/[^a-z0-9]+/gi,"-").toLowerCase(); }
+const cityTotal = obj => obj ? Object.values(obj).reduce((a,b)=>a+(Number(b)||0),0) : 0;
+
+let __crmCurrent = null;   // current selection: a rep name or "__board"
+
+/* ---- tab bar: one .tab per rep (active first, then greyed inactive), Leaderboard last ---- */
+function renderTopTabs(){
+  const bar=document.getElementById("crm-toptabs");
+  if(!bar || !window.__CRM) return;
+  const reps=window.__CRM.DATA.reps;
+  const active=reps.filter(r=>!r._inactive), inactive=reps.filter(r=>r._inactive);
+  let html="";
+  active.forEach(r=>{ html+=`<button class="tab crm-reptab" data-rep="${crmEsc(r.name)}">${crmEsc(r.name)}</button>`; });
+  if(inactive.length) html+=`<span class="crm-tabdiv"></span>`;
+  inactive.forEach(r=>{ html+=`<button class="tab crm-reptab is-inactive" data-rep="${crmEsc(r.name)}">${crmEsc(r.name)}</button>`; });
+  html+=`<span class="crm-tabdiv"></span><button class="tab crm-boardtab">🏆 Leaderboard</button>`;
+  bar.innerHTML=html;
+  bar.querySelectorAll(".crm-reptab").forEach(t=>t.addEventListener("click",()=>selectTab(t.dataset.rep)));
+  const bt=bar.querySelector(".crm-boardtab"); if(bt) bt.addEventListener("click",()=>selectTab("__board"));
+}
+
+function selectTab(key){
+  __crmCurrent=key;
+  try{ localStorage.setItem("crm_tab", key); }catch(e){}
+  const isBoard = key==="__board";
+  document.getElementById("tab-board").style.display = isBoard?"":"none";
+  document.getElementById("tab-reps").style.display  = isBoard?"none":"";
+  document.querySelectorAll("#crm-toptabs .tab").forEach(t=>{
+    const on = isBoard ? t.classList.contains("crm-boardtab") : (t.dataset.rep===key);
+    t.classList.toggle("active", on);
+  });
+  if(!isBoard) renderRepTab(key);
+}
+
+function restoreTab(){
+  if(!window.__CRM) return;
+  const reps=window.__CRM.DATA.reps;
+  const all=reps.map(r=>r.name), active=reps.filter(r=>!r._inactive).map(r=>r.name);
+  let saved=null; try{ saved=localStorage.getItem("crm_tab"); }catch(e){}
+  let start;
+  if(saved==="__board") start="__board";
+  else if(saved && all.indexOf(saved)>-1) start=saved;
+  else start=active[0]||all[0]||"__board";
+  selectTab(start);
+}
+
+/* ---- one rep's view: header + entry (active reps only) + pipeline + logged-days ---- */
+function renderRepTab(repName){
+  const host=document.getElementById("tab-reps");
+  if(!host || !window.__CRM) return;
+  const {DATA, offers}=window.__CRM;
+  const rep=DATA.reps.find(r=>r.name===repName);
+  if(!rep){ host.innerHTML=""; return; }
+  const repOffers=offers.filter(o=>o.rep===repName);
+  host.innerHTML = `<div id="${repSlug(repName)}">`
+    + repHeader(rep)
+    + (rep._inactive ? "" : repEntry(repName))
+    + repPipeline(repName, repOffers)
+    + repHistory(repName, rep.loggedDays||[])
+    + `</div>`;
+  wireRepTab(host, repName);
+}
+
+function repHeader(rep){
+  const m=rep.metrics;
+  const bg=CRM_TIERBG[rep.tier]||"var(--muted)", fg=rep.tier==="gold"?"var(--navy)":"#fff";
+  const mini=(l,v)=>`<div class="rep-stat-mini"><div class="rep-stat-mini-l">${l}</div><div class="rep-stat-mini-v">${v}</div></div>`;
+  return `<section class="panel active"><div class="crm-rep-head">
+      <div class="crm-rep-title">${crmEsc(rep.name)}${rep._inactive?' <span class="rep-stat-mini-l">(inactive)</span>':""}</div>
+      <div class="rep-card-tier-pill" style="background:${bg};color:${fg}">${rep.tier}</div>
+    </div>
+    <div class="rep-stats-grid">
+      ${mini("YTD pts",crmNum(rep.ytd_total))}
+      ${mini("Total calls",crmNum(m.totalCalls))}
+      ${mini("New calls",crmNum(m.totalNewCalls))}
+      ${mini("Re calls",crmNum(m.totalReCalls))}
+      ${mini("Sales",crmNum(m.salesCount))}
+      ${mini("Offers",crmNum(m.offersCount))}
+      ${mini("Calls / sale",crmNum(m.callsPerSale))}
+    </div>
+    <div class="rep-stats-grid">
+      ${mini("Pickup rate", m.pickupRate==null?"—":crmNum(m.pickupRate)+"%")}
+      ${mini("Follow-up ratio", m.followUpRatio==null?"—":crmNum(m.followUpRatio)+"%")}
+      ${mini("Avg calls / day", crmNum(m.avgCallsPerDay))}
+      ${mini("Pts / call", crmNum(m.pointsPerCall))}
+      ${mini("This vs last mo", m.momChange==null?"—":`<span style="color:${m.momChange>0?'var(--green)':m.momChange<0?'var(--red)':'inherit'}">${m.momChange>0?'▲ ':m.momChange<0?'▼ ':''}${crmNum(m.momChange)}</span>`)}
+      ${mini("Best call day", m.bestCallDay?(crmNum(m.bestCallDay.calls)+" calls · "+m.bestCallDay.date):"—")}
+    </div></section>`;
+}
+
+function repEntry(repName){
+  const today=new Date().toISOString().slice(0,10);
+  const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${s}">${s} · ${CRM_SESSIONS[s]}</option>`).join("");
+  const cityOpts=CRM_CITIES.map(c=>`<option value="${c}">${CRM_CITYNAME[c]} · ${c}</option>`).join("");
+  let grid=`<table class="crm-grid"><thead><tr><th>Category</th>${CRM_CITIES.map(c=>`<th>${c}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
+  CRM_CATS.forEach(cat=>{ grid+=`<tr><td>${crmEsc(cat)}</td>${CRM_CITIES.map(c=>`<td><input type="number" min="0" class="crm-cell" data-cat="${crmEsc(cat)}" data-city="${c}"></td>`).join("")}<td class="crm-rowtot" data-rowtot="${crmEsc(cat)}">0</td></tr>`; });
+  grid+=`</tbody></table>`;
+  return `<section class="panel active"><div class="panel-h">✍️ Log ${crmEsc(repName)}'s day</div>
+    <div class="crm-switch">
+      <button class="crm-btn crm-modebtn" data-mode="calls">Log calls</button>
+      <button class="crm-btn alt crm-modebtn" data-mode="offer">Add offer</button>
+      <button class="crm-btn alt crm-modebtn" data-mode="sale">Log direct sale</button>
+    </div>
+    <div class="crm-form" data-form="calls">
+      <div class="crm-row"><div class="crm-field"><span class="crm-label">Date</span><input class="filter-select" type="date" id="cl-date" value="${today}"></div></div>
+      ${grid}
+      <div style="margin-top:12px"><button class="crm-btn" id="cl-save">Save day</button><span class="crm-msg" id="cl-msg"></span></div>
+    </div>
+    <div class="crm-form" data-form="offer">
+      <div class="crm-row">
+        <div class="crm-field"><span class="crm-label">Centre</span><input class="filter-select" id="of-centre" placeholder="Centre name…" style="min-width:200px"></div>
+        <div class="crm-field"><span class="crm-label">City</span><select class="filter-select" id="of-city">${cityOpts}</select></div>
+        <div class="crm-field"><span class="crm-label">Offer date</span><input class="filter-select" type="date" id="of-date" value="${today}"></div>
+        <div class="crm-field"><span class="crm-label">&nbsp;</span><button class="crm-btn" id="of-save">Add offer (+1)</button></div>
+        <span class="crm-msg" id="of-msg"></span>
+      </div>
+    </div>
+    <div class="crm-form" data-form="sale">
+      <div class="crm-row">
+        <div class="crm-field"><span class="crm-label">Centre</span><input class="filter-select" id="ds-centre" placeholder="Centre name…" style="min-width:200px"></div>
+        <div class="crm-field"><span class="crm-label">City</span><select class="filter-select" id="ds-city">${cityOpts}</select></div>
+        <div class="crm-field"><span class="crm-label">Session</span><select class="filter-select" id="ds-session">${sessOpts}</select></div>
+        <div class="crm-field"><span class="crm-label">Date</span><input class="filter-select" type="date" id="ds-date" value="${today}"></div>
+        <div class="crm-field"><span class="crm-label">Points</span><span class="crm-rep-ytd" id="ds-pts">10</span></div>
+        <div class="crm-field"><span class="crm-label">&nbsp;</span><button class="crm-btn" id="ds-save">Log sale</button></div>
+        <span class="crm-msg" id="ds-msg"></span>
+      </div>
+    </div></section>`;
+}
+
+function repPipeline(repName, repOffers){
+  const cols={pending:[],ongoing:[],lost:[]};
+  repOffers.forEach(o=>{ (cols[o.status]||cols.pending).push(o); });
+  const today=new Date().toISOString().slice(0,10);
+  const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${s}">${s} · ${CRM_SESSIONS[s]}</option>`).join("");
+  function card(o){
+    const meta=`${o.city||"—"} · ${o.offerDate||""}`;
+    if(o.status==="pending") return `<div class="crm-card pending"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta}</div>
+      <div class="crm-card-actions"><button class="crm-mini conv" data-conv="${o.id}">Convert</button><button class="crm-mini lost" data-lost="${o.id}">Lost</button></div>
+      <div class="crm-convert" data-convform="${o.id}"><select class="filter-select" data-convsess="${o.id}">${sessOpts}</select><input class="filter-select" type="date" data-convdate="${o.id}" value="${today}"><button class="crm-mini conv" data-convsave="${o.id}">Save</button></div></div>`;
+    if(o.status==="ongoing") return `<div class="crm-card ongoing"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta}<br>→ ${crmEsc(o.sessionType||"")} · converted ${o.conversionDate||""}</div></div>`;
+    return `<div class="crm-card lost"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta} · lost</div></div>`;
+  }
+  const col=(t,a)=>`<div class="crm-col"><div class="crm-col-h">${t} (${a.length})</div>${a.length?a.map(card).join(""):'<div class="crm-card-meta" style="padding:8px">None</div>'}</div>`;
+  return `<section class="panel active"><div class="panel-h">🎯 ${crmEsc(repName)}'s offer pipeline</div>
+    <div class="crm-cols">${col("Pending",cols.pending)}${col("Ongoing",cols.ongoing)}${col("Lost",cols.lost)}</div></section>`;
+}
+
+/* ---- logged-days history: row per day (all activity days), expand for the full grid ---- */
+function repHistory(repName, days){
+  if(!days.length) return `<section class="panel active"><div class="panel-h">🗓️ ${crmEsc(repName)}'s logged days</div><div class="crm-card-meta" style="padding:8px">No days logged yet.</div></section>`;
+  const rows=days.map(d=>{
+    const key=d._id||("d-"+(d.date||""));
+    let grid=`<table class="crm-grid"><thead><tr><th>Category</th>${CRM_CITIES.map(c=>`<th>${c}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
+    CRM_CATS.forEach(cat=>{ const o=(d.counts||{})[cat]||{}; let rt=0;
+      grid+=`<tr><td>${crmEsc(cat)}</td>${CRM_CITIES.map(c=>{const v=Number(o[c])||0; rt+=v; return `<td>${v}</td>`;}).join("")}<td class="crm-rowtot">${rt}</td></tr>`; });
+    grid+=`</tbody></table>`;
+    const sd=d.saleDetails||[];
+    const saleList = sd.length
+      ? `<div style="margin-top:12px"><div class="ledger-h">Sales this day (${sd.length})</div>`
+        + sd.map(s=>`<div class="ledger-row" style="grid-template-columns:1fr auto"><span class="ledger-centre">${crmEsc(s.centre)}</span><span class="ledger-pts">${crmNum(s.points)} pts</span></div>`).join("")
+        + `</div>`
+      : "";
+    const del=d._id?`<button class="crm-day-del" data-daydel="${crmEsc(d._id)}" title="Delete this day">×</button>`:"";
+    return `<div class="crm-day">
+      <div class="crm-day-row">
+        <button class="crm-day-toggle" data-daytoggle="${crmEsc(key)}">▸</button>
+        <span class="crm-day-date">${crmEsc(d.date||"—")}</span>
+        <span class="crm-day-stat">TCC <b>${d.totalCalls||0}</b></span>
+        <span class="crm-day-stat">New <b>${d.totalNewCalls||0}</b></span>
+        <span class="crm-day-stat">Re <b>${d.totalReCalls||0}</b></span>
+        <span class="crm-day-stat">Sales <b>${d.sales||0}</b></span>
+        <span class="crm-day-stat">Offers <b>${d.offers||0}</b></span>
+        ${del}
+      </div>
+      <div class="crm-day-grid" data-daygrid="${crmEsc(key)}">${grid}${saleList}</div>
+    </div>`;
+  }).join("");
+  return `<section class="panel active"><div class="panel-h">🗓️ ${crmEsc(repName)}'s logged days</div>${rows}</section>`;
+}
+
+function wireRepTab(host, repName){
+  // entry switcher
+  function showMode(m){ host.querySelectorAll(".crm-modebtn").forEach(b=>{ const on=b.dataset.mode===m; b.classList.toggle("active",on); b.classList.toggle("alt",!on); });
+    host.querySelectorAll(".crm-form").forEach(f=>f.classList.toggle("active",f.dataset.form===m)); }
+  host.querySelectorAll(".crm-modebtn").forEach(b=>b.addEventListener("click",()=>showMode(b.dataset.mode)));
+  if(host.querySelector(".crm-modebtn")) showMode("calls");
+
+  // call grid row totals
+  function rowtot(cat){ let t=0; host.querySelectorAll(`.crm-cell[data-cat="${crmSel(cat)}"]`).forEach(i=>t+=Number(i.value)||0);
+    const el=host.querySelector(`.crm-rowtot[data-rowtot="${crmSel(cat)}"]`); if(el) el.textContent=t; }
+  host.querySelectorAll(".crm-cell").forEach(i=>i.addEventListener("input",()=>rowtot(i.dataset.cat)));
+
+  const clSave=host.querySelector("#cl-save");
+  if(clSave) clSave.addEventListener("click",async()=>{
+    const date=host.querySelector("#cl-date").value, msg=host.querySelector("#cl-msg");
+    if(!date){ crmMsg(msg,"Date required.",true); return; }
+    const counts={};
+    CRM_CATS.forEach(cat=>{ const o={}; CRM_CITIES.forEach(c=>{ const v=Number((host.querySelector(`.crm-cell[data-cat="${crmSel(cat)}"][data-city="${c}"]`)||{}).value)||0; if(v) o[c]=v; }); if(Object.keys(o).length) counts[cat]=o; });
+    if(!Object.keys(counts).length){ crmMsg(msg,"Enter at least one call count.",true); return; }
+    clSave.disabled=true; crmMsg(msg,"Saving…");
+    try{ await addDoc(collection(db,"daily-activity"),{rep:repName,date,counts}); await reloadAndRender(); }
+    catch(e){ console.error(e); crmMsg(host.querySelector("#cl-msg"),"Save failed: "+(e.message||e),true); clSave.disabled=false; }
+  });
+
+  const ofSave=host.querySelector("#of-save");
+  if(ofSave) ofSave.addEventListener("click",async()=>{
+    const centre=host.querySelector("#of-centre").value.trim(), city=host.querySelector("#of-city").value, offerDate=host.querySelector("#of-date").value, msg=host.querySelector("#of-msg");
+    if(!centre||!offerDate){ crmMsg(msg,"Centre and date required.",true); return; }
+    ofSave.disabled=true; crmMsg(msg,"Saving…");
+    try{ await addDoc(collection(db,"offer-centres"),{rep:repName,centre,city,offerDate,status:"pending",sessionType:null,conversionDate:null}); await reloadAndRender(); }
+    catch(e){ console.error(e); crmMsg(host.querySelector("#of-msg"),"Save failed: "+(e.message||e),true); ofSave.disabled=false; }
+  });
+
+  const dsSession=host.querySelector("#ds-session"), dsPts=host.querySelector("#ds-pts");
+  function dsprev(){ if(dsSession&&dsPts) dsPts.textContent=CRM_SESSIONS[dsSession.value]||0; }
+  if(dsSession) dsSession.addEventListener("change",dsprev); dsprev();
+  const dsSave=host.querySelector("#ds-save");
+  if(dsSave) dsSave.addEventListener("click",async()=>{
+    const centre=host.querySelector("#ds-centre").value.trim(), city=host.querySelector("#ds-city").value, session=host.querySelector("#ds-session").value, date=host.querySelector("#ds-date").value, msg=host.querySelector("#ds-msg");
+    if(!centre||!date){ crmMsg(msg,"Centre and date required.",true); return; }
+    const points=CRM_SESSIONS[session];
+    dsSave.disabled=true; crmMsg(msg,"Saving…");
+    try{ await addDoc(collection(db,"sales-entries"),{rep:repName,centre,date,points,city,citySplit:{[city]:points},sessionType:session,source:"crm"}); await reloadAndRender(); }
+    catch(e){ console.error(e); crmMsg(host.querySelector("#ds-msg"),"Save failed: "+(e.message||e),true); dsSave.disabled=false; }
+  });
+
+  // pipeline convert / lost
+  host.querySelectorAll("[data-conv]").forEach(b=>b.addEventListener("click",()=>{ const f=host.querySelector(`[data-convform="${crmSel(b.dataset.conv)}"]`); if(f) f.classList.toggle("open"); }));
+  host.querySelectorAll("[data-convsave]").forEach(b=>b.addEventListener("click",async()=>{
+    const id=b.dataset.convsave, sess=host.querySelector(`[data-convsess="${crmSel(id)}"]`).value, cdate=host.querySelector(`[data-convdate="${crmSel(id)}"]`).value;
+    if(!cdate) return; b.disabled=true;
+    try{ await updateDoc(doc(db,"offer-centres",id),{status:"ongoing",sessionType:sess,conversionDate:cdate}); await reloadAndRender(); }
+    catch(e){ console.error(e); b.disabled=false; }
+  }));
+  host.querySelectorAll("[data-lost]").forEach(b=>b.addEventListener("click",async()=>{ b.disabled=true;
+    try{ await updateDoc(doc(db,"offer-centres",b.dataset.lost),{status:"lost"}); await reloadAndRender(); }
+    catch(e){ console.error(e); b.disabled=false; }
+  }));
+
+  // logged-days expand / delete
+  host.querySelectorAll("[data-daytoggle]").forEach(b=>b.addEventListener("click",()=>{
+    const g=host.querySelector(`[data-daygrid="${crmSel(b.dataset.daytoggle)}"]`);
+    if(g){ const open=g.classList.toggle("open"); b.textContent=open?"▾":"▸"; }
+  }));
+  host.querySelectorAll("[data-daydel]").forEach(b=>b.addEventListener("click",async()=>{
+    if(!confirm("Delete this logged day?")) return; b.disabled=true;
+    try{ await deleteDoc(doc(db,"daily-activity",b.dataset.daydel)); await reloadAndRender(); }
+    catch(e){ console.error(e); b.disabled=false; }
+  }));
+}
+
+// Publish a freshly-built DATA into the board (idempotent re-render — NOT __initSales,
+// which is one-time) and rebuild the CRM tab.
+function publishDATA(DATA){
+  document.getElementById('payload-data').textContent = JSON.stringify(DATA);
+  if (window.__setDATA) window.__setDATA(DATA);
+  if (window.__rerenderSales) window.__rerenderSales();
+}
+async function reloadAndRender(){
+  const DATA = await loadAll();
+  publishDATA(DATA);          // board re-render (idempotent)
+  renderTopTabs();            // refresh the rep tab bar
+  selectTab(__crmCurrent || "__board");   // re-render the current selection
+}
+
+let __salesStarted = false;
+async function startSales(){
+  if (__salesStarted) return; __salesStarted = true;
+  try {
+    const DATA = await loadAll();
+    document.getElementById('payload-data').textContent = JSON.stringify(DATA);
+  } catch (e) {
+    console.error('[sales] live load failed; using static payload', e);
+  }
+  if (window.__initSales) window.__initSales();   // build the board ONCE, now with live data
+  renderTopTabs();                                // build the per-rep tab bar
+  restoreTab();                                   // land on the last-used tab (default first active rep)
+}
+// Gate on auth so the Firestore read is authorised.
+onAuthStateChanged(auth, (user) => { if (user) startSales(); });
+// Safety net: board is gated behind login anyway, but if no user resolves, still
+// build it from the static payload so it's never blank.
+setTimeout(() => { if (!__salesStarted && window.__initSales) { __salesStarted = true; window.__initSales(); renderTopTabs(); restoreTab(); } }, 7000);
+</script>
 </body>
 </html>
