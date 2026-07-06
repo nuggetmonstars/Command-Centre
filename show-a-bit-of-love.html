@@ -924,7 +924,8 @@ function cardHTML(c){
   if(st!=="saved"&&SIT_LABEL[c.situation])pilltxt=SIT_LABEL[c.situation];
   if(st==="saved"&&(c.signals||[]).some(s=>s&&s.t&&s.t.indexOf("2+ positive since new coach")>-1))pilltxt="Saved · new coach";
   const cadLimit=c.cadence==="Weekly"?21:(c.cadence==="Fortnightly"?28:28);
-  const overdueBy=(c.lastContactDays!=null&&c.lastContactDays>cadLimit)?(c.lastContactDays-cadLimit):0;
+  const overdueBy=(c.overdueDays!=null&&c.overdueDays>0)?c.overdueDays:((c.lastContactDays!=null&&c.lastContactDays>cadLimit)?(c.lastContactDays-cadLimit):0);
+  if(st==="reminder"&&overdueBy>0)pilltxt+=" · "+overdueBy+"d overdue";
   let head="";
   if(st==="saved")head=`<div class="pausedback">Saved off the list: <b>${c.savedDate||""}</b></div>`;
   return `<div class="card ${st} ${tier} ${open?"open":""}" data-name="${c.name}">
