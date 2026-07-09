@@ -2209,7 +2209,7 @@ h1,h2,h3,h4,h5,.mf,
       <div class="al-h">New centres <span class="al-badge" id="adm-new-count">0</span></div>
       <div class="al-controls">
         <input type="number" id="adm-assign-n" class="al-num" min="1" placeholder="N">
-        <select id="adm-assign-rep"><option value="Bek">Bek</option><option value="Carolyn">Carolyn</option></select>
+        <select id="adm-assign-rep"><option value="Bek">Bek</option><option value="Carolyn">Carolyn</option><option value="Nug">Nug</option><option value="Melissa">Melissa</option><option value="Mary">Mary</option></select>
         <button class="al-btn" id="adm-assign-btn">Assign</button>
       </div>
       <div class="al-log" id="adm-assign-log"></div>
@@ -6225,8 +6225,8 @@ function restoreTab(){
    Reads `sales-crm-centres` under the page's existing auth (db).
    cc-prefixed to avoid collisions with the rest of the module.
    ============================================================ */
-const ccREPS = ["Bek", "Carolyn"];
-const ccPINS = { Bek: "0000", Carolyn: "0000" };
+const ccREPS = ["Bek", "Carolyn", "Nug", "Melissa", "Mary"];
+const ccPINS = { Bek: "0000", Carolyn: "0000", Nug: "0000", Melissa: "0000", Mary: "0000" };
 const ccCOLLECTION = "sales-crm-centres";
 const ccSTATUS = {
   very_interested: { label:"Very interested", bar:"#F5C400", tint:"#FFF7DA" },
@@ -6348,12 +6348,19 @@ function ccDetail(c){
 function ccRenderList(){
   const items=ccCENTRES.filter(ccPasses);
   ccEl("cc-count").textContent=`${items.length} of ${ccCENTRES.length} centres`;
-  ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):`<div class="cc-empty">No centres match.</div>`;
+  ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">No centres match.</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
   ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const row=document.getElementById("cc-row-"+el.dataset.toggle); if(row) row.classList.toggle("open"); }));
 }
 
 /* ---- Phase 2/3: city map, today's live counter, log-a-call ---- */
-function ccTodayISO(){ return new Date().toISOString().slice(0,10); }
+function ccTodayISO(){
+  const p = new Intl.DateTimeFormat('en-CA', {
+    timeZone:'Australia/Sydney', year:'numeric', month:'2-digit', day:'2-digit'
+  }).formatToParts(new Date());
+  const g = t => p.find(x=>x.type===t).value;
+  return `${g('year')}-${g('month')}-${g('day')}`;
+}
+function ccDateAU(iso){ const [y,m,d]=String(iso||"").split('-'); return `${d}-${m}-${y}`; }   // display only (DD-MM-YYYY)
 const CC_CITYMAP = {NSW:"S", VIC:"M", QLD:"B", SA:"A", WA:"P", "SA/WA":"A"};
 function ccCity(state){
   const s=String(state||"").toUpperCase().trim();
@@ -6381,7 +6388,7 @@ function ccRenderCounter(){
   const c=ccToday.counts||{};
   const tcc=ccCatTot(c,"TCC"), nc=ccCatTot(c,"NC"), fuc=ccCatTot(c,"FUC");
   const interested=ccCatTot(c,"NC-In")+ccCatTot(c,"FU-RC");
-  head.innerHTML=`<span>Today &middot; ${crmEsc(ccTodayISO())}</span>`
+  head.innerHTML=`<span>Today &middot; ${crmEsc(ccDateAU(ccTodayISO()))}</span>`
     +`<span>Total Calls <b>${tcc}</b></span><span>New <b>${nc}</b></span><span>Recalls <b>${fuc}</b></span>`
     +`<span>Interested <b>${interested}</b></span><span>Booked <b>${ccBookedToday}</b></span>`;
   const gridEl=ccEl("cc-counter-grid"); if(!gridEl) return;
@@ -6474,6 +6481,10 @@ async function ccLogCall(num){
     // refresh counter + browse list (collapses this row, updates colour + snippet)
     await ccLoadToday(ccPinRep); ccRenderCounter();
     ccRenderChips(); ccRenderList();
+    // also rebuild the 🏆 Leaderboard board from fresh Firestore (idempotent re-render,
+    // same path the board's add-sale form uses). Isolated so a refresh error can never
+    // break the call log — the write above has already succeeded.
+    try{ await reloadAndRender(); }catch(refreshErr){ console.error("[calllist] board refresh after log failed (log still saved)", refreshErr); }
   }catch(e){
     console.error("ccLogCall",e);
     if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed: "+(e.message||e); }
