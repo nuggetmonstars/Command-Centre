@@ -65,6 +65,28 @@
   .xcollapse .xrow{margin-bottom:5px}
   details.xexp{margin-bottom:20px} details.xexp summary{cursor:pointer;font-family:'MarkerFelt',cursive;font-size:15px;color:var(--blue);margin-bottom:8px}
 
+  /* commission view */
+  .crow{background:var(--white);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden}
+  .crow.locked{opacity:.72;border-color:var(--lightblue)}
+  .crow-head{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;flex-wrap:wrap}
+  .crow-head:hover{background:#fbfdff}
+  .cn{font-family:'MarkerFelt',cursive;font-size:17px;color:var(--ink);flex:1;min-width:120px}
+  .cpts{font-size:12.5px;color:var(--blue)}
+  .clock{font-family:'MarkerFelt',cursive;font-size:11px;border-radius:30px;padding:3px 9px;color:#fff}
+  .clock.on{background:var(--green)} .clock.off{background:var(--orange)}
+  .cpay{font-family:'MarkerFelt',cursive;font-size:22px;color:var(--ink);flex:none}
+  .cpay small{font-size:12px;color:var(--blue)}
+  .cpay.zero{color:var(--orange)}
+  .cbody{display:none;padding:0 16px 14px;border-top:2px dashed var(--line)}
+  .crow.open .cbody{display:block}
+  .csplit{font-size:13px;color:var(--ink);margin:10px 0}
+  .csplit b{font-family:'MarkerFelt',cursive}
+  .cinv{font-size:12.5px;color:var(--ink);padding:3px 0;display:flex;gap:10px;justify-content:space-between;border-bottom:1px solid var(--line)}
+  .cinv .cc{flex:1}
+  .cinv .cd{font-family:'MarkerFelt',cursive;white-space:nowrap}
+  .cinv .tag{font-family:'MarkerFelt',cursive;font-size:10px;border-radius:30px;padding:1px 7px;color:#fff}
+  .cinv .tag.m{background:var(--green)} .cinv .tag.d{background:var(--orange)}
+
   /* controls row */
   .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
   .controls label{font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)}
@@ -213,6 +235,7 @@
     <div class="tabbar" id="tabbar">
       <button class="tab active" data-view="payroll">&#128181; Payroll Hours</button>
       <button class="tab" data-view="xero">&#128203; Xero Check</button>
+      <button class="tab" data-view="commission">&#128176; Commission</button>
     </div>
 
     <div id="view-payroll">
@@ -232,6 +255,10 @@
 
     <div id="view-xero" style="display:none">
       <div id="xero-body"><div class="empty">Loading Xero check…</div></div>
+    </div>
+
+    <div id="view-commission" style="display:none">
+      <div id="comm-body"><div class="empty">Loading commission…</div></div>
     </div>
   </div>
 
@@ -703,6 +730,70 @@
       body.innerHTML = `<div class="empty">Couldn't load the Xero check.<br><small>${esc(err.message||err)}</small></div>`;
     }
   }
+  // ---- Commission view ----
+  const money = n => '$' + (Math.round((n||0)*100)/100).toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+  function renderCommission(d){
+    const cfg = d.config||{}; const rate = cfg.rate||0.08;
+    const ic = d.invoiceCounts||{};
+    const reps = (d.reps||[]).slice().sort((a,b)=>(b.payableCommission||0)-(a.payableCommission||0) || (b.grossCommissionable||0)-(a.grossCommissionable||0));
+    const gen = d.generatedAt && d.generatedAt.toDate ? d.generatedAt.toDate() : null;
+    const totalPayable = (d.totals && d.totals.totalPayable!=null) ? d.totals.totalPayable : reps.reduce((s,r)=>s+(r.payableCommission||0),0);
+    const pts = r => (r.lifetimePoints!=null?r.lifetimePoints:(r.points!=null?r.points:0));
+
+    const repRows = reps.map(r=>{
+      const unlocked = !!r.unlocked;
+      const invs = r.invoices||[];
+      const isDefault = v => /default|nug/i.test(String(v.matchType||''));
+      const matched = invs.filter(v=>!isDefault(v));
+      const defaulted = invs.filter(v=>isDefault(v));
+      const payCell = unlocked
+        ? `<div class="cpay">${money(r.payableCommission)}</div>`
+        : `<div class="cpay zero">${money(0)}<small> · ${money(r.pendingCommission!=null?r.pendingCommission:(r.grossCommissionable||0)*rate)} pending</small></div>`;
+      const invLine = v => `<div class="cinv"><span class="cc">${esc(v.contact||'')}${v.matchedCentre?` <span style="opacity:.6">→ ${esc(v.matchedCentre)}</span>`:''}</span><span class="cd">${money(v.subtotal)} <span class="tag ${isDefault(v)?'d':'m'}">${isDefault(v)?'default':'match'}</span></span></div>`;
+      const splitLine = (r.name==='Nug' || defaulted.length)
+        ? `<div class="csplit"><b>${matched.length}</b> matched to ${esc(r.name)}'s ledger · <b>${defaulted.length}</b> defaulted (no ledger match)</div>` : '';
+      return `
+      <div class="crow ${unlocked?'':'locked'}">
+        <div class="crow-head">
+          <div class="cn">${esc(r.name)} <span class="cpts">${h1(pts(r))} pts</span></div>
+          <span class="clock ${unlocked?'on':'off'}">${unlocked?'unlocked':'locked'}</span>
+          <span class="cpts">${r.invoiceCount||invs.length} inv · ${money(r.grossCommissionable)} gross</span>
+          ${payCell}
+          <div class="caret">&#9654;</div>
+        </div>
+        <div class="cbody">
+          ${splitLine}
+          ${invs.length?invs.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(invLine).join(''):'<div class="empty">No invoices attributed this month.</div>'}
+        </div>
+      </div>`;
+    }).join('');
+
+    $('comm-body').innerHTML = `
+      <div class="xhead">Commission for <b>${esc(d.month||'')}</b> · ${(rate*100)}% of ex-GST invoice value · unlocks at ${cfg.unlockThreshold||100} lifetime points${gen?` · generated ${gen.toLocaleString('en-AU')}`:''}.</div>
+      <div class="tiles">
+        <div class="tile"><div class="num" style="font-size:26px">${money(totalPayable)}</div><div class="lbl">Total payable</div></div>
+        <div class="tile blue"><div class="num" style="font-size:26px">${money(d.commissionableBase)}</div><div class="lbl">Commissionable base</div></div>
+        <div class="tile"><div class="num">${ic.matched!=null?ic.matched:'—'}</div><div class="lbl">Matched invoices</div></div>
+        <div class="tile amber"><div class="num">${ic.defaultedToNug!=null?ic.defaultedToNug:'—'}</div><div class="lbl">Defaulted to Nug</div></div>
+      </div>
+      <div class="xsection"><div class="sub">Tap a rep to see their invoices — green = matched to their signed ledger, amber = defaulted (no ledger match). Locked reps (&lt;${cfg.unlockThreshold||100} pts) show pending, not payable.</div></div>
+      ${repRows}`;
+    document.querySelectorAll('#comm-body .crow-head').forEach(head=>{
+      head.addEventListener('click',()=>head.parentElement.classList.toggle('open'));
+    });
+  }
+  async function loadCommission(){
+    const body = $('comm-body');
+    body.innerHTML = `<div class="empty">Loading commission…</div>`;
+    try{
+      const snap = await getDocs(collection(db,'commission-runs'));
+      if(snap.empty){ body.innerHTML = `<div class="empty">No commission run yet.<br><small>Run <b>commission_agent.py</b> to generate one.</small></div>`; return; }
+      const docs = snap.docs.map(x=>({id:x.id, ...x.data()})).sort((a,b)=>String(b.id).localeCompare(String(a.id)));
+      renderCommission(docs[0]);
+    }catch(err){
+      body.innerHTML = `<div class="empty">Couldn't load commission.<br><small>${esc(err.message||err)}</small></div>`;
+    }
+  }
   function wireTabs(){
     document.querySelectorAll('#tabbar .tab').forEach(t=>{
       t.addEventListener('click', ()=>{
@@ -711,7 +802,9 @@
         const v = t.dataset.view;
         $('view-payroll').style.display = v==='payroll' ? '' : 'none';
         $('view-xero').style.display = v==='xero' ? '' : 'none';
+        $('view-commission').style.display = v==='commission' ? '' : 'none';
         if(v==='xero') loadXero();
+        if(v==='commission') loadCommission();
       });
     });
   }
