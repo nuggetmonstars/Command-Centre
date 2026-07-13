@@ -65,6 +65,32 @@
   .band.clear h3{color:var(--green)}
   .chip{font-family:'MarkerFelt',cursive;font-size:12px;background:var(--orange);color:#fff;border-radius:30px;padding:4px 11px;white-space:nowrap}
 
+  /* state filter pills */
+  .states{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+  .spill{font-family:'MarkerFelt',cursive;font-size:13px;background:var(--white);color:var(--blue);border:2px solid var(--lightblue);border-radius:30px;padding:6px 15px;cursor:pointer;transition:all .12s}
+  .spill:hover{border-color:var(--blue)}
+  .spill.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  /* not-attended rollup */
+  .rollup{background:var(--white);border:3px solid var(--red);border-radius:16px;box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+  .rollup-head{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer}
+  .rollup-head:hover{background:#fff6f5}
+  .rollup-head h3{font-size:17px;color:var(--red);flex:1}
+  .rollup-head .caret{color:var(--red);font-size:18px;transition:transform .15s}
+  .rollup.open .rollup-head .caret{transform:rotate(90deg)}
+  .rollup.clear{border-color:var(--green)} .rollup.clear .rollup-head h3,.rollup.clear .rollup-head .caret{color:var(--green)}
+  .rollup-body{display:none;padding:0 16px 14px;border-top:2px dashed var(--line)}
+  .rollup.open .rollup-body{display:block}
+  .ctr-block{margin-top:12px}
+  .ctr-name{font-family:'MarkerFelt',cursive;font-size:14px;color:var(--ink)}
+  .ctr-name .st-tag{font-family:'MarkerFelt',cursive;font-size:10.5px;color:#fff;background:var(--blue);border-radius:30px;padding:2px 8px;margin-left:7px}
+  .na-line{font-size:13px;color:var(--ink);padding:3px 0 3px 14px}
+  .na-line b{color:var(--ink)}
+
+  /* reason tag (shared: rollup + drill) */
+  .rsn{font-family:'MarkerFelt',cursive;font-size:10.5px;color:#fff;border-radius:30px;padding:2px 8px;margin-left:6px}
+  .rsn.needs{background:var(--orange)} .rsn.missed{background:var(--red)} .rsn.rescheduled{background:var(--pink)} .rsn.coachabsent{background:#8a6fc0}
+
   /* coach rows */
   .rows{display:flex;flex-direction:column;gap:8px}
   .row{background:var(--white);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
@@ -146,8 +172,10 @@
       <button class="refresh" id="refresh">&#8635; Refresh</button>
     </div>
 
+    <div class="states" id="states"></div>
     <div class="tiles" id="tiles"></div>
     <div id="band"></div>
+    <div id="rollup"></div>
     <div class="rows" id="rows"></div>
   </div>
 
@@ -238,9 +266,18 @@
     return 'needs';
   };
   const statusLabel = st => (String(st||'').trim()==='' ? 'needs marking' : st);
+  const reasonClass = r => {
+    const s = String(r||'').toLowerCase();
+    if(s.includes('miss')) return 'missed';
+    if(s.includes('resched')) return 'rescheduled';
+    if(s.includes('absent')) return 'coachabsent';
+    return 'needs';
+  };
+  const reasonLabel = r => String(r||'').replace(/-/g,' ');
 
   let FORTNIGHTS = [];   // all docs, newest first
   let CURRENT = null;    // selected fortnight doc
+  let STATE = 'All';     // active state filter
 
   async function loadFortnights(){
     const snap = await getDocs(collection(db,'payroll-fortnights'));
@@ -249,38 +286,48 @@
     return docs;
   }
 
-  function totalsFrom(doc){
-    // trust stored totals, but fall back to computing from coaches[] if absent
-    const t = doc.totals || {};
-    const coaches = doc.coaches || [];
-    const paidHours = t.paidHours!=null ? t.paidHours : coaches.reduce((s,c)=>s+(c.paidHours||0),0);
-    const count = c => coaches.reduce((s,x)=>s + ((x.flags&&x.flags[c]?x.flags[c].length:0)),0);
+  // ---- state-aware slices of the current fortnight ----
+  const coachesFor = doc => (doc.coaches||[]).filter(c => STATE==='All' || c.state===STATE);
+  const notAttendedFor = doc => (doc.notAttended||[]).filter(ctr => STATE==='All' || ctr.state===STATE);
+  const naCount = centres => centres.reduce((s,ctr)=>s + (ctr.coaches||[]).reduce((t,c)=>t+(c.sessions||[]).length,0), 0);
+
+  // totals computed over whatever slice is passed (so they respect the state filter)
+  function computeTotals(coaches, naCentres){
+    const flag = k => coaches.reduce((s,c)=>s + ((c.flags&&c.flags[k])?c.flags[k].length:0), 0);
     return {
-      coaches: t.coaches!=null ? t.coaches : coaches.length,
-      paidHours,
-      needsMarkingSessions: t.needsMarkingSessions!=null ? t.needsMarkingSessions : count('needsMarking'),
-      notDeliveredSessions: t.notDeliveredSessions!=null ? t.notDeliveredSessions : count('notDelivered'),
-      coachAbsentSessions: t.coachAbsentSessions!=null ? t.coachAbsentSessions : count('coachAbsent'),
+      coaches: coaches.length,
+      paidHours: coaches.reduce((s,c)=>s+(c.paidHours||0),0),
+      needsMarking: flag('needsMarking'),
+      notAttended: naCount(naCentres),
     };
+  }
+
+  function renderStates(doc){
+    const states = (doc.totals && doc.totals.states) ? doc.totals.states : [];
+    const pills = ['All', ...states];
+    $('states').innerHTML = pills.map(s =>
+      `<button class="spill ${s===STATE?'active':''}" data-state="${esc(s)}">${s==='All'?'All states':esc(s)}</button>`
+    ).join('');
+    document.querySelectorAll('#states .spill').forEach(b=>{
+      b.addEventListener('click', ()=>{ STATE = b.dataset.state; renderStates(doc); renderSlice(); });
+    });
   }
 
   function renderTiles(t){
     $('tiles').innerHTML = `
       <div class="tile blue"><div class="num">${t.coaches}</div><div class="lbl">Coaches</div></div>
       <div class="tile"><div class="num">${h1(t.paidHours)}</div><div class="lbl">Paid hours</div></div>
-      <div class="tile amber"><div class="num">${t.needsMarkingSessions}</div><div class="lbl">Needs marking</div></div>
-      <div class="tile red"><div class="num">${t.notDeliveredSessions}</div><div class="lbl">Not delivered</div></div>
-      <div class="tile red"><div class="num">${t.coachAbsentSessions}</div><div class="lbl">Coach absent</div></div>`;
+      <div class="tile amber"><div class="num">${t.needsMarking}</div><div class="lbl">Needs marking</div></div>
+      <div class="tile red"><div class="num">${t.notAttended}</div><div class="lbl">Not attended</div></div>`;
   }
 
-  function renderBand(doc){
-    const coaches = doc.coaches || [];
+  function renderBand(coaches){
     const need = coaches
       .map(c=>({name:c.name, n:(c.flags&&c.flags.needsMarking?c.flags.needsMarking.length:0)}))
       .filter(c=>c.n>0)
       .sort((a,b)=>b.n-a.n);
     if(!need.length){
-      $('band').innerHTML = `<div class="band clear"><h3>&#9989; Nothing to chase</h3><p>Every session in this fortnight is marked. Hours below are final and ready for payroll.</p></div>`;
+      $('band').innerHTML = `<div class="band clear"><h3>&#9989; Nothing to chase</h3><p>Every session ${STATE==='All'?'in this fortnight':'in '+esc(STATE)} is marked. Hours below are final and ready for payroll.</p></div>`;
       return;
     }
     const total = need.reduce((s,c)=>s+c.n,0);
@@ -292,6 +339,34 @@
       </div>`;
   }
 
+  // ---- not-attended rollup: centre -> coach -> sessions ----
+  function renderRollup(naCentres){
+    const total = naCount(naCentres);
+    if(!total){
+      $('rollup').innerHTML = `<div class="rollup clear"><div class="rollup-head"><h3>&#9989; Every session delivered</h3></div></div>`;
+      return;
+    }
+    const centres = naCentres.slice().sort((a,b)=>String(a.centre).localeCompare(String(b.centre)));
+    const body = centres.map(ctr=>{
+      const lines = (ctr.coaches||[]).map(c=>
+        (c.sessions||[]).map(s=>
+          `<div class="na-line"><b>${esc(c.name)}</b> · ${esc(s.day)} · ${esc(s.activity)}<span class="rsn ${reasonClass(s.reason)}">${esc(reasonLabel(s.reason))}</span></div>`
+        ).join('')
+      ).join('');
+      return `<div class="ctr-block"><div class="ctr-name">${esc(ctr.centre)}<span class="st-tag">${esc(ctr.state||'?')}</span></div>${lines}</div>`;
+    }).join('');
+    $('rollup').innerHTML = `
+      <div class="rollup">
+        <div class="rollup-head">
+          <h3>&#9888; ${total} session${total>1?'s':''} not attended — ${centres.length} centre${centres.length>1?'s':''}</h3>
+          <span class="caret">&#9654;</span>
+        </div>
+        <div class="rollup-body">${body}</div>
+      </div>`;
+    const head = $('rollup').querySelector('.rollup-head');
+    head.addEventListener('click', ()=> head.parentElement.classList.toggle('open'));
+  }
+
   function flagPills(f){
     f = f || {};
     const bits = [];
@@ -301,7 +376,7 @@
     return bits.join('');
   }
 
-  function drill(c){
+  function drill(c, coachNA){
     const per = (c.perCentre||[]).slice().sort((a,b)=>(b.hours||0)-(a.hours||0));
     const perRows = per.map(p=>`<tr><td>${esc(p.centre)}</td><td style="text-align:right">${h1(p.hours)}h</td></tr>`).join('')
       || `<tr><td colspan="2">No paid centre hours.</td></tr>`;
@@ -314,6 +389,22 @@
         <td style="text-align:right">${s.hours!=null?h1(s.hours)+'h':'—'}</td>
         <td><span class="st ${statusClass(s.status)}">${esc(statusLabel(s.status))}</span></td>
       </tr>`).join('') || `<tr><td colspan="5">No sessions recorded.</td></tr>`;
+
+    // not-attended sessions for this coach (missed / rescheduled / coach-absent / needs-marking)
+    const na = (coachNA||[]).slice().sort((a,b)=>String(a.day).localeCompare(String(b.day)));
+    const naSection = na.length ? `
+        <h4>Not attended (${na.length})</h4>
+        <table>
+          <thead><tr><th>Day</th><th>Centre</th><th>Activity</th><th>Reason</th></tr></thead>
+          <tbody>${na.map(s=>`
+            <tr>
+              <td>${esc(s.day)}</td>
+              <td>${esc(s.centre)}${s.state?`<span class="st-tag">${esc(s.state)}</span>`:''}</td>
+              <td>${esc(s.activity)}</td>
+              <td><span class="rsn ${reasonClass(s.reason)}">${esc(reasonLabel(s.reason))}</span></td>
+            </tr>`).join('')}</tbody>
+        </table>` : '';
+
     return `
       <div class="drill">
         <h4>Hours per centre</h4>
@@ -326,45 +417,69 @@
           <thead><tr><th>Day</th><th>Centre</th><th>Activity</th><th style="text-align:right">Hours</th><th>Status</th></tr></thead>
           <tbody>${sessRows}</tbody>
         </table>
+        ${naSection}
       </div>`;
   }
 
-  function renderRows(doc, filter){
+  // build a per-coach not-attended map from the fortnight's notAttended block (state-filtered)
+  function naByCoach(naCentres){
+    const map = {};
+    naCentres.forEach(ctr=>{
+      (ctr.coaches||[]).forEach(c=>{
+        (map[c.name] = map[c.name] || []).push(
+          ...(c.sessions||[]).map(s=>({ centre:ctr.centre, state:ctr.state, day:s.day, activity:s.activity, reason:s.reason }))
+        );
+      });
+    });
+    return map;
+  }
+
+  function renderRows(coaches, naMap, filter){
     const q = (filter||'').trim().toLowerCase();
-    const coaches = (doc.coaches||[])
+    const list = coaches
       .slice()
       .sort((a,b)=>(b.paidHours||0)-(a.paidHours||0))
       .filter(c=>!q || String(c.name||'').toLowerCase().includes(q));
-    if(!coaches.length){
-      $('rows').innerHTML = `<div class="empty">No coaches match “${esc(filter)}”.</div>`;
+    if(!list.length){
+      $('rows').innerHTML = `<div class="empty">No coaches match${q?` “${esc(filter)}”`:` ${esc(STATE)}`}.</div>`;
       return;
     }
-    $('rows').innerHTML = coaches.map((c,i)=>{
+    $('rows').innerHTML = list.map((c,i)=>{
       const flags = c.flags||{};
       const anyFlag = ['needsMarking','coachAbsent','notDelivered'].some(k=>flags[k]&&flags[k].length);
       return `
       <div class="row ${anyFlag?'flagged':''}" data-name="${esc(c.name)}">
         <div class="row-head">
           <div class="rank">${i+1}</div>
-          <div class="cname">${esc(c.name)}</div>
+          <div class="cname">${esc(c.name)}${c.state?`<span class="st-tag">${esc(c.state)}</span>`:''}</div>
           <div class="rflags">${flagPills(flags)}</div>
           <div class="hours">${h1(c.paidHours)}<small>h</small></div>
           <div class="caret">&#9654;</div>
         </div>
-        ${drill(c)}
+        ${drill(c, naMap[c.name])}
       </div>`;
     }).join('');
-    // expand/collapse
     document.querySelectorAll('#rows .row-head').forEach(head=>{
       head.addEventListener('click',()=>head.parentElement.classList.toggle('open'));
     });
   }
 
+  // render everything that depends on the active state slice
+  function renderSlice(){
+    if(!CURRENT) return;
+    const coaches = coachesFor(CURRENT);
+    const na = notAttendedFor(CURRENT);
+    renderTiles(computeTotals(coaches, na));
+    renderBand(coaches);
+    renderRollup(na);
+    renderRows(coaches, naByCoach(na), $('search').value);
+  }
+
   function renderCurrent(){
-    if(!CURRENT){ $('rows').innerHTML = `<div class="empty">No payroll fortnights found yet. Run <b>coach_hours.py --write</b> first.</div>`; return; }
-    renderTiles(totalsFrom(CURRENT));
-    renderBand(CURRENT);
-    renderRows(CURRENT, $('search').value);
+    if(!CURRENT){ $('states').innerHTML=''; $('tiles').innerHTML=''; $('band').innerHTML=''; $('rollup').innerHTML=''; $('rows').innerHTML = `<div class="empty">No payroll fortnights found yet. Run <b>coach_hours.py --write</b> first.</div>`; return; }
+    STATE = 'All';
+    renderStates(CURRENT);
+    renderSlice();
     const gen = CURRENT.generatedAt && CURRENT.generatedAt.toDate ? CURRENT.generatedAt.toDate() : null;
     $('foot').textContent = `Fortnight ${CURRENT.id} · reads payroll-fortnights (written by coach_hours.py --write)` + (gen?` · generated ${gen.toLocaleString('en-AU')}`:'');
   }
@@ -377,7 +492,7 @@
       CURRENT = FORTNIGHTS[0] || null;
       renderCurrent();
       sel.addEventListener('change',()=>{ CURRENT = FORTNIGHTS.find(f=>f.id===sel.value); renderCurrent(); });
-      $('search').addEventListener('input',()=>{ if(CURRENT) renderRows(CURRENT,$('search').value); });
+      $('search').addEventListener('input',()=>{ if(CURRENT) renderRows(coachesFor(CURRENT), naByCoach(notAttendedFor(CURRENT)), $('search').value); });
       $('refresh').addEventListener('click',async()=>{ FORTNIGHTS = await loadFortnights(); const cur=sel.value; sel.innerHTML=FORTNIGHTS.map(f=>`<option value="${esc(f.id)}">${fmtRange(f.start,f.end)}</option>`).join(''); sel.value=cur; CURRENT=FORTNIGHTS.find(f=>f.id===cur)||FORTNIGHTS[0]; renderCurrent(); });
     }catch(err){
       $('rows').innerHTML = `<div class="empty">Couldn't load payroll data.<br><small>${esc(err.message||err)}</small></div>`;
