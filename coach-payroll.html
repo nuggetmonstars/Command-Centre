@@ -102,6 +102,26 @@
   .rflags{display:flex;gap:6px;flex-wrap:wrap}
   .fl{font-family:'MarkerFelt',cursive;font-size:11px;color:#fff;border-radius:30px;padding:3px 9px;white-space:nowrap}
   .fl.mark{background:var(--orange)} .fl.miss{background:var(--red)} .fl.absent{background:var(--pink)}
+  .fl.pt{background:var(--blue)} .fl.centres{background:var(--red)}
+
+  /* PT tier selector on the row */
+  .pt-pick{display:flex;align-items:center;gap:4px;flex:none}
+  .pt-pick select{font-family:'Pencil',cursive;font-size:12px;padding:4px 8px;border:2px solid var(--lightblue);border-radius:10px;background:var(--white);color:var(--ink);cursor:pointer}
+  .pt-pick.on select{border-color:var(--blue);background:#eef7fd}
+
+  /* PT panel in drill */
+  .pt-panel{background:#f4fafe;border:2px solid var(--lightblue);border-radius:12px;padding:11px 13px;margin:14px 0}
+  .pt-panel h4{margin:0 0 8px}
+  .pt-grid{display:flex;flex-wrap:wrap;gap:14px}
+  .pt-stat{min-width:120px}
+  .pt-stat .k{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.4px}
+  .pt-stat .v{font-family:'MarkerFelt',cursive;font-size:20px;color:var(--ink)}
+  .pt-stat .v small{font-size:12px;color:var(--blue)}
+  .pt-checks{margin-top:10px;display:flex;flex-direction:column;gap:4px}
+  .pt-check{font-size:13px;color:var(--ink);display:flex;gap:7px;align-items:center}
+  .pt-check .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .pt-check.ok .dot{background:var(--green)} .pt-check.bad .dot{background:var(--red)}
+  .pt-check.bad{color:var(--red)}
   .hours{font-family:'MarkerFelt',cursive;font-size:22px;color:var(--ink);flex:none}
   .hours small{font-size:12px;color:var(--blue)}
   .caret{flex:none;color:var(--blue);font-size:18px;transition:transform .15s}
@@ -184,7 +204,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   // ---- Firebase config. apiKey injected locally from coaches.html (never in chat). ----
   const firebaseConfig = {
@@ -278,6 +298,41 @@
   let FORTNIGHTS = [];   // all docs, newest first
   let CURRENT = null;    // selected fortnight doc
   let STATE = 'All';     // active state filter
+
+  // ---- Part-time contracts ----
+  const PT_TARGETS = {
+    20: { week:[6,6],  fortnight:[12,12] },
+    15: { week:[5,5],  fortnight:[10,10] },
+    10: { week:[3,4],  fortnight:[6,8]   },
+  };
+  let PT_TIERS = {};   // coach name -> tier number
+  const ptKey = name => String(name||'').trim().replace(/[\/\\\s'"]+/g,'_') || '_';
+
+  async function loadPTContracts(){
+    try{
+      const snap = await getDocs(collection(db,'pt-contracts'));
+      const map = {};
+      snap.docs.forEach(d=>{ const v=d.data()||{}; if(v.name!=null && v.tier) map[v.name]=Number(v.tier); });
+      PT_TIERS = map;
+    }catch(e){ PT_TIERS = {}; }
+  }
+  async function savePTTier(name, tier){
+    try{
+      await setDoc(doc(db,'pt-contracts',ptKey(name)), { name, tier: tier||null });
+      if(tier) PT_TIERS[name]=tier; else delete PT_TIERS[name];
+    }catch(e){ alert('Could not save the part-time setting — Firestore may need write permission on pt-contracts.'); }
+  }
+  function ptCompliance(tier, c){
+    const t = PT_TARGETS[tier]; if(!t) return null;
+    const w1=c.distinctCentresWeek1||0, w2=c.distinctCentresWeek2||0, fn=c.distinctCentresFortnight||0;
+    const inRange = (n,[lo,hi]) => n>=lo && n<=hi;
+    const checks = [
+      { label:'Week 1 centres',    val:w1, target:t.week,      ok:inRange(w1,t.week) },
+      { label:'Week 2 centres',    val:w2, target:t.week,      ok:inRange(w2,t.week) },
+      { label:'Fortnight centres', val:fn, target:t.fortnight, ok:inRange(fn,t.fortnight) },
+    ];
+    return { checks, compliant: checks.every(x=>x.ok) };
+  }
 
   async function loadFortnights(){
     const snap = await getDocs(collection(db,'payroll-fortnights'));
@@ -387,6 +442,25 @@
     return bits.join('');
   }
 
+  function ptPanel(c){
+    const tier = PT_TIERS[c.name];
+    if(!tier) return '';
+    const comp = ptCompliance(tier, c);
+    const rng = ([lo,hi]) => lo===hi ? `${lo}` : `${lo}–${hi}`;
+    const checks = comp.checks.map(ch=>`
+        <div class="pt-check ${ch.ok?'ok':'bad'}"><span class="dot"></span>${ch.label}: <b>${ch.val}</b> (target ${rng(ch.target)})${ch.ok?'':' — off target'}</div>`).join('');
+    return `
+      <div class="pt-panel">
+        <h4>&#128188; Part-time contract — ${tier}h</h4>
+        <div class="pt-grid">
+          <div class="pt-stat"><div class="k">Contracted</div><div class="v">${tier}<small>h</small></div></div>
+          <div class="pt-stat"><div class="k">Actual coached</div><div class="v">${h1(c.paidHours)}<small>h</small></div></div>
+          <div class="pt-stat"><div class="k">Centres wk1 / wk2</div><div class="v">${c.distinctCentresWeek1||0} / ${c.distinctCentresWeek2||0}</div></div>
+          <div class="pt-stat"><div class="k">Centres fortnight</div><div class="v">${c.distinctCentresFortnight||0}</div></div>
+        </div>
+        <div class="pt-checks">${checks}</div>
+      </div>`;
+  }
   function drill(c, coachNA){
     const per = (c.perCentre||[]).slice().sort((a,b)=>(b.hours||0)-(a.hours||0));
     const perRows = per.map(p=>`<tr><td>${esc(p.centre)}</td><td style="text-align:right">${h1(p.hours)}h</td></tr>`).join('')
@@ -418,6 +492,7 @@
 
     return `
       <div class="drill">
+        ${ptPanel(c)}
         <h4>Hours per centre</h4>
         <table><tbody>
           ${perRows}
@@ -458,12 +533,23 @@
     $('rows').innerHTML = list.map((c,i)=>{
       const flags = c.flags||{};
       const anyFlag = ['needsMarking','coachAbsent','notDelivered'].some(k=>flags[k]&&flags[k].length);
+      const tier = PT_TIERS[c.name];
+      const comp = tier ? ptCompliance(tier, c) : null;
+      const ptPills = (tier ? `<span class="fl pt">PT ${tier}h</span>` : '')
+        + (comp && !comp.compliant ? `<span class="fl centres">centres &#9888;</span>` : '');
+      const ptSel = `<div class="pt-pick ${tier?'on':''}"><select data-coach="${esc(c.name)}" title="Contract type">
+            <option value="">Casual</option>
+            <option value="10"${tier==10?' selected':''}>PT 10h</option>
+            <option value="15"${tier==15?' selected':''}>PT 15h</option>
+            <option value="20"${tier==20?' selected':''}>PT 20h</option>
+          </select></div>`;
       return `
-      <div class="row ${anyFlag?'flagged':''}" data-name="${esc(c.name)}">
+      <div class="row ${anyFlag||(comp&&!comp.compliant)?'flagged':''}" data-name="${esc(c.name)}">
         <div class="row-head">
           <div class="rank">${i+1}</div>
           <div class="cname">${esc(c.name)}${c.state?`<span class="st-tag">${esc(c.state)}</span>`:''}</div>
-          <div class="rflags">${flagPills(flags)}</div>
+          <div class="rflags">${flagPills(flags)}${ptPills}</div>
+          ${ptSel}
           <div class="hours">${h1(c.paidHours)}<small>h</small></div>
           <div class="caret">&#9654;</div>
         </div>
@@ -472,6 +558,14 @@
     }).join('');
     document.querySelectorAll('#rows .row-head').forEach(head=>{
       head.addEventListener('click',()=>head.parentElement.classList.toggle('open'));
+    });
+    document.querySelectorAll('#rows .pt-pick select').forEach(sel=>{
+      sel.addEventListener('click', e=>e.stopPropagation());
+      sel.addEventListener('change', async e=>{
+        e.stopPropagation();
+        await savePTTier(sel.dataset.coach, Number(sel.value)||null);
+        renderSlice();
+      });
     });
   }
 
@@ -498,6 +592,7 @@
   async function init(){
     try{
       FORTNIGHTS = await loadFortnights();
+      await loadPTContracts();
       const sel = $('fnight');
       sel.innerHTML = FORTNIGHTS.map(f=>`<option value="${esc(f.id)}">${fmtRange(f.start,f.end)}</option>`).join('');
       CURRENT = FORTNIGHTS[0] || null;
