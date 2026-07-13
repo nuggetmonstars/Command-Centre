@@ -287,7 +287,18 @@
   }
 
   // ---- state-aware slices of the current fortnight ----
-  const coachesFor = doc => (doc.coaches||[]).filter(c => STATE==='All' || c.state===STATE);
+  // A state pill = everything happening in that state's centres (by centre location).
+  // A coach appears under a state if they had any session at a centre in that state.
+  // (Coaches are single-state in practice, so this equals their own state — but
+  //  filtering on centre location keeps the coach list and the rollup consistent
+  //  by construction, even if a stray cross-state session ever appears.)
+  const coachStates = c => {
+    const s = new Set();
+    (c.sessions||[]).forEach(x=>{ if(x.state) s.add(x.state); });
+    if(c.state) s.add(c.state);            // fallback if sessions lack state
+    return s;
+  };
+  const coachesFor = doc => (doc.coaches||[]).filter(c => STATE==='All' || coachStates(c).has(STATE));
   const notAttendedFor = doc => (doc.notAttended||[]).filter(ctr => STATE==='All' || ctr.state===STATE);
   const naCount = centres => centres.reduce((s,ctr)=>s + (ctr.coaches||[]).reduce((t,c)=>t+(c.sessions||[]).length,0), 0);
 
