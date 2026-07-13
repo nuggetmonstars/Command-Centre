@@ -41,6 +41,30 @@
   .pagehead h2{font-size:28px}
   .lede{color:var(--ink);font-size:15px;max-width:640px;line-height:1.5;background:var(--white);border:3px solid var(--lightblue);border-radius:16px;padding:11px 15px;box-shadow:var(--shadow);margin-top:8px}
 
+  /* tab bar */
+  .tabbar{display:flex;gap:8px;margin:16px 0}
+  .tab{font-family:'MarkerFelt',cursive;font-size:15px;background:var(--white);color:var(--blue);border:3px solid var(--lightblue);border-bottom:none;border-radius:14px 14px 0 0;padding:9px 18px;cursor:pointer;opacity:.7}
+  .tab.active{opacity:1;border-color:var(--blue);color:var(--ink);background:#eef7fd}
+
+  /* xero check view */
+  .xhead{color:var(--ink);font-size:14px;margin-bottom:14px}
+  .xsection{margin-bottom:20px}
+  .xsection h3{font-family:'MarkerFelt',cursive;font-size:19px;margin-bottom:4px}
+  .xsection .sub{color:var(--ink);font-size:13.5px;margin-bottom:10px}
+  .xsection.mismatch h3{color:var(--red)} .xsection.chase h3{color:var(--orange)} .xsection.expected h3{color:var(--blue)} .xsection.match h3{color:var(--green)}
+  .xrow{background:var(--white);border:3px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:11px 14px;margin-bottom:7px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .xrow.bad{border-color:var(--red)} .xrow.warn{border-color:var(--orange)}
+  .xrow .xn{font-family:'MarkerFelt',cursive;font-size:15px;color:var(--ink);flex:1;min-width:140px}
+  .xrow .hrs{font-size:13.5px;color:var(--ink)}
+  .xrow .hrs b{font-family:'MarkerFelt',cursive}
+  .delta{font-family:'MarkerFelt',cursive;font-size:15px;border-radius:30px;padding:3px 11px;color:#fff;white-space:nowrap}
+  .delta.up{background:var(--red)} .delta.down{background:#8a6fc0}
+  .xstatus{font-family:'MarkerFelt',cursive;font-size:11px;border-radius:30px;padding:3px 9px;color:#fff;background:var(--blue)}
+  .xstatus.requested{background:var(--orange)} .xstatus.approved{background:var(--green)} .xstatus.processed{background:var(--blue)} .xstatus.rejected{background:var(--red)}
+  .xnote{font-size:12.5px;color:var(--ink);opacity:.8;width:100%}
+  .xcollapse .xrow{margin-bottom:5px}
+  details.xexp{margin-bottom:20px} details.xexp summary{cursor:pointer;font-family:'MarkerFelt',cursive;font-size:15px;color:var(--blue);margin-bottom:8px}
+
   /* controls row */
   .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
   .controls label{font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)}
@@ -186,18 +210,29 @@
       <div class="lede">Paid hours per coach for the pay fortnight, straight from delivered sessions. Chase every <b>needs-marking</b> session before you run payroll — those are blocked payable hours that only pay once a manager marks them attended.</div>
     </div>
 
-    <div class="controls">
-      <label for="fnight">Fortnight</label>
-      <select id="fnight"></select>
-      <input id="search" type="search" placeholder="Find a coach…">
-      <button class="refresh" id="refresh">&#8635; Refresh</button>
+    <div class="tabbar" id="tabbar">
+      <button class="tab active" data-view="payroll">&#128181; Payroll Hours</button>
+      <button class="tab" data-view="xero">&#128203; Xero Check</button>
     </div>
 
-    <div class="states" id="states"></div>
-    <div class="tiles" id="tiles"></div>
-    <div id="band"></div>
-    <div id="rollup"></div>
-    <div class="rows" id="rows"></div>
+    <div id="view-payroll">
+      <div class="controls">
+        <label for="fnight">Fortnight</label>
+        <select id="fnight"></select>
+        <input id="search" type="search" placeholder="Find a coach…">
+        <button class="refresh" id="refresh">&#8635; Refresh</button>
+      </div>
+
+      <div class="states" id="states"></div>
+      <div class="tiles" id="tiles"></div>
+      <div id="band"></div>
+      <div id="rollup"></div>
+      <div class="rows" id="rows"></div>
+    </div>
+
+    <div id="view-xero" style="display:none">
+      <div id="xero-body"><div class="empty">Loading Xero check…</div></div>
+    </div>
   </div>
 
   <div class="foot" id="foot"></div>
@@ -205,7 +240,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
   import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-  import { getFirestore, collection, getDocs, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+  import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   // ---- Firebase config. apiKey injected locally from coaches.html (never in chat). ----
   const firebaseConfig = {
@@ -596,10 +631,96 @@
     $('foot').textContent = `Fortnight ${CURRENT.id} · reads payroll-fortnights (written by coach_hours.py --write)` + (gen?` · generated ${gen.toLocaleString('en-AU')}`:'');
   }
 
+  // ---- Xero cross-reference view ----
+  function xstatusPill(s){
+    const k = String(s||'').toLowerCase();
+    const cls = k.includes('reject')?'rejected':k.includes('approv')?'approved':k.includes('process')?'processed':k.includes('request')?'requested':'';
+    return s ? `<span class="xstatus ${cls}">${esc(s)}</span>` : '';
+  }
+  function deltaChip(d){
+    const v = Math.round((d||0)*100)/100;
+    if(v===0) return '';
+    return `<span class="delta ${v>0?'up':'down'}">${v>0?'+':''}${h1(v)}h</span>`;
+  }
+  function renderXero(d){
+    const coaches = d.coaches||[];
+    const bnorm = b => String(b||'').toLowerCase().replace(/[^a-z]/g,'');
+    const grp = { match:[], mismatch:[], chase:[], expected:[] };
+    coaches.forEach(c=>{
+      const b = bnorm(c.bucket);
+      if(b.includes('mismatch')) grp.mismatch.push(c);
+      else if(b.includes('chase')) grp.chase.push(c);
+      else if(b.includes('expected')) grp.expected.push(c);
+      else if(b.includes('match')) grp.match.push(c);
+      else grp.expected.push(c);
+    });
+    grp.mismatch.sort((a,b)=>Math.abs(b.delta||0)-Math.abs(a.delta||0));
+    grp.chase.sort((a,b)=>(b.sessionHours||0)-(a.sessionHours||0));
+    const gen = d.generatedAt && d.generatedAt.toDate ? d.generatedAt.toDate() : null;
+    const nm = c => esc(c.coachName || c.name || '');
+    const hoursCell = c => `<span class="hrs">session <b>${h1(c.sessionHours)}</b>h · xero <b>${h1(c.workedHours)}</b>h${(c.otherHours? ` · +${h1(c.otherHours)}h other`:'')}</span>`;
+    const mismatchRows = grp.mismatch.map(c=>`
+      <div class="xrow bad"><div class="xn">${nm(c)}</div>${hoursCell(c)}${deltaChip(c.delta)}${xstatusPill(c.status)}</div>`).join('')
+      || `<div class="empty">No hour mismatches — every submitted timesheet matches sessions.</div>`;
+    const chaseRows = grp.chase.map(c=>`
+      <div class="xrow warn"><div class="xn">${nm(c)}</div><span class="hrs">session <b>${h1(c.sessionHours)}</b>h · <b>no timesheet</b></span>${c.reason?`<div class="xnote">${esc(c.reason)}</div>`:''}</div>`).join('')
+      || `<div class="empty">Everyone with sessions has submitted a timesheet.</div>`;
+    const expectedRows = grp.expected.map(c=>`
+      <div class="xrow"><div class="xn">${nm(c)}</div><span class="hrs">${esc(c.reason||'expected absent')}</span></div>`).join('')
+      || `<div class="empty">None.</div>`;
+    $('xero-body').innerHTML = `
+      <div class="xhead">Session hours vs Xero timesheet hours for <b>${esc(d.fortnightId||CURRENT.id)}</b>${gen?` · generated ${gen.toLocaleString('en-AU')}`:''}. Worked hours = coaching rates + Ordinary Hours; office/overtime/allowances shown separately.</div>
+      <div class="tiles">
+        <div class="tile"><div class="num">${grp.match.length}</div><div class="lbl">Match</div></div>
+        <div class="tile red"><div class="num">${grp.mismatch.length}</div><div class="lbl">Mismatch</div></div>
+        <div class="tile amber"><div class="num">${grp.chase.length}</div><div class="lbl">No timesheet — chase</div></div>
+        <div class="tile blue"><div class="num">${grp.expected.length}</div><div class="lbl">Expected absent</div></div>
+      </div>
+      <div class="xsection mismatch">
+        <h3>&#9888; ${grp.mismatch.length} hour mismatch${grp.mismatch.length===1?'':'es'}</h3>
+        <div class="sub">Submitted a timesheet, but the hours differ from delivered sessions. Check before approving.</div>
+        ${mismatchRows}
+      </div>
+      <div class="xsection chase">
+        <h3>&#128203; ${grp.chase.length} to chase — no timesheet</h3>
+        <div class="sub">Has sessions this fortnight but no Xero timesheet submitted. Chase before payroll.</div>
+        ${chaseRows}
+      </div>
+      <details class="xexp">
+        <summary>Expected absent — ${grp.expected.length} (part-time / not in Xero yet)</summary>
+        <div class="xcollapse">${expectedRows}</div>
+      </details>`;
+  }
+  async function loadXero(){
+    const body = $('xero-body');
+    if(!CURRENT){ body.innerHTML = `<div class="empty">Pick a fortnight on the Payroll tab first.</div>`; return; }
+    body.innerHTML = `<div class="empty">Loading Xero check…</div>`;
+    try{
+      const snap = await getDoc(doc(db,'xero-crossref',CURRENT.id));
+      if(!snap.exists()){ body.innerHTML = `<div class="empty">No Xero check for this fortnight yet.<br><small>Run <b>xero_crossref.py</b> to generate it.</small></div>`; return; }
+      renderXero(snap.data());
+    }catch(err){
+      body.innerHTML = `<div class="empty">Couldn't load the Xero check.<br><small>${esc(err.message||err)}</small></div>`;
+    }
+  }
+  function wireTabs(){
+    document.querySelectorAll('#tabbar .tab').forEach(t=>{
+      t.addEventListener('click', ()=>{
+        document.querySelectorAll('#tabbar .tab').forEach(x=>x.classList.remove('active'));
+        t.classList.add('active');
+        const v = t.dataset.view;
+        $('view-payroll').style.display = v==='payroll' ? '' : 'none';
+        $('view-xero').style.display = v==='xero' ? '' : 'none';
+        if(v==='xero') loadXero();
+      });
+    });
+  }
+
   async function init(){
     try{
       FORTNIGHTS = await loadFortnights();
       await loadPTContracts();
+      wireTabs();
       const sel = $('fnight');
       sel.innerHTML = FORTNIGHTS.map(f=>`<option value="${esc(f.id)}">${fmtRange(f.start,f.end)}</option>`).join('');
       CURRENT = FORTNIGHTS[0] || null;
