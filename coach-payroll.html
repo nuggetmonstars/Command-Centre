@@ -102,7 +102,7 @@
   .rflags{display:flex;gap:6px;flex-wrap:wrap}
   .fl{font-family:'MarkerFelt',cursive;font-size:11px;color:#fff;border-radius:30px;padding:3px 9px;white-space:nowrap}
   .fl.mark{background:var(--orange)} .fl.miss{background:var(--red)} .fl.absent{background:var(--pink)}
-  .fl.pt{background:var(--blue)} .fl.centres{background:var(--red)}
+  .fl.pt{background:var(--blue)} .fl.centres{background:var(--red)} .fl.capacity{background:var(--orange)}
 
   /* PT tier selector on the row */
   .pt-pick{display:flex;align-items:center;gap:4px;flex:none}
@@ -122,6 +122,7 @@
   .pt-check .dot{width:9px;height:9px;border-radius:50%;flex:none}
   .pt-check.ok .dot{background:var(--green)} .pt-check.bad .dot{background:var(--red)}
   .pt-check.bad{color:var(--red)}
+  .pt-check.soft .dot{background:var(--orange)} .pt-check.soft{color:var(--orange)}
   .hours{font-family:'MarkerFelt',cursive;font-size:22px;color:var(--ink);flex:none}
   .hours small{font-size:12px;color:var(--blue)}
   .caret{flex:none;color:var(--blue);font-size:18px;transition:transform .15s}
@@ -324,14 +325,15 @@
   }
   function ptCompliance(tier, c){
     const t = PT_TARGETS[tier]; if(!t) return null;
-    const w1=c.distinctCentresWeek1||0, w2=c.distinctCentresWeek2||0, fn=c.distinctCentresFortnight||0;
+    const w1=c.distinctCentresWeek1||0, w2=c.distinctCentresWeek2||0;
+    const fnSum = w1 + w2;                       // fortnight = each week's distinct centres, summed
     const inRange = (n,[lo,hi]) => n>=lo && n<=hi;
-    const checks = [
-      { label:'Week 1 centres',    val:w1, target:t.week,      ok:inRange(w1,t.week) },
-      { label:'Week 2 centres',    val:w2, target:t.week,      ok:inRange(w2,t.week) },
-      { label:'Fortnight centres', val:fn, target:t.fortnight, ok:inRange(fn,t.fortnight) },
+    const fortnightOk = inRange(fnSum, t.fortnight);
+    const weekChecks = [
+      { label:'Week 1 centres', val:w1, target:t.week, ok:inRange(w1,t.week) },
+      { label:'Week 2 centres', val:w2, target:t.week, ok:inRange(w2,t.week) },
     ];
-    return { checks, compliant: checks.every(x=>x.ok) };
+    return { fnSum, fortnightOk, weekChecks, compliant: fortnightOk, fortnightTarget: t.fortnight };
   }
 
   async function loadFortnights(){
@@ -447,18 +449,20 @@
     if(!tier) return '';
     const comp = ptCompliance(tier, c);
     const rng = ([lo,hi]) => lo===hi ? `${lo}` : `${lo}–${hi}`;
-    const checks = comp.checks.map(ch=>`
-        <div class="pt-check ${ch.ok?'ok':'bad'}"><span class="dot"></span>${ch.label}: <b>${ch.val}</b> (target ${rng(ch.target)})${ch.ok?'':' — off target'}</div>`).join('');
+    const w1=c.distinctCentresWeek1||0, w2=c.distinctCentresWeek2||0;
+    const fnLine = `<div class="pt-check ${comp.fortnightOk?'ok':'bad'}"><span class="dot"></span>Fortnight centres: <b>${comp.fnSum}</b> (${w1}+${w2}, target ${rng(comp.fortnightTarget)})${comp.fortnightOk?'':' — off target'}</div>`;
+    const wkLines = comp.weekChecks.map(ch=>`
+        <div class="pt-check ${ch.ok?'ok':'soft'}"><span class="dot"></span>${ch.label}: <b>${ch.val}</b> (target ${rng(ch.target)})${ch.ok?'':' — room for another centre'}</div>`).join('');
     return `
       <div class="pt-panel">
         <h4>&#128188; Part-time contract — ${tier}h</h4>
         <div class="pt-grid">
           <div class="pt-stat"><div class="k">Contracted</div><div class="v">${tier}<small>h</small></div></div>
           <div class="pt-stat"><div class="k">Actual coached</div><div class="v">${h1(c.paidHours)}<small>h</small></div></div>
-          <div class="pt-stat"><div class="k">Centres wk1 / wk2</div><div class="v">${c.distinctCentresWeek1||0} / ${c.distinctCentresWeek2||0}</div></div>
-          <div class="pt-stat"><div class="k">Centres fortnight</div><div class="v">${c.distinctCentresFortnight||0}</div></div>
+          <div class="pt-stat"><div class="k">Centres wk1 / wk2</div><div class="v">${w1} / ${w2}</div></div>
+          <div class="pt-stat"><div class="k">Fortnight total</div><div class="v">${comp.fnSum}<small> / ${rng(comp.fortnightTarget)}</small></div></div>
         </div>
-        <div class="pt-checks">${checks}</div>
+        <div class="pt-checks">${fnLine}${wkLines}</div>
       </div>`;
   }
   function drill(c, coachNA){
@@ -535,8 +539,11 @@
       const anyFlag = ['needsMarking','coachAbsent','notDelivered'].some(k=>flags[k]&&flags[k].length);
       const tier = PT_TIERS[c.name];
       const comp = tier ? ptCompliance(tier, c) : null;
-      const ptPills = (tier ? `<span class="fl pt">PT ${tier}h</span>` : '')
-        + (comp && !comp.compliant ? `<span class="fl centres">centres &#9888;</span>` : '');
+      let ptPills = tier ? `<span class="fl pt">PT ${tier}h</span>` : '';
+      if(comp){
+        if(!comp.fortnightOk) ptPills += `<span class="fl centres">centres &#9888;</span>`;
+        else if(comp.weekChecks.some(w=>!w.ok)) ptPills += `<span class="fl capacity">capacity</span>`;
+      }
       const ptSel = `<div class="pt-pick ${tier?'on':''}"><select data-coach="${esc(c.name)}" title="Contract type">
             <option value="">Casual</option>
             <option value="10"${tier==10?' selected':''}>PT 10h</option>
