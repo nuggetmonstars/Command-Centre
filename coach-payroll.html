@@ -155,6 +155,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
   import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   // ---- Firebase config. apiKey injected locally from coaches.html (never in chat). ----
@@ -168,17 +169,57 @@
   };
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const auth = getAuth(app);   // reuse the shared Command Centre login session (same approach as coaches.html)
 
-  // ---- login speed-bump ----
+  // ---- passcode speed-bump (front door). Auth (below) is what satisfies Firestore rules. ----
   const PAYROLL_PASSCODE = "0000"; // TODO: set real passcode (placeholder, matches CRM PIN convention)
   const gate = document.getElementById('gate');
+  let unlocked = false, authKnown = false, currentUser = null, initDone = false;
+
   function tryUnlock(){
     const v = document.getElementById('gate-pin').value.trim();
-    if(v === PAYROLL_PASSCODE){ gate.style.display='none'; init(); }
-    else { document.getElementById('gate-err').textContent = 'Wrong passcode.'; }
+    if(v === PAYROLL_PASSCODE){
+      unlocked = true; gate.style.display='none';
+      if(!authKnown) document.getElementById('rows').innerHTML = '<div class="empty">Checking sign-in…</div>';
+      afterGate();
+    } else { document.getElementById('gate-err').textContent = 'Wrong passcode.'; }
   }
   document.getElementById('gate-go').addEventListener('click', tryUnlock);
   document.getElementById('gate-pin').addEventListener('keydown', e=>{ if(e.key==='Enter') tryUnlock(); });
+
+  // ---- auth: same approach as coaches.html — reuse the shared login session ----
+  onAuthStateChanged(auth, user => { currentUser = user; authKnown = true; afterGate(); });
+
+  // Load payroll only once BOTH the passcode is unlocked AND an authenticated user exists.
+  function afterGate(){
+    if(!unlocked || !authKnown) return;
+    if(currentUser){
+      if(!initDone){ initDone = true; init(); }        // authenticated → existing Firestore load
+    } else {
+      showSignIn();                                     // no session → clear prompt, not permission-denied
+    }
+  }
+
+  function showSignIn(){
+    document.getElementById('rows').innerHTML = `
+      <div class="empty" style="max-width:440px;margin:0 auto;text-align:left">
+        <p style="font-family:var(--mf,inherit);color:var(--red,#E52520);font-size:18px;margin:0 0 6px">Sign in to view payroll</p>
+        <p style="color:var(--muted,#7a8a96);font-size:13px;margin:0 0 12px">You're not signed into the Command Centre in this browser. Sign in on the <b>main Command Centre</b> first, then reopen this page — or sign in below with the same email &amp; password.</p>
+        <label style="display:block;font-size:12px;color:var(--muted,#7a8a96)">Email</label>
+        <input id="pay-em" type="email" placeholder="admin@minimonstars.net" autocomplete="email" style="width:100%;padding:10px;border:2px solid var(--line,#e7eef3);border-radius:8px;margin:3px 0 8px;font-family:inherit;font-size:15px">
+        <label style="display:block;font-size:12px;color:var(--muted,#7a8a96)">Password</label>
+        <input id="pay-pw" type="password" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;" autocomplete="current-password" style="width:100%;padding:10px;border:2px solid var(--line,#e7eef3);border-radius:8px;margin:3px 0 12px;font-family:inherit;font-size:15px">
+        <button id="pay-login" style="padding:10px 22px;border:none;border-radius:30px;background:var(--blue,#1f8fd6);color:#fff;cursor:pointer;font-family:inherit;font-size:15px">Sign in</button>
+        <div id="pay-login-err" style="color:var(--red,#E52520);font-size:13px;margin-top:8px"></div>
+      </div>`;
+    document.getElementById('pay-login').addEventListener('click', payLogin);
+    document.getElementById('pay-pw').addEventListener('keydown', e=>{ if(e.key==='Enter') payLogin(); });
+  }
+  async function payLogin(){
+    const err = document.getElementById('pay-login-err'); err.textContent = 'Signing in…';
+    try{ await signInWithEmailAndPassword(auth, document.getElementById('pay-em').value, document.getElementById('pay-pw').value); }
+    catch(e){ err.textContent = 'Invalid email or password.'; }   // same handler coaches.html uses
+  }
 
   // ---- helpers ----
   const $ = id => document.getElementById(id);
