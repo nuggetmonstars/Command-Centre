@@ -68,12 +68,13 @@
   /* commission view */
   .crow{background:var(--white);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden}
   .crow.locked{opacity:.72;border-color:var(--lightblue)}
+  .crow.ownerrow{border-color:var(--blue);background:#f4fafe}
   .crow-head{display:flex;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;flex-wrap:wrap}
   .crow-head:hover{background:#fbfdff}
   .cn{font-family:'MarkerFelt',cursive;font-size:17px;color:var(--ink);flex:1;min-width:120px}
   .cpts{font-size:12.5px;color:var(--blue)}
   .clock{font-family:'MarkerFelt',cursive;font-size:11px;border-radius:30px;padding:3px 9px;color:#fff}
-  .clock.on{background:var(--green)} .clock.off{background:var(--orange)}
+  .clock.on{background:var(--green)} .clock.off{background:var(--orange)} .clock.owner{background:var(--blue)}
   .cpay{font-family:'MarkerFelt',cursive;font-size:22px;color:var(--ink);flex:none}
   .cpay small{font-size:12px;color:var(--blue)}
   .cpay.zero{color:var(--orange)}
@@ -742,28 +743,39 @@
 
     const repRows = reps.map(r=>{
       const unlocked = !!r.unlocked;
+      const owner = !!r.owner;
       const invs = r.invoices||[];
+      const centres = r.centres||[];
       const isDefault = v => /default|nug/i.test(String(v.matchType||''));
       const matched = invs.filter(v=>!isDefault(v));
       const defaulted = invs.filter(v=>isDefault(v));
-      const payCell = unlocked
-        ? `<div class="cpay">${money(r.payableCommission)}</div>`
-        : `<div class="cpay zero">${money(0)}<small> · ${money(r.pendingCommission!=null?r.pendingCommission:(r.grossCommissionable||0)*rate)} pending</small></div>`;
-      const invLine = v => `<div class="cinv"><span class="cc">${esc(v.contact||'')}${v.matchedCentre?` <span style="opacity:.6">→ ${esc(v.matchedCentre)}</span>`:''}</span><span class="cd">${money(v.subtotal)} <span class="tag ${isDefault(v)?'d':'m'}">${isDefault(v)?'default':'match'}</span></span></div>`;
-      const splitLine = (r.name==='Nug' || defaulted.length)
-        ? `<div class="csplit"><b>${matched.length}</b> matched to ${esc(r.name)}'s ledger · <b>${defaulted.length}</b> defaulted (no ledger match)</div>` : '';
+      const payCell = owner
+        ? `<div class="cpay zero">owner<small> · not paid</small></div>`
+        : unlocked
+          ? `<div class="cpay">${money(r.payableCommission)}</div>`
+          : `<div class="cpay zero">${money(0)}<small> · ${money(r.pendingCommission!=null?r.pendingCommission:(r.grossCommissionable||0)*rate)} pending</small></div>`;
+      const statusPill = owner
+        ? `<span class="clock owner">owner</span>`
+        : `<span class="clock ${unlocked?'on':'off'}">${unlocked?'unlocked':'locked'}</span>`;
+      const splitLine = (owner || defaulted.length)
+        ? `<div class="csplit"><b>${matched.length}</b> matched to ${esc(r.name)}'s ledger · <b>${defaulted.length}</b> defaulted (no ledger match)${owner?' — owner, not paid':''}</div>` : '';
+      const centreRows = centres.length
+        ? centres.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(c=>`
+            <div class="cinv"><span class="cc">${esc(c.centre||'')}${c.invoiceCount>1?` <span style="opacity:.6">×${c.invoiceCount}</span>`:''} <span class="tag ${/default/i.test(String(c.matchType||''))?'d':'m'}">${/default/i.test(String(c.matchType||''))?'default':'match'}</span></span><span class="cd">${money(c.subtotal)} → ${money(c.commission)}</span></div>`).join('')
+        : invs.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(v=>`<div class="cinv"><span class="cc">${esc(v.contact||'')} <span class="tag ${isDefault(v)?'d':'m'}">${isDefault(v)?'default':'match'}</span></span><span class="cd">${money(v.subtotal)}</span></div>`).join('');
       return `
-      <div class="crow ${unlocked?'':'locked'}">
+      <div class="crow ${owner?'ownerrow':(unlocked?'':'locked')}">
         <div class="crow-head">
           <div class="cn">${esc(r.name)} <span class="cpts">${h1(pts(r))} pts</span></div>
-          <span class="clock ${unlocked?'on':'off'}">${unlocked?'unlocked':'locked'}</span>
+          ${statusPill}
           <span class="cpts">${r.invoiceCount||invs.length} inv · ${money(r.grossCommissionable)} gross</span>
           ${payCell}
           <div class="caret">&#9654;</div>
         </div>
         <div class="cbody">
           ${splitLine}
-          ${invs.length?invs.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(invLine).join(''):'<div class="empty">No invoices attributed this month.</div>'}
+          <div class="csplit" style="opacity:.7">Per centre — subtotal → commission (8%):</div>
+          ${centreRows || '<div class="empty">No invoices attributed this month.</div>'}
         </div>
       </div>`;
     }).join('');
