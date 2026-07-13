@@ -327,7 +327,7 @@
     const t = PT_TARGETS[tier]; if(!t) return null;
     const w1=c.distinctCentresWeek1||0, w2=c.distinctCentresWeek2||0;
     const fnSum = w1 + w2;                       // fortnight = each week's distinct centres, summed
-    const inRange = (n,[lo,hi]) => n>=lo && n<=hi;
+    const inRange = (n,[lo,hi]) => n>=lo;         // only flag UNDER the minimum; over-delivery is fine
     const fortnightOk = inRange(fnSum, t.fortnight);
     const weekChecks = [
       { label:'Week 1 centres', val:w1, target:t.week, ok:inRange(w1,t.week) },
