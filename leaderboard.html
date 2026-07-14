@@ -2188,6 +2188,7 @@ h1,h2,h3,h4,h5,.mf,
     <div class="cc-controls">
       <input id="cc-q" class="cc-search" type="text" placeholder="&#128269; Search name, phone, email, notes&#8230;" autocomplete="off">
       <input id="cc-goto" class="cc-goto" type="number" placeholder="Go to #" min="1">
+      <button id="cc-cbfilter" class="cc-cbbtn" type="button">&#128197; Callbacks <span id="cc-cbcount">0</span></button>
     </div>
     <div class="cc-chips" id="cc-chips"></div>
     <div class="cc-count" id="cc-count"></div>
@@ -5877,6 +5878,20 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-logform textarea{width:100%;min-height:52px;resize:vertical;}
 .cc-logsave{font-family:var(--font);font-size:14px;background:var(--blue);color:#fff;border:none;border-radius:30px;padding:9px 20px;cursor:pointer;box-shadow:var(--shadow);}
 .cc-logmsg{font-size:12px;margin-left:10px;color:var(--muted);}
+/* callbacks filter button + row tag + editable phone/email */
+.cc-cbbtn{font-family:var(--font);font-size:15px;border:2px solid var(--line);background:#fff;color:var(--ink);border-radius:40px;padding:10px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;}
+.cc-cbbtn:hover{border-color:var(--sky);}
+.cc-cbbtn.active{border-color:var(--red);color:var(--red);box-shadow:var(--shadow);}
+.cc-cbbtn #cc-cbcount{font-weight:700;opacity:.7;}
+.cc-cbtag{display:inline-block;font-size:11px;font-weight:700;color:#fff;background:var(--slate);border-radius:30px;padding:2px 8px;margin-top:4px;white-space:nowrap;}
+.cc-cbtag.due{background:var(--red);}
+.cc-edwrap{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.cc-edview,.cc-ededit{display:inline-flex;align-items:center;gap:6px;}
+.cc-edbtn{font-size:12px;border:none;background:#eef3f7;color:var(--slate);border-radius:6px;padding:3px 7px;cursor:pointer;line-height:1.3;}
+.cc-edbtn:hover{background:#dce6ee;}
+.cc-edinput{font-family:var(--font);font-size:13px;border:2px solid var(--sky);border-radius:6px;padding:4px 8px;background:#fff;color:var(--ink);outline:none;min-width:150px;}
+.cc-edmsg{font-size:11px;color:var(--muted);}
+.cc-muted{color:var(--muted);}
 /* Admin tab — centre allocator (ported from centre-allocator.html) */
 .al-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin:16px 0;}
 .al-h{font-family:var(--mf);color:var(--red);font-size:18px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
@@ -6275,6 +6290,18 @@ function ccInit(){
   // delegated: result change (callback auto-fill + session toggle) and Log Call save
   ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel) ccOnResultChange(sel); });
   ccEl("cc-list").addEventListener("click", e=>{ const b=e.target.closest("[data-logsave]"); if(b) ccLogCall(b.getAttribute("data-logsave")); });
+  // callbacks filter toggle (today + overdue only)
+  ccEl("cc-cbfilter").addEventListener("click",()=>{ ccFilter=(ccFilter==="callbacks")?"all":"callbacks"; ccRenderChips(); ccRenderList(); });
+  // delegated: edit / save / clear / cancel phone & email (no full re-render, keeps row open)
+  ccEl("cc-list").addEventListener("click", e=>{
+    const ed=e.target.closest("[data-editfield]"); if(ed){ ccBeginEdit(ed.getAttribute("data-editfield"), ed.getAttribute("data-editnum")); return; }
+    const sv=e.target.closest("[data-savefield]"); if(sv){ ccSaveField(sv.getAttribute("data-savefield"), sv.getAttribute("data-editnum")); return; }
+    const cl=e.target.closest("[data-clearfield]"); if(cl){ ccClearField(cl.getAttribute("data-clearfield"), cl.getAttribute("data-editnum")); return; }
+    const cx=e.target.closest("[data-canceledit]"); if(cx){ ccCancelEdit(cx.getAttribute("data-canceledit")); return; }
+  });
+  ccEl("cc-list").addEventListener("keydown", e=>{
+    const inp=e.target.closest("[data-edinput]"); if(inp && e.key==="Enter"){ e.preventDefault(); ccSaveField(inp.getAttribute("data-edfield"), inp.getAttribute("data-ednum")); }
+  });
   ccShow("rep");
 }
 function ccShow(which){
@@ -6312,7 +6339,8 @@ async function ccLoadBook(rep){
   }
 }
 function ccPasses(c){
-  if(ccFilter!=="all" && ccKey(c)!==ccFilter) return false;
+  if(ccFilter==="callbacks"){ if(!ccIsDueCallback(c)) return false; }
+  else if(ccFilter!=="all" && ccKey(c)!==ccFilter) return false;
   const q=ccEl("cc-q").value.trim().toLowerCase();
   if(!q) return true;
   const hay=[c.name,c.phone,c.email,c.address, ...((c.history||[]).map(h=>h&&h.text))].join(" ").toLowerCase();
@@ -6337,6 +6365,7 @@ function ccRow(c){
         <div class="cc-name">${crmEsc(c.name)}${c.doubleUp?`<span class="cc-du">DOUBLE UP</span>`:""}</div>
         <div class="cc-meta">${crmEsc(c.state||"—")} · ${crmEsc(c.phone||"no phone")}</div>
         <div class="cc-snip">${crmEsc(snip)}</div>
+        ${c.callbackDate?`<div class="cc-cbtag ${ccIsDueCallback(c)?"due":""}">&#128197; callback ${crmEsc(ccDateAU(c.callbackDate))}</div>`:""}
       </div>
       <div class="cc-pill" style="background:${s.bar}">${s.label}</div>
     </div>
@@ -6348,8 +6377,8 @@ function ccDetail(c){
   const rows=[
     ["Number","#"+crmEsc(c.num)],
     ["Name",crmEsc(c.name)],
-    ["Phone",c.phone?`<a href="tel:${crmEsc(c.phone)}">${crmEsc(c.phone)}</a>`:"—"],
-    ["Email",c.email?`<a href="mailto:${crmEsc(c.email)}">${crmEsc(c.email)}</a>`:"—"],
+    ["Phone",ccEditableCell(c,"phone")],
+    ["Email",ccEditableCell(c,"email")],
     ["Address",c.address?`<a href="${crmEsc(maps)}" target="_blank" rel="noopener">${crmEsc(c.address)}</a>`:"—"],
     ["Contact",crmEsc(c.rep||"—")],
     ["Status",crmEsc(ccSTATUS[ccKey(c)].label)]
@@ -6360,10 +6389,66 @@ function ccDetail(c){
     : `<div class="cc-empty">No history yet.</div>`;
   return `<div class="cc-grid">${grid}</div>${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
 }
+function ccIsDueCallback(c){ return !!c.callbackDate && String(c.callbackDate) <= ccTodayISO(); }   // today or overdue
+function ccFieldLink(field,val){
+  if(!val) return `<span class="cc-muted">—</span>`;
+  return field==="phone" ? `<a href="tel:${crmEsc(val)}">${crmEsc(val)}</a>` : `<a href="mailto:${crmEsc(val)}">${crmEsc(val)}</a>`;
+}
+function ccEditableCell(c, field){
+  const num=crmEsc(c.num), val=c[field]||"", type=field==="phone"?"tel":"email";
+  return `<span class="cc-edwrap" data-edwrap="${field}-${num}">
+    <span class="cc-edview">
+      <span class="cc-edlink">${ccFieldLink(field,val)}</span>
+      <button class="cc-edbtn" type="button" title="Edit" data-editfield="${field}" data-editnum="${num}">&#9998;</button>
+      <button class="cc-edbtn" type="button" title="Clear" data-clearfield="${field}" data-editnum="${num}">&#128465;</button>
+    </span>
+    <span class="cc-ededit" style="display:none">
+      <input class="cc-edinput" type="${type}" data-edinput data-edfield="${field}" data-ednum="${num}" value="${crmEsc(val)}" placeholder="${field==="phone"?"phone number":"email address"}">
+      <button class="cc-edbtn" type="button" title="Save" data-savefield="${field}" data-editnum="${num}">&#10003;</button>
+      <button class="cc-edbtn" type="button" title="Cancel" data-canceledit="${field}-${num}">&#10005;</button>
+    </span>
+    <span class="cc-edmsg" data-edmsg="${field}-${num}"></span>
+  </span>`;
+}
+function ccBeginEdit(field,num){
+  const w=document.querySelector(`[data-edwrap="${field}-${num}"]`); if(!w) return;
+  w.querySelector(".cc-edview").style.display="none";
+  const ed=w.querySelector(".cc-ededit"); ed.style.display="";
+  const inp=ed.querySelector("input"); if(inp){ inp.focus(); inp.select(); }
+}
+function ccCancelEdit(key){
+  const w=document.querySelector(`[data-edwrap="${key}"]`); if(!w) return;
+  w.querySelector(".cc-ededit").style.display="none";
+  w.querySelector(".cc-edview").style.display="";
+}
+async function ccSetField(field,num,val,doneMsg){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
+  const w=document.querySelector(`[data-edwrap="${field}-${num}"]`); if(!w) return;
+  const msg=w.querySelector(".cc-edmsg");
+  if(msg){ msg.style.color="var(--muted)"; msg.textContent="Saving…"; }
+  try{
+    await updateDoc(doc(db, ccCOLLECTION, c.id), {[field]:val});   // writes only the one field
+    c[field]=val;
+    w.querySelector(".cc-edlink").innerHTML=ccFieldLink(field,val);
+    const inp=w.querySelector("input"); if(inp) inp.value=val;
+    w.querySelector(".cc-ededit").style.display="none";
+    w.querySelector(".cc-edview").style.display="";
+    if(field==="phone"){ const m=document.querySelector(`#cc-row-${num} .cc-meta`); if(m) m.textContent=`${c.state||"—"} · ${val||"no phone"}`; }
+    if(msg){ msg.style.color="var(--blue)"; msg.textContent=doneMsg; setTimeout(()=>{ if(msg) msg.textContent=""; },2000); }
+  }catch(e){ console.error("ccSetField",e); if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed"; } }
+}
+function ccSaveField(field,num){
+  const w=document.querySelector(`[data-edwrap="${field}-${num}"]`); if(!w) return;
+  const inp=w.querySelector("input"); ccSetField(field,num,(inp?inp.value:"").trim(),"Saved");
+}
+function ccClearField(field,num){ ccSetField(field,num,"","Cleared"); }
 function ccRenderList(){
-  const items=ccCENTRES.filter(ccPasses);
+  let items=ccCENTRES.filter(ccPasses);
+  if(ccFilter==="callbacks") items=items.slice().sort((a,b)=>String(a.callbackDate||"").localeCompare(String(b.callbackDate||"")));  // most overdue first
   ccEl("cc-count").textContent=`${items.length} of ${ccCENTRES.length} centres`;
-  ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">No centres match.</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
+  const cbBtn=ccEl("cc-cbfilter");
+  if(cbBtn){ const cnt=ccEl("cc-cbcount"); if(cnt) cnt.textContent=ccCENTRES.filter(ccIsDueCallback).length; cbBtn.classList.toggle("active", ccFilter==="callbacks"); }
+  ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">${ccFilter==="callbacks"?"No callbacks due or overdue.":"No centres match."}</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
   ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const row=document.getElementById("cc-row-"+el.dataset.toggle); if(row) row.classList.toggle("open"); }));
 }
 
