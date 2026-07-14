@@ -87,6 +87,12 @@
   .cinv .cd{font-family:'MarkerFelt',cursive;white-space:nowrap}
   .cinv .tag{font-family:'MarkerFelt',cursive;font-size:10px;border-radius:30px;padding:1px 7px;color:#fff}
   .cinv .tag.m{background:var(--green)} .cinv .tag.d{background:var(--orange)}
+  .crev{font-size:13.5px;color:var(--ink);margin:12px 0 10px;padding:8px 11px;background:#fafcff;border-radius:10px;border:1px solid var(--line)}
+  .crev b{font-family:'MarkerFelt',cursive}
+  .csub{display:flex;gap:6px;margin-bottom:8px}
+  .csub-tab{font-family:'MarkerFelt',cursive;font-size:12.5px;background:var(--white);color:var(--blue);border:2px solid var(--lightblue);border-radius:20px;padding:5px 13px;cursor:pointer;opacity:.7}
+  .csub-tab.active{opacity:1;background:var(--blue);color:#fff;border-color:var(--blue)}
+  .cinv.bi .cc{color:var(--red)} .cinv.bi{opacity:.92}
 
   /* controls row */
   .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
@@ -741,14 +747,14 @@
     const totalPayable = (d.totals && d.totals.totalPayable!=null) ? d.totals.totalPayable : reps.reduce((s,r)=>s+(r.payableCommission||0),0);
     const pts = r => (r.lifetimePoints!=null?r.lifetimePoints:(r.points!=null?r.points:0));
 
-    const repRows = reps.map(r=>{
+    const repRows = reps.map((r,ri)=>{
       const unlocked = !!r.unlocked;
       const owner = !!r.owner;
-      const invs = r.invoices||[];
-      const centres = r.centres||[];
-      const isDefault = v => /default|nug/i.test(String(v.matchType||''));
-      const matched = invs.filter(v=>!isDefault(v));
-      const defaulted = invs.filter(v=>isDefault(v));
+      const comm = r.centres||[];
+      const buyin = r.buyInCentres||[];
+      const totalRev = r.totalRevenue!=null ? r.totalRevenue : (r.grossCommissionable||0);
+      const commSub = comm.reduce((s,c)=>s+(c.subtotal||0),0);
+      const biSub = buyin.reduce((s,c)=>s+(c.subtotal||0),0);
       const payCell = owner
         ? `<div class="cpay zero">owner<small> · not paid</small></div>`
         : unlocked
@@ -757,25 +763,33 @@
       const statusPill = owner
         ? `<span class="clock owner">owner</span>`
         : `<span class="clock ${unlocked?'on':'off'}">${unlocked?'unlocked':'locked'}</span>`;
-      const splitLine = (owner || defaulted.length)
-        ? `<div class="csplit"><b>${matched.length}</b> matched to ${esc(r.name)}'s ledger · <b>${defaulted.length}</b> defaulted (no ledger match)${owner?' — owner, not paid':''}</div>` : '';
-      const centreRows = centres.length
-        ? centres.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(c=>`
-            <div class="cinv"><span class="cc">${esc(c.centre||'')}${c.invoiceCount>1?` <span style="opacity:.6">×${c.invoiceCount}</span>`:''} <span class="tag ${/default/i.test(String(c.matchType||''))?'d':'m'}">${/default/i.test(String(c.matchType||''))?'default':'match'}</span></span><span class="cd">${money(c.subtotal)} → ${money(c.commission)}</span></div>`).join('')
-        : invs.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(v=>`<div class="cinv"><span class="cc">${esc(v.contact||'')} <span class="tag ${isDefault(v)?'d':'m'}">${isDefault(v)?'default':'match'}</span></span><span class="cd">${money(v.subtotal)}</span></div>`).join('');
+      const centreList = (arr, red) => arr.length
+        ? arr.slice().sort((a,b)=>(b.subtotal||0)-(a.subtotal||0)).map(c=>`
+            <div class="cinv${red?' bi':''}"><span class="cc">${esc(c.centre||'')}${c.invoiceCount>1?` <span style="opacity:.6">×${c.invoiceCount}</span>`:''}${c.overriddenToCommissionable?' <span style="opacity:.6">(moved from buy-in)</span>':''}</span><span class="cd">${money(c.subtotal)}${red?` <span style="opacity:.55">(${money(c.commission)} n/a)</span>`:` → <b>${money(c.commission)}</b>`}</span></div>`).join('')
+        : `<div class="empty">None this month.</div>`;
       return `
       <div class="crow ${owner?'ownerrow':(unlocked?'':'locked')}">
         <div class="crow-head">
           <div class="cn">${esc(r.name)} <span class="cpts">${h1(pts(r))} pts</span></div>
           ${statusPill}
-          <span class="cpts">${r.invoiceCount||invs.length} inv · ${money(r.grossCommissionable)} gross</span>
+          <span class="cpts">${money(totalRev)} revenue</span>
           ${payCell}
           <div class="caret">&#9654;</div>
         </div>
         <div class="cbody">
-          ${splitLine}
-          <div class="csplit" style="opacity:.7">Per centre — subtotal → commission (8%):</div>
-          ${centreRows || '<div class="empty">No invoices attributed this month.</div>'}
+          <div class="crev">Total revenue this month: <b>${money(totalRev)}</b> &nbsp;=&nbsp; <span style="color:var(--green)">${money(commSub)} commissionable</span> + <span style="color:var(--red)">${money(biSub)} buy-in</span></div>
+          <div class="csub">
+            <button class="csub-tab active" data-sub="comm">&#128176; Commission (${comm.length})</button>
+            <button class="csub-tab" data-sub="bi">&#128274; Buy-in (${buyin.length})</button>
+          </div>
+          <div class="csub-body" data-body="comm">
+            <div class="csplit" style="opacity:.7">Centres earning commission — subtotal → 8%:</div>
+            ${centreList(comm,false)}
+          </div>
+          <div class="csub-body" data-body="bi" style="display:none">
+            <div class="csplit" style="color:var(--red)">First-100-point buy-in centres — counted toward buy-in, no commission:</div>
+            ${centreList(buyin,true)}
+          </div>
         </div>
       </div>`;
     }).join('');
@@ -788,10 +802,20 @@
         <div class="tile"><div class="num">${ic.matched!=null?ic.matched:'—'}</div><div class="lbl">Matched invoices</div></div>
         <div class="tile amber"><div class="num">${ic.defaultedToNug!=null?ic.defaultedToNug:'—'}</div><div class="lbl">Defaulted to Nug</div></div>
       </div>
-      <div class="xsection"><div class="sub">Tap a rep to see their invoices — green = matched to their signed ledger, amber = defaulted (no ledger match). Locked reps (&lt;${cfg.unlockThreshold||100} pts) show pending, not payable.</div></div>
+      <div class="xsection"><div class="sub">Tap a rep to see their total revenue split into <span style="color:var(--green)">Commission</span> (post buy-in, earns 8%) and <span style="color:var(--red)">Buy-in</span> (first 100 points, no commission). Locked reps (&lt;${cfg.unlockThreshold||100} pts) show pending; the owner is the catch-all and isn't paid.</div></div>
       ${repRows}`;
     document.querySelectorAll('#comm-body .crow-head').forEach(head=>{
       head.addEventListener('click',()=>head.parentElement.classList.toggle('open'));
+    });
+    document.querySelectorAll('#comm-body .csub-tab').forEach(tab=>{
+      tab.addEventListener('click', e=>{
+        e.stopPropagation();
+        const body = tab.closest('.cbody');
+        body.querySelectorAll('.csub-tab').forEach(x=>x.classList.remove('active'));
+        tab.classList.add('active');
+        const which = tab.dataset.sub;
+        body.querySelectorAll('.csub-body').forEach(b=>{ b.style.display = b.dataset.body===which ? '' : 'none'; });
+      });
     });
   }
   async function loadCommission(){
