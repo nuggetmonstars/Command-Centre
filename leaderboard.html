@@ -5902,6 +5902,10 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-controls{margin:0 0 6px;}
 .cc-cbbtn.has-due{border-color:var(--red);}
 .cc-cbbtn.has-due #cc-cbcount{background:var(--red);color:#fff;border-radius:30px;padding:1px 8px;min-width:18px;text-align:center;opacity:1;}
+/* Offer-accepted convert button (offer -> booked) */
+.cc-offerbox{margin:8px 0 2px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.cc-offeraccept{font-family:var(--font);font-size:13px;background:var(--green);color:#fff;border:none;border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--shadow);}
+.cc-offermsg{font-size:12px;color:var(--muted);}
 /* Log Call callback-date day-load indicator */
 .cc-cbload{display:block;font-size:11.5px;margin-top:3px;color:var(--muted);}
 .cc-cbload.ok{color:var(--green);}
@@ -6278,6 +6282,7 @@ const ccSTATUS = {
   call_eoy:        { label:"Call EOY",         bar:"#F0837C", tint:"#FCE9E7" },
   not_interested:  { label:"Not interested",   bar:"#B23A2E", tint:"#F3E0DC" },
   booked:          { label:"Booked",           bar:"#5FB63C", tint:"#E7F6DD" },
+  offer:           { label:"Offer",            bar:"#8E5BD0", tint:"#EDE3F5" },
   no_answer:       { label:"No answer",        bar:"#AEBAC4", tint:"#F5F8FA" },
   double_up:       { label:"Double up",        bar:"#8A94A2", tint:"#EEF1F5" },
   new:             { label:"New",              bar:"#56C0E8", tint:"#EAF8FE" },
@@ -6312,6 +6317,7 @@ function ccInit(){
     const sv=e.target.closest("[data-savefield]"); if(sv){ ccSaveField(sv.getAttribute("data-savefield"), sv.getAttribute("data-editnum")); return; }
     const cl=e.target.closest("[data-clearfield]"); if(cl){ ccClearField(cl.getAttribute("data-clearfield"), cl.getAttribute("data-editnum")); return; }
     const cx=e.target.closest("[data-canceledit]"); if(cx){ ccCancelEdit(cx.getAttribute("data-canceledit")); return; }
+    const oa=e.target.closest("[data-offeraccept]"); if(oa){ ccOfferAccept(oa.getAttribute("data-offeraccept")); return; }
   });
   ccEl("cc-list").addEventListener("keydown", e=>{
     const inp=e.target.closest("[data-edinput]"); if(inp && e.key==="Enter"){ e.preventDefault(); ccSaveField(inp.getAttribute("data-edfield"), inp.getAttribute("data-ednum")); }
@@ -6389,7 +6395,7 @@ function ccRow(c){
 function ccDetail(c){
   const rows=[
     ["Number","#"+crmEsc(c.num)],
-    ["Name",crmEsc(c.name)],
+    ["Name",ccEditableCell(c,"name")],
     ["Phone",ccEditableCell(c,"phone")],
     ["Email",ccEditableCell(c,"email")],
     ["Address",ccEditableCell(c,"address")],
@@ -6401,7 +6407,7 @@ function ccDetail(c){
   const hist=(c.history&&c.history.length)
     ? c.history.slice().reverse().map(h=>`<div class="cc-tli"><div class="cc-tld">${crmEsc(h.date||"")}</div><div class="cc-tlt">${crmEsc(h.text||"")}</div>${h.source?`<div class="cc-tls">${crmEsc(h.source)}</div>`:""}</div>`).join("")
     : `<div class="cc-empty">No history yet.</div>`;
-  return `<div class="cc-grid">${grid}</div>${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
+  return `<div class="cc-grid">${grid}</div>${ccKey(c)==="offer"?ccOfferBox(c):""}${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
 }
 function ccIsDueCallback(c){ return !!c.callbackDate && String(c.callbackDate) <= ccTodayISO(); }   // today or overdue
 // day-load check for the Log Call callback date picker — counts OTHER centres in this rep's
@@ -6438,8 +6444,8 @@ function ccEditableCell(c, field){
     ? `<select class="cc-edinput" data-edinput data-edfield="state" data-ednum="${num}">`
       + [""].concat(CC_STATES).map(s=>`<option value="${s}"${String(val).toUpperCase()===s?" selected":""}>${s||"— pick state —"}</option>`).join("")
       + `</select>`
-    : `<input class="cc-edinput" type="${type}" data-edinput data-edfield="${field}" data-ednum="${num}" value="${crmEsc(val)}" placeholder="${field==="phone"?"phone number":field==="email"?"email address":field==="address"?"street, suburb STATE postcode":""}">`;
-  const clearBtn = field==="state" ? "" : `<button class="cc-edbtn" type="button" title="Clear" data-clearfield="${field}" data-editnum="${num}">&#128465;</button>`;
+    : `<input class="cc-edinput" type="${type}" data-edinput data-edfield="${field}" data-ednum="${num}" value="${crmEsc(val)}" placeholder="${field==="phone"?"phone number":field==="email"?"email address":field==="address"?"street, suburb STATE postcode":field==="name"?"centre name":""}">`;
+  const clearBtn = (field==="state"||field==="name") ? "" : `<button class="cc-edbtn" type="button" title="Clear" data-clearfield="${field}" data-editnum="${num}">&#128465;</button>`;   // no clear on name/state (don't blank them)
   return `<span class="cc-edwrap" data-edwrap="${field}-${num}">
     <span class="cc-edview">
       <span class="cc-edlink">${ccFieldLink(field,val)}</span>
@@ -6478,6 +6484,10 @@ async function ccSetField(field,num,val,doneMsg){
     w.querySelector(".cc-ededit").style.display="none";
     w.querySelector(".cc-edview").style.display="";
     let extra="";
+    if(field==="name"){                                  // reflect the new name on the collapsed row immediately
+      const nmEl=document.querySelector(`#cc-row-${num} .cc-name`);
+      if(nmEl) nmEl.innerHTML=`${crmEsc(val)}${c.doubleUp?`<span class="cc-du">DOUBLE UP</span>`:""}`;
+    }
     if(field==="address"){                               // auto-derive state from the new address text
       const st=ccDeriveState(val);
       if(st && st!==c.state){
@@ -6496,6 +6506,24 @@ function ccSaveField(field,num){
   const inp=w.querySelector("input,select"); ccSetField(field,num,(inp?inp.value:"").trim(),"Saved");
 }
 function ccClearField(field,num){ ccSetField(field,num,"","Cleared"); }
+function ccOfferBox(c){   // shown only on offer-status centres — convert offer -> booked (confirmed sale)
+  const num=crmEsc(c.num);
+  return `<div class="cc-offerbox"><button class="cc-offeraccept" type="button" data-offeraccept="${num}">&#9989; Offer accepted</button><span class="cc-offermsg" data-offermsg="${num}"></span></div>`;
+}
+async function ccOfferAccept(num){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
+  const row=document.getElementById("cc-row-"+num); if(!row) return;
+  const msg=row.querySelector(`[data-offermsg="${num}"]`);
+  if(msg){ msg.style.color="var(--muted)"; msg.textContent="Saving…"; }
+  try{
+    await updateDoc(doc(db, ccCOLLECTION, c.id), {status:"booked"});   // offer -> confirmed sale
+    c.status="booked";
+    const s=ccSTATUS.booked;
+    row.style.borderLeftColor=s.bar; row.style.background=s.tint;
+    const pill=row.querySelector(".cc-pill"); if(pill){ pill.style.background=s.bar; pill.textContent=s.label; }
+    const box=row.querySelector(".cc-offerbox"); if(box) box.innerHTML=`<span class="cc-offermsg" style="color:var(--green)">&#9989; Offer accepted — now Booked. Saved</span>`;
+  }catch(e){ console.error("ccOfferAccept",e); if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed"; } }
+}
 function ccRenderList(){
   let items=ccCENTRES.filter(ccPasses);
   if(ccFilter==="callbacks") items=items.slice().sort((a,b)=>String(a.callbackDate||"").localeCompare(String(b.callbackDate||"")));  // most overdue first
@@ -6597,7 +6625,7 @@ async function ccLogCall(num){
     // (a) centre doc
     const entry={date, text:desc, result, source:"crm"};
     const history=Array.isArray(c.history)?c.history.slice():[]; history.push(entry);
-    const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"booked"};
+    const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
     const patch={history, status:STATUSMAP[result]||c.status, crmCallCount:(c.crmCallCount||0)+1, lastResult:result};
     if(cb) patch.callbackDate=cb;
     await updateDoc(doc(db, ccCOLLECTION, c.id), patch);
