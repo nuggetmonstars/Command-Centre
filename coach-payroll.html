@@ -124,12 +124,18 @@
   .ic-callline .cl-name{font-family:'MarkerFelt',cursive;flex:1;min-width:150px}
   .ic-callline .cl-amt{font-family:'MarkerFelt',cursive;color:var(--red)}
   .ic-tier{font-family:'MarkerFelt',cursive;font-size:11px;background:var(--orange);color:#fff;border-radius:20px;padding:2px 9px;white-space:nowrap}
-  .ic-centre{background:var(--white);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden}
-  .ic-centre.warn{border-color:var(--orange);background:#fff8ee}
-  .ic-centre.late{border-color:var(--red);background:#fff5f4}
-  .ic-crow{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:13px 16px;cursor:pointer}
-  .ic-crow:hover{background:rgba(0,0,0,0.02)}
-  .ic-cname{font-family:'MarkerFelt',cursive;font-size:16px;color:var(--ink);flex:1;min-width:150px}
+  .ic-centre{background:var(--white);border:3px solid var(--line);border-left:8px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden}
+  /* row colour = most recent chase result (left bar + tint) */
+  .ic-centre.ic-ch-promised{border-left-color:#4FA82F;background:#E8F5E3}
+  .ic-centre.ic-ch-disputing{border-left-color:#FF9933;background:#FFF3E0}
+  .ic-centre.ic-ch-noanswer{border-left-color:#E52520;background:#FDECEB}
+  .ic-centre.ic-ch-none{border-left-color:#9fb0bb;background:#F0F2F4}
+  .ic-crow{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer}
+  .ic-crow:hover{filter:brightness(0.985)}
+  .ic-cmain{flex:1;min-width:0}
+  .ic-cnameline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ic-cprev{font-size:12.5px;color:var(--ink);opacity:.68;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ic-cname{font-family:'MarkerFelt',cursive;font-size:16px;color:var(--ink)}
   .ic-cstate{font-family:'MarkerFelt',cursive;font-size:11px;background:var(--blue);color:#fff;border-radius:20px;padding:2px 9px}
   .ic-cowed{font-family:'MarkerFelt',cursive;font-size:18px;color:var(--ink)}
   .ic-ccount{font-size:12.5px;color:var(--blue)}
@@ -918,6 +924,25 @@
     const g=t=>p.find(x=>x.type===t).value; return `${g('year')}-${g('month')}-${g('day')}`;
   }
   function icDateAU(v){ const p=String(v||'').slice(0,10).split('-'); return p.length===3?`${p[2]}-${p[1]}-${p[0]}`:String(v||''); }   // YYYY-MM-DD -> DD-MM-YYYY
+  // most-recent chase call across a set of invoice ids (keyed the same way as the log writer)
+  function icLastCalls(ids){ const all=[]; ids.forEach(k=>{ (IC_HIST[k]||[]).forEach(c=>all.push(c)); }); all.sort((a,b)=>String(a.date||'').localeCompare(String(b.date||''))); return all.length?all[all.length-1]:null; }
+  function icChaseClass(last){ const R={promised:'promised',disputing:'disputing',no_answer:'noanswer'}; return 'ic-ch-'+(last?(R[last.result]||'none'):'none'); }
+  function icPreview(md, owed, last){   // compact one-line snippet under the centre name
+    const bits=[ md>0?`${md}d overdue`:'current', `${money(owed)} owed` ];
+    bits.push(last ? `${esc(icResultLabel(last.result))} ${esc(icDateAU(last.date))}` : 'Not yet chased');
+    let note='';
+    if(last && last.note){ const n=String(last.note).replace(/\s+/g,' ').trim(); note = ` · '${esc(n.length>60?n.slice(0,60).trim()+'…':n)}'`; }
+    return bits.join(' · ') + note;
+  }
+  function icRefreshCentre(el){   // recolour + re-preview a centre row in place after a chase call is logged
+    if(!el) return;
+    const ids=[...el.querySelectorAll('[data-ichist]')].map(x=>x.getAttribute('data-ichist')).filter(Boolean);
+    const last=icLastCalls(ids);
+    el.classList.remove('ic-ch-promised','ic-ch-disputing','ic-ch-noanswer','ic-ch-none');
+    el.classList.add(icChaseClass(last));
+    const prev=el.querySelector('.ic-cprev');
+    if(prev) prev.innerHTML=icPreview(Number(el.getAttribute('data-icmd')||0), Number(el.getAttribute('data-icowed')||0), last);
+  }
   function icCentres(){
     const norm=i=>({
       id: i.invoiceId||i.id||i.invoiceID||i.invoiceNumber||i.number||'',
@@ -1022,16 +1047,16 @@
       + (IC_STATE!=='all'?' in '+IC_STATE:'') + (IC_BAND!=null?' ('+bands[IC_BAND].lbl+')':'');
     const listHtml = list.length
       ? list.map((c,idx)=>{
-          const md=maxDays(c); const tint=md>=45?'late':(md>=15?'warn':''); const owed=c.invoices.reduce((s,i)=>s+i.amount,0);
+          const md=maxDays(c); const owed=c.invoices.reduce((s,i)=>s+i.amount,0);
+          const last=icLastCalls(c.invoices.map(i=>i.id||i.number));
           const invs=c.invoices.slice().sort((a,b)=>b.days-a.days).map(icInvHtml).join('');
           const contact=`<div class="ic-contact">${c.phone?`<a href="tel:${esc(c.phone)}">&#128222; ${esc(c.phone)}</a>`:`<span class="ic-nc">No phone on file</span>`}<span class="ic-cdot">·</span>${c.email?`<a href="mailto:${esc(c.email)}">&#9993;&#65039; ${esc(c.email)}</a>`:`<span class="ic-nc">No email on file</span>`}</div>`;
-          return `<div class="ic-centre ${tint}" id="ic-centre-${idx}">
+          return `<div class="ic-centre ${icChaseClass(last)}" id="ic-centre-${idx}" data-icmd="${md}" data-icowed="${owed}">
             <div class="ic-crow" data-ictoggle="${idx}">
-              <span class="ic-cname">${esc(c.name)}</span>
-              <span class="ic-cstate">${esc(c.state||'—')}</span>
-              <span class="ic-cowed">${money(owed)}</span>
-              <span class="ic-ccount">${c.invoices.length} inv</span>
-              <span class="ic-coldest ${tint}">${md>0?md+'d':'current'}</span>
+              <div class="ic-cmain">
+                <div class="ic-cnameline"><span class="ic-cname">${esc(c.name)}</span><span class="ic-cstate">${esc(c.state||'—')}</span><span class="ic-ccount">${c.invoices.length} inv</span></div>
+                <div class="ic-cprev">${icPreview(md,owed,last)}</div>
+              </div>
               <span class="ic-caret">&#9654;</span>
             </div>
             <div class="ic-cdetail">${contact}${invs}</div>
@@ -1062,7 +1087,7 @@
       calls.push({date:icTodayAU(), note, result, loggedBy:'accounts'});
       await setDoc(doc(db,'invoice-chase-history',id), {invoiceId:id, calls}, {merge:true});   // read-modify-write append
       IC_HIST[id]=calls;
-      const histEl=document.querySelector(`[data-ichist="${id}"]`); if(histEl) histEl.innerHTML=icHistHtml(id);
+      const histEl=document.querySelector(`[data-ichist="${id}"]`); if(histEl){ histEl.innerHTML=icHistHtml(id); icRefreshCentre(histEl.closest('.ic-centre')); }
       noteEl.value=''; resEl.value='';
       if(msgEl){ msgEl.style.color='var(--green)'; msgEl.textContent='Saved'; setTimeout(()=>{ if(msgEl) msgEl.textContent=''; },2500); }
     }catch(err){ console.error('icLogChase',err); if(msgEl){ msgEl.style.color='var(--red)'; msgEl.textContent='Save failed — '+(err.message||err); } }
