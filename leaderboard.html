@@ -6563,7 +6563,7 @@ async function ccLogCall(num){
   const desc=q(`[data-logdesc="${num}"]`).value.trim();
   const cb=q(`[data-logcb="${num}"]`).value.trim();
   if(!result){ if(msg){ msg.style.color="var(--red)"; msg.textContent="Pick a result."; } return; }
-  const CITY=ccCity(c.state);
+  const CITY=ccCity(c.state) || "O";   // default unknown/blank state to "O" (Other) so stateless calls still count
   const NEWCALL = (c.crmCallCount||0)===0 && !(Array.isArray(c.history) && c.history.length>0);
   const save=q(`[data-logsave="${num}"]`); if(save) save.disabled=true;
   if(msg){ msg.style.color="var(--muted)"; msg.textContent="Saving…"; }
@@ -6580,7 +6580,7 @@ async function ccLogCall(num){
     const snap=await getDocs(query(collection(db,"daily-activity"), where("rep","==",ccPinRep)));
     let did=null, counts={};
     snap.forEach(d=>{ const x=d.data()||{}; if(x.date===date){ did=d.id; counts=x.counts||{}; } });
-    const bump=cat=>{ if(!CITY) return; counts[cat]=counts[cat]||{}; counts[cat][CITY]=(counts[cat][CITY]||0)+1; };   // skip city breakdown when centre has no state (avoids empty Firestore field key)
+    const bump=cat=>{ counts[cat]=counts[cat]||{}; counts[cat][CITY]=(counts[cat][CITY]||0)+1; };
     bump(NEWCALL?"NC":"FUC");
     let bucket=null;
     if(NEWCALL){
@@ -6593,10 +6593,8 @@ async function ccLogCall(num){
       else if(result==="no_answer") bucket="FUC-NA";
     }
     if(bucket) bump(bucket);
-    if(CITY){
-      counts["TCC"]=counts["TCC"]||{};
-      counts["TCC"][CITY]=((counts["NC"]||{})[CITY]||0)+((counts["FUC"]||{})[CITY]||0);
-    }
+    counts["TCC"]=counts["TCC"]||{};
+    counts["TCC"][CITY]=((counts["NC"]||{})[CITY]||0)+((counts["FUC"]||{})[CITY]||0);
     if(did){ await updateDoc(doc(db,"daily-activity",did),{counts}); }
     else { await addDoc(collection(db,"daily-activity"),{rep:ccPinRep, date, counts}); }
     // (c) booked → sales-entries / offer-centres (exact existing shapes)
