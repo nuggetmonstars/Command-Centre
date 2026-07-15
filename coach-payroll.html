@@ -94,6 +94,79 @@
   .csub-tab.active{opacity:1;background:var(--blue);color:#fff;border-color:var(--blue)}
   .cinv.bi .cc{color:var(--red)} .cinv.bi{opacity:.92}
 
+  /* ── Invoice Chase tab (ic- namespace) ─────────────── */
+  .ic-headline{display:flex;flex-wrap:wrap;gap:26px;align-items:center;background:rgba(36,55,70,0.97);border-radius:16px;padding:16px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+  .ic-hitem{display:flex;flex-direction:column;gap:2px}
+  .ic-hlabel{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--lightblue);text-transform:uppercase;letter-spacing:1.5px}
+  .ic-hval{font-family:'MarkerFelt',cursive;font-size:27px;color:var(--white);line-height:1}
+  .ic-hval.red{color:#ff8a80} .ic-hval.amber{color:var(--yellow)}
+  .ic-hval small{font-size:14px;color:var(--lightblue)}
+  .ic-bands{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:10px;margin-bottom:18px}
+  .ic-band{border-radius:14px;padding:11px 13px;color:#fff;box-shadow:var(--shadow)}
+  .ic-band .b-lbl{font-family:'MarkerFelt',cursive;font-size:13px;opacity:.97}
+  .ic-band .b-cnt{font-family:'MarkerFelt',cursive;font-size:23px;line-height:1.2}
+  .ic-band .b-amt{font-size:12.5px;opacity:.97}
+  .ic-band{cursor:pointer;position:relative;transition:transform .08s}
+  .ic-band:hover{transform:translateY(-1px)}
+  .ic-band.sel{outline:3px solid var(--ink);outline-offset:2px;transform:translateY(-2px)}
+  .ic-band.sel::after{content:'✓';position:absolute;top:6px;right:9px;font-family:'MarkerFelt',cursive;font-size:13px}
+  .ic-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .ic-pill{font-family:'MarkerFelt',cursive;font-size:13px;background:var(--white);color:var(--blue);border:2px solid var(--lightblue);border-radius:30px;padding:6px 15px;cursor:pointer}
+  .ic-pill.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .ic-sec-h{font-family:'MarkerFelt',cursive;font-size:19px;color:var(--red);margin:6px 0 10px}
+  .ic-subtabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .ic-subtab{font-family:'MarkerFelt',cursive;font-size:14px;background:var(--white);color:var(--blue);border:2px solid var(--lightblue);border-radius:30px;padding:8px 16px;cursor:pointer;opacity:.75}
+  .ic-subtab.active{opacity:1;background:var(--blue);color:#fff;border-color:var(--blue)}
+  .ic-calls{background:#fff6f5;border:2px solid var(--red);border-radius:14px;padding:4px 6px;margin-bottom:22px}
+  .ic-callline{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;font-size:13.5px;color:var(--ink)}
+  .ic-callline:last-child{border-bottom:0}
+  .ic-callline:hover{background:#fff}
+  .ic-callline .cl-name{font-family:'MarkerFelt',cursive;flex:1;min-width:150px}
+  .ic-callline .cl-amt{font-family:'MarkerFelt',cursive;color:var(--red)}
+  .ic-tier{font-family:'MarkerFelt',cursive;font-size:11px;background:var(--orange);color:#fff;border-radius:20px;padding:2px 9px;white-space:nowrap}
+  .ic-centre{background:var(--white);border:3px solid var(--line);border-radius:14px;box-shadow:var(--shadow);margin-bottom:9px;overflow:hidden}
+  .ic-centre.warn{border-color:var(--orange);background:#fff8ee}
+  .ic-centre.late{border-color:var(--red);background:#fff5f4}
+  .ic-crow{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:13px 16px;cursor:pointer}
+  .ic-crow:hover{background:rgba(0,0,0,0.02)}
+  .ic-cname{font-family:'MarkerFelt',cursive;font-size:16px;color:var(--ink);flex:1;min-width:150px}
+  .ic-cstate{font-family:'MarkerFelt',cursive;font-size:11px;background:var(--blue);color:#fff;border-radius:20px;padding:2px 9px}
+  .ic-cowed{font-family:'MarkerFelt',cursive;font-size:18px;color:var(--ink)}
+  .ic-ccount{font-size:12.5px;color:var(--blue)}
+  .ic-coldest{font-family:'MarkerFelt',cursive;font-size:12px;border-radius:20px;padding:3px 10px;color:#fff;background:var(--green);white-space:nowrap}
+  .ic-coldest.warn{background:var(--orange)} .ic-coldest.late{background:var(--red)}
+  .ic-caret{color:var(--blue);transition:transform .1s}
+  .ic-cdetail{display:none;padding:2px 16px 14px;border-top:2px dashed var(--line)}
+  .ic-contact{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0 2px;font-size:14px}
+  .ic-contact a{color:var(--blue);text-decoration:none;font-weight:700}
+  .ic-contact a:hover{text-decoration:underline}
+  .ic-nc{color:var(--blue);opacity:.55;font-style:italic}
+  .ic-cdot{color:var(--line)}
+  .ic-centre.open .ic-cdetail{display:block}
+  .ic-centre.open .ic-caret{transform:rotate(90deg)}
+  .ic-inv{border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+  .ic-inv.ov{border-color:#f2c9c6;background:#fffafa}
+  .ic-invhead{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px}
+  .ic-invno{font-family:'MarkerFelt',cursive;color:var(--ink)}
+  .ic-invmeta{color:var(--blue);flex:1;min-width:120px}
+  .ic-invamt{font-family:'MarkerFelt',cursive;color:var(--ink)}
+  .ic-invdays{font-family:'MarkerFelt',cursive;font-size:11px;border-radius:20px;padding:2px 9px;color:#fff;background:var(--green)}
+  .ic-invdays.warn{background:var(--orange)} .ic-invdays.late{background:var(--red)}
+  .ic-hist{margin:8px 0 2px}
+  .ic-hcall{font-size:12.5px;color:var(--ink);padding:4px 0;border-bottom:1px solid var(--line)}
+  .ic-hcall:last-child{border-bottom:0}
+  .ic-hdate{font-family:'MarkerFelt',cursive;color:var(--blue)}
+  .ic-hres{font-family:'MarkerFelt',cursive;font-size:10px;border-radius:20px;padding:1px 7px;color:#fff;background:var(--blue)}
+  .ic-hres.promised{background:var(--green)} .ic-hres.disputing{background:var(--orange)} .ic-hres.noanswer{background:#8A94A2}
+  .ic-hby{color:var(--blue);opacity:.7;font-size:11px}
+  .ic-nohist{font-size:12px;color:var(--blue);opacity:.7;padding:3px 0}
+  .ic-logform{background:#f4fafe;border-radius:10px;padding:9px 11px;margin-top:6px}
+  .ic-logform textarea{width:100%;min-height:44px;font-family:'Pencil',cursive;font-size:13px;color:var(--ink);border:2px solid var(--line);border-radius:8px;padding:6px 9px;resize:vertical;box-sizing:border-box;outline:none}
+  .ic-logrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
+  .ic-logrow select{font-family:'Pencil',cursive;font-size:13px;color:var(--ink);border:2px solid var(--line);border-radius:8px;padding:6px 9px;background:#fff;outline:none}
+  .ic-logbtn{font-family:'MarkerFelt',cursive;font-size:13px;background:var(--blue);color:#fff;border:none;border-radius:30px;padding:7px 16px;cursor:pointer}
+  .ic-msg{font-size:12px;color:var(--blue)}
+
   /* controls row */
   .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
   .controls label{font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)}
@@ -243,6 +316,7 @@
       <button class="tab active" data-view="payroll">&#128181; Payroll Hours</button>
       <button class="tab" data-view="xero">&#128203; Xero Check</button>
       <button class="tab" data-view="commission">&#128176; Commission</button>
+      <button class="tab" data-view="chase">&#129534; Invoice Chase</button>
     </div>
 
     <div id="view-payroll">
@@ -266,6 +340,10 @@
 
     <div id="view-commission" style="display:none">
       <div id="comm-body"><div class="empty">Loading commission…</div></div>
+    </div>
+
+    <div id="view-chase" style="display:none">
+      <div id="ic-body"><div class="empty">Loading invoice chase…</div></div>
     </div>
   </div>
 
@@ -830,6 +908,180 @@
       body.innerHTML = `<div class="empty">Couldn't load commission.<br><small>${esc(err.message||err)}</small></div>`;
     }
   }
+  // ---- Invoice Chase view ----
+  let IC_DOC=null, IC_HIST={}, IC_STATE='all', IC_SUB='calls', IC_BAND=null, IC_WIRED=false;   // default sub-tab: Calls Due; IC_BAND = selected age-band index or null
+  const ic0 = n => '$' + Math.round(n||0).toLocaleString('en-AU');   // whole-dollar (headline/bands)
+  const IC_RESULTS = [{v:'promised',l:'Promised to pay'},{v:'disputing',l:'Disputing'},{v:'no_answer',l:'No answer'}];
+  const icResultLabel = v => (IC_RESULTS.find(r=>r.v===v)||{}).l || v || '';
+  function icTodayAU(){
+    const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+    const g=t=>p.find(x=>x.type===t).value; return `${g('year')}-${g('month')}-${g('day')}`;
+  }
+  function icDateAU(v){ const p=String(v||'').slice(0,10).split('-'); return p.length===3?`${p[2]}-${p[1]}-${p[0]}`:String(v||''); }   // YYYY-MM-DD -> DD-MM-YYYY
+  function icCentres(){
+    const norm=i=>({
+      id: i.invoiceId||i.id||i.invoiceID||i.invoiceNumber||i.number||'',
+      number: i.invoiceNumber||i.number||i.invoiceNo||i.ref||i.invoiceId||i.id||'',
+      date: i.date||i.invoiceDate||'',
+      dueDate: i.dueDate||i.due||'',
+      amount: Number(i.amountDue||i.amount||i.total||i.outstanding||0),
+      days: Number(i.daysOverdue!=null?i.daysOverdue:(i.days||0)),
+      callDue: !!(i.callDue||i.calldue),
+      status: i.status || (Number(i.daysOverdue!=null?i.daysOverdue:(i.days||0))>0?'overdue':'current'),
+      tier: i.chaseTier||i.tier||i.milestone||''
+    });
+    const ph=o=>o.phone||o.phoneNumber||o.contactPhone||o.tel||o.mobile||'';
+    const em=o=>o.email||o.contactEmail||o.emailAddress||'';
+    if(Array.isArray(IC_DOC.centres) && IC_DOC.centres.length){
+      return IC_DOC.centres.map(c=>({ name:c.name||c.centre||c.contact||'(unnamed)', state:String(c.state||''), phone:ph(c), email:em(c), invoices:(c.invoices||[]).map(norm) }));
+    }
+    const flat=IC_DOC.invoices||[]; const g={};
+    flat.forEach(i=>{ const key=i.centre||i.contact||i.name||'(unnamed)'; const gg=(g[key]=g[key]||{name:key,state:String(i.state||''),phone:ph(i),email:em(i),invoices:[]}); if(!gg.phone) gg.phone=ph(i); if(!gg.email) gg.email=em(i); gg.invoices.push(norm(i)); });
+    return Object.values(g);
+  }
+  const icDayClass = d => d>=45?'late':(d>=15?'warn':'');
+  function icHistHtml(id){
+    const calls=IC_HIST[id]||[];
+    if(!calls.length) return `<div class="ic-nohist">No chase calls logged yet.</div>`;
+    return calls.slice().reverse().map(c=>{
+      const cls=String(c.result||'').toLowerCase().replace(/[^a-z]/g,'');
+      return `<div class="ic-hcall"><span class="ic-hdate">${esc(icDateAU(c.date))}</span> · <span class="ic-hres ${cls}">${esc(icResultLabel(c.result))}</span>${c.note?` · "${esc(c.note)}"`:''} <span class="ic-hby">— ${esc(c.loggedBy||'')}</span></div>`;
+    }).join('');
+  }
+  function icInvHtml(i){
+    const key=i.id||i.number||'';
+    const dcls=icDayClass(i.days);
+    const daysLbl=i.days>0?`${i.days}d overdue`:'current';
+    const logForm = key ? `
+      <div class="ic-logform">
+        <textarea class="ic-note" data-icnote="${esc(key)}" placeholder="What was discussed…"></textarea>
+        <div class="ic-logrow">
+          <select class="ic-result" data-icresult="${esc(key)}"><option value="">— result —</option>${IC_RESULTS.map(r=>`<option value="${r.v}">${r.l}</option>`).join('')}</select>
+          <button class="ic-logbtn" type="button" data-iclog="${esc(key)}">Log Chase Call</button>
+          <span class="ic-msg" data-icmsg="${esc(key)}"></span>
+        </div>
+      </div>` : `<div class="ic-nohist">No invoice id — can't log a call for this one.</div>`;
+    return `<div class="ic-inv ${i.days>0?'ov':''}">
+      <div class="ic-invhead">
+        <span class="ic-invno">#${esc(i.number||i.id||'—')}</span>
+        <span class="ic-invmeta">${esc(i.date||'—')} · due ${esc(i.dueDate||'—')}</span>
+        <span class="ic-invamt">${money(i.amount)}</span>
+        <span class="ic-invdays ${dcls}">${daysLbl}</span>
+        ${i.tier?`<span class="ic-tier">${esc(i.tier)}</span>`:''}
+      </div>
+      <div class="ic-hist" data-ichist="${esc(key)}">${icHistHtml(key)}</div>
+      ${logForm}
+    </div>`;
+  }
+  function icRender(){
+    if(!IC_DOC){ return; }
+    const all=icCentres();
+    // headline — global (unfiltered)
+    let totalUnpaid=0, ovAmt=0, ovCount=0, callsDue=0;
+    all.forEach(c=>c.invoices.forEach(i=>{ totalUnpaid+=i.amount; if(i.days>0){ovAmt+=i.amount;ovCount++;} if(i.callDue)callsDue++; }));
+    // age bands — global overdue (15d+)
+    const bands=[
+      {lbl:'15–29d', lo:15, hi:29, color:'#6FC04F'},
+      {lbl:'30–44d', lo:30, hi:44, color:'#C8CE00'},
+      {lbl:'45–99d', lo:45, hi:99, color:'#FFD119'},
+      {lbl:'100–149d', lo:100, hi:149, color:'#FF9933'},
+      {lbl:'150–249d', lo:150, hi:249, color:'#F5591F'},
+      {lbl:'250d+', lo:250, hi:1e12, color:'#E52520'}
+    ];
+    bands.forEach(b=>{b.count=0;b.amt=0;});
+    all.forEach(c=>c.invoices.forEach(i=>{ if(i.days>=15){ const b=bands.find(x=>i.days>=x.lo&&i.days<=x.hi); if(b){b.count++;b.amt+=i.amount;} } }));
+    const gen = IC_DOC.generatedAt && IC_DOC.generatedAt.toDate ? IC_DOC.generatedAt.toDate() : null;
+    const head = `<div class="ic-headline">
+      <div class="ic-hitem"><span class="ic-hlabel">Total Unpaid</span><span class="ic-hval">${ic0(totalUnpaid)}</span></div>
+      <div class="ic-hitem"><span class="ic-hlabel">Overdue</span><span class="ic-hval red">${ic0(ovAmt)} <small>(${ovCount})</small></span></div>
+      <div class="ic-hitem"><span class="ic-hlabel">Calls Due</span><span class="ic-hval amber">${callsDue}</span></div>
+    </div>`;
+    const bandsHtml = `<div class="ic-bands">${bands.map((b,bi)=>`<div class="ic-band ${IC_BAND===bi?'sel':''}" style="background:${b.color}" data-icband="${bi}" title="Filter to ${b.lbl}"><div class="b-lbl">${b.lbl}</div><div class="b-cnt">${b.count}</div><div class="b-amt">${ic0(b.amt)}</div></div>`).join('')}</div>`;
+
+    // ── state filter + sub-tabs (Total / Overdue / Calls Due) — ONE list ──
+    const STATES=['NSW','VIC','QLD','SA','WA'];
+    const pills = `<div class="ic-pills">${['all',...STATES].map(s=>`<button class="ic-pill ${IC_STATE===s?'active':''}" data-icstate="${s}">${s==='all'?'All':s}</button>`).join('')}</div>`;
+    const fc = all.filter(c=>IC_STATE==='all'||String(c.state||'').toUpperCase()===IC_STATE);   // state-filtered centres
+    const bandMatch = i => IC_BAND==null ? true : (i.days>=bands[IC_BAND].lo && i.days<=bands[IC_BAND].hi);   // age-band filter
+    const PRED = { total:()=>true, overdue:i=>i.days>0, calls:i=>!!i.callDue };
+    const cnt = k => fc.reduce((n,c)=>n+c.invoices.filter(i=>PRED[k](i)&&bandMatch(i)).length,0);   // counts reflect band filter too
+    const subtabs = `<div class="ic-subtabs">
+      <button class="ic-subtab ${IC_SUB==='total'?'active':''}" data-icsub="total">&#128203; Total (${cnt('total')})</button>
+      <button class="ic-subtab ${IC_SUB==='overdue'?'active':''}" data-icsub="overdue">&#9888;&#65039; Overdue (${cnt('overdue')})</button>
+      <button class="ic-subtab ${IC_SUB==='calls'?'active':''}" data-icsub="calls">&#128222; Calls Due (${cnt('calls')})</button>
+    </div>`;
+
+    // one list: centres whose invoices match the active sub-tab, showing only those invoices
+    const pred = PRED[IC_SUB] || PRED.calls;
+    const maxDays=c=>c.invoices.reduce((m,i)=>Math.max(m,i.days),0);
+    const list = fc.map(c=>({name:c.name,state:c.state,phone:c.phone,email:c.email,invoices:c.invoices.filter(i=>pred(i)&&bandMatch(i))}))
+                   .filter(c=>c.invoices.length)
+                   .sort((a,b)=>maxDays(b)-maxDays(a));   // most-overdue first
+    const emptyMsg = (IC_SUB==='calls'?'No calls due':IC_SUB==='overdue'?'No overdue invoices':'No unpaid invoices')
+      + (IC_STATE!=='all'?' in '+IC_STATE:'') + (IC_BAND!=null?' ('+bands[IC_BAND].lbl+')':'');
+    const listHtml = list.length
+      ? list.map((c,idx)=>{
+          const md=maxDays(c); const tint=md>=45?'late':(md>=15?'warn':''); const owed=c.invoices.reduce((s,i)=>s+i.amount,0);
+          const invs=c.invoices.slice().sort((a,b)=>b.days-a.days).map(icInvHtml).join('');
+          const contact=`<div class="ic-contact">${c.phone?`<a href="tel:${esc(c.phone)}">&#128222; ${esc(c.phone)}</a>`:`<span class="ic-nc">No phone on file</span>`}<span class="ic-cdot">·</span>${c.email?`<a href="mailto:${esc(c.email)}">&#9993;&#65039; ${esc(c.email)}</a>`:`<span class="ic-nc">No email on file</span>`}</div>`;
+          return `<div class="ic-centre ${tint}" id="ic-centre-${idx}">
+            <div class="ic-crow" data-ictoggle="${idx}">
+              <span class="ic-cname">${esc(c.name)}</span>
+              <span class="ic-cstate">${esc(c.state||'—')}</span>
+              <span class="ic-cowed">${money(owed)}</span>
+              <span class="ic-ccount">${c.invoices.length} inv</span>
+              <span class="ic-coldest ${tint}">${md>0?md+'d':'current'}</span>
+              <span class="ic-caret">&#9654;</span>
+            </div>
+            <div class="ic-cdetail">${contact}${invs}</div>
+          </div>`;
+        }).join('')
+      : `<div class="empty">${emptyMsg}.</div>`;
+
+    $('ic-body').innerHTML = head + bandsHtml + pills + subtabs + listHtml
+      + (gen?`<div class="xhead" style="margin-top:14px">Generated ${gen.toLocaleString('en-AU')}${IC_DOC.date?` · data date ${esc(IC_DOC.date)}`:''}.</div>`:'');
+  }
+  function icOnClick(e){
+    const st=e.target.closest('[data-icstate]'); if(st){ IC_STATE=st.getAttribute('data-icstate'); icRender(); return; }
+    const bd=e.target.closest('[data-icband]'); if(bd){ const bi=+bd.getAttribute('data-icband'); IC_BAND=(IC_BAND===bi)?null:bi; icRender(); return; }   // toggle age-band filter
+    const sub=e.target.closest('[data-icsub]'); if(sub){ IC_SUB=sub.getAttribute('data-icsub'); icRender(); return; }
+    const tg=e.target.closest('[data-ictoggle]'); if(tg){ const el=$('ic-centre-'+tg.getAttribute('data-ictoggle')); if(el) el.classList.toggle('open'); return; }
+    const lg=e.target.closest('[data-iclog]'); if(lg){ icLogChase(lg.getAttribute('data-iclog')); return; }
+  }
+  async function icLogChase(id){
+    const noteEl=document.querySelector(`[data-icnote="${id}"]`);
+    const resEl=document.querySelector(`[data-icresult="${id}"]`);
+    const msgEl=document.querySelector(`[data-icmsg="${id}"]`);
+    if(!noteEl||!resEl) return;
+    const note=noteEl.value.trim(), result=resEl.value;
+    if(!result){ if(msgEl){ msgEl.style.color='var(--red)'; msgEl.textContent='Pick a result.'; } return; }
+    if(msgEl){ msgEl.style.color='var(--ink)'; msgEl.textContent='Saving…'; }
+    try{
+      const calls=(IC_HIST[id]||[]).slice();
+      calls.push({date:icTodayAU(), note, result, loggedBy:'accounts'});
+      await setDoc(doc(db,'invoice-chase-history',id), {invoiceId:id, calls}, {merge:true});   // read-modify-write append
+      IC_HIST[id]=calls;
+      const histEl=document.querySelector(`[data-ichist="${id}"]`); if(histEl) histEl.innerHTML=icHistHtml(id);
+      noteEl.value=''; resEl.value='';
+      if(msgEl){ msgEl.style.color='var(--green)'; msgEl.textContent='Saved'; setTimeout(()=>{ if(msgEl) msgEl.textContent=''; },2500); }
+    }catch(err){ console.error('icLogChase',err); if(msgEl){ msgEl.style.color='var(--red)'; msgEl.textContent='Save failed — '+(err.message||err); } }
+  }
+  async function icLoad(){
+    const body=$('ic-body');
+    if(!IC_WIRED){ IC_WIRED=true; body.addEventListener('click', icOnClick); }
+    body.innerHTML=`<div class="empty">Loading invoice chase…</div>`;
+    try{
+      const snap=await getDocs(collection(db,'invoice-chase'));
+      if(snap.empty){ body.innerHTML=`<div class="empty">No invoice-chase data yet.<br><small>Run the invoice-chase agent to generate it.</small></div>`; return; }
+      const docs=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(b.date||b.id).localeCompare(String(a.date||a.id)));
+      IC_DOC=docs[0];
+      const hsnap=await getDocs(collection(db,'invoice-chase-history'));
+      IC_HIST={}; hsnap.docs.forEach(d=>{ const x=d.data()||{}; IC_HIST[d.id]=Array.isArray(x.calls)?x.calls:[]; });
+      IC_STATE='all'; IC_SUB='calls'; IC_BAND=null;   // start on Calls Due, all states, no band filter
+      icRender();
+    }catch(err){ console.error('icLoad',err); body.innerHTML=`<div class="empty">Couldn't load invoice chase.<br><small>${esc(err.message||err)}</small></div>`; }
+  }
+
   function wireTabs(){
     document.querySelectorAll('#tabbar .tab').forEach(t=>{
       t.addEventListener('click', ()=>{
@@ -839,8 +1091,10 @@
         $('view-payroll').style.display = v==='payroll' ? '' : 'none';
         $('view-xero').style.display = v==='xero' ? '' : 'none';
         $('view-commission').style.display = v==='commission' ? '' : 'none';
+        $('view-chase').style.display = v==='chase' ? '' : 'none';
         if(v==='xero') loadXero();
         if(v==='commission') loadCommission();
+        if(v==='chase') icLoad();
       });
     });
   }
