@@ -6387,13 +6387,13 @@ function ccRow(c){
   </div>`;
 }
 function ccDetail(c){
-  const maps="https://maps.google.com/?q="+encodeURIComponent(c.address||"");
   const rows=[
     ["Number","#"+crmEsc(c.num)],
     ["Name",crmEsc(c.name)],
     ["Phone",ccEditableCell(c,"phone")],
     ["Email",ccEditableCell(c,"email")],
-    ["Address",c.address?`<a href="${crmEsc(maps)}" target="_blank" rel="noopener">${crmEsc(c.address)}</a>`:"—"],
+    ["Address",ccEditableCell(c,"address")],
+    ["State",ccEditableCell(c,"state")],
     ["Contact",crmEsc(c.rep||"—")],
     ["Status",crmEsc(ccSTATUS[ccKey(c)].label)]
   ];
@@ -6418,20 +6418,36 @@ function ccCallbackDayLoad(num){
   else if(n<5){ msg.textContent=`📅 ${n} other callback${n===1?'':'s'} on this day`; msg.className="cc-cbload"; }
   else { msg.textContent=`📅 ${n} other callbacks on this day — consider another date`; msg.className="cc-cbload warn"; }
 }
+const CC_STATES=["NSW","VIC","QLD","SA","WA"];   // valid states for the state dropdown
+function ccDeriveState(address){                 // pull a state token out of an address string
+  const m=String(address||"").toUpperCase().match(/\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\b/g);
+  return m ? m[m.length-1] : null;               // last match = nearest the postcode
+}
+function ccRefreshMeta(c,num){ const m=document.querySelector(`#cc-row-${num} .cc-meta`); if(m) m.textContent=`${c.state||"—"} · ${c.phone||"no phone"}`; }
 function ccFieldLink(field,val){
   if(!val) return `<span class="cc-muted">—</span>`;
-  return field==="phone" ? `<a href="tel:${crmEsc(val)}">${crmEsc(val)}</a>` : `<a href="mailto:${crmEsc(val)}">${crmEsc(val)}</a>`;
+  if(field==="phone")   return `<a href="tel:${crmEsc(val)}">${crmEsc(val)}</a>`;
+  if(field==="email")   return `<a href="mailto:${crmEsc(val)}">${crmEsc(val)}</a>`;
+  if(field==="address") return `<a href="https://maps.google.com/?q=${encodeURIComponent(val)}" target="_blank" rel="noopener">${crmEsc(val)}</a>`;
+  return crmEsc(val);   // state (or plain) → text
 }
 function ccEditableCell(c, field){
-  const num=crmEsc(c.num), val=c[field]||"", type=field==="phone"?"tel":"email";
+  const num=crmEsc(c.num), val=c[field]||"";
+  const type=field==="phone"?"tel":field==="email"?"email":"text";
+  const control = field==="state"
+    ? `<select class="cc-edinput" data-edinput data-edfield="state" data-ednum="${num}">`
+      + [""].concat(CC_STATES).map(s=>`<option value="${s}"${String(val).toUpperCase()===s?" selected":""}>${s||"— pick state —"}</option>`).join("")
+      + `</select>`
+    : `<input class="cc-edinput" type="${type}" data-edinput data-edfield="${field}" data-ednum="${num}" value="${crmEsc(val)}" placeholder="${field==="phone"?"phone number":field==="email"?"email address":field==="address"?"street, suburb STATE postcode":""}">`;
+  const clearBtn = field==="state" ? "" : `<button class="cc-edbtn" type="button" title="Clear" data-clearfield="${field}" data-editnum="${num}">&#128465;</button>`;
   return `<span class="cc-edwrap" data-edwrap="${field}-${num}">
     <span class="cc-edview">
       <span class="cc-edlink">${ccFieldLink(field,val)}</span>
       <button class="cc-edbtn" type="button" title="Edit" data-editfield="${field}" data-editnum="${num}">&#9998;</button>
-      <button class="cc-edbtn" type="button" title="Clear" data-clearfield="${field}" data-editnum="${num}">&#128465;</button>
+      ${clearBtn}
     </span>
     <span class="cc-ededit" style="display:none">
-      <input class="cc-edinput" type="${type}" data-edinput data-edfield="${field}" data-ednum="${num}" value="${crmEsc(val)}" placeholder="${field==="phone"?"phone number":"email address"}">
+      ${control}
       <button class="cc-edbtn" type="button" title="Save" data-savefield="${field}" data-editnum="${num}">&#10003;</button>
       <button class="cc-edbtn" type="button" title="Cancel" data-canceledit="${field}-${num}">&#10005;</button>
     </span>
@@ -6442,7 +6458,7 @@ function ccBeginEdit(field,num){
   const w=document.querySelector(`[data-edwrap="${field}-${num}"]`); if(!w) return;
   w.querySelector(".cc-edview").style.display="none";
   const ed=w.querySelector(".cc-ededit"); ed.style.display="";
-  const inp=ed.querySelector("input"); if(inp){ inp.focus(); inp.select(); }
+  const inp=ed.querySelector("input,select"); if(inp){ inp.focus(); if(inp.select) inp.select(); }
 }
 function ccCancelEdit(key){
   const w=document.querySelector(`[data-edwrap="${key}"]`); if(!w) return;
@@ -6458,16 +6474,26 @@ async function ccSetField(field,num,val,doneMsg){
     await updateDoc(doc(db, ccCOLLECTION, c.id), {[field]:val});   // writes only the one field
     c[field]=val;
     w.querySelector(".cc-edlink").innerHTML=ccFieldLink(field,val);
-    const inp=w.querySelector("input"); if(inp) inp.value=val;
+    const inp=w.querySelector("input,select"); if(inp) inp.value=val;
     w.querySelector(".cc-ededit").style.display="none";
     w.querySelector(".cc-edview").style.display="";
-    if(field==="phone"){ const m=document.querySelector(`#cc-row-${num} .cc-meta`); if(m) m.textContent=`${c.state||"—"} · ${val||"no phone"}`; }
-    if(msg){ msg.style.color="var(--blue)"; msg.textContent=doneMsg; setTimeout(()=>{ if(msg) msg.textContent=""; },2000); }
+    let extra="";
+    if(field==="address"){                               // auto-derive state from the new address text
+      const st=ccDeriveState(val);
+      if(st && st!==c.state){
+        await updateDoc(doc(db, ccCOLLECTION, c.id), {state:st});
+        c.state=st; extra=" · state → "+st;
+        const sw=document.querySelector(`[data-edwrap="state-${num}"]`);
+        if(sw){ const lk=sw.querySelector(".cc-edlink"); if(lk) lk.innerHTML=ccFieldLink("state",st); const sel=sw.querySelector("select"); if(sel) sel.value=st; }
+      }
+    }
+    ccRefreshMeta(c,num);                                // keep the collapsed row's "state · phone" fresh
+    if(msg){ msg.style.color="var(--blue)"; msg.textContent=doneMsg+extra; setTimeout(()=>{ if(msg) msg.textContent=""; },2200); }
   }catch(e){ console.error("ccSetField",e); if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed"; } }
 }
 function ccSaveField(field,num){
   const w=document.querySelector(`[data-edwrap="${field}-${num}"]`); if(!w) return;
-  const inp=w.querySelector("input"); ccSetField(field,num,(inp?inp.value:"").trim(),"Saved");
+  const inp=w.querySelector("input,select"); ccSetField(field,num,(inp?inp.value:"").trim(),"Saved");
 }
 function ccClearField(field,num){ ccSetField(field,num,"","Cleared"); }
 function ccRenderList(){
