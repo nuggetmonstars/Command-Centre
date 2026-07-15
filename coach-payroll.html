@@ -932,11 +932,12 @@
     });
     const ph=o=>o.phone||o.phoneNumber||o.contactPhone||o.tel||o.mobile||'';
     const em=o=>o.email||o.contactEmail||o.emailAddress||'';
+    const nm=o=>o.centreName||o.name||o.contactName||o.centre||o.contact||'(unnamed)';   // agent writes "centreName"
     if(Array.isArray(IC_DOC.centres) && IC_DOC.centres.length){
-      return IC_DOC.centres.map(c=>({ name:c.name||c.centre||c.contact||'(unnamed)', state:String(c.state||''), phone:ph(c), email:em(c), invoices:(c.invoices||[]).map(norm) }));
+      return IC_DOC.centres.map(c=>({ name:nm(c), state:String(c.state||''), phone:ph(c), email:em(c), invoices:(c.invoices||[]).map(norm) }));
     }
     const flat=IC_DOC.invoices||[]; const g={};
-    flat.forEach(i=>{ const key=i.centre||i.contact||i.name||'(unnamed)'; const gg=(g[key]=g[key]||{name:key,state:String(i.state||''),phone:ph(i),email:em(i),invoices:[]}); if(!gg.phone) gg.phone=ph(i); if(!gg.email) gg.email=em(i); gg.invoices.push(norm(i)); });
+    flat.forEach(i=>{ const key=nm(i); const gg=(g[key]=g[key]||{name:key,state:String(i.state||''),phone:ph(i),email:em(i),invoices:[]}); if(!gg.phone) gg.phone=ph(i); if(!gg.email) gg.email=em(i); gg.invoices.push(norm(i)); });
     return Object.values(g);
   }
   const icDayClass = d => d>=45?'late':(d>=15?'warn':'');
