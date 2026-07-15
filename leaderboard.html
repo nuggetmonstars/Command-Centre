@@ -38,7 +38,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 h1,h2,h3,.mf{font-family:var(--mf);color:var(--red);}
 
-html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: hidden; font-size: calc(16px * var(--fs)); }
+html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: clip; font-size: calc(16px * var(--fs)); }
 
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -2180,15 +2180,17 @@ h1,h2,h3,h4,h5,.mf,
       <div class="cc-rep-name" id="cc-rep-name">&mdash;</div>
       <button class="cc-change" id="cc-change">Change rep</button>
     </div>
-    <div id="cc-counter" class="cc-counter">
-      <div class="cc-counter-head" id="cc-counter-head"></div>
-      <button class="cc-counter-toggle" id="cc-counter-toggle" type="button">&#9656; Today's breakdown</button>
-      <div class="cc-counter-grid" id="cc-counter-grid" style="display:none"></div>
-    </div>
-    <div class="cc-controls">
-      <input id="cc-q" class="cc-search" type="text" placeholder="&#128269; Search name, phone, email, notes&#8230;" autocomplete="off">
-      <input id="cc-goto" class="cc-goto" type="number" placeholder="Go to #" min="1">
-      <button id="cc-cbfilter" class="cc-cbbtn" type="button">&#128197; Callbacks <span id="cc-cbcount">0</span></button>
+    <div class="cc-sticky" id="cc-sticky">
+      <div id="cc-counter" class="cc-counter">
+        <div class="cc-counter-head" id="cc-counter-head"></div>
+        <button class="cc-counter-toggle" id="cc-counter-toggle" type="button">&#9656; Today's breakdown</button>
+        <div class="cc-counter-grid" id="cc-counter-grid" style="display:none"></div>
+      </div>
+      <div class="cc-controls">
+        <input id="cc-q" class="cc-search" type="text" placeholder="&#128269; Search #, name, phone, email, notes&#8230;" autocomplete="off">
+        <input id="cc-goto" class="cc-goto" type="number" placeholder="Go to #" min="1">
+        <button id="cc-cbfilter" class="cc-cbbtn" type="button">&#128197; Callbacks <span id="cc-cbcount">0</span></button>
+      </div>
     </div>
     <div class="cc-chips" id="cc-chips"></div>
     <div class="cc-count" id="cc-count"></div>
@@ -5892,6 +5894,18 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-edinput{font-family:var(--font);font-size:13px;border:2px solid var(--sky);border-radius:6px;padding:4px 8px;background:#fff;color:var(--ink);outline:none;min-width:150px;}
 .cc-edmsg{font-size:11px;color:var(--muted);}
 .cc-muted{color:var(--muted);}
+/* sticky controls block (counter + search + callbacks pinned while list scrolls) */
+.cc-sticky{position:sticky;top:0;z-index:30;background:var(--yellow);padding:4px 0 8px;}
+.cc-sticky .cc-counter{position:static;margin:6px 0 8px;}
+.cc-controls input{padding:7px 14px;font-size:14px;}
+.cc-search{min-width:180px;}
+.cc-controls{margin:0 0 6px;}
+.cc-cbbtn.has-due{border-color:var(--red);}
+.cc-cbbtn.has-due #cc-cbcount{background:var(--red);color:#fff;border-radius:30px;padding:1px 8px;min-width:18px;text-align:center;opacity:1;}
+/* Log Call callback-date day-load indicator */
+.cc-cbload{display:block;font-size:11.5px;margin-top:3px;color:var(--muted);}
+.cc-cbload.ok{color:var(--green);}
+.cc-cbload.warn{color:var(--orange);font-weight:700;}
 /* Admin tab — centre allocator (ported from centre-allocator.html) */
 .al-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin:16px 0;}
 .al-h{font-family:var(--mf);color:var(--red);font-size:18px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
@@ -6288,7 +6302,7 @@ function ccInit(){
   // counter expand toggle
   ccEl("cc-counter-toggle").addEventListener("click",()=>{ const g=ccEl("cc-counter-grid"); const open=g.style.display==="none"; g.style.display=open?"":"none"; ccEl("cc-counter-toggle").innerHTML=(open?"&#9662;":"&#9656;")+" Today's breakdown"; });
   // delegated: result change (callback auto-fill + session toggle) and Log Call save
-  ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel) ccOnResultChange(sel); });
+  ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel){ ccOnResultChange(sel); return; } const cb=e.target.closest("[data-logcb]"); if(cb) ccCallbackDayLoad(cb.getAttribute("data-logcb")); });
   ccEl("cc-list").addEventListener("click", e=>{ const b=e.target.closest("[data-logsave]"); if(b) ccLogCall(b.getAttribute("data-logsave")); });
   // callbacks filter toggle (today + overdue only)
   ccEl("cc-cbfilter").addEventListener("click",()=>{ ccFilter=(ccFilter==="callbacks")?"all":"callbacks"; ccRenderChips(); ccRenderList(); });
@@ -6343,7 +6357,7 @@ function ccPasses(c){
   else if(ccFilter!=="all" && ccKey(c)!==ccFilter) return false;
   const q=ccEl("cc-q").value.trim().toLowerCase();
   if(!q) return true;
-  const hay=[c.name,c.phone,c.email,c.address, ...((c.history||[]).map(h=>h&&h.text))].join(" ").toLowerCase();
+  const hay=[c.num,c.name,c.phone,c.email,c.address, ...((c.history||[]).map(h=>h&&h.text))].join(" ").toLowerCase();
   return hay.indexOf(q)>-1;
 }
 function ccRenderChips(){
@@ -6390,6 +6404,20 @@ function ccDetail(c){
   return `<div class="cc-grid">${grid}</div>${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
 }
 function ccIsDueCallback(c){ return !!c.callbackDate && String(c.callbackDate) <= ccTodayISO(); }   // today or overdue
+// day-load check for the Log Call callback date picker — counts OTHER centres in this rep's
+// book already booked on the chosen date (from the loaded ccCENTRES, no extra Firestore read).
+function ccCallbackDayLoad(num){
+  const row=document.getElementById("cc-row-"+num); if(!row) return;
+  const cb=row.querySelector(`[data-logcb="${num}"]`);
+  const msg=row.querySelector(`[data-cbload="${num}"]`);
+  if(!cb||!msg) return;
+  const d=(cb.value||"").trim();
+  if(!d){ msg.textContent=""; msg.className="cc-cbload"; return; }
+  const n=ccCENTRES.filter(c=>String(c.callbackDate||"")===d && String(c.num)!==String(num)).length;
+  if(n===0){ msg.textContent="No other callbacks on this day"; msg.className="cc-cbload ok"; }
+  else if(n<5){ msg.textContent=`📅 ${n} other callback${n===1?'':'s'} on this day`; msg.className="cc-cbload"; }
+  else { msg.textContent=`📅 ${n} other callbacks on this day — consider another date`; msg.className="cc-cbload warn"; }
+}
 function ccFieldLink(field,val){
   if(!val) return `<span class="cc-muted">—</span>`;
   return field==="phone" ? `<a href="tel:${crmEsc(val)}">${crmEsc(val)}</a>` : `<a href="mailto:${crmEsc(val)}">${crmEsc(val)}</a>`;
@@ -6447,7 +6475,7 @@ function ccRenderList(){
   if(ccFilter==="callbacks") items=items.slice().sort((a,b)=>String(a.callbackDate||"").localeCompare(String(b.callbackDate||"")));  // most overdue first
   ccEl("cc-count").textContent=`${items.length} of ${ccCENTRES.length} centres`;
   const cbBtn=ccEl("cc-cbfilter");
-  if(cbBtn){ const cnt=ccEl("cc-cbcount"); if(cnt) cnt.textContent=ccCENTRES.filter(ccIsDueCallback).length; cbBtn.classList.toggle("active", ccFilter==="callbacks"); }
+  if(cbBtn){ const due=ccCENTRES.filter(ccIsDueCallback).length; const cnt=ccEl("cc-cbcount"); if(cnt) cnt.textContent=due; cbBtn.classList.toggle("active", ccFilter==="callbacks"); cbBtn.classList.toggle("has-due", due>0); }
   ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">${ccFilter==="callbacks"?"No callbacks due or overdue.":"No centres match."}</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
   ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const row=document.getElementById("cc-row-"+el.dataset.toggle); if(row) row.classList.toggle("open"); }));
 }
@@ -6507,7 +6535,7 @@ function ccLogForm(c){
     <div class="cc-logrow">
       <div class="cc-logfield"><label>Date</label><input type="date" value="${today}" data-logdate="${num}"></div>
       <div class="cc-logfield"><label>Result</label><select data-logresult="${num}">${resultOpts}</select></div>
-      <div class="cc-logfield"><label>Callback date</label><input type="date" data-logcb="${num}"></div>
+      <div class="cc-logfield"><label>Callback date</label><input type="date" data-logcb="${num}"><span class="cc-cbload" data-cbload="${num}"></span></div>
       <div class="cc-logfield" data-logsessionwrap="${num}" style="display:none"><label>Session</label><select data-logsession="${num}">${sessOpts}</select></div>
     </div>
     <div class="cc-logrow" style="align-items:stretch"><div class="cc-logfield" style="flex:1;width:100%"><label>Description</label><textarea data-logdesc="${num}" placeholder="What happened on the call…"></textarea></div></div>
@@ -6520,6 +6548,7 @@ function ccOnResultChange(sel){
   const val=sel.value;
   const cb=row.querySelector(`[data-logcb="${num}"]`);
   if(val==="call_eoy" && cb && !cb.value){ cb.value=(new Date().getFullYear())+"-12-15"; }   // auto callback = 15 Dec
+  ccCallbackDayLoad(num);   // refresh day-load indicator if the date changed programmatically
   const sw=row.querySelector(`[data-logsessionwrap="${num}"]`);
   if(sw) sw.style.display = val==="booked_sale" ? "" : "none";
 }
@@ -6551,7 +6580,7 @@ async function ccLogCall(num){
     const snap=await getDocs(query(collection(db,"daily-activity"), where("rep","==",ccPinRep)));
     let did=null, counts={};
     snap.forEach(d=>{ const x=d.data()||{}; if(x.date===date){ did=d.id; counts=x.counts||{}; } });
-    const bump=cat=>{ counts[cat]=counts[cat]||{}; counts[cat][CITY]=(counts[cat][CITY]||0)+1; };
+    const bump=cat=>{ if(!CITY) return; counts[cat]=counts[cat]||{}; counts[cat][CITY]=(counts[cat][CITY]||0)+1; };   // skip city breakdown when centre has no state (avoids empty Firestore field key)
     bump(NEWCALL?"NC":"FUC");
     let bucket=null;
     if(NEWCALL){
@@ -6564,8 +6593,10 @@ async function ccLogCall(num){
       else if(result==="no_answer") bucket="FUC-NA";
     }
     if(bucket) bump(bucket);
-    counts["TCC"]=counts["TCC"]||{};
-    counts["TCC"][CITY]=((counts["NC"]||{})[CITY]||0)+((counts["FUC"]||{})[CITY]||0);
+    if(CITY){
+      counts["TCC"]=counts["TCC"]||{};
+      counts["TCC"][CITY]=((counts["NC"]||{})[CITY]||0)+((counts["FUC"]||{})[CITY]||0);
+    }
     if(did){ await updateDoc(doc(db,"daily-activity",did),{counts}); }
     else { await addDoc(collection(db,"daily-activity"),{rep:ccPinRep, date, counts}); }
     // (c) booked → sales-entries / offer-centres (exact existing shapes)
