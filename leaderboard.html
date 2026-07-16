@@ -38,7 +38,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 h1,h2,h3,.mf{font-family:var(--mf);color:var(--red);}
 
-html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: clip; font-size: calc(16px * var(--fs)); }
+html { background: var(--yellow); } html, body { min-height: 100vh; font-family: var(--font); color: var(--blue); overflow-x: clip; -webkit-overflow-scrolling: touch; font-size: calc(16px * var(--fs)); }
 
 body::before {
   content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
@@ -5832,8 +5832,8 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-chip.active{border-color:var(--ink);box-shadow:var(--shadow);}
 .cc-count{font-size:13px;color:var(--slate);margin:6px 2px 12px;}
 .cc-list{display:flex;flex-direction:column;gap:10px;}
-.cc-row{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border-left:8px solid var(--line);cursor:pointer;transition:transform .08s;}
-.cc-row:hover{transform:translateY(-1px);}
+.cc-row{background:#fff;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;border-left:8px solid var(--line);cursor:pointer;transition:transform .08s;-webkit-transform:translateZ(0);transform:translateZ(0);}
+.cc-row:hover{transform:translateY(-1px) translateZ(0);-webkit-transform:translateY(-1px) translateZ(0);}
 .cc-rowhead{display:flex;align-items:center;gap:14px;padding:12px 16px;}
 .cc-num{font-family:var(--mf);font-size:24px;color:var(--ink);min-width:54px;text-align:center;line-height:1;}
 .cc-main{flex:1;min-width:0;}
@@ -5895,7 +5895,7 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-edmsg{font-size:11px;color:var(--muted);}
 .cc-muted{color:var(--muted);}
 /* sticky controls block (counter + search + callbacks pinned while list scrolls) */
-.cc-sticky{position:sticky;top:0;z-index:30;background:var(--yellow);padding:4px 0 8px;}
+.cc-sticky{position:sticky;top:0;z-index:30;background:var(--yellow);padding:4px 0 8px;-webkit-transform:translateZ(0);transform:translateZ(0);}
 .cc-sticky .cc-counter{position:static;margin:6px 0 8px;}
 .cc-controls input{padding:7px 14px;font-size:14px;}
 .cc-search{min-width:180px;}
