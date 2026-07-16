@@ -5899,7 +5899,12 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-sticky .cc-counter{position:static;margin:6px 0 8px;}
 .cc-controls input{padding:7px 14px;font-size:14px;}
 .cc-search{min-width:180px;}
-.cc-controls{margin:0 0 6px;}
+.cc-controls{margin:0 0 6px;position:relative;z-index:2;}
+/* Safari: raise interactive controls above the .cc-sticky translateZ compositing layer so they receive clicks/focus */
+.cc-controls input,.cc-controls .cc-cbbtn{position:relative;z-index:2;pointer-events:auto;}
+.cc-counter-toggle{position:relative;z-index:2;pointer-events:auto;}
+.cc-chips{position:relative;z-index:2;}
+.cc-chips .cc-chip{position:relative;z-index:2;pointer-events:auto;}
 .cc-cbbtn.has-due{border-color:var(--red);}
 .cc-cbbtn.has-due #cc-cbcount{background:var(--red);color:#fff;border-radius:30px;padding:1px 8px;min-width:18px;text-align:center;opacity:1;}
 /* Offer-accepted convert button (offer -> booked) */
