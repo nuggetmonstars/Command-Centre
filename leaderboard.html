@@ -1469,12 +1469,14 @@ h1,h2,h3,h4,h5,.mf,
 .card-love      { border-color: var(--pink); }
 .card-payroll   { border-color: var(--green); }
 .card-sales, .card-full.card-sales { border-color: var(--red); }
+.card-social    { border-color: var(--purple); }
 .card-coaches:hover   { box-shadow: 6px 8px 0 rgba(255,209,25,0.30); }
 .card-centres:hover   { box-shadow: 6px 8px 0 rgba(111,192,79,0.28); }
 .card-travel:hover    { box-shadow: 6px 8px 0 rgba(31,143,214,0.26); }
 .card-equipment:hover { box-shadow: 6px 8px 0 rgba(255,153,51,0.28); }
 .card-love:hover      { box-shadow: 6px 8px 0 rgba(255,111,168,0.28); }
 .card-payroll:hover   { box-shadow: 6px 8px 0 rgba(111,192,79,0.28); }
+.card-social:hover    { box-shadow: 6px 8px 0 rgba(156,39,176,0.26); }
 .card-sales:hover     { box-shadow: 6px 8px 0 rgba(229,37,32,0.26); }
 .footer, .footer span, .foot { color: var(--ink); }
 
@@ -1830,6 +1832,19 @@ h1,h2,h3,h4,h5,.mf,
         <span class="card-tag">Care Notes</span>
       </div>
       <div class="card-arrow">→</div>
+    </a>
+
+    <a href="social.html" class="card card-social">
+      <div class="card-icon">&#128241;</div>
+      <div class="card-title">Social Performance</div>
+      <div class="card-desc">Every post across Instagram, Facebook, YouTube, TikTok and LinkedIn &mdash; what's working and when to post.</div>
+      <div class="card-tags">
+        <span class="card-tag">Reach</span>
+        <span class="card-tag">Engagement</span>
+        <span class="card-tag">Formats</span>
+        <span class="card-tag">Timing</span>
+      </div>
+      <div class="card-arrow">&rarr;</div>
     </a>
 
     <a href="#leaderboard" onclick="showView('leaderboard'); return false;" class="card card-sales">
@@ -5915,6 +5930,21 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-cbload{display:block;font-size:11.5px;margin-top:3px;color:var(--muted);}
 .cc-cbload.ok{color:var(--green);}
 .cc-cbload.warn{color:var(--orange);font-weight:700;}
+/* editable history note */
+.cc-htwrap{display:flex;align-items:flex-start;gap:6px;flex-wrap:wrap}
+.cc-htview{flex:1;min-width:0}
+.cc-htpencil{flex:none}
+.cc-htedit{display:flex;flex-direction:column;gap:6px;width:100%}
+.cc-htarea{width:100%;min-height:44px;font-family:var(--font);font-size:14px;color:var(--ink);border:2px solid var(--sky);border-radius:8px;padding:6px 9px;resize:vertical;box-sizing:border-box;outline:none}
+.cc-htbtns{display:flex;align-items:center;gap:6px}
+.cc-htmsg{font-size:11px;color:var(--muted)}
+/* offer upcoming sessions */
+.cc-offersessions{margin:10px 0 2px;background:#f6f1fb;border:2px solid #d9c4ef;border-radius:12px;padding:8px 12px}
+.cc-os-h{font-family:var(--mf);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#7a45b8;margin-bottom:6px}
+.cc-os-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;border-bottom:1px solid #e6d9f4;font-size:14px}
+.cc-os-row:last-child{border-bottom:0}
+.cc-os-wk{font-family:var(--mf);color:#7a45b8}
+.cc-os-dt{font-family:var(--mf);color:var(--ink)}
 /* Admin tab — centre allocator (ported from centre-allocator.html) */
 .al-card{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px 20px;margin:16px 0;}
 .al-h{font-family:var(--mf);color:var(--red);font-size:18px;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
@@ -5940,7 +5970,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <script type="module">
 import { initializeApp, getApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, getDocs, query, where, addDoc, deleteDoc, updateDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, getDocs, getDoc, query, where, addDoc, deleteDoc, updateDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
@@ -6323,6 +6353,9 @@ function ccInit(){
     const cl=e.target.closest("[data-clearfield]"); if(cl){ ccClearField(cl.getAttribute("data-clearfield"), cl.getAttribute("data-editnum")); return; }
     const cx=e.target.closest("[data-canceledit]"); if(cx){ ccCancelEdit(cx.getAttribute("data-canceledit")); return; }
     const oa=e.target.closest("[data-offeraccept]"); if(oa){ ccOfferAccept(oa.getAttribute("data-offeraccept")); return; }
+    const he=e.target.closest("[data-histedit]"); if(he){ ccHistEdit(he.getAttribute("data-hn"), he.getAttribute("data-hi"), true); return; }
+    const hsv=e.target.closest("[data-histsave]"); if(hsv){ ccSaveHistNote(hsv.getAttribute("data-hn"), hsv.getAttribute("data-hi")); return; }
+    const hcx=e.target.closest("[data-histcancel]"); if(hcx){ ccHistEdit(hcx.getAttribute("data-hn"), hcx.getAttribute("data-hi"), false); return; }
   });
   ccEl("cc-list").addEventListener("keydown", e=>{
     const inp=e.target.closest("[data-edinput]"); if(inp && e.key==="Enter"){ e.preventDefault(); ccSaveField(inp.getAttribute("data-edfield"), inp.getAttribute("data-ednum")); }
@@ -6409,12 +6442,131 @@ function ccDetail(c){
     ["Status",crmEsc(ccSTATUS[ccKey(c)].label)]
   ];
   const grid=rows.map(kv=>`<div class="cc-k">${kv[0]}</div><div class="cc-v">${kv[1]}</div>`).join("");
+  const num=crmEsc(c.num);
   const hist=(c.history&&c.history.length)
-    ? c.history.slice().reverse().map(h=>`<div class="cc-tli"><div class="cc-tld">${crmEsc(h.date||"")}</div><div class="cc-tlt">${crmEsc(h.text||"")}</div>${h.source?`<div class="cc-tls">${crmEsc(h.source)}</div>`:""}</div>`).join("")
+    ? c.history.map((h,hi)=>({h,hi})).reverse().map(({h,hi})=>`<div class="cc-tli">
+        <div class="cc-tld">${crmEsc(h.date||"")}</div>
+        <div class="cc-htwrap" data-histwrap="${num}-${hi}">
+          <span class="cc-tlt cc-htview">${crmEsc(h.text||"")}</span>
+          <button class="cc-edbtn cc-htpencil" type="button" title="Edit note" data-histedit data-hn="${num}" data-hi="${hi}">&#9998;</button>
+          <span class="cc-htedit" style="display:none">
+            <textarea class="cc-htarea" data-htarea="${num}-${hi}">${crmEsc(h.text||"")}</textarea>
+            <span class="cc-htbtns"><button class="cc-edbtn" type="button" title="Save" data-histsave data-hn="${num}" data-hi="${hi}">&#10003;</button><button class="cc-edbtn" type="button" title="Cancel" data-histcancel data-hn="${num}" data-hi="${hi}">&#10005;</button><span class="cc-htmsg" data-htmsg="${num}-${hi}"></span></span>
+          </span>
+        </div>
+        ${h.source?`<div class="cc-tls">${crmEsc(h.source)}</div>`:""}
+      </div>`).join("")
     : `<div class="cc-empty">No history yet.</div>`;
-  return `<div class="cc-grid">${grid}</div>${ccKey(c)==="offer"?ccOfferBox(c):""}${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
+  const offerSessions = ccKey(c)==="offer" ? `<div class="cc-offersessions" data-offersessions="${num}"></div>` : "";
+  return `<div class="cc-grid">${grid}</div>${ccKey(c)==="offer"?ccOfferBox(c):""}${offerSessions}${ccLogForm(c)}<div class="cc-tl"><div class="cc-tlh">History</div>${hist}</div>`;
 }
 function ccIsDueCallback(c){ return !!c.callbackDate && String(c.callbackDate) <= ccTodayISO(); }   // today or overdue
+// ---- edit a past history note (only the text) ----
+function ccHistEdit(num,hi,editing){
+  const w=document.querySelector(`[data-histwrap="${num}-${hi}"]`); if(!w) return;
+  w.querySelector(".cc-htview").style.display = editing ? "none" : "";
+  w.querySelector(".cc-htpencil").style.display = editing ? "none" : "";
+  const ed=w.querySelector(".cc-htedit"); ed.style.display = editing ? "" : "none";
+  if(editing){ const ta=ed.querySelector("textarea"); if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); } }
+}
+async function ccSaveHistNote(num,hi){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
+  const w=document.querySelector(`[data-histwrap="${num}-${hi}"]`); if(!w) return;
+  const ta=w.querySelector("textarea"); const msg=w.querySelector(".cc-htmsg");
+  const text=(ta?ta.value:"").trim();
+  const idx=Number(hi);
+  if(msg){ msg.style.color="var(--muted)"; msg.textContent="Saving…"; }
+  try{
+    const ref=doc(db, ccCOLLECTION, c.id);
+    const snap=await getDoc(ref);                     // read fresh, update the one entry, write back
+    if(!snap.exists()) throw new Error("centre not found");
+    const data=snap.data()||{};
+    const hist=Array.isArray(data.history)?data.history.slice():[];
+    if(!(idx>=0 && idx<hist.length)) throw new Error("history entry not found");
+    hist[idx]={...hist[idx], text};                   // only the note text changes
+    await updateDoc(ref, {history:hist});
+    c.history=hist;
+    const view=w.querySelector(".cc-htview"); if(view) view.textContent=text;
+    ccHistEdit(num,hi,false);
+    if(msg){ msg.style.color="var(--blue)"; msg.textContent="Saved"; setTimeout(()=>{ if(msg) msg.textContent=""; },2000); }
+  }catch(e){ console.error("ccSaveHistNote",e); if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed"; } }
+}
+// ---- offer centres: upcoming session dates from events ----
+let ccOfferCache={};   // num -> array of ISO dates (or 'loading')
+function ccEventDateAEST(v){
+  if(v==null) return null;
+  let dt=null;
+  if(typeof v==="object" && v.toDate) dt=v.toDate();
+  else if(typeof v==="object" && v.seconds!=null) dt=new Date(v.seconds*1000);
+  else dt=new Date(v);
+  if(isNaN(dt)) return null;
+  const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(dt);
+  const g=t=>p.find(x=>x.type===t).value; return `${g('year')}-${g('month')}-${g('day')}`;   // AEST ISO
+}
+function ccOfferSessionsHtml(dates){
+  if(!dates || !dates.length) return `<div class="cc-os-h">&#128197; Upcoming sessions</div><div class="cc-empty">No upcoming sessions found.</div>`;
+  const rows=dates.map((iso,i)=>{ const [y,m,d]=iso.split('-'); return `<div class="cc-os-row"><span class="cc-os-wk">Week ${i+1}</span><span class="cc-os-dt">${d}/${m}/${y}</span></div>`; }).join("");
+  return `<div class="cc-os-h">&#128197; Upcoming sessions</div>${rows}`;
+}
+// per-rep tab: fetch offer session dates by centre NAME (cached by name), reusing the same fuzzy match + queries as the Call List
+async function ccFetchOfferSessions(name){
+  const key='nm:'+String(name||'').toLowerCase().trim();
+  if(ccOfferCache[key]!==undefined && ccOfferCache[key]!=="loading") return ccOfferCache[key];
+  ccOfferCache[key]="loading";
+  try{
+    const target=String(name||'').toLowerCase().trim().replace(/\s+/g," ");
+    let ecId=null;
+    if(target.length>=4){
+      const ecSnap=await getDocs(collection(db,"education-centers"));
+      let best=null;
+      ecSnap.forEach(d=>{ const nm=String((d.data()||{}).name||'').toLowerCase().trim().replace(/\s+/g," "); if(!nm) return;
+        if(nm===target){ best={id:d.id,rank:3}; }
+        else if(!best && (nm.includes(target)||target.includes(nm))){ best={id:d.id,rank:2}; }
+        else if(!best && (nm.startsWith(target.slice(0,14))||target.startsWith(nm.slice(0,14)))){ best={id:d.id,rank:1}; }
+      });
+      ecId=best?best.id:null;
+    }
+    if(!ecId){ ccOfferCache[key]=[]; return []; }
+    const evSnap=await getDocs(query(collection(db,"events"), where("educationCenter","==",ecId)));
+    const today=ccTodayISO(); const set=new Set();
+    evSnap.forEach(d=>{ const iso=ccEventDateAEST((d.data()||{}).start); if(iso && iso>=today) set.add(iso); });
+    const uniq=[...set].sort(); ccOfferCache[key]=uniq; return uniq;
+  }catch(e){ console.error("ccFetchOfferSessions",e); delete ccOfferCache[key]; return []; }
+}
+async function ccLoadRepOfferSessions(el){
+  if(!el) return;
+  el.innerHTML=`<div class="cc-os-h">&#128197; Upcoming sessions</div><div class="cc-empty">Looking up sessions…</div>`;
+  el.innerHTML=ccOfferSessionsHtml(await ccFetchOfferSessions(el.getAttribute("data-repofferc")));
+}
+async function ccLoadOfferSessions(num){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c || ccKey(c)!=="offer") return;
+  const box=document.querySelector(`[data-offersessions="${num}"]`); if(!box) return;
+  if(ccOfferCache[num]!==undefined && ccOfferCache[num]!=="loading"){ box.innerHTML=ccOfferSessionsHtml(ccOfferCache[num]); return; }   // cached
+  if(ccOfferCache[num]==="loading") return;
+  ccOfferCache[num]="loading";
+  box.innerHTML=`<div class="cc-os-h">&#128197; Upcoming sessions</div><div class="cc-empty">Looking up sessions…</div>`;
+  try{
+    const target=String(c.name||"").toLowerCase().trim().replace(/\s+/g," ");
+    let ecId=null;
+    if(target.length>=4){
+      const ecSnap=await getDocs(collection(db,"education-centers"));
+      let best=null;
+      ecSnap.forEach(d=>{ const nm=String((d.data()||{}).name||"").toLowerCase().trim().replace(/\s+/g," "); if(!nm) return;
+        if(nm===target){ best={id:d.id,rank:3}; }
+        else if(!best && (nm.includes(target)||target.includes(nm))){ best={id:d.id,rank:2}; }
+        else if(!best && (nm.startsWith(target.slice(0,14))||target.startsWith(nm.slice(0,14)))){ best={id:d.id,rank:1}; }
+      });
+      ecId=best?best.id:null;
+    }
+    if(!ecId){ ccOfferCache[num]=[]; box.innerHTML=ccOfferSessionsHtml([]); return; }
+    const evSnap=await getDocs(query(collection(db,"events"), where("educationCenter","==",ecId)));
+    const today=ccTodayISO(); const set=new Set();
+    evSnap.forEach(d=>{ const iso=ccEventDateAEST((d.data()||{}).start); if(iso && iso>=today) set.add(iso); });
+    const uniq=[...set].sort();
+    ccOfferCache[num]=uniq;
+    box.innerHTML=ccOfferSessionsHtml(uniq);
+  }catch(e){ console.error("ccLoadOfferSessions",e); delete ccOfferCache[num]; box.innerHTML=`<div class="cc-os-h">&#128197; Upcoming sessions</div><div class="cc-empty">Couldn't load sessions.</div>`; }
+}
 // day-load check for the Log Call callback date picker — counts OTHER centres in this rep's
 // book already booked on the chosen date (from the loaded ccCENTRES, no extra Firestore read).
 function ccCallbackDayLoad(num){
@@ -6536,7 +6688,7 @@ function ccRenderList(){
   const cbBtn=ccEl("cc-cbfilter");
   if(cbBtn){ const due=ccCENTRES.filter(ccIsDueCallback).length; const cnt=ccEl("cc-cbcount"); if(cnt) cnt.textContent=due; cbBtn.classList.toggle("active", ccFilter==="callbacks"); cbBtn.classList.toggle("has-due", due>0); }
   ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">${ccFilter==="callbacks"?"No callbacks due or overdue.":"No centres match."}</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
-  ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const row=document.getElementById("cc-row-"+el.dataset.toggle); if(row) row.classList.toggle("open"); }));
+  ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const num=el.dataset.toggle; const row=document.getElementById("cc-row-"+num); if(!row) return; row.classList.toggle("open"); if(row.classList.contains("open")) ccLoadOfferSessions(num); }));
 }
 
 /* ---- Phase 2/3: city map, today's live counter, log-a-call ---- */
@@ -6805,11 +6957,11 @@ function renderRepTab(repName){
   const repOffers=offers.filter(o=>o.rep===repName);
   host.innerHTML = `<div id="${repSlug(repName)}">`
     + repHeader(rep)
-    + (rep._inactive ? "" : repEntry(repName))
     + repPipeline(repName, repOffers)
     + repHistory(repName, rep.loggedDays||[])
     + `</div>`;
   wireRepTab(host, repName);
+  host.querySelectorAll("[data-repoffer]").forEach(el=>ccLoadRepOfferSessions(el));   // offer session dates
 }
 
 function repHeader(rep){
@@ -6839,57 +6991,18 @@ function repHeader(rep){
     </div></section>`;
 }
 
-function repEntry(repName){
-  const today=new Date().toISOString().slice(0,10);
-  const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${s}">${s} · ${CRM_SESSIONS[s]}</option>`).join("");
-  const cityOpts=CRM_CITIES.map(c=>`<option value="${c}">${CRM_CITYNAME[c]} · ${c}</option>`).join("");
-  let grid=`<table class="crm-grid"><thead><tr><th>Category</th>${CRM_CITIES.map(c=>`<th>${c}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
-  CRM_CATS.forEach(cat=>{ grid+=`<tr><td>${crmEsc(cat)}</td>${CRM_CITIES.map(c=>`<td><input type="number" min="0" class="crm-cell" data-cat="${crmEsc(cat)}" data-city="${c}"></td>`).join("")}<td class="crm-rowtot" data-rowtot="${crmEsc(cat)}">0</td></tr>`; });
-  grid+=`</tbody></table>`;
-  return `<section class="panel active"><div class="panel-h">✍️ Log ${crmEsc(repName)}'s day</div>
-    <div class="crm-switch">
-      <button class="crm-btn crm-modebtn" data-mode="calls">Log calls</button>
-      <button class="crm-btn alt crm-modebtn" data-mode="offer">Add offer</button>
-      <button class="crm-btn alt crm-modebtn" data-mode="sale">Log direct sale</button>
-    </div>
-    <div class="crm-form" data-form="calls">
-      <div class="crm-row"><div class="crm-field"><span class="crm-label">Date</span><input class="filter-select" type="date" id="cl-date" value="${today}"></div></div>
-      ${grid}
-      <div style="margin-top:12px"><button class="crm-btn" id="cl-save">Save day</button><span class="crm-msg" id="cl-msg"></span></div>
-    </div>
-    <div class="crm-form" data-form="offer">
-      <div class="crm-row">
-        <div class="crm-field"><span class="crm-label">Centre</span><input class="filter-select" id="of-centre" placeholder="Centre name…" style="min-width:200px"></div>
-        <div class="crm-field"><span class="crm-label">City</span><select class="filter-select" id="of-city">${cityOpts}</select></div>
-        <div class="crm-field"><span class="crm-label">Offer date</span><input class="filter-select" type="date" id="of-date" value="${today}"></div>
-        <div class="crm-field"><span class="crm-label">&nbsp;</span><button class="crm-btn" id="of-save">Add offer (+1)</button></div>
-        <span class="crm-msg" id="of-msg"></span>
-      </div>
-    </div>
-    <div class="crm-form" data-form="sale">
-      <div class="crm-row">
-        <div class="crm-field"><span class="crm-label">Centre</span><input class="filter-select" id="ds-centre" placeholder="Centre name…" style="min-width:200px"></div>
-        <div class="crm-field"><span class="crm-label">City</span><select class="filter-select" id="ds-city">${cityOpts}</select></div>
-        <div class="crm-field"><span class="crm-label">Session</span><select class="filter-select" id="ds-session">${sessOpts}</select></div>
-        <div class="crm-field"><span class="crm-label">Date</span><input class="filter-select" type="date" id="ds-date" value="${today}"></div>
-        <div class="crm-field"><span class="crm-label">Points</span><span class="crm-rep-ytd" id="ds-pts">10</span></div>
-        <div class="crm-field"><span class="crm-label">&nbsp;</span><button class="crm-btn" id="ds-save">Log sale</button></div>
-        <span class="crm-msg" id="ds-msg"></span>
-      </div>
-    </div></section>`;
-}
-
 function repPipeline(repName, repOffers){
   const cols={pending:[],ongoing:[],lost:[]};
   repOffers.forEach(o=>{ (cols[o.status]||cols.pending).push(o); });
   const today=new Date().toISOString().slice(0,10);
   const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${s}">${s} · ${CRM_SESSIONS[s]}</option>`).join("");
+  const sessBox=o=>`<div class="cc-offersessions" data-repoffer="${crmEsc(o.id)}" data-repofferc="${crmEsc(o.centre)}"></div>`;
   function card(o){
     const meta=`${o.city||"—"} · ${o.offerDate||""}`;
     if(o.status==="pending") return `<div class="crm-card pending"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta}</div>
       <div class="crm-card-actions"><button class="crm-mini conv" data-conv="${o.id}">Convert</button><button class="crm-mini lost" data-lost="${o.id}">Lost</button></div>
-      <div class="crm-convert" data-convform="${o.id}"><select class="filter-select" data-convsess="${o.id}">${sessOpts}</select><input class="filter-select" type="date" data-convdate="${o.id}" value="${today}"><button class="crm-mini conv" data-convsave="${o.id}">Save</button></div></div>`;
-    if(o.status==="ongoing") return `<div class="crm-card ongoing"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta}<br>→ ${crmEsc(o.sessionType||"")} · converted ${o.conversionDate||""}</div></div>`;
+      <div class="crm-convert" data-convform="${o.id}"><select class="filter-select" data-convsess="${o.id}">${sessOpts}</select><input class="filter-select" type="date" data-convdate="${o.id}" value="${today}"><button class="crm-mini conv" data-convsave="${o.id}">Save</button></div>${sessBox(o)}</div>`;
+    if(o.status==="ongoing") return `<div class="crm-card ongoing"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta}<br>→ ${crmEsc(o.sessionType||"")} · converted ${o.conversionDate||""}</div>${sessBox(o)}</div>`;
     return `<div class="crm-card lost"><div class="crm-card-name">${crmEsc(o.centre)}</div><div class="crm-card-meta">${meta} · lost</div></div>`;
   }
   const col=(t,a)=>`<div class="crm-col"><div class="crm-col-h">${t} (${a.length})</div>${a.length?a.map(card).join(""):'<div class="crm-card-meta" style="padding:8px">None</div>'}</div>`;
@@ -6931,50 +7044,7 @@ function repHistory(repName, days){
 }
 
 function wireRepTab(host, repName){
-  // entry switcher
-  function showMode(m){ host.querySelectorAll(".crm-modebtn").forEach(b=>{ const on=b.dataset.mode===m; b.classList.toggle("active",on); b.classList.toggle("alt",!on); });
-    host.querySelectorAll(".crm-form").forEach(f=>f.classList.toggle("active",f.dataset.form===m)); }
-  host.querySelectorAll(".crm-modebtn").forEach(b=>b.addEventListener("click",()=>showMode(b.dataset.mode)));
-  if(host.querySelector(".crm-modebtn")) showMode("calls");
-
-  // call grid row totals
-  function rowtot(cat){ let t=0; host.querySelectorAll(`.crm-cell[data-cat="${crmSel(cat)}"]`).forEach(i=>t+=Number(i.value)||0);
-    const el=host.querySelector(`.crm-rowtot[data-rowtot="${crmSel(cat)}"]`); if(el) el.textContent=t; }
-  host.querySelectorAll(".crm-cell").forEach(i=>i.addEventListener("input",()=>rowtot(i.dataset.cat)));
-
-  const clSave=host.querySelector("#cl-save");
-  if(clSave) clSave.addEventListener("click",async()=>{
-    const date=host.querySelector("#cl-date").value, msg=host.querySelector("#cl-msg");
-    if(!date){ crmMsg(msg,"Date required.",true); return; }
-    const counts={};
-    CRM_CATS.forEach(cat=>{ const o={}; CRM_CITIES.forEach(c=>{ const v=Number((host.querySelector(`.crm-cell[data-cat="${crmSel(cat)}"][data-city="${c}"]`)||{}).value)||0; if(v) o[c]=v; }); if(Object.keys(o).length) counts[cat]=o; });
-    if(!Object.keys(counts).length){ crmMsg(msg,"Enter at least one call count.",true); return; }
-    clSave.disabled=true; crmMsg(msg,"Saving…");
-    try{ await addDoc(collection(db,"daily-activity"),{rep:repName,date,counts}); await reloadAndRender(); }
-    catch(e){ console.error(e); crmMsg(host.querySelector("#cl-msg"),"Save failed: "+(e.message||e),true); clSave.disabled=false; }
-  });
-
-  const ofSave=host.querySelector("#of-save");
-  if(ofSave) ofSave.addEventListener("click",async()=>{
-    const centre=host.querySelector("#of-centre").value.trim(), city=host.querySelector("#of-city").value, offerDate=host.querySelector("#of-date").value, msg=host.querySelector("#of-msg");
-    if(!centre||!offerDate){ crmMsg(msg,"Centre and date required.",true); return; }
-    ofSave.disabled=true; crmMsg(msg,"Saving…");
-    try{ await addDoc(collection(db,"offer-centres"),{rep:repName,centre,city,offerDate,status:"pending",sessionType:null,conversionDate:null}); await reloadAndRender(); }
-    catch(e){ console.error(e); crmMsg(host.querySelector("#of-msg"),"Save failed: "+(e.message||e),true); ofSave.disabled=false; }
-  });
-
-  const dsSession=host.querySelector("#ds-session"), dsPts=host.querySelector("#ds-pts");
-  function dsprev(){ if(dsSession&&dsPts) dsPts.textContent=CRM_SESSIONS[dsSession.value]||0; }
-  if(dsSession) dsSession.addEventListener("change",dsprev); dsprev();
-  const dsSave=host.querySelector("#ds-save");
-  if(dsSave) dsSave.addEventListener("click",async()=>{
-    const centre=host.querySelector("#ds-centre").value.trim(), city=host.querySelector("#ds-city").value, session=host.querySelector("#ds-session").value, date=host.querySelector("#ds-date").value, msg=host.querySelector("#ds-msg");
-    if(!centre||!date){ crmMsg(msg,"Centre and date required.",true); return; }
-    const points=CRM_SESSIONS[session];
-    dsSave.disabled=true; crmMsg(msg,"Saving…");
-    try{ await addDoc(collection(db,"sales-entries"),{rep:repName,centre,date,points,city,citySplit:{[city]:points},sessionType:session,source:"crm"}); await reloadAndRender(); }
-    catch(e){ console.error(e); crmMsg(host.querySelector("#ds-msg"),"Save failed: "+(e.message||e),true); dsSave.disabled=false; }
-  });
+  // (manual "Log day" entry form removed — calls now auto-log via the CRM Call List)
 
   // pipeline convert / lost
   host.querySelectorAll("[data-conv]").forEach(b=>b.addEventListener("click",()=>{ const f=host.querySelector(`[data-convform="${crmSel(b.dataset.conv)}"]`); if(f) f.classList.toggle("open"); }));
