@@ -302,6 +302,7 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
       <option value="Music">Music</option>
       <option value="Gymnastics">Gymnastics</option>
       <option value="Yoga">Yoga</option>
+      <option value="Sensory Fusion">Sensory Fusion</option>
       <option value="Other">Other</option>
     </select>
   </div>
@@ -950,8 +951,8 @@ function renderStock(cat) {
 
   var list = cat === "all" ? ITEMS : [];
   if (cat !== "all") { for (var i = 0; i < ITEMS.length; i++) { if (ITEMS[i].cat === cat) list.push(ITEMS[i]); } }
-  var cc = {Sports:"#EFF6FF",Music:"#FDF2F8",Gymnastics:"#F0FDF4",Yoga:"#FEFCE8",Other:"#F9F9F9"};
-  var ct = {Sports:"#2563EB",Music:"#DB2777",Gymnastics:"#16A34A",Yoga:"#CA8A04",Other:"#888"};
+  var cc = {Sports:"#EFF6FF",Music:"#FDF2F8",Gymnastics:"#F0FDF4",Yoga:"#FEFCE8","Sensory Fusion":"#FFF7ED",Other:"#F9F9F9"};
+  var ct = {Sports:"#2563EB",Music:"#DB2777",Gymnastics:"#16A34A",Yoga:"#CA8A04","Sensory Fusion":"#EA580C",Other:"#888"};
   var html = "";
   for (var i = 0; i < list.length; i++) {
     var item = list[i];
@@ -1146,7 +1147,7 @@ applyZoom();
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-import { getFirestore, collection, getDocs, doc, setDoc, addDoc, deleteDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
 
 const app = initializeApp({
   apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
@@ -1319,6 +1320,50 @@ async function loadFromDb() {
   ordLo = orders.length ? orders[orders.length - 1]._seq : 0;
 }
 
+// ---- load the shared catalogue (tracker-catalogue/current) into ITEMS + MINS ----
+// Single source of truth shared with the equipment agent. Rebuilds the global
+// ITEMS array and MINS map IN PLACE (so every existing reference stays valid).
+// On any failure (offline / missing doc) the hardcoded arrays are left untouched.
+const CAT_ORDER = ["Sports", "Music", "Gymnastics", "Yoga", "Sensory Fusion", "Other"];
+async function loadCatalogue() {
+  try {
+    const snap = await getDoc(doc(db, "tracker-catalogue", "current"));
+    if (!snap.exists()) { console.warn("[catalogue] tracker-catalogue/current not found — keeping hardcoded ITEMS/MINS"); return; }
+    const data = snap.data() || {};
+    const items = Array.isArray(data.items) ? data.items.filter(i => i && i.name) : [];
+    if (!items.length) { console.warn("[catalogue] doc has no items — keeping hardcoded ITEMS/MINS"); return; }
+
+    // category order: prefer the doc's own list, else the fixed 6-category order; unknowns go last
+    const order = Array.isArray(data.categories) && data.categories.length ? data.categories : CAT_ORDER;
+    const rank = {}; order.forEach((c, i) => { rank[c] = i; });
+    const sorted = items.slice().sort((a, b) => {
+      const ra = (a.category in rank) ? rank[a.category] : order.length;
+      const rb = (b.category in rank) ? rank[b.category] : order.length;
+      return ra - rb;   // stable: preserves within-category order from the doc
+    });
+
+    const newItems = sorted.map((it, i) => ({
+      id: "i" + String(i + 1).padStart(2, "0"),
+      name: it.name,
+      cat: it.category || "Other",
+      stock: 0,
+      min: (typeof it.min === "number" ? it.min : 0),
+      reorder: 0
+    }));
+
+    // rebuild ITEMS in place
+    ITEMS.length = 0;
+    newItems.forEach(it => ITEMS.push(it));
+    // rebuild MINS in place ({name: min})
+    Object.keys(MINS).forEach(k => delete MINS[k]);
+    newItems.forEach(it => { MINS[it.name] = it.min; });
+
+    console.log(`[catalogue] loaded ${newItems.length} items from tracker-catalogue/current`);
+  } catch (e) {
+    console.error("[catalogue] load failed — keeping hardcoded ITEMS/MINS", e);
+  }
+}
+
 function rerenderAll() {
   window.populateSels();
   window.renderOverview();
@@ -1332,6 +1377,7 @@ function rerenderAll() {
 }
 
 async function initData() {
+  await loadCatalogue();         // ITEMS + MINS from tracker-catalogue/current (shared with the agent)
   const snap = await getDocs(collection(db, EQUIP));
   if (snap.empty) {
     await seedFromMemory();      // first run: hardcoded arrays become the seed
