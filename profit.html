@@ -127,6 +127,7 @@ tr:hover td{background:#fbfdff}
       <div class="tab on" data-v="overview">Overview</div>
       <div class="tab" data-v="states">By State</div>
       <div class="tab" data-v="reps">By Rep</div>
+      <div class="tab" data-v="econ">Unit Economics</div>
       <div class="tab" data-v="centres">Every Centre</div>
       <div class="tab" data-v="watch">Watch List</div>
     </div>
@@ -135,6 +136,7 @@ tr:hover td{background:#fbfdff}
 
     <div id="v-states" style="display:none"></div>
     <div id="v-reps" style="display:none"></div>
+    <div id="v-econ" style="display:none"></div>
     <div id="v-centres" style="display:none"></div>
     <div id="v-watch" style="display:none"></div>
   </div>
@@ -201,6 +203,62 @@ function renderOverview(){
     h+='<div style="font-size:12px;color:#7d93a3;margin-top:6px">Tap <b>By Rep</b> for detail.</div></div>';
   }
   document.getElementById('v-overview').innerHTML=h;
+}
+
+function renderEcon(){
+  var e=DATA.econ;
+  if(!e){
+    document.getElementById('v-econ').innerHTML='<div class="card"><h3>No unit economics yet</h3><div>Run <code>unit_economics.py --write</code> to generate.</div></div>';
+    return;
+  }
+  var a=e.assumptions||{}, ltv=e.ltv||{};
+  function m(n){ return n==null?'':'$'+Math.round(n).toLocaleString(); }
+  var h='';
+
+  // LTV panel
+  h+='<div class="card"><h3>Lifetime Value per centre</h3>';
+  h+='<div style="font-size:12.5px;color:#7d93a3;margin-bottom:12px">What one centre is worth over its lifetime. '+
+     'Weekly runs twice as often as fortnightly, so it\'s worth roughly double.</div>';
+  h+='<div style="overflow-x:auto"><table><thead><tr><th>Type</th>'+
+     '<th class="num">Revenue LTV</th><th class="num">Contribution LTV</th><th class="num">Lifetime sessions</th></tr></thead><tbody>';
+  h+='<tr><td><b>Weekly</b></td><td class="num">'+m(ltv.weekly&&ltv.weekly.revenue)+'</td>'+
+     '<td class="num"><b>'+m(ltv.weekly&&ltv.weekly.contribution)+'</b></td>'+
+     '<td class="num">'+(a.weeklyLifetimeSessions||'')+'</td></tr>';
+  h+='<tr><td><b>Fortnightly</b></td><td class="num">'+m(ltv.fortnightly&&ltv.fortnightly.revenue)+'</td>'+
+     '<td class="num"><b>'+m(ltv.fortnightly&&ltv.fortnightly.contribution)+'</b></td>'+
+     '<td class="num">'+(a.fortnightlyLifetimeSessions||'')+'</td></tr>';
+  h+='</tbody></table></div></div>';
+
+  // CAC + ratio per rep
+  if(e.reps && e.reps.length){
+    h+='<div class="card"><h3>Cost to Acquire &amp; return, per rep</h3>';
+    h+='<div style="font-size:12.5px;color:#7d93a3;margin-bottom:12px">CAC = (salary since start + commission + ad spend) &divide; centres signed. '+
+       'Blended LTV uses each rep\'s weekly/fortnightly mix (contribution basis). '+
+       '<b>Ad spend is $0 for now</b> &mdash; CAC will rise once ad metrics are added.</div>';
+    h+='<div style="overflow-x:auto"><table><thead><tr><th>Rep</th><th class="num">Signed</th>'+
+       '<th class="num">Wk/Fn</th><th class="num">Salary</th><th class="num">Comm</th>'+
+       '<th class="num">CAC</th><th class="num">Blended LTV</th><th class="num">LTV:CAC</th></tr></thead><tbody>';
+    e.reps.forEach(function(r){
+      h+='<tr><td><b>'+r.rep+'</b></td><td class="num">'+r.signed+'</td>'+
+         '<td class="num">'+r.weekly+'/'+r.fortnightly+'</td>'+
+         '<td class="num">'+m(r.salary)+'</td><td class="num">'+m(r.commission)+'</td>'+
+         '<td class="num"><b>'+m(r.cac)+'</b></td>'+
+         '<td class="num">'+m(r.blendedLtvContribution)+'</td>'+
+         '<td class="num"><b>'+(r.ltvCacRatio!=null?r.ltvCacRatio+':1':'')+'</b></td></tr>';
+    });
+    h+='</tbody></table></div></div>';
+  }
+
+  // assumptions
+  h+='<div class="note" style="font-size:12px"><b>Assumptions:</b> '+
+     (a.monthlyChurn!=null?(a.monthlyChurn*100).toFixed(1)+'% monthly churn &rarr; '+a.lifetimeMonths+'mo lifetime':'')+
+     ' &middot; $'+a.pricePerSession+'/session (conservative; observed median ~$'+
+     ((a.observedMedianPricePerSession&&a.observedMedianPricePerSession.weekly)||'?')+') &middot; '+
+     Math.round((a.contributionMargin||0)*100)+'% contribution margin &middot; '+
+     'weekly '+a.weeklySessionsPerYear+' sessions/yr, fortnightly '+a.fortnightlySessionsPerYear+'/yr (holiday downtime removed) &middot; '+
+     'commission June-only (lifetime pending) &middot; ad spend $0 (pending).</div>';
+
+  document.getElementById('v-econ').innerHTML=h;
 }
 
 function renderReps(){
@@ -349,13 +407,13 @@ function renderAll(){
   var g=new Date(DATA.generated), ago=Math.round((Date.now()-g)/86400000);
   document.getElementById('stamp').innerHTML='<b>'+DATA.month+'</b> &middot; '+DATA.totals.centres+' centres<br>'+
     (ago<1?'today':ago+'d ago')+' &middot; '+DATA.windowDays+'d window';
-  renderKpis(); renderOverview(); renderStates(); renderReps(); renderCentres(); renderWatch();
+  renderKpis(); renderOverview(); renderStates(); renderReps(); renderEcon(); renderCentres(); renderWatch();
 }
 Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(t){
   t.onclick=function(){
     Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.remove('on');});
     t.classList.add('on');
-    ['overview','states','reps','centres','watch'].forEach(function(v){
+    ['overview','states','reps','econ','centres','watch'].forEach(function(v){
       document.getElementById('v-'+v).style.display = (v===t.getAttribute('data-v'))?'block':'none'; });
   };
 });
@@ -385,7 +443,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap){
+window.__ingestProfit=function(doc, repMap, unitEcon){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -394,6 +452,7 @@ window.__ingestProfit=function(doc, repMap){
   }
   DATA=computeAggregates(doc);
   DATA.reps=computeReps(doc, repMap||[]);
+  DATA.econ=unitEcon||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -406,7 +465,7 @@ window.__profitError=function(msg){
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
   from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js';
-import { getFirestore, collection, getDocs, query, orderBy, limit }
+import { getFirestore, collection, getDocs, query, orderBy, limit, getDoc, doc }
   from 'https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js';
 const app = initializeApp({
   apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
@@ -442,7 +501,12 @@ async function loadFromFirestore(){
       const rsnap = await getDocs(query(collection(db,'rep-centre-map')));
       rsnap.forEach(d=>repMap.push(d.data()));
     }catch(_){ /* rep map optional; overview still works without it */ }
-    window.__ingestProfit(docs[0].data, repMap);
+    let unitEcon=null;
+    try{
+      const usnap = await getDoc(doc(db,'unit-economics','current'));
+      if(usnap.exists()) unitEcon=usnap.data();
+    }catch(_){ /* unit economics optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
