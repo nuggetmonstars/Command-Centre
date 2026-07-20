@@ -55,7 +55,7 @@ h1,h2,h3,.mf,th,.stat-n,.tab{font-family:'MarkerFelt',cursive}
 .kpis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin:16px 0}
 .kpi{background:#fff;border:3px solid #e7eef3;border-radius:18px;box-shadow:4px 5px 0 rgba(0,0,0,.10);padding:16px}
 .kpi .stat-n{font-size:30px;color:var(--blue);line-height:1.1}
-.kpi .stat-l{font-size:11px;color:#7d93a3;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
+.kpi .stat-l{font-size:16px;color:#7d93a3;text-transform:uppercase;letter-spacing:.5px;margin-top:3px}
 .kpi.green .stat-n{color:var(--green)}
 
 .card{background:#fff;border:3px solid #e7eef3;border-radius:20px;box-shadow:5px 7px 0 rgba(0,0,0,.12);
@@ -119,20 +119,17 @@ tr:hover td{background:#fbfdff}
         Dig into any section using the tabs.</p>
     </div>
 
-    <div class="note" id="basis"></div>
-
-    <div class="kpis" id="kpis"></div>
-
-    <div class="tabs">
-      <div class="tab on" data-v="overview">Overview</div>
-      <div class="tab" data-v="states">By State</div>
-      <div class="tab" data-v="reps">By Rep</div>
-      <div class="tab" data-v="econ">Unit Economics</div>
-      <div class="tab" data-v="centres">Every Centre</div>
-      <div class="tab" data-v="watch">Watch List</div>
+    <div id="hub"></div>
+    <div id="sectionWrap" style="display:none">
+      <div style="display:flex;align-items:center;gap:12px;margin:6px 0 14px">
+        <button id="backHub" style="background:var(--ink);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-family:Pencil,sans-serif;font-size:14px;cursor:pointer">&larr; All sections</button>
+        <h2 id="sectionTitle" style="margin:0;font-size:22px"></h2>
+      </div>
+      <div id="sectionHeader"></div>
+      <div class="tabs" id="subtabs"></div>
     </div>
 
-    <div id="v-overview"></div>
+    <div id="v-overview" style="display:none"></div>
 
     <div id="v-states" style="display:none"></div>
     <div id="v-reps" style="display:none"></div>
@@ -284,9 +281,73 @@ function renderReps(){
   document.getElementById('v-reps').innerHTML=h;
 }
 
+function renderScorecard(){
+  var sc=DATA.scorecard;
+  var el=document.getElementById('scorecard');
+  if(!sc){ el.innerHTML=''; return; }
+  var RAG={green:'var(--green)',amber:'var(--orange)',red:'var(--red)',info:'#9fb0bd',pending:'#c7d0d6',grey:'#9fb0bd'};
+  function money(n){ if(n==null) return '-'; var neg=n<0; n=Math.abs(n);
+    var s=n>=1000?'$'+(n/1000).toFixed(n>=100000?0:1)+'k':'$'+Math.round(n); return neg?'-'+s:s; }
+  function fmt(m){
+    var v=m.value;
+    if(v==null) return '-';
+    if(m.unit==='$'&&typeof v==='number') return money(v);
+    if(m.unit==='%'&&typeof v==='number') return v+'%';
+    if(m.unit==='pts') return v+' pts';
+    return v;
+  }
+  var overall=sc.overall||'grey';
+  var overallLabel={red:'Needs attention',amber:'Watch closely',green:'Healthy',grey:'\u2014'}[overall];
+
+  var h='<div class="card" style="border-top:6px solid '+RAG[overall]+'">';
+  h+='<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px">';
+  h+='<h3 style="margin:0">Executive Scorecard</h3>';
+  h+='<span style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink)">'+
+     '<span style="width:12px;height:12px;border-radius:50%;background:'+RAG[overall]+';display:inline-block"></span>'+
+     '<b>'+overallLabel+'</b></span>';
+  h+='<span style="margin-left:auto;font-size:12px;color:#7d93a3">'+(sc.month||'')+'</span></div>';
+
+  // attention strip
+  if(sc.attention && sc.attention.length){
+    h+='<div style="background:#fff6f4;border:1px solid #ffd9d0;border-radius:10px;padding:10px 12px;margin:10px 0;font-size:13px">';
+    h+='<b style="color:var(--red)">\u26a0 Needs attention today:</b> ';
+    h+=sc.attention.map(function(a){
+      var c=RAG[a.status];
+      return '<span style="color:'+c+';font-weight:600">'+a.name+'</span> ('+a.value+(a.target!=null?' vs '+a.target:'')+')';
+    }).join(' &middot; ');
+    h+='</div>';
+  }
+
+  // grouped metrics
+  var groups={};
+  (sc.metrics||[]).forEach(function(m){ (groups[m.group]=groups[m.group]||[]).push(m); });
+  h+='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:6px">';
+  Object.keys(groups).forEach(function(g){
+    h+='<div style="border:1px solid #e7edf1;border-radius:12px;padding:12px">';
+    h+='<div style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:15px;margin-bottom:8px">'+g+'</div>';
+    groups[g].forEach(function(m){
+      var c=RAG[m.status]||'#9fb0bd';
+      var tgt=m.target!=null?'<span style="color:#9fb0bd;font-size:11px"> / '+m.target+'</span>':'';
+      var note=m.note?'<div style="font-size:10.5px;color:#a9b6bf;margin-top:-2px">'+m.note+'</div>':'';
+      var pend=m.status==='pending';
+      h+='<div style="display:flex;align-items:baseline;gap:8px;padding:3px 0'+(pend?';opacity:.55':'')+'">'+
+         '<span style="width:9px;height:9px;border-radius:50%;background:'+c+';flex:0 0 auto"></span>'+
+         '<span style="font-size:12.5px;color:var(--ink);flex:1">'+m.name+note+'</span>'+
+         '<span style="font-size:13px;font-weight:700;color:var(--ink)">'+fmt(m)+tgt+'</span></div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  h+='<div style="font-size:11px;color:#a9b6bf;margin-top:10px">Targets: churn &lt;'+
+     (sc.targets&&sc.targets.churnPct)+'%/mo &middot; '+(sc.targets&&sc.targets.pointsPerMonth)+' pts/mo &middot; '+
+     (sc.targets&&sc.targets.newCentresPerMonth)+' new centres/mo. Pending metrics arrive as later sections are built.</div>';
+  h+='</div>';
+  el.innerHTML=h;
+}
+
 function renderKpis(){
   var t=DATA.totals, w=DATA.warnings;
-  document.getElementById('basis').innerHTML =
+  DATA._basisHtml =
     '<b>How to read this:</b> '+DATA.basis+' &nbsp;Window: last '+DATA.windowDays+' days. '+
     (w.unmarkedSessions? w.unmarkedSessions+' sessions unmarked (cost $0 here). ':'')+
     (w.unmatchedRevenue? full(w.unmatchedRevenue)+' revenue not yet mapped to a centre.':'');
@@ -296,7 +357,7 @@ function renderKpis(){
   h+='<div class="kpi green"><div class="stat-n">'+full(t.contribution)+'</div><div class="stat-l">Contribution</div></div>';
   h+='<div class="kpi green"><div class="stat-n">'+t.marginPct+'%</div><div class="stat-l">Margin</div></div>';
   h+='<div class="kpi"><div class="stat-n">'+t.centres+'</div><div class="stat-l">Centres with revenue</div></div>';
-  document.getElementById('kpis').innerHTML=h;
+  DATA._kpisHtml = h;
 }
 
 function renderStates(){
@@ -407,16 +468,190 @@ function renderAll(){
   var g=new Date(DATA.generated), ago=Math.round((Date.now()-g)/86400000);
   document.getElementById('stamp').innerHTML='<b>'+DATA.month+'</b> &middot; '+DATA.totals.centres+' centres<br>'+
     (ago<1?'today':ago+'d ago')+' &middot; '+DATA.windowDays+'d window';
-  renderKpis(); renderOverview(); renderStates(); renderReps(); renderEcon(); renderCentres(); renderWatch();
+  renderKpis(); renderStates(); renderReps(); renderEcon(); renderCentres(); renderWatch(); renderHub();
 }
-Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(t){
-  t.onclick=function(){
-    Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.remove('on');});
-    t.classList.add('on');
-    ['overview','states','reps','econ','centres','watch'].forEach(function(v){
-      document.getElementById('v-'+v).style.display = (v===t.getAttribute('data-v'))?'block':'none'; });
-  };
-});
+// ---------- HUB / SECTION navigation ----------
+var SECTIONS=[
+  {id:'scorecard', title:'Executive Scorecard', kind:'scorecard'},
+  {id:'contribution', title:'Centre Contribution',
+   subtabs:[['states','By State'],['centres','Every Centre'],['watch','Watch List']]},
+  {id:'sales', title:'Sales', subtabs:[['reps','By Rep']]},
+  {id:'econ', title:'Unit Economics', subtabs:[['econ','LTV, CAC & Ratio']]},
+];
+var ALLVIEWS=['overview','states','reps','econ','centres','watch'];
+function hideAllViews(){ ALLVIEWS.forEach(function(v){ var e=document.getElementById('v-'+v); if(e) e.style.display='none'; }); }
+function money(n){ if(n==null) return '-'; var neg=n<0; n=Math.abs(n);
+  var s=n>=1000?'$'+(n/1000).toFixed(n>=100000?0:1)+'k':'$'+Math.round(n); return neg?'-'+s:s; }
+var RAGC={green:'var(--green)',amber:'var(--orange)',red:'var(--red)',info:'#9fb0bd',pending:'#c7d0d6',grey:'#9fb0bd'};
+
+// ---- rich per-tile content ----
+// ---- mini chart helpers (inline SVG, no library) ----
+function miniBars(items, opts){
+  // items: [{label, value, color}] ; opts: {target, w, h}
+  opts=opts||{}; var w=opts.w||240, h=opts.h||70, n=items.length;
+  if(!n) return '';
+  var max=Math.max.apply(null, items.map(function(i){return i.value;}).concat(opts.target?[opts.target]:[]));
+  if(max<=0) max=1;
+  var gap=4, bw=(w-(n-1)*gap)/n;
+  var svg='<svg viewBox="0 0 '+w+' '+(h+16)+'" style="width:100%;height:auto;display:block">';
+  items.forEach(function(it,i){
+    var bh=Math.max(2,(it.value/max)*h), x=i*(bw+gap), y=h-bh;
+    svg+='<rect x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+bh.toFixed(1)+'" rx="2" fill="'+(it.color||'var(--blue)')+'"></rect>';
+    svg+='<text x="'+(x+bw/2).toFixed(1)+'" y="'+(h+12)+'" font-size="16" text-anchor="middle" fill="#8ba0ad" font-family="Pencil,sans-serif">'+it.label+'</text>';
+  });
+  if(opts.target){
+    var ty=h-(opts.target/max)*h;
+    svg+='<line x1="0" y1="'+ty.toFixed(1)+'" x2="'+w+'" y2="'+ty.toFixed(1)+'" stroke="var(--red)" stroke-width="1.2" stroke-dasharray="4 3"></line>';
+  }
+  svg+='</svg>';
+  return svg;
+}
+function hbars(items, opts){
+  // horizontal bars: [{label,value,color}]
+  opts=opts||{}; var n=items.length; if(!n) return '';
+  var max=Math.max.apply(null, items.map(function(i){return i.value;})); if(max<=0)max=1;
+  var h='';
+  items.forEach(function(it){
+    var pct=Math.max(3,(it.value/max)*100);
+    h+='<div style="display:flex;align-items:center;gap:8px;margin:9px 0;font-size:15px">'+
+       '<span style="width:52px;color:#6b7f8c;flex:0 0 auto;font-size:15px">'+it.label+'</span>'+
+       '<span style="flex:1;background:#eef3f6;border-radius:4px;height:22px;position:relative;overflow:hidden">'+
+       '<span style="position:absolute;left:0;top:0;bottom:0;width:'+pct+'%;background:'+(it.color||'var(--blue)')+';border-radius:4px"></span></span>'+
+       '<span style="width:76px;text-align:right;font-weight:700;font-size:15.5px;color:var(--ink);flex:0 0 auto">'+(it.display||it.value)+'</span></div>';
+  });
+  return h;
+}
+
+function tileContent(secId){
+  var sc=DATA.scorecard;
+  function find(n){ if(!sc)return null; return (sc.metrics||[]).find(function(x){return x.name===n;}); }
+  function line(label,val,c){ return '<div style="display:flex;justify-content:space-between;gap:10px;padding:6px 0;font-size:16px">'+
+    '<span style="color:#6b7f8c">'+label+'</span><span style="font-weight:700;color:'+(c||'var(--ink)')+'">'+val+'</span></div>'; }
+  var SVC={NSW:'var(--blue)',VIC:'var(--red)',QLD:'var(--green)',SA:'var(--orange)',WA:'var(--pink)'};
+
+  if(secId==='scorecard'){
+    var overall=(sc&&sc.overall)||'grey';
+    var lbl={red:'Needs attention',amber:'Watch closely',green:'Healthy',grey:'-'}[overall];
+    var att=(sc&&sc.attention)||[];
+    var body='<div style="font-size:32px;font-weight:800;color:'+RAGC[overall]+'">'+lbl+'</div>';
+    body+='<div style="font-size:17px;color:#7d93a3;margin:10px 0 14px">'+att.length+' metric'+(att.length!=1?'s':'')+' need attention today</div>';
+    att.forEach(function(a){
+      body+='<div style="display:inline-block;background:'+(a.status==='red'?'#fff1ee':'#fff8ee')+';border:1px solid '+(a.status==='red'?'#ffd3c8':'#ffe6c2')+';border-radius:20px;padding:4px 11px;margin:5px 6px 5px 0;font-size:16px">'+
+        '<span style="color:'+RAGC[a.status]+'">&#9679;</span> '+a.name+' <b>'+a.value+'</b>'+(a.target!=null?' <span style="color:#9fb0bd">/ '+a.target+'</span>':'')+'</div>';
+    });
+    return {rag:overall, body:body};
+  }
+  if(secId==='contribution'){
+    var t=DATA.totals||{};
+    var states=(DATA.byState||[]).slice().sort(function(a,b){return b.contribution-a.contribution;});
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px">'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--green)">'+money(t.contribution)+'</div><div style="font-size:16px;color:#7d93a3">Contribution</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--ink)">'+(t.marginPct!=null?t.marginPct+'%':'-')+'</div><div style="font-size:16px;color:#7d93a3">Margin</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--ink)">'+money(t.revenue)+'</div><div style="font-size:16px;color:#7d93a3">Revenue</div></div></div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:4px 0 2px">Contribution by state</div>';
+    body+=hbars(states.map(function(s){return {label:s.state,value:s.contribution,display:money(s.contribution),color:SVC[s.state]||'var(--blue)'};}));
+    return {rag:'info', body:body};
+  }
+  if(secId==='sales'){
+    var avg=find('Avg sales points / month'), thism=find('Sales points (this month)');
+    var monthly=(sc&&sc.monthly)||[];
+    var tgt=(sc&&sc.pointsTarget)||180;
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px">'+
+      '<div><div style="font-size:24px;font-weight:800;color:'+RAGC[(avg&&avg.status)||'info']+'">'+(avg?avg.value:'-')+'</div><div style="font-size:16px;color:#7d93a3">Avg pts/mo (target '+tgt+')</div></div>'+
+      '<div><div style="font-size:24px;font-weight:800;color:'+RAGC[(thism&&thism.status)||'info']+'">'+(thism?thism.value:'-')+'</div><div style="font-size:16px;color:#7d93a3">This month</div></div></div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:4px 0 2px">Sales points / month (red line = target)</div>';
+    body+=miniBars(monthly.map(function(m){
+      var short=m.month.slice(5); var lbls={ '02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun','07':'Jul','08':'Aug','09':'Sep','10':'Oct','11':'Nov','12':'Dec','01':'Jan'};
+      return {label:lbls[short]||short, value:m.points, color: m.points>=tgt?'var(--green)':'var(--orange)'};
+    }), {target:tgt, w:520, h:150});
+    return {rag:(avg&&avg.status)||'info', body:body};
+  }
+  if(secId==='econ'){
+    var e=DATA.econ; var ltv=(e&&e.ltv)||{}; var reps=(e&&e.reps)||[];
+    var r=reps.map(function(x){return x.ltvCacRatio;}).filter(Boolean);
+    var avg=r.length?(r.reduce(function(a,b){return a+b;},0)/r.length).toFixed(1):null;
+    var cacs=reps.map(function(x){return x.cac;}).filter(Boolean);
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--green)">'+(avg?avg+':1':'-')+'</div><div style="font-size:16px;color:#7d93a3">LTV : CAC</div></div>'+
+      (cacs.length?'<div><div style="font-size:30px;font-weight:800;color:var(--ink)">$'+Math.min.apply(null,cacs)+'-'+Math.max.apply(null,cacs)+'</div><div style="font-size:16px;color:#7d93a3">CAC / centre</div></div>':'')+'</div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:4px 0 2px">Lifetime value (contribution)</div>';
+    body+=hbars([
+      {label:'Wkly',value:(ltv.weekly&&ltv.weekly.contribution)||0,display:money(ltv.weekly&&ltv.weekly.contribution),color:'var(--green)'},
+      {label:'Fght',value:(ltv.fortnightly&&ltv.fortnightly.contribution)||0,display:money(ltv.fortnightly&&ltv.fortnightly.contribution),color:'var(--lightblue)'},
+    ]);
+    body+='<div style="font-size:14px;color:#a9b6bf;margin-top:8px">ad spend $0 (pending)</div>';
+    return {rag:'info', body:body};
+  }
+  return {rag:'info', body:''};
+}
+
+function renderHub(){
+  var h='<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:4px">';
+  SECTIONS.forEach(function(s){
+    var c=tileContent(s.id);
+    h+='<div class="hubtile" data-sec="'+s.id+'" style="cursor:pointer;background:#fff;border:1px solid #e7edf1;border-top:6px solid '+(RAGC[c.rag]||'#9fb0bd')+';border-radius:14px;padding:16px 18px;box-shadow:3px 3px 0 rgba(36,55,70,.08);min-height:300px;display:flex;flex-direction:column">'+
+       '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
+       '<span style="width:11px;height:11px;border-radius:50%;background:'+(RAGC[c.rag]||'#9fb0bd')+'"></span>'+
+       '<span style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:19px">'+s.title+'</span></div>'+
+       '<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between">'+c.body+'</div>'+
+       '<div style="font-size:15px;color:var(--blue);margin-top:12px">Open &rarr;</div></div>';
+  });
+  ['Churn &amp; Retention','Recruitment','Coach Capacity','Finance','Forecast'].forEach(function(name){
+    h+='<div style="background:#f6f8f9;border:1px dashed #cdd8de;border-radius:14px;padding:16px;opacity:.7;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center">'+
+       '<div style="font-family:MarkerFelt,sans-serif;color:#9fb0bd;font-size:16px;text-align:center">'+name+'</div>'+
+       '<div style="font-size:12px;color:#a9b6bf;margin-top:6px">Coming soon</div></div>';
+  });
+  h+='</div>';
+  document.getElementById('hub').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('.hubtile'),function(el){
+    el.onclick=function(){ openSection(el.getAttribute('data-sec')); };
+  });
+}
+
+function openSection(secId){
+  var sec=SECTIONS.find(function(s){return s.id===secId;});
+  if(!sec) return;
+  document.getElementById('hub').style.display='none';
+  document.getElementById('sectionWrap').style.display='block';
+  document.getElementById('sectionTitle').textContent=sec.title;
+  var hdr=document.getElementById('sectionHeader');
+  var tb=document.getElementById('subtabs');
+  hideAllViews(); tb.innerHTML=''; hdr.innerHTML='';
+
+  if(sec.kind==='scorecard'){
+    tb.style.display='none';
+    hdr.innerHTML='<div id="scorecard"></div>';
+    renderScorecard();
+    window.scrollTo(0,0); return;
+  }
+  tb.style.display='';
+  // Contribution section shows the KPI strip + basis note above its tabs
+  if(secId==='contribution'){
+    hdr.innerHTML='<div class="note">'+(DATA._basisHtml||'')+'</div><div class="kpis">'+(DATA._kpisHtml||'')+'</div>';
+  }
+  sec.subtabs.forEach(function(st,i){
+    var d=document.createElement('div'); d.className='tab'+(i===0?' on':''); d.textContent=st[1]; d.setAttribute('data-v',st[0]);
+    d.onclick=function(){
+      Array.prototype.forEach.call(tb.querySelectorAll('.tab'),function(x){x.classList.remove('on');});
+      d.classList.add('on'); hideAllViews();
+      var e=document.getElementById('v-'+st[0]); if(e) e.style.display='block';
+    };
+    tb.appendChild(d);
+  });
+  var first=document.getElementById('v-'+sec.subtabs[0][0]); if(first) first.style.display='block';
+  window.scrollTo(0,0);
+}
+
+function backToHub(){
+  document.getElementById('sectionWrap').style.display='none';
+  hideAllViews();
+  document.getElementById('hub').style.display='block';
+  renderHub();
+  window.scrollTo(0,0);
+}
+document.getElementById('backHub').onclick=backToHub;
+
+
 // Data arrives from Firestore via the auth module below (window.__ingestProfit).
 // The doc stores raw centres[]; we compute totals + byState here so the render
 // code is unchanged. Firestore read is gated by rules to Shane's UID only.
@@ -443,7 +678,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap, unitEcon){
+window.__ingestProfit=function(doc, repMap, unitEcon, scorecard){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -453,6 +688,7 @@ window.__ingestProfit=function(doc, repMap, unitEcon){
   DATA=computeAggregates(doc);
   DATA.reps=computeReps(doc, repMap||[]);
   DATA.econ=unitEcon||null;
+  DATA.scorecard=scorecard||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -506,7 +742,12 @@ async function loadFromFirestore(){
       const usnap = await getDoc(doc(db,'unit-economics','current'));
       if(usnap.exists()) unitEcon=usnap.data();
     }catch(_){ /* unit economics optional */ }
-    window.__ingestProfit(docs[0].data, repMap, unitEcon);
+    let scorecard=null;
+    try{
+      const ssnap = await getDoc(doc(db,'scorecard','current'));
+      if(ssnap.exists()) scorecard=ssnap.data();
+    }catch(_){ /* scorecard optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
