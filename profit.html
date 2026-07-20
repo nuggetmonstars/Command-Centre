@@ -113,10 +113,10 @@ tr:hover td{background:#fbfdff}
 
   <div class="wrap">
     <div class="pagehead">
-      <h2>&#128176; Centre Contribution</h2>
-      <p class="lede">Revenue minus coach wages and super, per centre. This is
-        <b>contribution</b>, not profit &mdash; it's what each centre puts toward covering
-        overheads (managers, office, marketing). Higher is better.</p>
+      <h2>&#128202; Command Centre Overview</h2>
+      <p class="lede">The whole business at a glance &mdash; contribution, states, and sales reps.
+        Everything here is <b>contribution</b> (revenue minus coach wages + super), not profit.
+        Dig into any section using the tabs.</p>
     </div>
 
     <div class="note" id="basis"></div>
@@ -124,12 +124,17 @@ tr:hover td{background:#fbfdff}
     <div class="kpis" id="kpis"></div>
 
     <div class="tabs">
-      <div class="tab on" data-v="states">By State</div>
+      <div class="tab on" data-v="overview">Overview</div>
+      <div class="tab" data-v="states">By State</div>
+      <div class="tab" data-v="reps">By Rep</div>
       <div class="tab" data-v="centres">Every Centre</div>
       <div class="tab" data-v="watch">Watch List</div>
     </div>
 
-    <div id="v-states"></div>
+    <div id="v-overview"></div>
+
+    <div id="v-states" style="display:none"></div>
+    <div id="v-reps" style="display:none"></div>
     <div id="v-centres" style="display:none"></div>
     <div id="v-watch" style="display:none"></div>
   </div>
@@ -143,6 +148,83 @@ function money(n){ if(n==null)return'';
   var s = n>=1000 ? '$'+(n/1000).toFixed(n>=10000?0:1)+'k' : '$'+Math.round(n);
   return neg?'-'+s:s; }
 function full(n){ return '$'+Math.round(n).toLocaleString(); }
+
+// ---- rep contribution: join rep-centre-map -> centre programCode -> contribution ----
+function computeReps(doc, repMap){
+  var bycode={};
+  (doc.centres||[]).forEach(function(c){ if(c.programCode) bycode[c.programCode]=c; });
+  var reps={};
+  repMap.forEach(function(m){
+    var rep=m.rep||'?';
+    var r=reps[rep]||(reps[rep]={rep:rep, centres:0, inProfit:0, revenue:0, coachCost:0, contribution:0, codes:{}});
+    if(m.programCode && !r.codes[m.programCode]){
+      r.codes[m.programCode]=1; r.centres++;
+      var c=bycode[m.programCode];
+      if(c && (c.revenue||0)>0){ r.inProfit++; r.revenue+=c.revenue||0; r.coachCost+=c.coachCost||0; r.contribution+=c.contribution||0; }
+    }
+  });
+  var out=Object.keys(reps).map(function(k){
+    var r=reps[k]; delete r.codes;
+    r.revenue=Math.round(r.revenue); r.coachCost=Math.round(r.coachCost); r.contribution=Math.round(r.contribution);
+    r.marginPct = r.revenue? Math.round(1000*r.contribution/r.revenue)/10 : null;
+    return r;
+  });
+  return out.sort(function(a,b){ return b.contribution-a.contribution; });
+}
+
+function renderOverview(){
+  var t=DATA.totals;
+  var h='';
+  // headline strip already in #kpis; here we give the at-a-glance panels
+  h+='<div class="card"><h3>Contribution by state</h3>';
+  var st=DATA.byState, maxc=Math.max.apply(null,st.map(function(s){return s.contribution;}));
+  st.forEach(function(s){
+    var w=maxc?Math.max(3,(s.contribution/maxc)*100):3;
+    h+='<div class="barrow"><div class="st"><span class="svc" style="background:'+(SVC[s.state]||"#999")+'"></span>'+s.state+'</div>'+
+       '<div class="bartrack"><div class="barfill" style="width:'+w+'%;background:'+(SVC[s.state]||"#999")+'"></div></div>'+
+       '<div class="barnums"><b>'+full(s.contribution)+'</b> &middot; '+s.marginPct+'%</div></div>';
+  });
+  h+='<div style="font-size:12px;color:#7d93a3;margin-top:6px">Tap <b>By State</b> for detail.</div></div>';
+
+  // rep summary
+  if(DATA.reps && DATA.reps.length){
+    var rmax=Math.max.apply(null,DATA.reps.map(function(r){return r.contribution;}));
+    h+='<div class="card"><h3>Contribution by sales rep</h3>';
+    h+='<div style="font-size:12.5px;color:#7d93a3;margin-bottom:10px">What the centres each rep signed are generating now. '+
+       'Bar = contribution from their active centres.</div>';
+    DATA.reps.forEach(function(r){
+      var w=rmax?Math.max(3,(r.contribution/rmax)*100):3;
+      h+='<div class="barrow"><div class="st" style="font-size:13px">'+r.rep+'</div>'+
+         '<div class="bartrack"><div class="barfill" style="width:'+w+'%;background:var(--orange)"></div></div>'+
+         '<div class="barnums"><b>'+full(r.contribution)+'</b><br><span style="font-size:11px">'+r.inProfit+'/'+r.centres+' centres earning</span></div></div>';
+    });
+    h+='<div style="font-size:12px;color:#7d93a3;margin-top:6px">Tap <b>By Rep</b> for detail.</div></div>';
+  }
+  document.getElementById('v-overview').innerHTML=h;
+}
+
+function renderReps(){
+  if(!DATA.reps || !DATA.reps.length){
+    document.getElementById('v-reps').innerHTML='<div class="card"><h3>No rep data</h3><div>rep-centre-map is empty. Run build_rep_centre_map.py --write.</div></div>';
+    return;
+  }
+  var h='<div class="note">Each rep\'s <b>signed centres</b> matched to what those centres are '+
+    'contributing now. "Earning" = centres already generating revenue in the window; the rest are '+
+    'signed but not yet billing (new signings / offers not yet invoiced). Nug is the owner catch-all, '+
+    'so his book includes historical centres.</div>';
+  h+='<div class="card"><div style="overflow-x:auto"><table><thead><tr>'+
+     '<th>Rep</th><th class="num">Centres</th><th class="num">Earning</th>'+
+     '<th class="num">Revenue</th><th class="num">Coach</th><th class="num">Contribution</th><th class="num">Margin</th>'+
+     '</tr></thead><tbody>';
+  DATA.reps.forEach(function(r){
+    h+='<tr><td><b>'+r.rep+'</b></td><td class="num">'+r.centres+'</td><td class="num">'+r.inProfit+'</td>'+
+       '<td class="num">'+money(r.revenue)+'</td><td class="num">'+money(r.coachCost)+'</td>'+
+       '<td class="num"><b>'+money(r.contribution)+'</b></td>'+
+       '<td class="num">'+(r.marginPct==null?"":r.marginPct+"%")+'</td></tr>';
+  });
+  h+='</tbody></table></div></div>';
+  document.getElementById('v-reps').innerHTML=h;
+}
 
 function renderKpis(){
   var t=DATA.totals, w=DATA.warnings;
@@ -267,13 +349,13 @@ function renderAll(){
   var g=new Date(DATA.generated), ago=Math.round((Date.now()-g)/86400000);
   document.getElementById('stamp').innerHTML='<b>'+DATA.month+'</b> &middot; '+DATA.totals.centres+' centres<br>'+
     (ago<1?'today':ago+'d ago')+' &middot; '+DATA.windowDays+'d window';
-  renderKpis(); renderStates(); renderCentres(); renderWatch();
+  renderKpis(); renderOverview(); renderStates(); renderReps(); renderCentres(); renderWatch();
 }
 Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(t){
   t.onclick=function(){
     Array.prototype.forEach.call(document.querySelectorAll('.tab'),function(x){x.classList.remove('on');});
     t.classList.add('on');
-    ['states','centres','watch'].forEach(function(v){
+    ['overview','states','reps','centres','watch'].forEach(function(v){
       document.getElementById('v-'+v).style.display = (v===t.getAttribute('data-v'))?'block':'none'; });
   };
 });
@@ -303,18 +385,19 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc){
+window.__ingestProfit=function(doc, repMap){
   if(!doc){ 
-    document.getElementById('v-states').innerHTML=
+    document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
       'Run <code>centre_profit.py --write</code> to generate this month.</div></div>';
     return;
   }
   DATA=computeAggregates(doc);
+  DATA.reps=computeReps(doc, repMap||[]);
   renderAll();
 };
 window.__profitError=function(msg){
-  document.getElementById('v-states').innerHTML=
+  document.getElementById('v-overview').innerHTML=
     '<div class="card"><h3>Could not load</h3><div>'+msg+'</div></div>';
 };
 </script>
@@ -351,7 +434,15 @@ async function loadFromFirestore(){
     let docs=[];
     snap.forEach(d=>docs.push({id:d.id, data:d.data()}));
     docs.sort((a,b)=> a.id<b.id?1:-1);   // newest YYYY-MM first
-    window.__ingestProfit(docs[0].data);
+    // also load rep-centre-map (rep -> programCode) so we can attribute contribution per rep.
+    // this collection is readable by any logged-in user (leaderboard needs it); the DOLLARS
+    // come from centre-profit which is locked to Shane, so managers can't see this join.
+    let repMap=[];
+    try{
+      const rsnap = await getDocs(query(collection(db,'rep-centre-map')));
+      rsnap.forEach(d=>repMap.push(d.data()));
+    }catch(_){ /* rep map optional; overview still works without it */ }
+    window.__ingestProfit(docs[0].data, repMap);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
