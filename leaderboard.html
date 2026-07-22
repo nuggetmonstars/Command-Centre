@@ -6375,6 +6375,16 @@ function ccInit(){
   ccEl("cc-cbday").addEventListener("change", ccOpenCbDay);
   ccEl("cc-cbday-close").addEventListener("click", ()=> ccEl("cc-cbday-overlay").classList.remove("open"));
   ccEl("cc-cbday-overlay").addEventListener("click", e=>{ if(e.target.id==="cc-cbday-overlay") ccEl("cc-cbday-overlay").classList.remove("open"); });
+  // popup rows act exactly like the main list: derive num from the row's own data-toggle
+  // (NOT getElementById — popup rows share id="cc-row-{num}"), close the popup to avoid stacked
+  // modals, then reuse ccGoto() — the same reveal+open+scroll the main list uses to expose Log Call.
+  ccEl("cc-cbday-list").addEventListener("click", e=>{
+    const head=e.target.closest("[data-toggle]"); if(!head) return;
+    const num=head.getAttribute("data-toggle");
+    ccEl("cc-cbday-overlay").classList.remove("open");
+    ccEl("cc-cbday-list").innerHTML="";   // drop the duplicate-id rows from the DOM
+    ccGoto(num);
+  });
   // delegated: edit / save / clear / cancel phone & email (no full re-render, keeps row open)
   ccEl("cc-list").addEventListener("click", e=>{
     const ed=e.target.closest("[data-editfield]"); if(ed){ ccBeginEdit(ed.getAttribute("data-editfield"), ed.getAttribute("data-editnum")); return; }
