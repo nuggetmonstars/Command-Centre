@@ -2219,11 +2219,20 @@ h1,h2,h3,h4,h5,.mf,
         <input id="cc-q" class="cc-search" type="text" placeholder="&#128269; Search #, name, phone, email, notes&#8230;" autocomplete="off">
         <input id="cc-goto" class="cc-goto" type="number" placeholder="Go to #" min="1">
         <button id="cc-cbfilter" class="cc-cbbtn" type="button">&#128197; Callbacks <span id="cc-cbcount">0</span></button>
+        <input id="cc-cbday" class="cc-goto" type="date" title="View callbacks on a specific day">
+        <button id="cc-cbday-btn" class="cc-cbbtn" type="button">&#128197; View day</button>
       </div>
     </div>
     <div class="cc-chips" id="cc-chips"></div>
     <div class="cc-count" id="cc-count"></div>
     <div class="cc-list" id="cc-list"></div>
+    <div class="detail-overlay" id="cc-cbday-overlay">
+      <div class="detail-panel">
+        <button class="detail-close" id="cc-cbday-close" type="button">✕</button>
+        <div class="detail-name" id="cc-cbday-title">Callbacks</div>
+        <div id="cc-cbday-list"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -6360,6 +6369,12 @@ function ccInit(){
   ccEl("cc-list").addEventListener("click", e=>{ const b=e.target.closest("[data-logsave]"); if(b) ccLogCall(b.getAttribute("data-logsave")); });
   // callbacks filter toggle (today + overdue only)
   ccEl("cc-cbfilter").addEventListener("click",()=>{ ccFilter=(ccFilter==="callbacks")?"all":"callbacks"; ccRenderChips(); ccRenderList(); });
+  // callbacks-on-a-day popup (display-only)
+  ccEl("cc-cbday").value = ccTodayISO();
+  ccEl("cc-cbday-btn").addEventListener("click", ccOpenCbDay);
+  ccEl("cc-cbday").addEventListener("change", ccOpenCbDay);
+  ccEl("cc-cbday-close").addEventListener("click", ()=> ccEl("cc-cbday-overlay").classList.remove("open"));
+  ccEl("cc-cbday-overlay").addEventListener("click", e=>{ if(e.target.id==="cc-cbday-overlay") ccEl("cc-cbday-overlay").classList.remove("open"); });
   // delegated: edit / save / clear / cancel phone & email (no full re-render, keeps row open)
   ccEl("cc-list").addEventListener("click", e=>{
     const ed=e.target.closest("[data-editfield]"); if(ed){ ccBeginEdit(ed.getAttribute("data-editfield"), ed.getAttribute("data-editnum")); return; }
@@ -6703,6 +6718,19 @@ function ccRenderList(){
   if(cbBtn){ const due=ccCENTRES.filter(ccIsDueCallback).length; const cnt=ccEl("cc-cbcount"); if(cnt) cnt.textContent=due; cbBtn.classList.toggle("active", ccFilter==="callbacks"); cbBtn.classList.toggle("has-due", due>0); }
   ccEl("cc-list").innerHTML=items.length?items.map(ccRow).join(""):(ccCENTRES.length?`<div class="cc-empty">${ccFilter==="callbacks"?"No callbacks due or overdue.":"No centres match."}</div>`:`<div class="cc-empty">No centres yet — nothing has been allocated to this rep.</div>`);
   ccEl("cc-list").querySelectorAll("[data-toggle]").forEach(el=> el.addEventListener("click",()=>{ const num=el.dataset.toggle; const row=document.getElementById("cc-row-"+num); if(!row) return; row.classList.toggle("open"); if(row.classList.contains("open")) ccLoadOfferSessions(num); }));
+}
+// ---- callbacks-on-a-day popup (display-only; reuses ccRow + the detail-overlay modal) ----
+function ccRenderCbDay(iso){
+  const list=ccEl("cc-cbday-list"); if(!list) return;
+  const title=ccEl("cc-cbday-title"); if(title) title.textContent=`Callbacks for ${ccDateAU(iso)}`;
+  const matches=ccCENTRES.filter(c=>String(c.callbackDate||"")===iso);
+  list.innerHTML = matches.length ? matches.map(ccRow).join("")
+    : `<div class="cc-empty" style="text-align:center">No callbacks on this day.</div>`;
+}
+function ccOpenCbDay(){
+  const iso=ccEl("cc-cbday").value; if(!iso) return;
+  ccRenderCbDay(iso);
+  ccEl("cc-cbday-overlay").classList.add("open");
 }
 
 /* ---- Phase 2/3: city map, today's live counter, log-a-call ---- */
