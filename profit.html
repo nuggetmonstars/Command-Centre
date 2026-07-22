@@ -281,6 +281,178 @@ function renderReps(){
   document.getElementById('v-reps').innerHTML=h;
 }
 
+var CHURN_PERIOD={year:'2026', month:'latest'};  // 'latest' resolves to newest month with data
+
+// authoritative monthly data from churn-monthly (churn_score.py) — matches Stats page + SABOL
+function churnMonthByKey(key){
+  var cm=DATA.churnMonthly; if(!cm||!cm.months) return null;
+  return cm.months.filter(function(m){return m.key===key;})[0]||null;
+}
+// coach/relationship detail from churn-analytics, filtered to a period (for the value-add layer)
+function churnFilteredCentres(){
+  var ch=DATA.churn; if(!ch||!ch.centres) return [];
+  var yr=CHURN_PERIOD.year, mo=CHURN_PERIOD.month;
+  return ch.centres.filter(function(c){
+    if(!c.closedYear || c.closedYear!==yr) return false;
+    if(mo==='full'||mo==='ytd') return true;
+    return c.closedMonth===yr+'-'+mo;
+  });
+}
+function churnComputeDetail(centres){
+  var out={coach:0,relationship:0,notours:0,unclear:0,coachFault:{},relCentres:[],coachExamples:{},tenure:{}};
+  var FMAP={coach_fault:'coach',relationship_fault:'relationship',not_our_fault:'notours',unclear:'unclear'};
+  centres.forEach(function(c){
+    var k=FMAP[c.fault]||'unclear'; out[k]++;
+    if(c.tenure) out.tenure[c.tenure]=(out.tenure[c.tenure]||0)+1;
+    if(c.fault==='relationship_fault') out.relCentres.push({name:c.name,state:c.state,why:c.why,points:c.points});
+    if(c.fault==='coach_fault' && c.coaches && c.coaches.length){
+      c.coaches.forEach(function(co){
+        out.coachFault[co]=(out.coachFault[co]||0)+1;
+        (out.coachExamples[co]=out.coachExamples[co]||[]).push({centre:c.name,why:c.why});
+      });
+    }
+  });
+  return out;
+}
+
+function renderChurnSection(){
+  var cm=DATA.churnMonthly;
+  var el=document.getElementById('churnDetail');
+  if(!cm){ el.innerHTML='<div class="card">No churn data available. Run push_churn_monthly.py.</div>'; return; }
+  var MONTHS=[['ytd','YTD'],['01','Jan'],['02','Feb'],['03','Mar'],['04','Apr'],['05','May'],['06','Jun'],
+              ['07','Jul'],['08','Aug'],['09','Sep'],['10','Oct'],['11','Nov'],['12','Dec']];
+
+  // period selector
+  var h='<div class="card" style="padding:14px 16px"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
+  h+='<span style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:17px;margin-right:6px">Period</span>';
+  ['2025','2026'].forEach(function(y){
+    var on=CHURN_PERIOD.year===y;
+    h+='<button class="chYr" data-y="'+y+'" style="border:none;border-radius:9px;padding:7px 16px;font-family:Pencil,sans-serif;font-size:15px;cursor:pointer;background:'+(on?'var(--ink)':'#eef3f6')+';color:'+(on?'#fff':'var(--ink)')+'">'+y+'</button>';
+  });
+  h+='<span style="width:1px;height:24px;background:#e0e7ec;margin:0 4px"></span>';
+  MONTHS.forEach(function(m){
+    if(m[0]==='ytd' && CHURN_PERIOD.year!=='2026') return;
+    var on=CHURN_PERIOD.month===m[0];
+    h+='<button class="chMo" data-m="'+m[0]+'" style="border:none;border-radius:8px;padding:5px 11px;font-family:Pencil,sans-serif;font-size:13.5px;cursor:pointer;background:'+(on?'var(--blue)':'#f2f6f8')+';color:'+(on?'#fff':'#5b7180')+'">'+(m[0]==='ytd'?'YTD':m[1])+'</button>';
+  });
+  if(CHURN_PERIOD.year==='2025'){
+    var onf=CHURN_PERIOD.month==='full';
+    h+='<button class="chMo" data-m="full" style="border:none;border-radius:8px;padding:5px 11px;font-family:Pencil,sans-serif;font-size:13.5px;cursor:pointer;background:'+(onf?'var(--blue)':'#f2f6f8')+';color:'+(onf?'#fff':'#5b7180')+'">Full year</button>';
+  }
+  h+='</div></div>';
+
+  // ---- authoritative KPI (from churn-monthly) ----
+  // resolve 'latest' to the newest month present in the data
+  if(CHURN_PERIOD.month==='latest'){
+    var ym=(cm.months||[]).filter(function(m){return m.key.slice(0,4)===CHURN_PERIOD.year;});
+    CHURN_PERIOD.month = ym.length ? ym[ym.length-1].key.slice(5) : 'ytd';
+  }
+  var isYTD = (CHURN_PERIOD.month==='ytd');
+  var isFull = (CHURN_PERIOD.month==='full');
+  var lost,our,noto,uncat,base,pct,ourPct,notPct,periodLabel;
+  if(isYTD){
+    lost=cm.ytd_total; our=cm.ytd_our; noto=cm.ytd_not_our; uncat=cm.ytd_uncat;
+    pct=cm.ytd_pct_avg; ourPct=cm.ytd_our_pct_avg; notPct=cm.ytd_not_our_pct_avg;
+    base=cm.active_now; periodLabel='2026 YTD (avg of completed months)';
+  } else if(isFull){
+    // sum the year's months
+    var yrM=(cm.months||[]).filter(function(m){return m.key.slice(0,4)===CHURN_PERIOD.year;});
+    lost=yrM.reduce(function(a,m){return a+(m.total||0);},0);
+    our=yrM.reduce(function(a,m){return a+(m.our||0);},0);
+    noto=yrM.reduce(function(a,m){return a+(m.not_our||0);},0);
+    uncat=yrM.reduce(function(a,m){return a+(m.uncat||0);},0);
+    var pcts=yrM.filter(function(m){return m.pct!=null;});
+    pct=pcts.length?(pcts.reduce(function(a,m){return a+m.pct;},0)/pcts.length):0;
+    ourPct=pcts.length?(pcts.reduce(function(a,m){return a+(m.our_pct||0);},0)/pcts.length):0;
+    notPct=pcts.length?(pcts.reduce(function(a,m){return a+(m.not_our_pct||0);},0)/pcts.length):0;
+    base=null; periodLabel=CHURN_PERIOD.year+' full year';
+  } else {
+    var mk=CHURN_PERIOD.year+'-'+CHURN_PERIOD.month;
+    var mo=churnMonthByKey(mk);
+    if(!mo){
+      h+='<div class="card" style="color:#9fb0bd">No churn data for '+mk+' yet. (Monthly figures come from the Stats-page snapshots in churn_score.py.)</div>';
+      el.innerHTML=h; wireChurnButtons(el); return;
+    }
+    lost=mo.total; our=mo.our; noto=mo.not_our; uncat=mo.uncat;
+    base=mo.active_at_start; pct=mo.pct; ourPct=mo.our_pct; notPct=mo.not_our_pct;
+    periodLabel=(MONTHS.filter(function(x){return x[0]===CHURN_PERIOD.month;})[0]||['',''])[1]+' '+CHURN_PERIOD.year;
+  }
+
+  var ytdPct=cm.ytd_pct_avg, ytdLost=cm.ytd_total;
+  h+='<div class="card"><div style="font-size:13px;color:#8ba0ad;margin-bottom:8px">Churn for <b>'+periodLabel+'</b>'+(base?' \u00b7 base '+base+' active centres':'')+'. Matches the Stats page &amp; Show a Bit of Love.</div>'+
+    '<div style="display:flex;gap:30px;flex-wrap:wrap;align-items:flex-end">'+
+    '<div><div style="font-size:40px;font-weight:800;color:var(--red)">'+(pct!=null?pct.toFixed(1):'-')+'%</div><div style="color:#7d93a3">'+(isYTD||isFull?'Churn rate':'Monthly churn')+' ('+lost+' lost)</div></div>'+
+    (!isYTD ? '<div><div style="font-size:40px;font-weight:800;color:var(--ink)">'+(ytdPct!=null?ytdPct.toFixed(1):'-')+'%</div><div style="color:#7d93a3">Total YTD ('+ytdLost+' lost)</div></div>' : '')+
+    '<div><div style="font-size:28px;font-weight:800;color:var(--orange)">'+(ourPct!=null?ourPct.toFixed(1):'-')+'%</div><div style="color:#7d93a3">Our fault ('+our+')</div></div>'+
+    '<div><div style="font-size:28px;font-weight:800;color:var(--green)">'+(notPct!=null?notPct.toFixed(1):'-')+'%</div><div style="color:#7d93a3">Not our fault ('+noto+')</div></div>'+
+    ((uncat||0)?'<div><div style="font-size:28px;font-weight:800;color:#9fb0bd">'+uncat+'</div><div style="color:#7d93a3">Uncategorised</div></div>':'')+
+    '</div></div>';
+
+  // ---- VALUE-ADD: coach/relationship detail from churn-analytics (period-filtered) ----
+  // coach/relationship detail is always YEAR-TO-DATE (reviewing coaches is not a per-month task)
+  var detCentres=(DATA.churn&&DATA.churn.centres||[]).filter(function(c){return c.closedYear===CHURN_PERIOD.year;});
+  var det=churnComputeDetail(detCentres);
+  h+='<div class="card" style="border-top:4px solid var(--orange)"><h3>Our-fault breakdown: coaching vs relationship</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Splitting the our-fault churns into coaching problems vs relationship/retention gaps (AI-assisted from the closing notes). This is the deeper view your Stats page doesn\u2019t show.</div>'+
+     hbars([
+       {label:'Coaching',value:det.coach,display:det.coach,color:'var(--red)'},
+       {label:'Relationship',value:det.relationship,display:det.relationship,color:'var(--orange)'},
+     ])+'</div>';
+
+  // relationship centre list
+  if(det.relCentres.length){
+    h+='<div class="card"><h3>Relationship-fault centres ('+det.relCentres.length+')</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Lost to a competitor or not retained \u2014 review to confirm.</div>';
+    det.relCentres.slice().sort(function(a,b){return (b.points||0)-(a.points||0);}).forEach(function(c){
+      h+='<div style="border-bottom:1px solid #f0f4f6;padding:6px 0;font-size:13.5px">'+
+         '<span style="font-weight:700;color:var(--ink)">'+c.name+'</span>'+
+         '<span style="color:#9fb0bd"> \u00b7 '+(c.state||'?')+' \u00b7 '+(c.points||0)+' pts</span>'+
+         (c.why?'<div style="color:#6b7f8c;font-size:12.5px;margin-top:1px">'+c.why+'</div>':'')+'</div>';
+    });
+    h+='</div>';
+  }
+
+  // coach accountability
+  var coaches=Object.keys(det.coachFault).sort(function(a,b){return det.coachFault[b]-det.coachFault[a];});
+  h+='<div class="card"><h3>Coaches on coach-fault churns</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Where the closing note named the coach, or one coach ran the majority of sessions. A <b>signal to review</b>, not a verdict \u2014 click a name for the centres.</div>';
+  if(!coaches.length){ h+='<div style="color:#9fb0bd">No coach-fault churns attributed in this period.</div>'; }
+  else {
+    coaches.forEach(function(co,i){
+      var exs=(det.coachExamples[co]||[]).map(function(e){
+        return '<div style="font-size:12.5px;color:#6b7f8c;padding:2px 0 2px 16px">\u2022 '+e.centre+(e.why?' \u2014 '+e.why:'')+'</div>';
+      }).join('');
+      h+='<div style="border-bottom:1px solid #f0f4f6;padding:8px 0">'+
+         '<div class="coachRow" data-i="'+i+'" style="display:flex;justify-content:space-between;cursor:pointer">'+
+         '<span style="font-weight:700;color:var(--ink)">'+co+'</span>'+
+         '<span style="color:var(--red);font-weight:700">'+det.coachFault[co]+' centre'+(det.coachFault[co]!=1?'s':'')+' &#9662;</span></div>'+
+         '<div class="coachEx" data-i="'+i+'" style="display:none;margin-top:4px">'+exs+'</div></div>';
+    });
+  }
+  h+='</div>';
+
+  el.innerHTML=h;
+  wireChurnButtons(el);
+}
+
+function wireChurnButtons(el){
+  Array.prototype.forEach.call(el.querySelectorAll('.chYr'),function(b){
+    b.onclick=function(){ CHURN_PERIOD.year=b.getAttribute('data-y');
+      CHURN_PERIOD.month=(CHURN_PERIOD.year==='2026')?'ytd':'full'; renderChurnSection(); };
+  });
+  Array.prototype.forEach.call(el.querySelectorAll('.chMo'),function(b){
+    b.onclick=function(){ CHURN_PERIOD.month=b.getAttribute('data-m'); renderChurnSection(); };
+  });
+  Array.prototype.forEach.call(el.querySelectorAll('.coachRow'),function(row){
+    row.onclick=function(){
+      var i=row.getAttribute('data-i');
+      var ex=el.querySelector('.coachEx[data-i="'+i+'"]');
+      if(ex) ex.style.display=ex.style.display==='none'?'block':'none';
+    };
+  });
+}
+
+
 function renderScorecard(){
   var sc=DATA.scorecard;
   var el=document.getElementById('scorecard');
@@ -473,6 +645,7 @@ function renderAll(){
 // ---------- HUB / SECTION navigation ----------
 var SECTIONS=[
   {id:'scorecard', title:'Executive Scorecard', kind:'scorecard'},
+  {id:'churn', title:'Churn & Retention', kind:'churn'},
   {id:'contribution', title:'Centre Contribution',
    subtabs:[['states','By State'],['centres','Every Centre'],['watch','Watch List']]},
   {id:'sales', title:'Sales', subtabs:[['reps','By Rep']]},
@@ -582,6 +755,20 @@ function tileContent(secId){
     body+='<div style="font-size:14px;color:#a9b6bf;margin-top:8px">ad spend $0 (pending)</div>';
     return {rag:'info', body:body};
   }
+  if(secId==='churn'){
+    var cm=DATA.churnMonthly;
+    if(!cm) return {rag:'info', body:'<div style="color:#9fb0bd">No churn data yet.</div>'};
+    var pct=cm.ytd_pct_avg, ourPct=cm.ytd_our_pct_avg, notPct=cm.ytd_not_our_pct_avg;
+    var rag = (pct!=null && pct>3.4) ? 'red' : 'green';
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<div><div style="font-size:30px;font-weight:800;color:'+RAGC[rag]+'">'+(pct!=null?pct.toFixed(1):'-')+'%</div><div style="font-size:16px;color:#7d93a3">YTD churn (target 3.4%)</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--orange)">'+(ourPct!=null?ourPct.toFixed(1):'-')+'%</div><div style="font-size:16px;color:#7d93a3">our fault</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--green)">'+(notPct!=null?notPct.toFixed(1):'-')+'%</div><div style="font-size:16px;color:#7d93a3">not our fault</div></div></div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:6px 0 4px">Monthly churn rate '+(cm.months&&cm.months.length?cm.months[0].key.slice(0,4):'')+'</div>';
+    var mm=(cm.months||[]);
+    body+=miniBars(mm.map(function(m){return {label:(m.label||m.key.slice(5)),value:m.pct||0,color:'var(--lightblue)'};}),{w:280,h:64});
+    return {rag:rag, body:body};
+  }
   return {rag:'info', body:''};
 }
 
@@ -596,7 +783,7 @@ function renderHub(){
        '<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between">'+c.body+'</div>'+
        '<div style="font-size:15px;color:var(--blue);margin-top:12px">Open &rarr;</div></div>';
   });
-  ['Churn &amp; Retention','Recruitment','Coach Capacity','Finance','Forecast'].forEach(function(name){
+  ['Recruitment','Coach Capacity','Finance','Forecast'].forEach(function(name){
     h+='<div style="background:#f6f8f9;border:1px dashed #cdd8de;border-radius:14px;padding:16px;opacity:.7;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center">'+
        '<div style="font-family:MarkerFelt,sans-serif;color:#9fb0bd;font-size:16px;text-align:center">'+name+'</div>'+
        '<div style="font-size:12px;color:#a9b6bf;margin-top:6px">Coming soon</div></div>';
@@ -622,6 +809,12 @@ function openSection(secId){
     tb.style.display='none';
     hdr.innerHTML='<div id="scorecard"></div>';
     renderScorecard();
+    window.scrollTo(0,0); return;
+  }
+  if(sec.kind==='churn'){
+    tb.style.display='none';
+    hdr.innerHTML='<div id="churnDetail"></div>';
+    renderChurnSection();
     window.scrollTo(0,0); return;
   }
   tb.style.display='';
@@ -678,7 +871,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap, unitEcon, scorecard){
+window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -689,6 +882,8 @@ window.__ingestProfit=function(doc, repMap, unitEcon, scorecard){
   DATA.reps=computeReps(doc, repMap||[]);
   DATA.econ=unitEcon||null;
   DATA.scorecard=scorecard||null;
+  DATA.churn=churn||null;
+  DATA.churnMonthly=churnMonthly||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -747,7 +942,17 @@ async function loadFromFirestore(){
       const ssnap = await getDoc(doc(db,'scorecard','current'));
       if(ssnap.exists()) scorecard=ssnap.data();
     }catch(_){ /* scorecard optional */ }
-    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard);
+    let churn=null;
+    try{
+      const csnap = await getDoc(doc(db,'churn-analytics','current'));
+      if(csnap.exists()) churn=csnap.data();
+    }catch(_){ /* churn optional */ }
+    let churnMonthly=null;
+    try{
+      const cmsnap = await getDoc(doc(db,'churn-monthly','current'));
+      if(cmsnap.exists()) churnMonthly=cmsnap.data();
+    }catch(_){ /* churn-monthly optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
