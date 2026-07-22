@@ -6798,7 +6798,7 @@ async function ccLogCall(num){
     const history=Array.isArray(c.history)?c.history.slice():[]; history.push(entry);
     const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
     const patch={history, status:STATUSMAP[result]||c.status, crmCallCount:(c.crmCallCount||0)+1, lastResult:result};
-    if(cb) patch.callbackDate=cb;
+    if(cb) patch.callbackDate=cb; else patch.callbackDate=null;
     await updateDoc(doc(db, ccCOLLECTION, c.id), patch);
     Object.assign(c, patch);
     // (b) daily-activity upsert for rep+date
