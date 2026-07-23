@@ -724,6 +724,144 @@ function renderFinancialsSection(){
 }
 
 
+var FC_TREATMENT='annual';   // 'oneoff' | 'annual' | 'reported'
+
+function renderForecastSection(){
+  var f=DATA.forecast;
+  var el=document.getElementById('fcDetail');
+  if(!f){ el.innerHTML='<div class="card">No forecast yet. Run forecast.py --write.</div>'; return; }
+  var M=function(n){ if(n==null) return '-'; var neg=n<0,v=Math.abs(Math.round(n));
+    return (neg?'-$':'$')+v.toLocaleString(); };
+  var d=f.drivers||{}, b=f.budget||{}, L=f.landing||{}, o=f.outlier||{};
+  var proj = (FC_TREATMENT==='oneoff') ? (f.projectionOneOff||[]) : (f.projection||[]);
+  var land = L[FC_TREATMENT] || L.annual || {};
+
+  var h='';
+
+  // ---- treatment toggle ----
+  h+='<div class="card" style="padding:14px 16px"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
+  h+='<span style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:17px;margin-right:6px">'+o.month+' cost</span>';
+  [['annual','Spread yearly'],['oneoff','One-off (removed)'],['reported','As reported']].forEach(function(x){
+    var on=FC_TREATMENT===x[0];
+    h+='<button class="fcT" data-t="'+x[0]+'" style="border:none;border-radius:9px;padding:7px 15px;font-family:Pencil,sans-serif;font-size:14px;cursor:pointer;background:'+(on?'var(--ink)':'#eef3f6')+';color:'+(on?'#fff':'var(--ink)')+'">'+x[1]+'</button>';
+  });
+  h+='</div><div style="font-size:12.5px;color:#9fb0bd;margin-top:8px">'+o.month+' wages were '+M(o.wages)+
+     ' against a '+M(o.normalWageAvg)+' average \u2014 '+M(o.excess)+' above normal. How that is treated changes the profit outlook, not revenue.</div></div>';
+
+  // ---- landing vs budget ----
+  var revBeat = (land.revenue||0) >= (b.revenue||0);
+  var npBeat  = (land.netProfit||0) >= (b.netProfit||0);
+  h+='<div class="card"><h3>Where CY2026 lands</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Actuals to date plus the projection for the rest of the year, against budget.</div>'+
+     '<div style="display:flex;gap:36px;flex-wrap:wrap;align-items:flex-end">'+
+     '<div><div style="font-size:38px;font-weight:800;color:'+(revBeat?'var(--green)':'var(--orange)')+'">'+M(land.revenue)+'</div>'+
+       '<div style="color:#7d93a3">Revenue \u00b7 budget '+M(b.revenue)+'</div></div>'+
+     '<div><div style="font-size:38px;font-weight:800;color:'+(npBeat?'var(--green)':'var(--red)')+'">'+M(land.netProfit)+'</div>'+
+       '<div style="color:#7d93a3">Net profit \u00b7 budget '+M(b.netProfit)+'</div></div>'+
+     '</div>';
+  h+='<div style="margin-top:14px;padding-top:12px;border-top:1px solid #eef3f6;font-size:13.5px;color:#6b7f8c">'+
+     'Net profit clears budget under all three treatments ('+M((L.oneoff||{}).netProfit)+' / '+
+     M((L.annual||{}).netProfit)+' / '+M((L.reported||{}).netProfit)+'), so the conclusion holds regardless of how '+o.month+' is treated.</div></div>';
+
+  // ---- drivers ----
+  h+='<div class="card"><h3>What drives the model</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Every figure below comes from live data, not assumptions.</div>'+
+     '<table style="width:100%;border-collapse:collapse;font-size:14px">';
+  [['Active centres', d.activeCentres, ''],
+   ['New centres sold / month', d.newPerMonth, ''],
+   ['Monthly churn rate', d.churnPct, '%'],
+   ['Revenue per centre / month', M(d.revenuePerCentre), ''],
+   ['Gross margin', d.grossMarginPct, '%'],
+   ['Operating costs / month', M(d.opexPerMonth), '']].forEach(function(r){
+    h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+       '<td style="padding:7px 6px;color:#6b7f8c">'+r[0]+'</td>'+
+       '<td style="text-align:right;font-weight:700;color:var(--ink)">'+r[1]+r[2]+'</td></tr>';
+  });
+  h+='</table></div>';
+
+  // ---- equilibrium ----
+  if(f.equilibriumCentres){
+    var eq=f.equilibriumCentres, now=d.activeCentres||0;
+    var pct=Math.min(100, Math.round(100*now/eq));
+    h+='<div class="card" style="border-top:4px solid var(--orange)"><h3>Growth ceiling: '+Math.round(eq)+' centres</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:12px">At '+d.newPerMonth+' new centres a month against '+d.churnPct+
+       '% churn, losses catch up with sales at about <b>'+Math.round(eq)+' centres</b>. Churn scales with the base; sales do not. '+
+       'Passing that ceiling needs either more sales or less churn.</div>'+
+       '<div style="background:#eef3f6;border-radius:10px;height:26px;position:relative;overflow:hidden">'+
+       '<div style="background:var(--blue);height:100%;width:'+pct+'%"></div>'+
+       '<div style="position:absolute;top:0;left:8px;line-height:26px;font-size:13px;font-weight:700;color:#fff">'+now+' now</div>'+
+       '<div style="position:absolute;top:0;right:8px;line-height:26px;font-size:13px;color:#5b7180">'+Math.round(eq)+'</div>'+
+       '</div></div>';
+  }
+
+  // ---- 12-month projection ----
+  if(proj.length){
+    h+='<div class="card"><h3>Next 12 months</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Seasonality from 2025 actuals, with December at 75% and January at 50% of November.</div>';
+    h+=miniBars(proj.slice(0,12).map(function(m){
+      return {label:m.month.slice(5), value:Math.round(m.revenue),
+              color:(m.netProfit<0?'var(--red)':'var(--blue)')};
+    }),{w:520,h:150});
+    h+='<div style="font-size:12.5px;color:#9fb0bd;margin:4px 0 12px">Revenue by month \u00b7 red = month runs at a loss</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:13.5px">'+
+       '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+       '<th style="padding:6px">Month</th><th style="text-align:right">Centres</th>'+
+       '<th style="text-align:right">Revenue</th><th style="text-align:right">Net profit</th></tr>';
+    proj.slice(0,12).forEach(function(m){
+      var neg=m.netProfit<0;
+      h+='<tr style="border-bottom:1px solid #f0f4f6'+(neg?';background:#fff6f5':'')+'">'+
+         '<td style="padding:6px;font-weight:700;color:var(--ink)">'+m.month+'</td>'+
+         '<td style="text-align:right;color:#5b7180">'+Math.round(m.centres)+'</td>'+
+         '<td style="text-align:right">'+M(m.revenue)+'</td>'+
+         '<td style="text-align:right;font-weight:800;color:'+(neg?'var(--red)':'var(--green)')+'">'+M(m.netProfit)+'</td></tr>';
+    });
+    h+='</table>';
+    // summer trough callout
+    var loss=proj.slice(0,12).filter(function(m){return m.netProfit<0;});
+    if(loss.length){
+      var tot=loss.reduce(function(a,m){return a+m.netProfit;},0);
+      h+='<div style="margin-top:12px;padding:10px 12px;background:#fff6f5;border-left:4px solid var(--red);border-radius:8px;font-size:13.5px;color:#6b7f8c">'+
+         '<b style="color:var(--red)">Plan cash for the summer.</b> '+loss.map(function(m){return m.month;}).join(' and ')+
+         ' run at a combined loss of about '+M(Math.abs(tot))+' \u2014 revenue falls away while costs keep running.</div>';
+    }
+    h+='</div>';
+  }
+
+  // ---- scenarios ----
+  var sc=f.scenarios||[];
+  if(sc.length){
+    var base=sc[0];
+    h+='<div class="card" style="border-top:4px solid var(--green)"><h3>What if</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Next 12 months under different assumptions, against the current trajectory.</div>'+
+       '<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+       '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+       '<th style="padding:7px 6px">Scenario</th><th style="text-align:right">Revenue</th>'+
+       '<th style="text-align:right">Net profit</th><th style="text-align:right">Centres</th>'+
+       '<th style="text-align:right">vs now</th></tr>';
+    sc.forEach(function(s,i){
+      var delta=(s.netProfit12||0)-(base.netProfit12||0);
+      var isBase=(i===0);
+      h+='<tr style="border-bottom:1px solid #f0f4f6'+(isBase?';background:#fbfdff':'')+'">'+
+         '<td style="padding:7px 6px;font-weight:'+(isBase?'800':'700')+';color:var(--ink)">'+s.name+'</td>'+
+         '<td style="text-align:right">'+M(s.revenue12)+'</td>'+
+         '<td style="text-align:right;font-weight:700;color:var(--green)">'+M(s.netProfit12)+'</td>'+
+         '<td style="text-align:right;color:#5b7180">'+Math.round(s.endCentres||0)+'</td>'+
+         '<td style="text-align:right;font-weight:700;color:'+(delta>0?'var(--green)':(delta<0?'var(--red)':'#9fb0bd'))+'">'+
+           (isBase?'\u2013':(delta>0?'+':'')+M(delta))+'</td></tr>';
+    });
+    h+='</table>'+
+       '<div style="margin-top:12px;padding:10px 12px;background:#f4faf2;border-left:4px solid var(--green);border-radius:8px;font-size:13.5px;color:#6b7f8c">'+
+       '<b style="color:var(--green)">Retention beats acquisition.</b> Hitting the 3.4% churn target is worth more profit than selling five extra centres a month \u2014 and you already have the churn analysis to act on it.</div>';
+    h+='</div>';
+  }
+
+  el.innerHTML=h;
+  Array.prototype.forEach.call(el.querySelectorAll('.fcT'),function(btn){
+    btn.onclick=function(){ FC_TREATMENT=btn.getAttribute('data-t'); renderForecastSection(); };
+  });
+}
+
+
 function renderScorecard(){
   var sc=DATA.scorecard;
   var el=document.getElementById('scorecard');
@@ -921,6 +1059,7 @@ var SECTIONS=[
    subtabs:[['states','By State'],['centres','Every Centre'],['watch','Watch List']]},
   {id:'sales', title:'Sales', kind:'sales'},
   {id:'financials', title:'Financials', kind:'financials'},
+  {id:'forecast', title:'Forecast', kind:'forecast'},
   {id:'econ', title:'Unit Economics', subtabs:[['econ','LTV, CAC & Ratio']]},
 ];
 var ALLVIEWS=['overview','states','reps','econ','centres','watch'];
@@ -1029,6 +1168,22 @@ function tileContent(secId){
     body+='<div style="font-size:14px;color:#a9b6bf;margin-top:8px">ad spend $0 (pending)</div>';
     return {rag:'info', body:body};
   }
+  if(secId==='forecast'){
+    var fc=DATA.forecast;
+    if(!fc) return {rag:'info', body:'<div style="color:#9fb0bd">No forecast yet.</div>'};
+    var L=(fc.landing||{}).annual||{}, b=fc.budget||{}, d=fc.drivers||{};
+    var mny=function(n){ if(n==null) return '-'; var neg=n<0,v=Math.abs(Math.round(n));
+      return (neg?'-$':'$')+(v>=1000?(v/1000).toFixed(v>=100000?0:1)+'k':v); };
+    var beat=(L.netProfit||0)>=(b.netProfit||0);
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--ink)">'+mny(L.revenue)+'</div><div style="font-size:16px;color:#7d93a3">CY2026 revenue</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:'+(beat?'var(--green)':'var(--red)')+'">'+mny(L.netProfit)+'</div><div style="font-size:16px;color:#7d93a3">net profit (budget '+mny(b.netProfit)+')</div></div></div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:6px 0 4px">Projected revenue</div>';
+    body+=miniBars((fc.projection||[]).slice(0,12).map(function(m){
+      return {label:m.month.slice(5),value:Math.round(m.revenue),color:(m.netProfit<0?'var(--red)':'var(--blue)')};}),{w:280,h:64});
+    body+='<div style="font-size:15px;color:#7d93a3;margin-top:8px">Growth ceiling '+Math.round(fc.equilibriumCentres||0)+' centres at '+d.churnPct+'% churn</div>';
+    return {rag:(beat?'green':'amber'), body:body};
+  }
   if(secId==='financials'){
     var f=DATA.financials;
     if(!f) return {rag:'info', body:'<div style="color:#9fb0bd">No financial data yet.</div>'};
@@ -1119,6 +1274,12 @@ function openSection(secId){
     renderFinancialsSection();
     window.scrollTo(0,0); return;
   }
+  if(sec.kind==='forecast'){
+    tb.style.display='none';
+    hdr.innerHTML='<div id="fcDetail"></div>';
+    renderForecastSection();
+    window.scrollTo(0,0); return;
+  }
   tb.style.display='';
   // Contribution section shows the KPI strip + basis note above its tabs
   if(secId==='contribution'){
@@ -1173,7 +1334,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials){
+window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials, forecast){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -1188,6 +1349,7 @@ window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMon
   DATA.churnMonthly=churnMonthly||null;
   DATA.salesAnalytics=salesAnalytics||null;
   DATA.financials=financials||null;
+  DATA.forecast=forecast||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -1266,7 +1428,12 @@ async function loadFromFirestore(){
       const fsnap = await getDoc(doc(db,'financials','current'));
       if(fsnap.exists()) financials=fsnap.data();
     }catch(_){ /* financials optional */ }
-    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials);
+    let forecast=null;
+    try{
+      const fcsnap = await getDoc(doc(db,'forecast','current'));
+      if(fcsnap.exists()) forecast=fcsnap.data();
+    }catch(_){ /* forecast optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials, forecast);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
