@@ -589,6 +589,141 @@ function renderSalesSection(){
 }
 
 
+function renderFinancialsSection(){
+  var f=DATA.financials;
+  var el=document.getElementById('finDetail');
+  if(!f){ el.innerHTML='<div class="card">No financial data yet. Run financials.py --write.</div>'; return; }
+  var M=function(n){ if(n==null) return '-';
+    var neg=n<0, v=Math.abs(Math.round(n));
+    return (neg?'-$':'$')+v.toLocaleString(); };
+  var b=f.budget||{}, y=f.ytd||{}, rr=f.runRate||{}, va=f.variance||{};
+  var n=f.monthsCovered||0, pace=f.budgetPace||0;
+
+  var h='';
+
+  // ---- headline: YTD vs budget ----
+  var revPct = b.revenue? (100*y.revenue/(b.revenue*pace)) : null;
+  h+='<div class="card"><div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">'+
+     n+' months actual ('+f.year+') from Xero, against the CY'+f.year+' budget.</div>'+
+     '<div style="display:flex;gap:34px;flex-wrap:wrap;align-items:flex-end">'+
+     '<div><div style="font-size:38px;font-weight:800;color:var(--ink)">'+M(y.revenue)+'</div>'+
+       '<div style="color:#7d93a3">Revenue YTD <span style="color:'+(va.revenue>=0?'var(--green)':'var(--orange)')+'">('+(va.revenue>=0?'+':'')+M(va.revenue).replace('$','$')+' vs budget)</span></div></div>'+
+     '<div><div style="font-size:38px;font-weight:800;color:var(--green)">'+M(y.grossProfit)+'</div><div style="color:#7d93a3">Gross profit</div></div>'+
+     '<div><div style="font-size:38px;font-weight:800;color:'+((y.netProfit||0)>=0?'var(--green)':'var(--red)')+'">'+M(y.netProfit)+'</div>'+
+       '<div style="color:#7d93a3">Net profit <span style="color:'+(va.netProfit>=0?'var(--green)':'var(--red)')+'">('+(va.netProfit>=0?'+':'')+M(va.netProfit)+' vs budget)</span></div></div>'+
+     '</div></div>';
+
+  // ---- run-rate vs full-year budget ----
+  h+='<div class="card"><h3>Tracking to the full-year budget</h3>'+
+     '<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+     '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+     '<th style="padding:7px 6px"></th><th style="text-align:right">YTD actual</th>'+
+     '<th style="text-align:right">Budget to date</th><th style="text-align:right">Annualised</th>'+
+     '<th style="text-align:right">Full-year budget</th></tr>';
+  [['Revenue','revenue'],['Gross profit','grossProfit'],['Net profit','netProfit']].forEach(function(r){
+    var k=r[1];
+    var ann=rr[k], bud=b[k], budToDate=(bud!=null? bud*pace : null);
+    var good = (ann!=null && bud!=null) ? (ann>=bud) : null;
+    h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+       '<td style="padding:7px 6px;font-weight:700;color:var(--ink)">'+r[0]+'</td>'+
+       '<td style="text-align:right;font-weight:700">'+M(y[k])+'</td>'+
+       '<td style="text-align:right;color:#7d93a3">'+M(budToDate)+'</td>'+
+       '<td style="text-align:right;font-weight:800;color:'+(good?'var(--green)':'var(--orange)')+'">'+M(ann)+'</td>'+
+       '<td style="text-align:right;color:#7d93a3">'+M(bud)+'</td></tr>';
+  });
+  h+='</table></div>';
+
+  // ---- monthly P&L ----
+  var mo=f.monthly||[];
+  if(mo.length){
+    h+='<div class="card"><h3>Month by month</h3>'+
+       '<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+       '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+       '<th style="padding:7px 6px">Month</th><th style="text-align:right">Revenue</th>'+
+       '<th style="text-align:right">Gross profit</th><th style="text-align:right">Net profit</th></tr>';
+    mo.forEach(function(m){
+      var np=m.netProfit||0;
+      h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+         '<td style="padding:7px 6px;font-weight:700;color:var(--ink)">'+m.month+'</td>'+
+         '<td style="text-align:right">'+M(m.revenue)+'</td>'+
+         '<td style="text-align:right;color:var(--green)">'+M(m.grossProfit)+'</td>'+
+         '<td style="text-align:right;font-weight:800;color:'+(np>=0?'var(--green)':'var(--red)')+'">'+M(np)+'</td></tr>';
+    });
+    h+='</table>';
+    h+='<div style="margin-top:14px">'+miniBars(mo.map(function(m){
+      return {label:m.month, value:Math.round(m.revenue||0), color:'var(--blue)'};
+    }),{w:520,h:130})+'</div>';
+    h+='<div style="font-size:12.5px;color:#9fb0bd;margin-top:4px">Revenue by month</div>';
+    h+='</div>';
+
+    // ---- worst month callout ----
+    var worst=mo.slice().sort(function(a,b){return (a.netProfit||0)-(b.netProfit||0);})[0];
+    if(worst && (worst.netProfit||0)<0){
+      var others=mo.filter(function(m){return m.month!==worst.month;});
+      var avgNp=others.length? others.reduce(function(a,m){return a+(m.netProfit||0);},0)/others.length : 0;
+      h+='<div class="card" style="border-top:4px solid var(--red)"><h3>'+worst.month+' pulled the year down</h3>'+
+         '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">'+worst.month+' lost <b>'+M(worst.netProfit)+
+         '</b> while the other months averaged '+M(avgNp)+'. Its largest costs:</div>';
+      (worst.expenses||[]).slice(0,8).forEach(function(e){
+        h+='<div style="display:flex;justify-content:space-between;border-bottom:1px solid #f0f4f6;padding:5px 0;font-size:13.5px">'+
+           '<span style="color:var(--ink)">'+e.label+'</span>'+
+           '<span style="font-weight:700">'+M(e.amount)+'</span></div>';
+      });
+      h+='<div style="font-size:12.5px;color:#9fb0bd;margin-top:8px">A single heavy month can be a year-end adjustment rather than real trading. Worth confirming before treating it as a trend.</div></div>';
+    }
+  }
+
+  // ---- revenue by state ----
+  var inc=f.incomeLines||[];
+  if(inc.length){
+    var SVC={'Programs - Victoria':'var(--red)','Programs - Queensland':'var(--green)',
+             'Programs - New South Wales':'var(--blue)','Programs - Western Australia':'var(--pink)',
+             'Programs - South Australia':'var(--orange)'};
+    h+='<div class="card"><h3>Revenue by stream (YTD)</h3>'+
+       hbars(inc.slice(0,8).map(function(l){
+         return {label:l.label.replace('Programs - ',''), value:l.ytd, display:M(l.ytd),
+                 color:SVC[l.label]||'var(--lightblue)'};
+       }))+'</div>';
+  }
+
+  // ---- expenses ----
+  var ox=f.opexLines||[];
+  if(ox.length){
+    h+='<div class="card"><h3>Operating expenses (YTD)</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Largest cost lines for the year to date.</div>'+
+       hbars(ox.slice(0,10).map(function(l){
+         return {label:l.label, value:l.ytd, display:M(l.ytd), color:'var(--orange)'};
+       }))+'</div>';
+  }
+
+  // ---- history ----
+  var hist=f.history||[];
+  if(hist.length){
+    h+='<div class="card"><h3>Where this year sits</h3>'+
+       '<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+       '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+       '<th style="padding:7px 6px">Year</th><th style="text-align:right">Revenue</th><th style="text-align:right">Net profit</th></tr>';
+    hist.forEach(function(x){
+      h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+         '<td style="padding:7px 6px;font-weight:700">'+x.year+'</td>'+
+         '<td style="text-align:right">'+M(x.revenue)+'</td>'+
+         '<td style="text-align:right;color:'+((x.netProfit||0)>=0?'var(--green)':'var(--red)')+'">'+M(x.netProfit)+'</td></tr>';
+    });
+    h+='<tr style="border-bottom:1px solid #f0f4f6;background:#fbfdff">'+
+       '<td style="padding:7px 6px;font-weight:800">'+f.year+' budget</td>'+
+       '<td style="text-align:right;font-weight:700">'+M(b.revenue)+'</td>'+
+       '<td style="text-align:right;font-weight:700">'+M(b.netProfit)+'</td></tr>';
+    h+='<tr style="background:#fffdf5">'+
+       '<td style="padding:7px 6px;font-weight:800">'+f.year+' annualised</td>'+
+       '<td style="text-align:right;font-weight:800">'+M(rr.revenue)+'</td>'+
+       '<td style="text-align:right;font-weight:800;color:'+((rr.netProfit||0)>=0?'var(--green)':'var(--red)')+'">'+M(rr.netProfit)+'</td></tr>';
+    h+='</table></div>';
+  }
+
+  el.innerHTML=h;
+}
+
+
 function renderScorecard(){
   var sc=DATA.scorecard;
   var el=document.getElementById('scorecard');
@@ -785,6 +920,7 @@ var SECTIONS=[
   {id:'contribution', title:'Centre Contribution',
    subtabs:[['states','By State'],['centres','Every Centre'],['watch','Watch List']]},
   {id:'sales', title:'Sales', kind:'sales'},
+  {id:'financials', title:'Financials', kind:'financials'},
   {id:'econ', title:'Unit Economics', subtabs:[['econ','LTV, CAC & Ratio']]},
 ];
 var ALLVIEWS=['overview','states','reps','econ','centres','watch'];
@@ -893,6 +1029,22 @@ function tileContent(secId){
     body+='<div style="font-size:14px;color:#a9b6bf;margin-top:8px">ad spend $0 (pending)</div>';
     return {rag:'info', body:body};
   }
+  if(secId==='financials'){
+    var f=DATA.financials;
+    if(!f) return {rag:'info', body:'<div style="color:#9fb0bd">No financial data yet.</div>'};
+    var y=f.ytd||{}, b=f.budget||{}, rr=f.runRate||{}, va=f.variance||{};
+    var np=y.netProfit||0;
+    var rag = np<0 ? 'red' : (rr.netProfit>=b.netProfit ? 'green' : 'amber');
+    var mny=function(n){ if(n==null) return '-'; var neg=n<0,v=Math.abs(Math.round(n));
+      return (neg?'-$':'$')+(v>=1000?(v/1000).toFixed(v>=100000?0:1)+'k':v); };
+    var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px">'+
+      '<div><div style="font-size:30px;font-weight:800;color:var(--ink)">'+mny(y.revenue)+'</div><div style="font-size:16px;color:#7d93a3">revenue YTD</div></div>'+
+      '<div><div style="font-size:30px;font-weight:800;color:'+(np>=0?'var(--green)':'var(--red)')+'">'+mny(np)+'</div><div style="font-size:16px;color:#7d93a3">net profit YTD</div></div></div>';
+    body+='<div style="font-size:16px;color:#8ba0ad;margin:6px 0 4px">Revenue by month</div>';
+    body+=miniBars((f.monthly||[]).map(function(m){return {label:m.month,value:Math.round(m.revenue||0),color:'var(--blue)'};}),{w:280,h:64});
+    body+='<div style="font-size:15px;color:#7d93a3;margin-top:8px">Annualised '+mny(rr.revenue)+' vs budget '+mny(b.revenue)+'</div>';
+    return {rag:rag, body:body};
+  }
   if(secId==='churn'){
     var cm=DATA.churnMonthly;
     if(!cm) return {rag:'info', body:'<div style="color:#9fb0bd">No churn data yet.</div>'};
@@ -961,6 +1113,12 @@ function openSection(secId){
     renderSalesSection();
     window.scrollTo(0,0); return;
   }
+  if(sec.kind==='financials'){
+    tb.style.display='none';
+    hdr.innerHTML='<div id="finDetail"></div>';
+    renderFinancialsSection();
+    window.scrollTo(0,0); return;
+  }
   tb.style.display='';
   // Contribution section shows the KPI strip + basis note above its tabs
   if(secId==='contribution'){
@@ -1015,7 +1173,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics){
+window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -1029,6 +1187,7 @@ window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMon
   DATA.churn=churn||null;
   DATA.churnMonthly=churnMonthly||null;
   DATA.salesAnalytics=salesAnalytics||null;
+  DATA.financials=financials||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -1102,7 +1261,12 @@ async function loadFromFirestore(){
       const sasnap = await getDoc(doc(db,'sales-analytics','current'));
       if(sasnap.exists()) salesAnalytics=sasnap.data();
     }catch(_){ /* sales-analytics optional */ }
-    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics);
+    let financials=null;
+    try{
+      const fsnap = await getDoc(doc(db,'financials','current'));
+      if(fsnap.exists()) financials=fsnap.data();
+    }catch(_){ /* financials optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics, financials);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
