@@ -453,6 +453,142 @@ function wireChurnButtons(el){
 }
 
 
+var SALES_MONTH=null;  // null = latest; 'ytd' = year to date
+
+function renderSalesSection(){
+  var sa=DATA.salesAnalytics;
+  var el=document.getElementById('salesDetail');
+  if(!sa){ el.innerHTML='<div class="card">No sales data yet. Run sales_analytics.py.</div>'; return; }
+  var money=function(n){ return n?('$'+Number(n).toLocaleString()):'-'; };
+  var monthList=(sa.months||[]).map(function(m){return m.month;});
+  if(!SALES_MONTH) SALES_MONTH = sa.thisMonth || (monthList.length?monthList[monthList.length-1]:null);
+  var MLAB={ '01':'Jan','02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun','07':'Jul','08':'Aug','09':'Sep','10':'Oct','11':'Nov','12':'Dec'};
+  function mlabel(mk){ return (MLAB[mk.slice(5)]||mk.slice(5))+' '+mk.slice(0,4); }
+  var target=sa.target||180;
+  var isYTD = (SALES_MONTH==='ytd');
+
+  var h='';
+
+  // month selector + YTD
+  h+='<div class="card" style="padding:14px 16px"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
+  h+='<span style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:17px;margin-right:6px">Month</span>';
+  monthList.forEach(function(mk){
+    var on=SALES_MONTH===mk;
+    h+='<button class="saMo" data-m="'+mk+'" style="border:none;border-radius:9px;padding:7px 13px;font-family:Pencil,sans-serif;font-size:13.5px;cursor:pointer;background:'+(on?'var(--ink)':'#eef3f6')+';color:'+(on?'#fff':'var(--ink)')+'">'+(MLAB[mk.slice(5)]||mk.slice(5))+'</button>';
+  });
+  h+='<span style="width:1px;height:24px;background:#e0e7ec;margin:0 4px"></span>';
+  var onY=isYTD;
+  h+='<button class="saMo" data-m="ytd" style="border:none;border-radius:9px;padding:7px 16px;font-family:Pencil,sans-serif;font-size:14px;cursor:pointer;background:'+(onY?'var(--green)':'#eef3f6')+';color:'+(onY?'#fff':'var(--ink)')+'">YTD 2026</button>';
+  h+='</div></div>';
+
+  // ---- headline: centres sold + points for the period ----
+  var ytd=sa.ytd||{};
+  var periodCentres, periodPoints, periodLabel;
+  if(isYTD){
+    periodCentres=ytd.centresSold; periodPoints=ytd.points; periodLabel='2026 year to date';
+  } else {
+    var mo=(sa.months||[]).filter(function(m){return m.month===SALES_MONTH;})[0]||{};
+    periodCentres=mo.centresSold; periodPoints=mo.points; periodLabel=mlabel(SALES_MONTH);
+  }
+  h+='<div class="card"><div style="font-size:13px;color:#8ba0ad;margin-bottom:8px">Sales for <b>'+periodLabel+'</b></div>'+
+     '<div style="display:flex;gap:36px;flex-wrap:wrap;align-items:flex-end">'+
+     '<div><div style="font-size:40px;font-weight:800;color:var(--blue)">'+(periodCentres!=null?periodCentres:'-')+'</div><div style="color:#7d93a3">Centres sold</div></div>'+
+     '<div><div style="font-size:40px;font-weight:800;color:var(--ink)">'+(periodPoints!=null?periodPoints:'-')+'</div><div style="color:#7d93a3">Points'+(!isYTD?' (target '+target+')':'')+'</div></div>'+
+     (isYTD?'<div><div style="font-size:32px;font-weight:800;color:var(--green)">'+money(ytd.profit)+'</div><div style="color:#7d93a3">Profit after coaches</div></div>':'')+
+     '</div></div>';
+
+  // ---- ranked leaderboard ----
+  var rows, prevRank={}, headNote;
+  if(isYTD){
+    // rank by total points
+    rows=(sa.reps||[]).filter(function(r){return r.pointsTotal>0;})
+          .map(function(r){return {rep:r.rep, points:r.pointsTotal};})
+          .sort(function(a,b){return b.points-a.points;});
+    headNote='Year-to-date points by rep.';
+  } else {
+    var monthObj=(sa.months||[]).filter(function(m){return m.month===SALES_MONTH;})[0];
+    rows=((monthObj&&monthObj.reps)||[]).map(function(r){return {rep:r.rep,points:r.points,centres:r.centres};});
+    var idx=monthList.indexOf(SALES_MONTH);
+    if(idx>0){ var prevObj=(sa.months||[]).filter(function(m){return m.month===monthList[idx-1];})[0];
+      if(prevObj) prevObj.reps.forEach(function(r,i){ prevRank[r.rep]=i+1; }); }
+    headNote='Points and centres sold this month, with movement vs last month. Target '+target+' pts/mo (team).';
+  }
+  h+='<div class="card"><h3>Leaderboard \u2014 '+periodLabel+'</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">'+headNote+'</div>';
+  h+='<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+     '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+     '<th style="padding:7px 6px;width:44px">#</th><th>Rep</th>'+
+     (!isYTD?'<th style="text-align:right">Centres</th>':'')+
+     '<th style="text-align:right">Points</th>'+
+     (!isYTD?'<th style="text-align:center;width:70px">Move</th>':'')+'</tr>';
+  rows.forEach(function(r,i){
+    var rank=i+1;
+    var medal = rank===1?'&#129351;':rank===2?'&#129352;':rank===3?'&#129353;':'';
+    var hit = r.points>=target;
+    var mvHtml='';
+    if(!isYTD){
+      var pr=prevRank[r.rep]; var mv=pr?(pr-rank):null;
+      mvHtml = mv==null ? '<span style="color:#c7d0d6">new</span>' :
+               mv>0 ? '<span style="color:var(--green)">&#9650; '+mv+'</span>' :
+               mv<0 ? '<span style="color:var(--red)">&#9660; '+(-mv)+'</span>' :
+               '<span style="color:#9fb0bd">\u2013</span>';
+    }
+    h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+       '<td style="padding:7px 6px;font-weight:800;color:var(--ink)">'+rank+' '+medal+'</td>'+
+       '<td style="font-weight:700;color:var(--ink)">'+r.rep+'</td>'+
+       (!isYTD?'<td style="text-align:right;color:#5b7180">'+(r.centres||0)+'</td>':'')+
+       '<td style="text-align:right;font-weight:800;color:'+(hit?'var(--green)':'var(--ink)')+'">'+r.points+'</td>'+
+       (!isYTD?'<td style="text-align:center">'+mvHtml+'</td>':'')+'</tr>';
+  });
+  h+='</table></div>';
+
+  // ---- revenue + profit per rep ----
+  var reps=(sa.reps||[]).filter(function(r){return r.revenue||r.profit||r.centres;});
+  if(reps.length){
+    h+='<div class="card" style="border-top:4px solid var(--green)"><h3>Revenue &amp; profit per rep</h3>'+
+       '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Each rep\u2019s active centre book: revenue billed and profit after paying coaches (contribution).</div>';
+    h+='<table style="width:100%;border-collapse:collapse;font-size:14px">'+
+       '<tr style="text-align:left;color:#6b7f8c;border-bottom:2px solid #eef3f6">'+
+       '<th style="padding:7px 6px">Rep</th><th style="text-align:right">Active centres</th><th style="text-align:right">Revenue</th><th style="text-align:right">Profit (after coaches)</th><th style="text-align:right">Margin</th></tr>';
+    reps.slice().sort(function(a,b){return (b.profit||0)-(a.profit||0);}).forEach(function(r){
+      var margin = r.revenue ? Math.round(100*r.profit/r.revenue) : 0;
+      h+='<tr style="border-bottom:1px solid #f0f4f6">'+
+         '<td style="padding:7px 6px;font-weight:700;color:var(--ink)">'+r.rep+'</td>'+
+         '<td style="text-align:right">'+(r.centres||0)+'</td>'+
+         '<td style="text-align:right;font-weight:700">'+money(r.revenue)+'</td>'+
+         '<td style="text-align:right;font-weight:800;color:var(--green)">'+money(r.profit)+'</td>'+
+         '<td style="text-align:right;color:#7d93a3">'+(r.revenue?margin+'%':'-')+'</td></tr>';
+    });
+    h+='</table></div>';
+  }
+
+  // ---- month-by-month: centres sold + points ----
+  h+='<div class="card"><h3>Centres sold by month</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Team centres sold each month. YTD total: <b>'+(ytd.centresSold||0)+'</b> centres.</div>';
+  h+=miniBars(monthList.map(function(mk){
+    var mo=(sa.months||[]).filter(function(m){return m.month===mk;})[0]||{};
+    return {label:(MLAB[mk.slice(5)]||mk.slice(5)), value:mo.centresSold||0,
+            color:(!isYTD&&mk===SALES_MONTH)?'var(--red)':'var(--blue)'};
+  }), {w:520,h:150});
+  h+='</div>';
+
+  h+='<div class="card"><h3>Points by month</h3>'+
+     '<div style="font-size:13px;color:#8ba0ad;margin-bottom:10px">Team points each month vs the '+target+' target. YTD total: <b>'+(ytd.points||0)+'</b> pts.</div>';
+  h+=miniBars(monthList.map(function(mk){
+    var mo=(sa.months||[]).filter(function(m){return m.month===mk;})[0]||{};
+    var v=Math.round(mo.points||0);
+    return {label:(MLAB[mk.slice(5)]||mk.slice(5)), value:v,
+            color:(!isYTD&&mk===SALES_MONTH)?'var(--red)':(v>=target?'var(--green)':'var(--orange)')};
+  }), {target:target,w:520,h:150});
+  h+='<div style="font-size:12.5px;color:#9fb0bd;margin-top:4px">Dashed line = target</div></div>';
+
+  el.innerHTML=h;
+  Array.prototype.forEach.call(el.querySelectorAll('.saMo'),function(b){
+    b.onclick=function(){ SALES_MONTH=b.getAttribute('data-m'); renderSalesSection(); };
+  });
+}
+
+
 function renderScorecard(){
   var sc=DATA.scorecard;
   var el=document.getElementById('scorecard');
@@ -648,7 +784,7 @@ var SECTIONS=[
   {id:'churn', title:'Churn & Retention', kind:'churn'},
   {id:'contribution', title:'Centre Contribution',
    subtabs:[['states','By State'],['centres','Every Centre'],['watch','Watch List']]},
-  {id:'sales', title:'Sales', subtabs:[['reps','By Rep']]},
+  {id:'sales', title:'Sales', kind:'sales'},
   {id:'econ', title:'Unit Economics', subtabs:[['econ','LTV, CAC & Ratio']]},
 ];
 var ALLVIEWS=['overview','states','reps','econ','centres','watch'];
@@ -729,9 +865,11 @@ function tileContent(secId){
     var avg=find('Avg sales points / month'), thism=find('Sales points (this month)');
     var monthly=(sc&&sc.monthly)||[];
     var tgt=(sc&&sc.pointsTarget)||180;
+    var sa=DATA.salesAnalytics; var leader=sa&&sa.reps&&sa.reps.filter(function(r){return r.rankThis===1;})[0];
     var body='<div style="display:flex;gap:18px;flex-wrap:wrap;margin-bottom:8px">'+
       '<div><div style="font-size:24px;font-weight:800;color:'+RAGC[(avg&&avg.status)||'info']+'">'+(avg?avg.value:'-')+'</div><div style="font-size:16px;color:#7d93a3">Avg pts/mo (target '+tgt+')</div></div>'+
-      '<div><div style="font-size:24px;font-weight:800;color:'+RAGC[(thism&&thism.status)||'info']+'">'+(thism?thism.value:'-')+'</div><div style="font-size:16px;color:#7d93a3">This month</div></div></div>';
+      '<div><div style="font-size:24px;font-weight:800;color:'+RAGC[(thism&&thism.status)||'info']+'">'+(thism?thism.value:'-')+'</div><div style="font-size:16px;color:#7d93a3">This month</div></div>'+
+      (leader?'<div><div style="font-size:24px;font-weight:800;color:var(--yellow)">&#129351; '+leader.rep+'</div><div style="font-size:16px;color:#7d93a3">Leader ('+leader.pointsThis+' pts)</div></div>':'')+'</div>';
     body+='<div style="font-size:16px;color:#8ba0ad;margin:4px 0 2px">Sales points / month (red line = target)</div>';
     body+=miniBars(monthly.map(function(m){
       var short=m.month.slice(5); var lbls={ '02':'Feb','03':'Mar','04':'Apr','05':'May','06':'Jun','07':'Jul','08':'Aug','09':'Sep','10':'Oct','11':'Nov','12':'Dec','01':'Jan'};
@@ -817,6 +955,12 @@ function openSection(secId){
     renderChurnSection();
     window.scrollTo(0,0); return;
   }
+  if(sec.kind==='sales'){
+    tb.style.display='none';
+    hdr.innerHTML='<div id="salesDetail"></div>';
+    renderSalesSection();
+    window.scrollTo(0,0); return;
+  }
   tb.style.display='';
   // Contribution section shows the KPI strip + basis note above its tabs
   if(secId==='contribution'){
@@ -871,7 +1015,7 @@ function computeAggregates(d){
   d.warnings = d.warnings||{};
   return d;
 }
-window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly){
+window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics){
   if(!doc){ 
     document.getElementById('v-overview').innerHTML=
       '<div class="card"><h3>No data yet</h3><div>No contribution document found. '+
@@ -884,6 +1028,7 @@ window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMon
   DATA.scorecard=scorecard||null;
   DATA.churn=churn||null;
   DATA.churnMonthly=churnMonthly||null;
+  DATA.salesAnalytics=salesAnalytics||null;
   renderAll();
 };
 window.__profitError=function(msg){
@@ -952,7 +1097,12 @@ async function loadFromFirestore(){
       const cmsnap = await getDoc(doc(db,'churn-monthly','current'));
       if(cmsnap.exists()) churnMonthly=cmsnap.data();
     }catch(_){ /* churn-monthly optional */ }
-    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly);
+    let salesAnalytics=null;
+    try{
+      const sasnap = await getDoc(doc(db,'sales-analytics','current'));
+      if(sasnap.exists()) salesAnalytics=sasnap.data();
+    }catch(_){ /* sales-analytics optional */ }
+    window.__ingestProfit(docs[0].data, repMap, unitEcon, scorecard, churn, churnMonthly, salesAnalytics);
   }catch(e){
     // rules deny => this fires for anyone who is not Shane
     window.__profitError('You do not have access to this data, or it could not be loaded. ('+e.code+')');
