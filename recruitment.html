@@ -61,7 +61,7 @@ tr:hover td{background:#f7fcff}
 .pcard .pt{font-size:12px;color:#7a8b98;margin-top:2px}
 .pcard .badges{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
 .mini{font-family:'MarkerFelt',cursive;font-size:10px;padding:2px 7px;border-radius:20px;color:#fff}
-.mini.ok{background:var(--green)}.mini.no{background:var(--orange)}.mini.hold{background:var(--pink)}
+.mini.ok{background:var(--green)}.mini.no{background:var(--orange)}.mini.hold{background:var(--pink)}.mini.exp{background:var(--red)}.mini.na{background:#c3ced6;color:var(--ink)}
 .colempty{font-size:12px;color:#9aa8b2;text-align:center;padding:14px 4px;font-family:'MarkerFelt',cursive}
 .modalbg{position:fixed;inset:0;background:rgba(36,55,70,.55);display:flex;align-items:center;justify-content:center;z-index:80;padding:20px}
 .modal{background:#fff;border-radius:20px;border:3px solid #e7eef3;box-shadow:var(--shadow-lg);max-width:440px;width:100%;padding:22px 24px;max-height:85vh;overflow:auto}
@@ -6946,7 +6946,7 @@ async function saveCheck(id, key, val){
 async function createCoach(o){
   const rec = { name:o.name, town:o.town, state:o.state, email:o.email, phone:o.phone,
     location:o.location||'', stage:'Applied', wwccType:(o.state==='QLD'?'Blue Card':'WWCC'), wwccOk:false,
-    checklist:{Interview:false,"Signed up to app":false,[(o.state==='QLD'?'Blue Card':'WWCC')]:false,"Trial session":false,"First head coach session":false},
+    checklist:{Interview:false,"Signed up to app":false,[(o.state==='QLD'?'Blue Card':'WWCC')]:false,"National Safety Training":false,"Trial session":false,"First head coach session":false},
     notes:o.notes||'', source:'manual', updatedAt:Date.now() };
   if (LIVE && db){
     try { const ref = await addDoc(collection(db,COLL), rec); CANDS.push({id:ref.id,...rec}); toast('Coach added'); }
@@ -7087,12 +7087,12 @@ function buildBoard(){
     } else {
       inCol.forEach(c=>{
         const hold = /hold/i.test(c.notes||'')||/hold/i.test(c.name||'');
-        const wcls = c.wwccOk?'ok':'no';
         h += `<div class="pcard" onclick="openCard('${c.id}')">
           <div class="pn">${esc(c.name)}</div>
           <div class="pt">${esc(c.town||'-')}${c.state?', '+esc(c.state):''}</div>
           <div class="badges">
-            <span class="mini ${wcls}">${esc(c.wwccType||'WWCC')} ${c.wwccOk?'✓':'✗'}</span>
+            <span class="mini ${c.wwccState==='valid'?'ok':c.wwccState==='expired'?'exp':'na'}">${esc(c.wwccType||'WWCC')} ${c.wwccState==='valid'?'✓':c.wwccState==='expired'?'expired':'not on file'}</span>
+            <span class="mini ${c.nstState==='valid'?'ok':c.nstState==='due'?'no':'na'}">NST ${c.nstState==='valid'?'✓':c.nstState==='due'?'due':'not on file'}</span>
             ${hold?'<span class="mini hold">on hold</span>':''}
           </div></div>`;
       });
@@ -7124,6 +7124,11 @@ window.openCard = function(id){
       ${c.email?`<div class="mrow" style="margin-top:10px"><b>Email:</b> ${esc(c.email)}</div>`:''}
       ${c.phone?`<div class="mrow"><b>Phone:</b> ${esc(c.phone)}</div>`:''}
       ${c.location?`<div class="mrow"><b>Applied for:</b> ${esc(c.location)}</div>`:''}
+      ${(c.backendMatched!==undefined)?`<div style="margin:14px 0 4px;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Compliance ${c.clearedToCoach?'<span style="color:var(--green)">· cleared to coach</span>':'<span style="color:var(--orange)">· action needed</span>'}</div>
+      <div class="mrow">${c.wwccType||'WWCC'}: ${c.wwccState==='valid'?`<b style="color:var(--green)">valid</b>${c.wwccExpiry?` to ${dmy(c.wwccExpiry)}`:''}`:c.wwccState==='expired'?`<b style="color:var(--red)">expired</b>${c.wwccExpiry?` ${dmy(c.wwccExpiry)}`:''} <span style="color:#9aa8b2;font-size:12px">(renew, or update the date in the system)</span>`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their check)</span>'}</div>
+      <div class="mrow">National Safety Training: ${c.nstState==='valid'?`<b style="color:var(--green)">valid</b>${c.nstDue?` to ${dmy(c.nstDue)}`:''}`:c.nstState==='due'?`<b style="color:var(--orange)">needs updating</b>${c.nstDue?` (due ${dmy(c.nstDue)})`:''}`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their training)</span>'}</div>
+      <div class="mrow">App signup: ${c.signedUpApp?'<b style="color:var(--green)">complete</b>':`<b style="color:var(--orange)">incomplete</b>${(c.signupMissing&&c.signupMissing.length)?` (missing: ${c.signupMissing.map(esc).join(', ')})`:''}`}</div>
+      ${!c.backendMatched?'<div class="mrow" style="color:#9aa8b2;font-size:12px">No matching app account found by email, so these read as not on file until they sign up.</div>':''}`:''}
       <div style="margin:14px 0 4px;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Onboarding checklist</div>
       ${rows}
       ${c.notes?`<div class="mrow" style="margin-top:12px;color:#7a8b98"><b>Notes:</b> ${esc(c.notes)}</div>`:''}
