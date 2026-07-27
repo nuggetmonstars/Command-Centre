@@ -6852,6 +6852,8 @@ const IS_PLACEHOLDER = FIREBASE_CONFIG.apiKey.startsWith("PASTE");
 const IS_FILE = location.protocol === "file:";
 let DATA = FALLBACK_DATA, benchLive = null;
 let db = null, LIVE = false, CANDS = [];
+let NEEDS = []; let fNeedStatus = "open";
+const NEEDS_COLL = "recruitment-needs";
 const COLL = "recruitment-pipeline";
 const TABS = ["Overview","Pipeline","Open Needs","Outcomes","Bench","Ad Spend"];
 let active = "Overview";
@@ -6866,7 +6868,7 @@ if (IS_FILE) {
   // local preview: no gate, baked snapshot, edits are in-memory only
   $('#modeBanner').innerHTML = '<div class="banner"><b>Preview mode.</b> Opened as a local file, so this is not signed in plus shows a baked snapshot. Moving a coach or ticking a document works to try it, but is not saved. Sign in on the live page to read plus write Firestore.</div>';
   LIVE = false;
-  loadCands().then(boot);
+  Promise.all([loadCands(), loadNeeds()]).then(boot);
 } else if (IS_PLACEHOLDER) {
   // hosted but not configured: refuse to render PII
   show($('#gate')); $('#gateTitle').textContent = "Not configured";
@@ -6892,6 +6894,7 @@ if (IS_FILE) {
         if (r.ok) DATA = await r.json();      // analytics tabs still read the snapshot for now
       } catch(e){ /* keep fallback */ }
       await loadCands();                       // board reads Firestore
+      await loadNeeds();
       await loadBench();
       boot();
     } else {
@@ -6914,6 +6917,40 @@ async function loadCands(){
   } else {
     CANDS = (DATA.candidates||[]).map((c,i)=>({ id:'local-'+i, ...c, stage:c.derivedStage }));
   }
+}
+async function loadNeeds(){
+  if (LIVE && db){
+    try {
+      const snap = await getDocs(collection(db, NEEDS_COLL));
+      NEEDS = []; snap.forEach(d => NEEDS.push({ id:d.id, ...d.data() }));
+    } catch(e){ NEEDS = []; }
+    if (NEEDS.length === 0){
+      NEEDS = (DATA.needs||[]).map((n,i)=>({ id:'snap-'+i, state:n.state, location:n.location, programs:n.programs,
+        coachesNeeded:n.coachesNeeded, urgency:n.urgency, dateRaised:n.dateNeedRaised, reason:n.reason, status:'open' }));
+    }
+  } else {
+    NEEDS = (DATA.needs||[]).map((n,i)=>({ id:'local-'+i, state:n.state, location:n.location, programs:n.programs,
+      coachesNeeded:n.coachesNeeded, urgency:n.urgency, dateRaised:n.dateNeedRaised, reason:n.reason, status:'open' }));
+  }
+}
+async function saveNeed(id, patch){
+  const nd = NEEDS.find(x=>x.id===id); if(!nd) return;
+  Object.assign(nd, patch);
+  if (LIVE && db && !String(id).startsWith('snap-') && !String(id).startsWith('local-')){
+    try { await updateDoc(doc(db,NEEDS_COLL,id), patch); toast('Saved'); } catch(e){ toast('Save failed'); }
+  } else { toast('Preview only, not saved'); }
+  render();
+}
+async function createNeed(o){
+  const rec = { state:o.state||'', location:o.location||'', programs:o.programs||'',
+    coachesNeeded:(o.coachesNeeded===''?null:Number(o.coachesNeeded)), urgency:o.urgency||'',
+    dateRaised:o.dateRaised||new Date().toISOString().slice(0,10), reason:o.reason||'', status:'open',
+    source:'manual', createdAt:new Date().toISOString() };
+  if (LIVE && db){
+    try { const ref = await addDoc(collection(db,NEEDS_COLL), rec); NEEDS.push({id:ref.id,...rec}); toast('Need added'); }
+    catch(e){ toast('Add failed'); return; }
+  } else { NEEDS.push({id:'local-new-'+Date.now(),...rec}); toast('Preview only, not saved'); }
+  closeCard(); render();
 }
 function toast(msg){
   let t = document.getElementById('toast');
@@ -7006,13 +7043,26 @@ function render(){
     v += table(ns, false);
   }
   if (active==="Open Needs"){
-    const by = DATA.needsByState;
-    v += `<div class="card"><h3>Open needs by state (${DATA.counts.openNeeds})</h3>${bars(by)}</div>`;
-    v += `<div class="card"><h3>The list</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th>Raised</th><th>Reason</th></tr></thead><tbody>`;
-    DATA.needs.forEach(n=>{ v+=`<tr><td><span class="pill b">${esc(n.state)}</span></td><td>${esc(n.location)}</td><td>${esc(n.programs)}</td>
-      <td>${n.coachesNeeded!=null?n.coachesNeeded:(n.coachesNeededBad?'<span class="flag">check cell</span>':'-')}</td>
-      <td>${n.urgency?`<span class="pill ${/high/i.test(n.urgency)?'r':'o'}">${esc(n.urgency)}</span>`:''}</td>
-      <td>${dmy(n.dateNeedRaised)}${n.needRaisedReview?' <span class="flag">?</span>':''}</td><td style="font-size:12px;color:#7a8b98">${esc(n.reason)}</td></tr>`; });
+    const open = NEEDS.filter(n=>(n.status||'open')!=='closed' && (n.status||'open')!=='filled');
+    const shown = NEEDS.filter(n=> fNeedStatus==='all' ? true : (n.status||'open')===fNeedStatus)
+                       .filter(n=> fState==='All' || n.state===fState);
+    const by = {}; open.forEach(n=>{ if(n.state) by[n.state]=(by[n.state]||0)+1; });
+    const stateBtns = ["All","VIC","NSW","QLD","SA","WA"].map(s=>{
+      const nn = s==="All"? open.length : open.filter(n=>n.state===s).length;
+      return `<button class="fbtn ${s===fState?'on':(nn===0?'off':'')}" onclick="setState('${s}')">${s}${s!=="All"?` ${nn}`:''}</button>`;
+    }).join('');
+    const statusBtns = [["open","Open"],["filled","Filled"],["all","All"]].map(([k,l])=>
+      `<button class="fbtn ${k===fNeedStatus?'on':''}" onclick="setNeedStatus('${k}')">${l}</button>`).join('');
+    v += `<div class="filterbar">${stateBtns}<span style="width:10px"></span>${statusBtns}
+      <button class="fbtn on" style="margin-left:auto;background:var(--green);border-color:var(--green)" onclick="openAddNeed()">+ Add need</button></div>`;
+    v += `<div class="card"><h3>Open needs by state (${open.length})</h3>${bars(by)}</div>`;
+    v += `<div class="card"><h3>The list (${shown.length})</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th>Raised</th><th>Status</th></tr></thead><tbody>`;
+    shown.forEach(n=>{ const st=(n.status||'open');
+      v+=`<tr style="cursor:pointer" onclick="openNeed('${n.id}')"><td><span class="pill b">${esc(n.state||'-')}</span></td><td>${esc(n.location)}</td><td style="font-size:12px">${esc(n.programs)}</td>
+      <td>${n.coachesNeeded!=null?n.coachesNeeded:'<span class="s">set</span>'}</td>
+      <td>${n.urgency?`<span class="pill ${/high/i.test(n.urgency)?'r':/med/i.test(n.urgency)?'o':'g'}">${esc(n.urgency)}</span>`:''}</td>
+      <td>${n.dateRaised?dmy(n.dateRaised):'<span class="s">set</span>'}</td>
+      <td>${st==='open'?'<span class="mini ok">open</span>':st==='filled'?'<span class="mini na">filled</span>':'<span class="mini na">closed</span>'}</td></tr>`; });
     v += `</tbody></table></div>`;
   }
   if (active==="Bench"){
@@ -7159,6 +7209,64 @@ window.submitAdd = function(){
   createCoach({name, town:g('ac_town'), state:g('ac_state'), email:g('ac_email'), phone:g('ac_phone'), location:g('ac_loc')});
 };
 window.closeCard = function(){ document.getElementById('modalHost').innerHTML=''; };
+
+window.setNeedStatus = function(s){ fNeedStatus=s; render(); };
+const URG = ["High","Medium","Low"];
+window.openNeed = function(id){
+  const n = NEEDS.find(x=>x.id===id); if(!n) return;
+  const opt = (cur,arr)=>arr.map(x=>`<option ${x===cur?'selected':''}>${x}</option>`).join('');
+  document.getElementById('modalHost').innerHTML = `<div class="modalbg" onclick="if(event.target===this)closeCard()">
+    <div class="modal">
+      <h3>${esc(n.location||'Need')}</h3>
+      <div class="msub">${esc(n.state||'')} · ${(n.status||'open')}</div>
+      <div class="mrow" style="margin-top:8px"><b>State</b></div>
+      <select class="fsel" style="width:100%;max-width:100%" onchange="saveNeed('${id}',{state:this.value})"><option value="">-</option>${["VIC","NSW","QLD","SA","WA"].map(s=>`<option ${s===n.state?'selected':''}>${s}</option>`).join('')}</select>
+      <div class="mrow" style="margin-top:8px"><b>Location</b></div>
+      <input class="fsel" style="width:100%;max-width:100%" value="${esc(n.location||'')}" onchange="saveNeed('${id}',{location:this.value})">
+      <div class="mrow" style="margin-top:8px"><b>Programs</b></div>
+      <input class="fsel" style="width:100%;max-width:100%" value="${esc(n.programs||'')}" onchange="saveNeed('${id}',{programs:this.value})">
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <div style="flex:1"><div class="mrow"><b>Coaches needed</b></div>
+          <input class="fsel" style="width:100%;max-width:100%" type="number" min="0" value="${n.coachesNeeded!=null?n.coachesNeeded:''}" onchange="saveNeed('${id}',{coachesNeeded:this.value===''?null:Number(this.value)})"></div>
+        <div style="flex:1"><div class="mrow"><b>Urgency</b></div>
+          <select class="fsel" style="width:100%;max-width:100%" onchange="saveNeed('${id}',{urgency:this.value})"><option value="">-</option>${opt(n.urgency,URG)}</select></div>
+      </div>
+      <div class="mrow" style="margin-top:8px"><b>Date raised</b></div>
+      <input class="fsel" style="width:100%;max-width:100%" type="date" value="${esc(n.dateRaised||'')}" onchange="saveNeed('${id}',{dateRaised:this.value})">
+      <div class="mrow" style="margin-top:8px"><b>Reason</b></div>
+      <textarea class="fsel" style="width:100%;max-width:100%;min-height:54px" onchange="saveNeed('${id}',{reason:this.value})">${esc(n.reason||'')}</textarea>
+      <div style="margin-top:14px">
+        ${(n.status||'open')==='open'
+          ? `<button class="mclose" style="background:var(--green)" onclick="saveNeed('${id}',{status:'filled'});closeCard()">Mark filled</button>
+             <button class="mclose" style="background:#c3ced6;color:var(--ink);margin-left:6px" onclick="saveNeed('${id}',{status:'closed'});closeCard()">Close need</button>`
+          : `<button class="mclose" style="background:var(--blue)" onclick="saveNeed('${id}',{status:'open'});closeCard()">Reopen</button>`}
+        <button class="mclose" style="background:var(--red);margin-left:6px" onclick="closeCard()">Done</button>
+      </div>
+    </div></div>`;
+};
+window.openAddNeed = function(){
+  document.getElementById('modalHost').innerHTML = `<div class="modalbg" onclick="if(event.target===this)closeCard()">
+    <div class="modal">
+      <h3>Add need</h3>
+      <div class="msub">A new open coaching need, saved to Firestore.</div>
+      <select class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_state"><option value="">State...</option>${["VIC","NSW","QLD","SA","WA"].map(s=>`<option>${s}</option>`).join('')}</select>
+      <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_loc" placeholder="Location / town">
+      <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_prog" placeholder="Programs (Sport, Music...)">
+      <div style="display:flex;gap:8px">
+        <input class="fsel" style="flex:1;max-width:100%;margin:6px 0" id="nd_num" type="number" min="0" placeholder="How many">
+        <select class="fsel" style="flex:1;max-width:100%;margin:6px 0" id="nd_urg"><option value="">Urgency...</option>${URG.map(u=>`<option>${u}</option>`).join('')}</select>
+      </div>
+      <textarea class="fsel" style="width:100%;max-width:100%;margin:6px 0;min-height:48px" id="nd_reason" placeholder="Reason"></textarea>
+      <button class="mclose" style="background:var(--green)" onclick="submitAddNeed()">Save need</button>
+      <button class="mclose" style="background:#c3ced6;color:var(--ink);margin-left:8px" onclick="closeCard()">Cancel</button>
+    </div></div>`;
+};
+window.submitAddNeed = function(){
+  const g = id => (document.getElementById(id).value||'').trim();
+  if(!g('nd_loc')){ toast('Location is required'); return; }
+  createNeed({state:g('nd_state'), location:g('nd_loc'), programs:g('nd_prog'),
+    coachesNeeded:g('nd_num'), urgency:g('nd_urg'), reason:g('nd_reason')});
+};
 
 window.doLogin = window.doLogin || (()=>{});
 </script></body></html>
