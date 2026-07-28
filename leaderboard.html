@@ -2339,28 +2339,6 @@ h1,h2,h3,h4,h5,.mf,
   </div>
 </div>
 
-<style>
-.wm-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
-@media(max-width:720px){.wm-stats{grid-template-columns:1fr;}}
-.wm-card{background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;border:1px solid var(--line);}
-.wm-h{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
-.wm-title{font-size:12px;font-weight:900;letter-spacing:.5px;text-transform:uppercase;color:var(--navy);}
-.wm-range{font-size:11px;font-weight:800;color:var(--muted);margin-top:2px;}
-.wm-nav{display:flex;gap:6px;align-items:center;}
-.wm-arrow{border:1px solid var(--line);background:#f7fafc;border-radius:8px;font-weight:900;color:var(--navy);cursor:pointer;padding:2px 10px;line-height:1.5;font-size:12px;}
-.wm-arrow[disabled]{opacity:.35;cursor:default;}
-.wm-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
-.wm-tile{background:#f7fafc;border-radius:8px;padding:7px 8px;text-align:center;}
-.wm-tile-l{font-size:8.5px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
-.wm-tile-v{font-size:16px;font-weight:900;color:var(--navy);margin-top:2px;}
-.wm-tbl{width:100%;border-collapse:collapse;font-size:11px;}
-.wm-tbl th{font-size:8.5px;font-weight:900;text-transform:uppercase;color:var(--muted);text-align:right;padding:3px 5px;border-bottom:1px solid var(--line);}
-.wm-tbl th:first-child{text-align:left;}
-.wm-tbl td{padding:3px 5px;text-align:right;font-weight:800;color:var(--navy);border-bottom:1px solid #f2f2f2;}
-.wm-tbl td:first-child{text-align:left;}
-</style>
-<div class="wm-stats" id="wm-stats"></div>
-
 <div class="filters">
   <input type="text" class="filter-input" id="f-search" placeholder="🔎 Search rep name…">
   <select class="filter-select" id="f-period">
@@ -5160,55 +5138,6 @@ window.__initSales = function(){
   }
   renderMonthlyTarget(CUR_IDX);
 
-  // ---- Weekly + monthly team/per-rep stats (points · centres · calls), Australia/Sydney ----
-  var wmOffset = 0;   // 0 = current week; negative steps back through previous weeks
-  function wmFmtPts(n){ return (Math.round((Number(n)||0)*10)/10).toString(); }
-  function renderWMStats(){
-    var host = document.getElementById('wm-stats'); if (!host) return;
-    var reps = (DATA.reps || []).slice().sort(function(a,b){ return (a.rank||99) - (b.rank||99); });
-    var curMon = weekMondaySyd(ccTodayISO());               // this week's Monday, in Sydney
-    if (wmOffset > 0) wmOffset = 0;                          // never step into the future
-    var selMon = shiftMondaySyd(curMon, wmOffset);          // selected week's Monday drives all week lookups
-    var mIdx = (DATA.current_month_idx != null ? DATA.current_month_idx : CUR_IDX);
-    var wk = function(r, key){ var o = r[key] || {}; return Number(o[selMon]) || 0; };
-    var mo = function(r, key){ var a = r[key] || []; return Number(a[mIdx]) || 0; };
-    var wT = {p:0,c:0,k:0}, mT = {p:0,c:0,k:0};
-    reps.forEach(function(r){
-      wT.p += wk(r,'weekly'); wT.c += wk(r,'weeklyCentres'); wT.k += wk(r,'weeklyCalls');
-      mT.p += mo(r,'monthly'); mT.c += mo(r,'monthlyCentres'); mT.k += mo(r,'monthlyCalls');
-    });
-    function tiles(t){ return '<div class="wm-tiles">'
-      + '<div class="wm-tile"><div class="wm-tile-l">Points</div><div class="wm-tile-v">'+wmFmtPts(t.p)+'</div></div>'
-      + '<div class="wm-tile"><div class="wm-tile-l">Centres</div><div class="wm-tile-v">'+t.c+'</div></div>'
-      + '<div class="wm-tile"><div class="wm-tile-l">Calls</div><div class="wm-tile-v">'+t.k+'</div></div></div>'; }
-    function table(kind){
-      var rows = reps.map(function(r){
-        var p = kind==='wk'? wk(r,'weekly')        : mo(r,'monthly');
-        var c = kind==='wk'? wk(r,'weeklyCentres') : mo(r,'monthlyCentres');
-        var k = kind==='wk'? wk(r,'weeklyCalls')   : mo(r,'monthlyCalls');
-        if (!p && !c && !k) return '';   // hide reps with nothing in this period
-        return '<tr><td>'+crmEsc(r.name)+'</td><td>'+wmFmtPts(p)+'</td><td>'+c+'</td><td>'+k+'</td></tr>';
-      }).join('');
-      if (!rows) rows = '<tr><td colspan="4" style="text-align:center;color:var(--muted);font-weight:700;">No activity</td></tr>';
-      return '<table class="wm-tbl"><thead><tr><th>Rep</th><th>Pts</th><th>Ctr</th><th>Calls</th></tr></thead><tbody>'+rows+'</tbody></table>';
-    }
-    var atCurrent = (wmOffset === 0);
-    var weekCard = '<div class="wm-card"><div class="wm-h">'
-      + '<div><div class="wm-title">'+(atCurrent?'This Week':'Week')+'</div><div class="wm-range">'+weekRangeLabel(selMon)+'</div></div>'
-      + '<div class="wm-nav"><button class="wm-arrow" data-wmprev title="Previous week">◀</button>'
-      + '<button class="wm-arrow" data-wmnext title="Next week"'+(atCurrent?' disabled':'')+'>▶</button></div>'
-      + '</div>'+tiles(wT)+table('wk')+'</div>';
-    var monthCard = '<div class="wm-card"><div class="wm-h">'
-      + '<div><div class="wm-title">This Month</div><div class="wm-range">'+((DATA.current_month_label||'')+' · running')+'</div></div>'
-      + '</div>'+tiles(mT)+table('mo')+'</div>';
-    host.innerHTML = weekCard + monthCard;
-    var pv = host.querySelector('[data-wmprev]'), nx = host.querySelector('[data-wmnext]');
-    if (pv) pv.onclick = function(){ wmOffset -= 1; renderWMStats(); };   // older week -> re-read buckets for new selMon
-    if (nx) nx.onclick = function(){ if (wmOffset < 0) { wmOffset += 1; renderWMStats(); } };
-  }
-  renderWMStats();
-  window.__renderWMStats = renderWMStats;   // let __rerenderSales refresh it after a log-call
-
   // ---- Filter state ----
   var filterState = { search: '', period: 'curr', territory: 'all', sort: 'rank' };
 
@@ -5788,7 +5717,6 @@ window.__initSales = function(){
     var ga = document.getElementById('goal-actual');
     if (ga) ga.textContent = Number(DATA.team_ytd_total).toLocaleString(undefined, {maximumFractionDigits: 1});
     renderLeaderboard(); renderStatusTable(); renderRepsTab(); renderFeed('all');
-    renderWMStats();   // keep the weekly/monthly stats block live after log-calls
   };
   (function __wireAddSale(){
     var POINTS = {"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
@@ -6153,35 +6081,11 @@ function pickCity(split){
   return c;
 }
 
-// ---- Australia/Sydney week helpers (Monday-anchored, tz-safe — mirrors the ~ccTodayISO pattern) ----
-const _SYD_YMD = new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit'});
-const _SYD_WD  = new Intl.DateTimeFormat('en-US',{timeZone:'Australia/Sydney',weekday:'short'});
-function _sydYMD(dt){ const p=_SYD_YMD.formatToParts(dt); const g=t=>p.find(x=>x.type===t).value; return `${g('year')}-${g('month')}-${g('day')}`; }
-function weekMondaySyd(iso){                       // "YYYY-MM-DD" -> ISO date of that week's Monday, evaluated in Sydney
-  if(!iso) return null;
-  const noon=new Date(String(iso).slice(0,10)+"T12:00:00Z");   // noon UTC = evening Sydney, same calendar day
-  if(isNaN(noon)) return null;
-  const wd={Mon:0,Tue:1,Wed:2,Thu:3,Fri:4,Sat:5,Sun:6}[_SYD_WD.format(noon)];
-  return _sydYMD(new Date(noon.getTime()-wd*86400000));
-}
-function shiftMondaySyd(mondayISO, weeks){         // step a Monday by N weeks, staying tz-safe
-  const noon=new Date(String(mondayISO).slice(0,10)+"T12:00:00Z");
-  return _sydYMD(new Date(noon.getTime()+weeks*7*86400000));
-}
-function weekRangeLabel(mondayISO){                // "Mon – Sun" display range
-  const M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  const mon=new Date(String(mondayISO).slice(0,10)+"T12:00:00Z");
-  const sun=new Date(mon.getTime()+6*86400000);
-  const f=dt=>{ const s=_sydYMD(dt).split("-"); return parseInt(s[2],10)+" "+M[parseInt(s[1],10)-1]; };
-  return f(mon)+" – "+f(sun);
-}
-
 function buildEverything(sales, offers, activity, asOf){
   const events=buildPointEvents(sales, offers);
   const repNames=new Set([...events.map(e=>e.rep),...offers.map(o=>o.rep),...activity.map(a=>a.rep)]);
   const byRep={};
   repNames.forEach(n=>byRep[n]={name:n,events:[],monthly:Array(12).fill(0),
-    weekly:{},weeklyCentres:{},monthlyCentres:Array(12).fill(0),
     sales_by_city:{A:0,P:0,B:0,S:0,M:0},tcc_by_city:{A:0,P:0,B:0,S:0,M:0},
     totalCalls:0,totalNewCalls:0,totalReCalls:0,tclSales:0,callCats:{},offersCount:0,ongoingCount:0,lostCount:0,pendingCount:0,
     directSales:0,newDirectSales:0,activeDays:new Set()});
@@ -6192,9 +6096,6 @@ function buildEverything(sales, offers, activity, asOf){
     const r=byRep[e.rep]; if(!r) return;
     const d=new Date(e.date+"T00:00:00"); if(isNaN(d)) return;
     r.events.push(e); r.monthly[d.getMonth()]+=e.points;
-    { const wk=weekMondaySyd(e.date);                 // week buckets: points + centres-sold count
-      if(wk){ r.weekly[wk]=(r.weekly[wk]||0)+e.points; r.weeklyCentres[wk]=(r.weeklyCentres[wk]||0)+1; }
-      r.monthlyCentres[d.getMonth()]+=1; }
     if(e.city && r.sales_by_city[e.city]!==undefined) r.sales_by_city[e.city]+=e.points;
     if(e.kind==="sale"){ r.directSales++; if(e.source!=="seed") r.newDirectSales++; }
   });
@@ -6278,15 +6179,9 @@ function buildEverything(sales, offers, activity, asOf){
     const loggedDays=Object.values(dayMap).sort((a,b)=>a.date<b.date?1:-1);
     let bestCallDay=null;
     loggedDays.forEach(d=>{ if(d.totalCalls>0 && (!bestCallDay || d.totalCalls>bestCallDay.calls)) bestCallDay={date:d.date,calls:d.totalCalls}; });
-    // week/month CALL buckets, from the logged days (calls live here, not in sales-entries)
-    const weeklyCalls={}, monthlyCalls=Array(12).fill(0);
-    loggedDays.forEach(ld=>{ if(!ld.date) return;
-      const wk=weekMondaySyd(ld.date); if(wk) weeklyCalls[wk]=(weeklyCalls[wk]||0)+(ld.totalCalls||0);
-      const md=new Date(ld.date+"T00:00:00"); if(!isNaN(md)) monthlyCalls[md.getMonth()]+=(ld.totalCalls||0); });
     return {name:r.name,sales:salesCount,sales_by_city:r.sales_by_city,trials:r.offersCount,
       trials_by_city:{A:0,P:0,B:0,S:0,M:0},tcc:r.totalCalls,tcc_by_city:r.tcc_by_city,
       top_territory:CITY_FULL[top_code],top_territory_code:top_code,daily,sales_ledger,
-      weekly:r.weekly,weeklyCentres:r.weeklyCentres,weeklyCalls,monthlyCentres:r.monthlyCentres,monthlyCalls,
       has_session_dates:false,monthly:r.monthly,ytd_total,ytd_avg,current_month:r2(r.monthly[asOf.getMonth()]),
       eligible,reason:eligible?`YTD avg ${ytd_avg.toFixed(2)} ≥ 50`:`${ytd_avg.toFixed(2)} YTD avg`,
       tier,is_new_rep:(days_active<=14&&ytd_total<30&&!inactive),start_date,fair_avg,months_active,days_active,
@@ -7126,49 +7021,6 @@ async function admAssign(){
 }
 
 /* ---- one rep's view: header + entry (active reps only) + pipeline + logged-days ---- */
-/* ---- a rep's own sold-centres ledger (mirrors buildRepCard's Sales Ledger, HTML-string form) ---- */
-function repLedgerDate(s){
-  if(!s) return "—";
-  const p=String(s).split("-"); if(p.length!==3) return String(s);
-  const M=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  return parseInt(p[2],10)+" "+M[parseInt(p[1],10)-1];
-}
-function repSalesLedger(rep){
-  const led=(rep.sales_ledger||[]).slice();
-  const title=`📒 ${crmEsc(rep.name)}'s Sales Ledger <span style="color:var(--muted);font-weight:700;font-size:11px;">(${led.length} centre${led.length===1?'':'s'})</span>`;
-  if(!led.length){
-    return `<section class="panel active"><div class="ledger-h">${title}</div><div class="ledger"><div class="ledger-row empty">No centres signed yet</div></div></section>`;
-  }
-  // CRM ledgers carry no session dates: sort newest-first, recompute running totals oldest->newest (same as buildRepCard)
-  led.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
-  let cum=0;
-  for(let i=led.length-1;i>=0;i--){ cum=Math.round((cum+(Number(led[i].points)||0))*100)/100; led[i].running_total=cum; }
-  let crossed=false;
-  for(let i=led.length-1;i>=0;i--){ led[i].crossed_100=false; if(!crossed && led[i].running_total>=100){ led[i].crossed_100=true; crossed=true; } }
-  const earned=led.filter(e=>e.running_total>=100), pending=led.filter(e=>e.running_total<100);
-  const row=(e,crossing)=>`<div class="ledger-row${crossing?' crossing':''}">`
-    +`<div class="ledger-date">${repLedgerDate(e.date)}</div>`
-    +`<div class="ledger-centre">${crossing?'🎯 ':''}${crmEsc(e.centre)}</div>`
-    +`<div class="ledger-start tbc">—</div>`
-    +`<div class="ledger-city">${crmEsc(e.city||'—')}</div>`
-    +`<div class="ledger-pts${(Number(e.points)===0)?' zero':''}">${(Number(e.points)||0).toFixed(1)}</div>`
-    +`<div class="ledger-running">${(Number(e.running_total)||0).toFixed(1)}</div>`
-    +`<div class="ledger-flag"></div></div>`;
-  let b=`<div class="ledger-row ledger-head"><div>Signed</div><div>Centre</div><div>Start</div><div>City</div><div style="text-align:right;">Points</div><div style="text-align:right;">Running</div><div></div></div>`;
-  if(earned.length){
-    b+=`<div class="ledger-section-hdr earned">💰 EARNS COMMISSION (above 100 pts) · ${earned.length} centre${earned.length===1?'':'s'} · 8% of every sale</div>`;
-    earned.forEach(e=>{ b+=row(e,e.crossed_100); });
-  }
-  if(earned.length && pending.length){
-    b+=`<div class="commission-line"><span>━━━━━━━ 100 PTS · COMMISSION LINE ━━━━━━━</span></div>`;
-  }
-  if(pending.length){
-    b+=`<div class="ledger-section-hdr pending">⏳ BUILDING TO 100 · ${pending.length} centre${pending.length===1?'':'s'}</div>`;
-    pending.forEach(e=>{ b+=row(e,false); });
-  }
-  return `<section class="panel active"><div class="ledger-h">${title}</div><div class="ledger">${b}</div></section>`;
-}
-
 function renderRepTab(repName){
   const host=document.getElementById("tab-reps");
   if(!host || !window.__CRM) return;
@@ -7179,7 +7031,6 @@ function renderRepTab(repName){
   host.innerHTML = `<div id="${repSlug(repName)}">`
     + repHeader(rep)
     + repPipeline(repName, repOffers)
-    + repSalesLedger(rep)
     + repHistory(repName, rep.loggedDays||[])
     + `</div>`;
   wireRepTab(host, repName);
