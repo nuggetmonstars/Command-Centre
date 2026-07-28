@@ -7175,6 +7175,17 @@ window.openCard = function(id){
   const stages = (DATA.onboardStages)||["Applied","Interview","Signed up to app","Documents in","Trial session","Active coach"];
   const stageOpts = stages.map(s=>`<option value="${s}" ${s===c.stage?'selected':''}>${s}</option>`).join('');
   const ck = c.checklist||{};
+  const fd = c.fullDetails||null;
+  const fdBlock = fd ? `<details style="margin-top:12px"><summary style="cursor:pointer;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Full application details${c.source==='indeed'?' · via Indeed':''}</summary>
+      <div style="margin-top:8px">
+        ${c.dateOfBirthText?`<div class="mrow"><b>Date of birth:</b> ${esc(c.dateOfBirthText)}</div>`:''}
+        ${fd.role?`<div class="mrow"><b>Applied for:</b> ${esc(fd.role)}${fd.adLocation?' · '+esc(fd.adLocation):''}</div>`:''}
+        ${fd.relevantExp?`<div class="mrow"><b>Relevant experience:</b> ${esc(fd.relevantExp)}</div>`:''}
+        ${(fd.screening&&fd.screening.length)?`<div class="mrow" style="margin-top:8px"><b>Screening answers</b> <span style="color:#9aa8b2;font-size:11px">(self-reported)</span></div>`+fd.screening.map(s=>`<div class="mrow" style="font-size:13px;margin-top:4px">${esc(s.q)}<br><span style="color:#7a8b98">${esc(s.a)}</span></div>`).join(''):''}
+        ${fd.summary?`<div class="mrow" style="margin-top:8px"><b>Summary:</b> <span style="color:#7a8b98">${esc(fd.summary)}</span></div>`:''}
+        ${fd.skills?`<div class="mrow"><b>Skills:</b> <span style="color:#7a8b98">${esc(fd.skills)}</span></div>`:''}
+        ${fd.resumeFile?`<div class="mrow" style="color:#9aa8b2;font-size:12px">Resume: ${esc(fd.resumeFile)}</div>`:''}
+      </div></details>` : '';
   const rows = Object.entries(ck).map(([k,v])=>{
     const mark = v===true?'<i class="y">✓</i>':v===false?'<i class="n">✗</i>':'<i class="q">?</i>';
     const next = v===true?false:true;
@@ -7183,7 +7194,7 @@ window.openCard = function(id){
   document.getElementById('modalHost').innerHTML = `<div class="modalbg" onclick="if(event.target===this)closeCard()">
     <div class="modal">
       <h3>${esc(c.name)}</h3>
-      <div class="msub">${esc(c.town||'')}${c.state?', '+esc(c.state):''}</div>
+      <div class="msub">${esc(c.town||'')}${c.state?', '+esc(c.state):''}${c.source==='indeed'?' · <span style="color:var(--blue)">Indeed applicant</span>':''}</div>
       <div class="mrow" style="margin:10px 0 4px"><b>Stage</b></div>
       <select class="fsel" style="max-width:100%;width:100%" onchange="saveStage('${id}',this.value)">${stageOpts}</select>
       ${c.email?`<div class="mrow" style="margin-top:10px"><b>Email:</b> ${esc(c.email)}</div>`:''}
@@ -7197,6 +7208,7 @@ window.openCard = function(id){
       ${!c.backendMatched?'<div class="mrow" style="color:#9aa8b2;font-size:12px">No matching app account found by email, so these read as not on file until they sign up.</div>':''}`:''}
       <div style="margin:14px 0 4px;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Onboarding checklist</div>
       ${rows}
+      ${fdBlock}
       ${c.notes?`<div class="mrow" style="margin-top:12px;color:#7a8b98"><b>Notes:</b> ${esc(c.notes)}</div>`:''}
       <button class="mclose" onclick="closeCard()">Close</button>
     </div></div>`;
