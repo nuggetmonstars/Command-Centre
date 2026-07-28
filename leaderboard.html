@@ -5206,7 +5206,7 @@ window.__initSales = function(){
     if (pv) pv.onclick = function(){ wmOffset -= 1; renderWMStats(); };   // older week -> re-read buckets for new selMon
     if (nx) nx.onclick = function(){ if (wmOffset < 0) { wmOffset += 1; renderWMStats(); } };
   }
-  renderWMStats();
+  try { renderWMStats(); } catch(e){ console.error('wm-stats render failed:', e); }   // must never abort the board build
   window.__renderWMStats = renderWMStats;   // let __rerenderSales refresh it after a log-call
 
   // ---- Filter state ----
@@ -5788,7 +5788,7 @@ window.__initSales = function(){
     var ga = document.getElementById('goal-actual');
     if (ga) ga.textContent = Number(DATA.team_ytd_total).toLocaleString(undefined, {maximumFractionDigits: 1});
     renderLeaderboard(); renderStatusTable(); renderRepsTab(); renderFeed('all');
-    renderWMStats();   // keep the weekly/monthly stats block live after log-calls
+    try { renderWMStats(); } catch(e){ console.error('wm-stats render failed:', e); }   // keep the weekly/monthly stats block live after log-calls (never abort the re-render)
   };
   (function __wireAddSale(){
     var POINTS = {"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
@@ -6175,6 +6175,16 @@ function weekRangeLabel(mondayISO){                // "Mon – Sun" display rang
   const f=dt=>{ const s=_sydYMD(dt).split("-"); return parseInt(s[2],10)+" "+M[parseInt(s[1],10)-1]; };
   return f(mon)+" – "+f(sun);
 }
+
+// Expose the helpers renderWMStats() needs to global scope. renderWMStats lives in a
+// classic <script> block, which cannot see module-scoped declarations — so publish the
+// five identifiers it references on window (function decls are hoisted, so crmEsc /
+// ccTodayISO resolve here even though they are defined lower in this module).
+window.weekMondaySyd  = weekMondaySyd;
+window.shiftMondaySyd = shiftMondaySyd;
+window.weekRangeLabel = weekRangeLabel;
+window.ccTodayISO     = window.ccTodayISO || ccTodayISO;
+window.crmEsc         = window.crmEsc || crmEsc;
 
 function buildEverything(sales, offers, activity, asOf){
   const events=buildPointEvents(sales, offers);
