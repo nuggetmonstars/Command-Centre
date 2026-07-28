@@ -7017,14 +7017,20 @@ function render(){
   let v = "";
   if (active==="Overview"){
     const placed = DATA.candidates.filter(x=>x.tab==="Onboarded" && /plac/i.test(x.outcome)).length;
+    // live time-to-fill: applied date -> first session, from the Firestore coaches
+    const med = arr => { if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:Math.round((s[m-1]+s[m])/2); };
+    const dOf = v => v?new Date(v):null;
+    const fillDays = CANDS.map(c=>{ const a=dOf(c.appliedDate||c.dateApplied), f=dOf(c.firstSessionDate); if(!a||!f) return null; const d=Math.round((f-a)/86400000); return d>=0?d:null; }).filter(x=>x!=null);
+    const inProg = CANDS.filter(c=>c.stage && !["Closed","Active coach"].includes(c.stage)).map(c=>{ const a=dOf(c.appliedDate||c.dateApplied); if(!a) return null; const d=Math.round((Date.now()-a)/86400000); return d>=0?d:null; }).filter(x=>x!=null);
+    const medFill = med(fillDays), medProg = med(inProg);
     v += `<div class="grid">
       ${kpi(c.pipeline,"In Pipeline","live candidates","blue")}
       ${kpi(c.onboarded,"Onboarded",`${placed} placed`,"green")}
       ${kpi(c.notSuitable,"Not Suitable","dropped, ghosted, declined","red")}
       ${kpi(c.openNeeds,"Open Needs","across states","orange")}
       ${kpi(m.ghostRate.rate!=null?m.ghostRate.rate+'%':'-',"Ghost Rate",`${m.ghostRate.ghosted} of ${m.ghostRate.interviewed} interviewed`,"pink")}
-      ${kpi(m.timeToFill.median!=null?m.timeToFill.median+'d':'awaiting data',"Time to Fill", m.timeToFill.median!=null?`median, n=${m.timeToFill.n}`:'needs Date Need Raised linked','', m.timeToFill.median==null)}
-      ${kpi(m.timeToProductivity.median!=null?m.timeToProductivity.median+'d':'awaiting data',"Time to Productivity", m.timeToProductivity.median!=null?`median, n=${m.timeToProductivity.n}`:'needs First Head Coach + Need Raised','', m.timeToProductivity.median==null)}
+      ${kpi(medFill!=null?medFill+'d':'awaiting data',"Time to Fill", medFill!=null?`applied to first session, median of ${fillDays.length}`:'needs applied + session dates','', medFill==null)}
+      ${kpi(medProg!=null?medProg+'d':'-',"In Pipeline Now", medProg!=null?`median days waiting, ${inProg.length} coaches`:'','', medProg==null)}
       ${kpi(h.benchCount||(benchLive?Object.keys(benchLive).length:0)||'0',"Bench Strength", benchLive?'live from Firebase':'awaiting bench + Firebase','', h.benchCount===0)}
     </div>`;
     v += `<div class="card health"><h3>Data health, what is awaiting a human</h3>
@@ -7200,6 +7206,7 @@ window.openCard = function(id){
       ${c.email?`<div class="mrow" style="margin-top:10px"><b>Email:</b> ${esc(c.email)}</div>`:''}
       ${c.phone?`<div class="mrow"><b>Phone:</b> ${esc(c.phone)}</div>`:''}
       ${c.location?`<div class="mrow"><b>Applied for:</b> ${esc(c.location)}</div>`:''}
+      ${c.appliedDate?`<div class="mrow"><b>Applied:</b> ${dmy(c.appliedDate)} <span style="color:#9aa8b2;font-size:12px">(${Math.max(0,Math.round((Date.now()-new Date(c.appliedDate))/86400000))} days ago)</span></div>`:''}
       ${(c.backendMatched!==undefined)?`<div style="margin:14px 0 4px;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Compliance ${c.clearedToCoach?'<span style="color:var(--green)">· cleared to coach</span>':'<span style="color:var(--orange)">· action needed</span>'}</div>
       <div class="mrow">${c.wwccType||'WWCC'}: ${c.wwccState==='valid'?`<b style="color:var(--green)">valid</b>${c.wwccExpiry?` to ${dmy(c.wwccExpiry)}`:''}`:c.wwccState==='expired'?`<b style="color:var(--red)">expired</b>${c.wwccExpiry?` ${dmy(c.wwccExpiry)}`:''} <span style="color:#9aa8b2;font-size:12px">(renew, or update the date in the system)</span>`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their check)</span>'}</div>
       <div class="mrow">National Safety Training: ${c.nstState==='valid'?`<b style="color:var(--green)">valid</b>${c.nstDue?` to ${dmy(c.nstDue)}`:''}`:c.nstState==='due'?`<b style="color:var(--orange)">needs updating</b>${c.nstDue?` (due ${dmy(c.nstDue)})`:''}`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their training)</span>'}</div>
