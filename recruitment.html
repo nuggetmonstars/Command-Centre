@@ -6983,9 +6983,20 @@ async function saveCheck(id, key, val){
   } else { toast('Preview only, not saved'); }
   render(); openCard(id);
 }
+async function saveCand(id, patch){
+  const c = CANDS.find(x=>x.id===id); if(!c) return;
+  Object.assign(c, patch);
+  if (LIVE && db && !String(id).startsWith('snap-') && !String(id).startsWith('local-')){
+    try { await updateDoc(doc(db,COLL,id), {...patch, updatedAt:Date.now()}); toast('Saved'); }
+    catch(e){ toast('Save failed'); }
+  } else { toast('Preview only, not saved'); }
+  render(); openCard(id);
+}
+window.saveCand = saveCand;
 async function createCoach(o){
   const rec = { name:o.name, town:o.town, state:o.state, email:o.email, phone:o.phone,
     location:o.location||'', stage:'Applied', wwccType:(o.state==='QLD'?'Blue Card':'WWCC'), wwccOk:false,
+    appliedDate:o.appliedDate||new Date().toISOString().slice(0,10),
     checklist:{Interview:false,"Signed up to app":false,[(o.state==='QLD'?'Blue Card':'WWCC')]:false,"National Safety Training":false,"Trial session":false,"First head coach session":false},
     notes:o.notes||'', source:'manual', updatedAt:Date.now() };
   if (LIVE && db){
@@ -7161,6 +7172,7 @@ function buildBoard(){
         h += `<div class="pcard" onclick="openCard('${c.id}')">
           <div class="pn">${esc(c.name)}</div>
           <div class="pt">${esc(c.town||'-')}${c.state?', '+esc(c.state):''}</div>
+          ${(c.appliedDate||c.dateApplied)?`<div class="pt" style="font-size:11px;color:#9aa8b2">applied ${Math.max(0,Math.round((Date.now()-new Date(c.appliedDate||c.dateApplied))/86400000))}d ago</div>`:''}
           <div class="badges">
             <span class="mini ${c.wwccState==='valid'?'ok':c.wwccState==='expired'?'exp':'na'}">${esc(c.wwccType||'WWCC')} ${c.wwccState==='valid'?'✓':c.wwccState==='expired'?'expired':'not on file'}</span>
             <span class="mini ${c.nstState==='valid'?'ok':c.nstState==='due'?'no':'na'}">NST ${c.nstState==='valid'?'✓':c.nstState==='due'?'due':'not on file'}</span>
@@ -7206,7 +7218,8 @@ window.openCard = function(id){
       ${c.email?`<div class="mrow" style="margin-top:10px"><b>Email:</b> ${esc(c.email)}</div>`:''}
       ${c.phone?`<div class="mrow"><b>Phone:</b> ${esc(c.phone)}</div>`:''}
       ${c.location?`<div class="mrow"><b>Applied for:</b> ${esc(c.location)}</div>`:''}
-      ${c.appliedDate?`<div class="mrow"><b>Applied:</b> ${dmy(c.appliedDate)} <span style="color:#9aa8b2;font-size:12px">(${Math.max(0,Math.round((Date.now()-new Date(c.appliedDate))/86400000))} days ago)</span></div>`:''}
+      <div class="mrow" style="margin-top:8px"><b>Applied date</b>${c.appliedDate?` <span style="color:#9aa8b2;font-size:12px">(${Math.max(0,Math.round((Date.now()-new Date(c.appliedDate))/86400000))} days ago)</span>`:''}</div>
+      <input class="fsel" style="width:100%;max-width:100%" type="date" value="${esc(c.appliedDate||c.dateApplied||'')}" onchange="saveCand('${id}',{appliedDate:this.value})">
       ${(c.backendMatched!==undefined)?`<div style="margin:14px 0 4px;font-family:'MarkerFelt',cursive;color:var(--blue);font-size:14px">Compliance ${c.clearedToCoach?'<span style="color:var(--green)">· cleared to coach</span>':'<span style="color:var(--orange)">· action needed</span>'}</div>
       <div class="mrow">${c.wwccType||'WWCC'}: ${c.wwccState==='valid'?`<b style="color:var(--green)">valid</b>${c.wwccExpiry?` to ${dmy(c.wwccExpiry)}`:''}`:c.wwccState==='expired'?`<b style="color:var(--red)">expired</b>${c.wwccExpiry?` ${dmy(c.wwccExpiry)}`:''} <span style="color:#9aa8b2;font-size:12px">(renew, or update the date in the system)</span>`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their check)</span>'}</div>
       <div class="mrow">National Safety Training: ${c.nstState==='valid'?`<b style="color:var(--green)">valid</b>${c.nstDue?` to ${dmy(c.nstDue)}`:''}`:c.nstState==='due'?`<b style="color:var(--orange)">needs updating</b>${c.nstDue?` (due ${dmy(c.nstDue)})`:''}`:'<b style="color:#7a8b98">not on file</b> <span style="color:#9aa8b2;font-size:12px">(enter their training)</span>'}</div>
@@ -7232,6 +7245,8 @@ window.openAdd = function(){
       <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="ac_email" placeholder="Email">
       <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="ac_phone" placeholder="Phone">
       <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="ac_loc" placeholder="Location applied for">
+      <div class="mrow" style="margin:6px 0 0;font-size:12px;color:#9aa8b2">Applied date</div>
+      <input class="fsel" style="width:100%;max-width:100%;margin:2px 0 6px" id="ac_applied" type="date">
       <button class="mclose" style="background:var(--green)" onclick="submitAdd()">Save coach</button>
       <button class="mclose" style="background:#c3ced6;color:var(--ink);margin-left:8px" onclick="closeCard()">Cancel</button>
     </div></div>`;
@@ -7240,7 +7255,7 @@ window.submitAdd = function(){
   const g = id => (document.getElementById(id).value||'').trim();
   const name = g('ac_name');
   if(!name){ toast('Name is required'); return; }
-  createCoach({name, town:g('ac_town'), state:g('ac_state'), email:g('ac_email'), phone:g('ac_phone'), location:g('ac_loc')});
+  createCoach({name, town:g('ac_town'), state:g('ac_state'), email:g('ac_email'), phone:g('ac_phone'), location:g('ac_loc'), appliedDate:g('ac_applied')});
 };
 window.closeCard = function(){ document.getElementById('modalHost').innerHTML=''; };
 
