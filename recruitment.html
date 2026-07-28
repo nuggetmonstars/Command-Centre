@@ -49,6 +49,9 @@ tr:hover td{background:#f7fcff}
 .fbtn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
 .fbtn.off{opacity:.45}
 .fsel{font-family:'Pencil',cursive;font-size:14px;border:3px solid var(--lightblue);border-radius:30px;padding:7px 13px;color:var(--ink);outline:none;background:#fff;max-width:220px}
+.progchips{display:flex;flex-wrap:wrap;gap:7px;margin:4px 0}
+.pchip{font-family:'MarkerFelt',cursive;font-size:13px;border:3px solid var(--lightblue);background:#fff;color:var(--blue);border-radius:30px;padding:6px 13px;cursor:pointer;user-select:none}
+.pchip.on{background:var(--green);color:#fff;border-color:var(--green)}
 .board{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px}
 .col{flex:0 0 210px;background:rgba(255,255,255,.55);border-radius:16px;border:2px solid #e7eef3;padding:10px;min-height:120px}
 .colhead{font-family:'MarkerFelt',cursive;font-size:14px;color:#fff;border-radius:12px;padding:8px 10px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center}
@@ -6852,7 +6855,7 @@ const IS_PLACEHOLDER = FIREBASE_CONFIG.apiKey.startsWith("PASTE");
 const IS_FILE = location.protocol === "file:";
 let DATA = FALLBACK_DATA, benchLive = null;
 let db = null, LIVE = false, CANDS = [];
-let NEEDS = []; let fNeedStatus = "open";
+let NEEDS = []; let fNeedStatus = "open"; let fNeedUrg = "All";
 const NEEDS_COLL = "recruitment-needs";
 const COLL = "recruitment-pipeline";
 const TABS = ["Overview","Pipeline","Open Needs","Outcomes","Bench","Ad Spend"];
@@ -7043,25 +7046,37 @@ function render(){
     v += table(ns, false);
   }
   if (active==="Open Needs"){
+    const URGRANK = {high:3, medium:2, low:1};
+    const passUrg = n => fNeedUrg==='All' || (n.urgency||'').toLowerCase()===fNeedUrg.toLowerCase();
     const open = NEEDS.filter(n=>(n.status||'open')!=='closed' && (n.status||'open')!=='filled');
+    const openU = open.filter(passUrg);
     const shown = NEEDS.filter(n=> fNeedStatus==='all' ? true : (n.status||'open')===fNeedStatus)
-                       .filter(n=> fState==='All' || n.state===fState);
-    const by = {}; open.forEach(n=>{ if(n.state) by[n.state]=(by[n.state]||0)+1; });
+                       .filter(n=> fState==='All' || n.state===fState)
+                       .filter(passUrg)
+                       .sort((a,b)=>(URGRANK[(b.urgency||'').toLowerCase()]||0)-(URGRANK[(a.urgency||'').toLowerCase()]||0));
+    const by = {}; openU.forEach(n=>{ if(n.state) by[n.state]=(by[n.state]||0)+1; });
     const stateBtns = ["All","VIC","NSW","QLD","SA","WA"].map(s=>{
-      const nn = s==="All"? open.length : open.filter(n=>n.state===s).length;
+      const nn = s==="All"? openU.length : openU.filter(n=>n.state===s).length;
       return `<button class="fbtn ${s===fState?'on':(nn===0?'off':'')}" onclick="setState('${s}')">${s}${s!=="All"?` ${nn}`:''}</button>`;
+    }).join('');
+    const urgBtns = ["All","High","Medium","Low"].map(u=>{
+      const nn = u==="All"? open.length : open.filter(n=>(n.urgency||'').toLowerCase()===u.toLowerCase()).length;
+      const cl = u===fNeedUrg?'on':'';
+      return `<button class="fbtn ${cl}" onclick="setNeedUrg('${u}')">${u}${u!=="All"?` ${nn}`:''}</button>`;
     }).join('');
     const statusBtns = [["open","Open"],["filled","Filled"],["all","All"]].map(([k,l])=>
       `<button class="fbtn ${k===fNeedStatus?'on':''}" onclick="setNeedStatus('${k}')">${l}</button>`).join('');
-    v += `<div class="filterbar">${stateBtns}<span style="width:10px"></span>${statusBtns}
+    v += `<div class="filterbar">${stateBtns}
       <button class="fbtn on" style="margin-left:auto;background:var(--green);border-color:var(--green)" onclick="openAddNeed()">+ Add need</button></div>`;
-    v += `<div class="card"><h3>Open needs by state (${open.length})</h3>${bars(by)}</div>`;
-    v += `<div class="card"><h3>The list (${shown.length})</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th>Raised</th><th>Status</th></tr></thead><tbody>`;
+    v += `<div class="filterbar"><span style="font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)">Urgency:</span>${urgBtns}<span style="width:12px"></span><span style="font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)">Status:</span>${statusBtns}</div>`;
+    v += `<div class="card"><h3>Open needs by state (${openU.length})</h3>${bars(by)}</div>`;
+    v += `<div class="card"><h3>The list (${shown.length})</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th>Raised</th><th>Reason</th><th>Status</th></tr></thead><tbody>`;
     shown.forEach(n=>{ const st=(n.status||'open');
       v+=`<tr style="cursor:pointer" onclick="openNeed('${n.id}')"><td><span class="pill b">${esc(n.state||'-')}</span></td><td>${esc(n.location)}</td><td style="font-size:12px">${esc(n.programs)}</td>
       <td>${n.coachesNeeded!=null?n.coachesNeeded:'<span class="s">set</span>'}</td>
       <td>${n.urgency?`<span class="pill ${/high/i.test(n.urgency)?'r':/med/i.test(n.urgency)?'o':'g'}">${esc(n.urgency)}</span>`:''}</td>
       <td>${n.dateRaised?dmy(n.dateRaised):'<span class="s">set</span>'}</td>
+      <td style="font-size:12px;color:#7a8b98;max-width:240px">${esc(n.reason||'')}</td>
       <td>${st==='open'?'<span class="mini ok">open</span>':st==='filled'?'<span class="mini na">filled</span>':'<span class="mini na">closed</span>'}</td></tr>`; });
     v += `</tbody></table></div>`;
   }
@@ -7211,7 +7226,22 @@ window.submitAdd = function(){
 window.closeCard = function(){ document.getElementById('modalHost').innerHTML=''; };
 
 window.setNeedStatus = function(s){ fNeedStatus=s; render(); };
+window.setNeedUrg = function(u){ fNeedUrg=u; render(); };
 const URG = ["High","Medium","Low"];
+const PROGRAMS = ["Sports","Music","Yoga","Gymnastics","Sensory Fusion","All"];
+const PROG_MATCH = {"Sports":"sport","Music":"music","Yoga":"yoga","Gymnastics":"gymnast","Sensory Fusion":"sensory","All":"all"};
+function progChips(sel, editId){
+  const s = (sel||'').toLowerCase();
+  const cid = editId ? 'ne_prog_chips' : 'nd_prog_chips';
+  return `<div class="progchips" id="${cid}">` + PROGRAMS.map(p=>{
+    const on = s.includes(PROG_MATCH[p]) ? 'on' : '';
+    const click = editId ? `toggleChip(this);saveNeedProgs('${editId}')` : `toggleChip(this)`;
+    return `<span class="pchip ${on}" data-p="${esc(p)}" onclick="${click}">${esc(p)}</span>`;
+  }).join('') + `</div>`;
+}
+window.toggleChip = function(el){ el.classList.toggle('on'); };
+function readProgs(cid){ return [...document.querySelectorAll('#'+cid+' .pchip.on')].map(x=>x.dataset.p).join(', '); }
+window.saveNeedProgs = function(id){ saveNeed(id, {programs: readProgs('ne_prog_chips')}); };
 window.openNeed = function(id){
   const n = NEEDS.find(x=>x.id===id); if(!n) return;
   const opt = (cur,arr)=>arr.map(x=>`<option ${x===cur?'selected':''}>${x}</option>`).join('');
@@ -7224,7 +7254,7 @@ window.openNeed = function(id){
       <div class="mrow" style="margin-top:8px"><b>Location</b></div>
       <input class="fsel" style="width:100%;max-width:100%" value="${esc(n.location||'')}" onchange="saveNeed('${id}',{location:this.value})">
       <div class="mrow" style="margin-top:8px"><b>Programs</b></div>
-      <input class="fsel" style="width:100%;max-width:100%" value="${esc(n.programs||'')}" onchange="saveNeed('${id}',{programs:this.value})">
+      ${progChips(n.programs, id)}
       <div style="display:flex;gap:8px;margin-top:8px">
         <div style="flex:1"><div class="mrow"><b>Coaches needed</b></div>
           <input class="fsel" style="width:100%;max-width:100%" type="number" min="0" value="${n.coachesNeeded!=null?n.coachesNeeded:''}" onchange="saveNeed('${id}',{coachesNeeded:this.value===''?null:Number(this.value)})"></div>
@@ -7251,7 +7281,8 @@ window.openAddNeed = function(){
       <div class="msub">A new open coaching need, saved to Firestore.</div>
       <select class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_state"><option value="">State...</option>${["VIC","NSW","QLD","SA","WA"].map(s=>`<option>${s}</option>`).join('')}</select>
       <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_loc" placeholder="Location / town">
-      <input class="fsel" style="width:100%;max-width:100%;margin:6px 0" id="nd_prog" placeholder="Programs (Sport, Music...)">
+      <div class="mrow" style="margin:6px 0 0"><b>Programs</b></div>
+      ${progChips('', null)}
       <div style="display:flex;gap:8px">
         <input class="fsel" style="flex:1;max-width:100%;margin:6px 0" id="nd_num" type="number" min="0" placeholder="How many">
         <select class="fsel" style="flex:1;max-width:100%;margin:6px 0" id="nd_urg"><option value="">Urgency...</option>${URG.map(u=>`<option>${u}</option>`).join('')}</select>
@@ -7264,7 +7295,7 @@ window.openAddNeed = function(){
 window.submitAddNeed = function(){
   const g = id => (document.getElementById(id).value||'').trim();
   if(!g('nd_loc')){ toast('Location is required'); return; }
-  createNeed({state:g('nd_state'), location:g('nd_loc'), programs:g('nd_prog'),
+  createNeed({state:g('nd_state'), location:g('nd_loc'), programs:readProgs('nd_prog_chips'),
     coachesNeeded:g('nd_num'), urgency:g('nd_urg'), reason:g('nd_reason')});
 };
 
