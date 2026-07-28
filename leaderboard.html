@@ -5161,7 +5161,8 @@ window.__initSales = function(){
   renderMonthlyTarget(CUR_IDX);
 
   // ---- Weekly + monthly team/per-rep stats (points · centres · calls), Australia/Sydney ----
-  var wmOffset = 0;   // 0 = current week; negative steps back through previous weeks
+  var wmOffset = 0;        // 0 = current week; negative steps back through previous weeks
+  var wmMonthOffset = 0;   // 0 = current month; negative steps back through earlier months (same calendar year)
   function wmFmtPts(n){ return (Math.round((Number(n)||0)*10)/10).toString(); }
   function renderWMStats(){
     var host = document.getElementById('wm-stats'); if (!host) return;
@@ -5169,9 +5170,15 @@ window.__initSales = function(){
     var curMon = weekMondaySyd(ccTodayISO());               // this week's Monday, in Sydney
     if (wmOffset > 0) wmOffset = 0;                          // never step into the future
     var selMon = shiftMondaySyd(curMon, wmOffset);          // selected week's Monday drives all week lookups
-    var mIdx = (DATA.current_month_idx != null ? DATA.current_month_idx : CUR_IDX);
+    var mIdx = (DATA.current_month_idx != null ? DATA.current_month_idx : CUR_IDX);   // current month index
+    if (wmMonthOffset > 0) wmMonthOffset = 0;                 // never step into the future
+    if (mIdx + wmMonthOffset < 0) wmMonthOffset = -mIdx;      // never step before January
+    var selMonthIdx = mIdx + wmMonthOffset;                   // selected month drives all month lookups
+    var curYear = (DATA.current_month_label || '').split(' ').pop() || '';
+    var monthName = (DATA.month_labels && DATA.month_labels[selMonthIdx]) || '';
+    var atCurrentMonth = (wmMonthOffset === 0);
     var wk = function(r, key){ var o = r[key] || {}; return Number(o[selMon]) || 0; };
-    var mo = function(r, key){ var a = r[key] || []; return Number(a[mIdx]) || 0; };
+    var mo = function(r, key){ var a = r[key] || []; return Number(a[selMonthIdx]) || 0; };
     var wT = {p:0,c:0,k:0}, mT = {p:0,c:0,k:0};
     reps.forEach(function(r){
       wT.p += wk(r,'weekly'); wT.c += wk(r,'weeklyCentres'); wT.k += wk(r,'weeklyCalls');
@@ -5199,12 +5206,17 @@ window.__initSales = function(){
       + '<button class="wm-arrow" data-wmnext title="Next week"'+(atCurrent?' disabled':'')+'>▶</button></div>'
       + '</div>'+tiles(wT)+table('wk')+'</div>';
     var monthCard = '<div class="wm-card"><div class="wm-h">'
-      + '<div><div class="wm-title">This Month</div><div class="wm-range">'+((DATA.current_month_label||'')+' · running')+'</div></div>'
+      + '<div><div class="wm-title">'+(atCurrentMonth?'This Month':'Month')+'</div><div class="wm-range">'+(monthName+' '+curYear+(atCurrentMonth?' · running':''))+'</div></div>'
+      + '<div class="wm-nav"><button class="wm-arrow" data-wmmprev title="Previous month"'+(selMonthIdx<=0?' disabled':'')+'>◀</button>'
+      + '<button class="wm-arrow" data-wmmnext title="Next month"'+(atCurrentMonth?' disabled':'')+'>▶</button></div>'
       + '</div>'+tiles(mT)+table('mo')+'</div>';
     host.innerHTML = weekCard + monthCard;
     var pv = host.querySelector('[data-wmprev]'), nx = host.querySelector('[data-wmnext]');
     if (pv) pv.onclick = function(){ wmOffset -= 1; renderWMStats(); };   // older week -> re-read buckets for new selMon
     if (nx) nx.onclick = function(){ if (wmOffset < 0) { wmOffset += 1; renderWMStats(); } };
+    var mpv = host.querySelector('[data-wmmprev]'), mnx = host.querySelector('[data-wmmnext]');
+    if (mpv) mpv.onclick = function(){ if (mIdx + wmMonthOffset > 0) { wmMonthOffset -= 1; renderWMStats(); } };   // stop at January
+    if (mnx) mnx.onclick = function(){ if (wmMonthOffset < 0) { wmMonthOffset += 1; renderWMStats(); } };            // stop at current month
   }
   try { renderWMStats(); } catch(e){ console.error('wm-stats render failed:', e); }   // must never abort the board build
   window.__renderWMStats = renderWMStats;   // let __rerenderSales refresh it after a log-call
