@@ -7172,7 +7172,7 @@ function buildBoard(){
         h += `<div class="pcard" onclick="openCard('${c.id}')">
           <div class="pn">${esc(c.name)}</div>
           <div class="pt">${esc(c.town||'-')}${c.state?', '+esc(c.state):''}</div>
-          ${(c.appliedDate||c.dateApplied)?`<div class="pt" style="font-size:11px;color:#9aa8b2">applied ${Math.max(0,Math.round((Date.now()-new Date(c.appliedDate||c.dateApplied))/86400000))}d ago</div>`:''}
+          ${(c.appliedDate||c.dateApplied)?`<div style="font-size:13px;font-weight:bold;color:var(--blue);margin:2px 0">Applied ${dmy(c.appliedDate||c.dateApplied)}</div>`:''}
           <div class="badges">
             <span class="mini ${c.wwccState==='valid'?'ok':c.wwccState==='expired'?'exp':'na'}">${esc(c.wwccType||'WWCC')} ${c.wwccState==='valid'?'✓':c.wwccState==='expired'?'expired':'not on file'}</span>
             <span class="mini ${c.nstState==='valid'?'ok':c.nstState==='due'?'no':'na'}">NST ${c.nstState==='valid'?'✓':c.nstState==='due'?'due':'not on file'}</span>
