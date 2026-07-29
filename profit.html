@@ -1217,16 +1217,54 @@ function tileContent(secId){
   return {rag:'info', body:''};
 }
 
+function fcAgo(iso, monthlyManual){
+  if(!iso) return null;
+  var d=new Date(iso); if(isNaN(d)) return null;
+  var days=(Date.now()-d.getTime())/86400000;
+  // monthly-manual sources (churn) are meant to be up to a month old
+  var warn = monthlyManual?35:2, bad = monthlyManual?45:7;
+  var col = days>bad?'var(--red)':(days>warn?'var(--orange)':'#9fb0bd');
+  var opts={day:'numeric',month:'short'};
+  var label=d.toLocaleDateString('en-AU',opts);
+  var hh=d.getHours(), mm=('0'+d.getMinutes()).slice(-2);
+  var ampm=hh>=12?'pm':'am'; var h12=((hh%12)||12);
+  var timeStr=(days<1)?(', '+h12+':'+mm+ampm):'';
+  return {text:'Updated '+label+timeStr, color:col, days:days};
+}
+function fcStampHtml(key, monthlyManual){
+  var s=(DATA.stamps||{})[key];
+  var a=fcAgo(s, monthlyManual);
+  if(!a) return '';
+  return '<div style="font-size:12px;color:'+a.color+';margin-top:2px">'+a.text+'</div>';
+}
+
 function renderHub(){
-  var h='<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:4px">';
+  // freshness banner - freshest date, plus a warning if any section is stale
+  var stampKeys={contribution:false,scorecard:false,sales:false,financials:false,unitEcon:false,forecast:false,churn:true};
+  var freshest=null, staleWarn=[];
+  Object.keys(stampKeys).forEach(function(k){
+    var a=fcAgo((DATA.stamps||{})[k], stampKeys[k]);
+    if(!a) return;
+    if(freshest===null || a.days<freshest.days) freshest=a;
+    if(a.color!=='#9fb0bd') staleWarn.push(k);
+  });
+  var banner='';
+  if(freshest){
+    banner='<div style="margin:0 0 16px;font-size:13px;color:#7d93a3">Data '+freshest.text.replace('Updated ','as of ')+
+      (staleWarn.length?' \u00b7 <span style="color:var(--orange)">'+staleWarn.length+' section'+(staleWarn.length>1?'s':'')+' may be stale</span>':' \u00b7 <span style="color:var(--green)">all current</span>')+'</div>';
+  }
+  var h=banner+'<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin-top:4px">';
+  var STAMPKEY={contribution:'contribution',scorecard:'scorecard',sales:'sales',financials:'financials','unit-economics':'unitEcon',forecast:'forecast',churn:'churn'};
   SECTIONS.forEach(function(s){
     var c=tileContent(s.id);
+    var sk=STAMPKEY[s.id]; var stampHtml=sk?fcStampHtml(sk, sk==='churn'):'';
     h+='<div class="hubtile" data-sec="'+s.id+'" style="cursor:pointer;background:#fff;border:1px solid #e7edf1;border-top:6px solid '+(RAGC[c.rag]||'#9fb0bd')+';border-radius:14px;padding:16px 18px;box-shadow:3px 3px 0 rgba(36,55,70,.08);min-height:300px;display:flex;flex-direction:column">'+
        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">'+
        '<span style="width:11px;height:11px;border-radius:50%;background:'+(RAGC[c.rag]||'#9fb0bd')+'"></span>'+
        '<span style="font-family:MarkerFelt,sans-serif;color:var(--red);font-size:19px">'+s.title+'</span></div>'+
        '<div style="flex:1;display:flex;flex-direction:column;justify-content:space-between">'+c.body+'</div>'+
-       '<div style="font-size:15px;color:var(--blue);margin-top:12px">Open &rarr;</div></div>';
+       '<div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:12px">'+
+       '<span style="font-size:15px;color:var(--blue)">Open &rarr;</span>'+stampHtml+'</div></div>';
   });
   ['Recruitment','Coach Capacity'].forEach(function(name){
     h+='<div style="background:#f6f8f9;border:1px dashed #cdd8de;border-radius:14px;padding:16px;opacity:.7;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center">'+
@@ -1350,6 +1388,16 @@ window.__ingestProfit=function(doc, repMap, unitEcon, scorecard, churn, churnMon
   DATA.salesAnalytics=salesAnalytics||null;
   DATA.financials=financials||null;
   DATA.forecast=forecast||null;
+  // freshness stamps: read each doc's generated timestamp (centre-profit uses the newest month doc)
+  DATA.stamps={
+    contribution: (doc&&doc.generated)||null,
+    scorecard: (scorecard&&scorecard.generated)||null,
+    sales: (salesAnalytics&&salesAnalytics.generated)||null,
+    financials: (financials&&financials.generated)||null,
+    unitEcon: (unitEcon&&unitEcon.generated)||null,
+    forecast: (forecast&&forecast.generated)||null,
+    churn: (churnMonthly&&churnMonthly.generated)||null
+  };
   renderAll();
 };
 window.__profitError=function(msg){
