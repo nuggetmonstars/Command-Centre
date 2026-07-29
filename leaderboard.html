@@ -6069,6 +6069,9 @@ document.addEventListener('DOMContentLoaded', function(){
 /* offer upcoming sessions */
 .cc-offersessions{margin:10px 0 2px;background:#f6f1fb;border:2px solid #d9c4ef;border-radius:12px;padding:8px 12px}
 .cc-os-h{font-family:var(--mf);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#7a45b8;margin-bottom:6px}
+.cc-os-att{text-transform:none;letter-spacing:0;color:#7a45b8;font-size:11px;margin-left:8px}
+.cc-slots{display:flex;gap:8px;flex-wrap:wrap}
+.cc-slot{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.10)}
 .cc-os-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;border-bottom:1px solid #e6d9f4;font-size:14px}
 .cc-os-row:last-child{border-bottom:0}
 .cc-os-wk{font-family:var(--mf);color:#7a45b8}
@@ -6392,8 +6395,13 @@ async function loadAll(){
   const sales    = salesSnap.docs.map(d=>({id:d.id,...d.data()}));
   const offers   = offersSnap.docs.map(d=>({id:d.id,...d.data()}));
   const activity = actSnap.docs.map(d=>({id:d.id,...d.data()}));
+  let offerSessions = {};   // offer-callbacks/current.pipelineSessions -> { offerId: {ecId,sessions,attendedCount,noSessions} }
+  try {
+    const ocSnap = await getDoc(doc(db,"offer-callbacks","current"));
+    if(ocSnap.exists()) offerSessions = (ocSnap.data()||{}).pipelineSessions || {};
+  } catch(e){ console.error("[offers] pipelineSessions load failed (tracker will show 'no sessions')", e); }
   const DATA = buildEverything(sales, offers, activity, new Date());
-  window.__CRM = { DATA, sales, offers, activity };      // for the CRM tab to render
+  window.__CRM = { DATA, sales, offers, activity, offerSessions };      // for the CRM tab to render
   return DATA;
 }
 
@@ -6716,14 +6724,40 @@ async function ccFetchOfferSessions(name){
     if(!ecId){ ccOfferCache[key]=[]; return []; }
     const evSnap=await getDocs(query(collection(db,"events"), where("educationCenter","==",ecId)));
     const today=ccTodayISO(); const set=new Set();
-    evSnap.forEach(d=>{ const iso=ccEventDateAEST((d.data()||{}).start); if(iso && iso>=today) set.add(iso); });
+    evSnap.forEach(d=>{ const iso=ccEventDateAEST((d.data()||{}).start); if(iso) set.add(iso); });
     const uniq=[...set].sort(); ccOfferCache[key]=uniq; return uniq;
   }catch(e){ console.error("ccFetchOfferSessions",e); delete ccOfferCache[key]; return []; }
 }
+// 4-slot session tracker for a pipeline offer. Colours: green=Attended, red=Missed,
+// orange=Rescheduled, grey=not-yet. Caps at 4, pads short offers to 4.
+function ccOfferSlotsHtml(entry){
+  if(!entry || entry.noSessions || !(entry.sessions && entry.sessions.length)){
+    return `<div class="cc-os-h">&#128197; Sessions</div><div class="cc-empty">No sessions on system currently</div>`;
+  }
+  const COL={green:"#3fb950",red:"#e5534b",orange:"#f0883e",grey:"#d9d2e2"};
+  const LBL={green:"Attended",red:"Missed",orange:"Rescheduled",grey:"Not yet"};
+  let slots="";
+  for(let i=0;i<4;i++){
+    const sn=entry.sessions[i];
+    const c=(sn && sn.colour) ? sn.colour : "grey";
+    const title=sn ? `${LBL[c]||c}${sn.date?" · "+crmEsc(sn.date):""}` : "Not scheduled";
+    slots+=`<span class="cc-slot" title="${title}" style="background:${COL[c]||COL.grey}">${i+1}</span>`;
+  }
+  const att=entry.attendedCount||0;
+  return `<div class="cc-os-h">&#128197; Sessions <span class="cc-os-att">${att}/4 attended</span></div><div class="cc-slots">${slots}</div>`;
+}
+// Reads offer-callbacks/current.pipelineSessions by pipeline offer id (no client-side
+// name matching). Wrapped so a tracker failure can never blank the offer box or board.
 async function ccLoadRepOfferSessions(el){
   if(!el) return;
-  el.innerHTML=`<div class="cc-os-h">&#128197; Upcoming sessions</div><div class="cc-empty">Looking up sessions…</div>`;
-  el.innerHTML=ccOfferSessionsHtml(await ccFetchOfferSessions(el.getAttribute("data-repofferc")));
+  try{
+    const offerId=el.getAttribute("data-repoffer");
+    const map=(window.__CRM && window.__CRM.offerSessions) || {};
+    el.innerHTML=ccOfferSlotsHtml(map[offerId]);
+  }catch(e){
+    console.error("ccLoadRepOfferSessions",e);
+    try{ el.innerHTML=`<div class="cc-os-h">&#128197; Sessions</div><div class="cc-empty">No sessions on system currently</div>`; }catch(_){}
+  }
 }
 async function ccLoadOfferSessions(num){
   const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c || ccKey(c)!=="offer") return;
