@@ -6070,8 +6070,10 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-offersessions{margin:10px 0 2px;background:#f6f1fb;border:2px solid #d9c4ef;border-radius:12px;padding:8px 12px}
 .cc-os-h{font-family:var(--mf);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:#7a45b8;margin-bottom:6px}
 .cc-os-att{text-transform:none;letter-spacing:0;color:#7a45b8;font-size:11px;margin-left:8px}
-.cc-slots{display:flex;gap:8px;flex-wrap:wrap}
-.cc-slot{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;box-shadow:inset 0 0 0 1px rgba(0,0,0,.10)}
+.cc-slots{display:flex;gap:6px;flex-wrap:wrap}
+.cc-slot{min-width:66px;padding:4px 8px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:11px;font-weight:700;color:#fff;line-height:1.15;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.cc-slot-wk{font-size:8.5px;font-weight:700;opacity:.75;letter-spacing:.5px}
+.cc-slot-empty{background:#f2eef8;color:#b3a7c9;box-shadow:inset 0 0 0 1px #e2d9ef}
 .cc-os-row{display:flex;justify-content:space-between;gap:12px;padding:4px 0;border-bottom:1px solid #e6d9f4;font-size:14px}
 .cc-os-row:last-child{border-bottom:0}
 .cc-os-wk{font-family:var(--mf);color:#7a45b8}
@@ -6734,14 +6736,20 @@ function ccOfferSlotsHtml(entry){
   if(!entry || entry.noSessions || !(entry.sessions && entry.sessions.length)){
     return `<div class="cc-os-h">&#128197; Sessions</div><div class="cc-empty">No sessions on system currently</div>`;
   }
-  const COL={green:"#3fb950",red:"#e5534b",orange:"#f0883e",grey:"#d9d2e2"};
+  const COL={green:"#3fb950",red:"#e5534b",orange:"#f0883e",grey:"#e7e0f0"};
+  const TXT={green:"#fff",red:"#fff",orange:"#fff",grey:"#6b5b86"};
   const LBL={green:"Attended",red:"Missed",orange:"Rescheduled",grey:"Not yet"};
+  const auDate=iso=>{ const p=String(iso||"").split('-'); return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:""; };   // ISO -> DD/MM/YYYY
   let slots="";
   for(let i=0;i<4;i++){
     const sn=entry.sessions[i];
     const c=(sn && sn.colour) ? sn.colour : "grey";
-    const title=sn ? `${LBL[c]||c}${sn.date?" · "+crmEsc(sn.date):""}` : "Not scheduled";
-    slots+=`<span class="cc-slot" title="${title}" style="background:${COL[c]||COL.grey}">${i+1}</span>`;
+    if(sn && sn.date){
+      const d=auDate(sn.date);
+      slots+=`<span class="cc-slot" title="${crmEsc((LBL[c]||c)+" · "+d)}" style="background:${COL[c]||COL.grey};color:${TXT[c]||"#fff"}"><b class="cc-slot-wk">S${i+1}</b>${crmEsc(d)}</span>`;
+    } else {
+      slots+=`<span class="cc-slot cc-slot-empty" title="Not scheduled"><b class="cc-slot-wk">S${i+1}</b>&mdash;</span>`;
+    }
   }
   const att=entry.attendedCount||0;
   return `<div class="cc-os-h">&#128197; Sessions <span class="cc-os-att">${att}/4 attended</span></div><div class="cc-slots">${slots}</div>`;
