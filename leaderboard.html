@@ -6938,7 +6938,7 @@ function ccRenderCounter(){
 }
 function ccLogForm(c){
   const today=ccTodayISO(), num=crmEsc(c.num);
-  const resultOpts=[["","— pick result —"],["very_interested","Very interested"],["interested","Interested"],["not_interested","Not interested"],["call_eoy","Call EOY"],["no_answer","No answer"],["booked_sale","Booked sale"],["booked_offer","Booked offer"]]
+  const resultOpts=[["","— pick result —"],["very_interested","Very interested"],["interested","Interested"],["not_interested","Not interested"],["call_eoy","Call EOY"],["no_answer","No answer"],["booked_sale","Booked sale"],["booked_offer","Booked offer"],["followup_nc","Follow-up (no status change)"]]
     .map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("");
   const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${crmEsc(s)}">${crmEsc(s)} · ${CRM_SESSIONS[s]}pt</option>`).join("");
   return `<div class="cc-logform">
@@ -6984,7 +6984,7 @@ async function ccLogCall(num){
     const history=Array.isArray(c.history)?c.history.slice():[]; history.push(entry);
     const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
     const patch={history, status:STATUSMAP[result]||c.status, crmCallCount:(c.crmCallCount||0)+1, lastResult:result};
-    if(cb) patch.callbackDate=cb; else patch.callbackDate=null;
+    if(cb) patch.callbackDate=cb; else if(result!=="followup_nc") patch.callbackDate=null;
     await updateDoc(doc(db, ccCOLLECTION, c.id), patch);
     Object.assign(c, patch);
     // (b) daily-activity upsert for rep+date
