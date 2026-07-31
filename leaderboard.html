@@ -7026,7 +7026,11 @@ async function ccLogCall(num){
     const history=Array.isArray(c.history)?c.history.slice():[]; history.push(entry);
     const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
     const patch={history, status:STATUSMAP[result]||c.status, crmCallCount:(c.crmCallCount||0)+1, lastResult:result};
-    if(cb) patch.callbackDate=cb; else if(result!=="followup_nc") patch.callbackDate=null;
+    if(cb) patch.callbackDate=cb;
+    else if(result!=="followup_nc") patch.callbackDate=null;
+    // follow-up (no status change): clear a DUE/overdue callback (actioned today, drops off the
+    // calls-today list) but leave a FUTURE one untouched. "due" mirrors ccIsDueCallback exactly.
+    else if(c.callbackDate && String(c.callbackDate)<=ccTodayISO()) patch.callbackDate=null;
     await updateDoc(doc(db, ccCOLLECTION, c.id), patch);
     Object.assign(c, patch);
     // (b) daily-activity upsert for rep+date
