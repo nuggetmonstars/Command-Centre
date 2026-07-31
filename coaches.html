@@ -410,6 +410,13 @@ body::before {
 .lp-weeks{margin-top:-4px;margin-bottom:12px;padding-left:2px}
 .tr-pill.lp-wk{font-size:11px;padding:5px 12px;border-color:#cfe0ea}
 .tr-pill.lp-wk.on{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.lp-subtabs{display:flex;gap:6px;margin:-2px 0 10px}
+.lp-sub{font-family:'MarkerFelt',cursive;font-size:12px;padding:5px 13px;border-radius:30px;cursor:pointer;border:2px solid #cfe0ea;background:#fff;color:var(--blue);user-select:none;display:flex;align-items:center;gap:6px}
+.lp-sub.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.lp-sub .lp-n{background:rgba(0,0,0,.12);border-radius:10px;padding:0 7px;font-size:11px}
+.lp-sub.on .lp-n{background:rgba(255,255,255,.25)}
+.lp-pane ul{margin:4px 0 10px 17px;padding:0}
 </style>
 </head>
 <body>
@@ -1596,55 +1603,66 @@ function renderLessons(){
     // drill-down: full history, program -> week, period views marked
     const byProg={};
     c.views.forEach(v=>{ (byProg[v.prog]=byProg[v.prog]||{})[v.week]=(byProg[v.prog][v.week]||[]); byProg[v.prog][v.week].push(v); });
-    let body='';
+    let vbody='';
     const progs=Object.keys(byProg).sort();
     if(progs.length){
       progs.forEach(p=>{
         const wks=byProg[p];
         const tot=Object.values(wks).reduce((a,b)=>a+b.length,0);
-        body+=`<b>${esc(p)}</b> <span class="tr-dim">${tot} view${tot===1?'':'s'}</span><ul>`;
+        vbody+=`<b>${esc(p)}</b> <span class="tr-dim">${tot} view${tot===1?'':'s'}</span><ul>`;
         Object.entries(wks)
           .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
           .slice(0,12)
           .forEach(([wk,vs])=>{
             const lastW=Math.max(...vs.map(v=>v.date));
             const inP=vs.some(v=>inR(v.date));
-            body+=`<li>${esc(wk)} <span class="tr-dim">${vs.length}×, ${fdate(lastW)}</span>`+
+            vbody+=`<li>${esc(wk)} <span class="tr-dim">${vs.length}×, ${fdate(lastW)}</span>`+
                   `${inP?' <b style="color:#3d8b2f">•</b>':''}</li>`;
           });
         const nw=Object.keys(wks).length;
-        if(nw>12) body+=`<li class="tr-dim">…and ${nw-12} more weeks</li>`;
-        body+=`</ul>`;
+        if(nw>12) vbody+=`<li class="tr-dim">…and ${nw-12} more weeks</li>`;
+        vbody+=`</ul>`;
       });
-      body+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} video views.</div>`;
+      vbody+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} video views.</div>`;
     } else if(!c.pdfs.length&&!c.mapped){
-      body=`<div class="tr-dim">This coach has no app ID on record yet, so their activity can't be matched. It isn't evidence they haven't watched anything — the map fills in as they use the app.</div>`;
+      vbody=`<div class="tr-dim">This coach has no app ID on record yet, so their activity can't be matched. It isn't evidence they haven't watched anything — the map fills in as they use the app.</div>`;
     } else {
-      body=`<div class="tr-dim">No lesson plan videos watched.</div>`;
+      vbody=`<div class="tr-dim">No lesson plan videos watched.</div>`;
     }
     // PDF plan views
+    let pbody='';
     if(c.pdfs.length){
       const pw={};
       c.pdfs.forEach(p=>{ const k=`${p.prog} · ${p.week}`; (pw[k]=pw[k]||[]).push(p); });
-      body+=`<div style="margin-top:10px"><b>Lesson plan PDFs opened</b><ul>`;
+      pbody+=`<ul>`;
       Object.entries(pw)
         .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
         .slice(0,12)
         .forEach(([k,vs])=>{
           const lastP=Math.max(...vs.map(v=>v.date));
-          body+=`<li>${esc(k)} <span class="tr-dim">${vs.length}×, ${fdate(lastP)}</span>`+
+          pbody+=`<li>${esc(k)} <span class="tr-dim">${vs.length}×, ${fdate(lastP)}</span>`+
                 `${vs.some(v=>inR(v.date))?' <b style="color:#3d8b2f">•</b>':''}</li>`;
         });
       const np=Object.keys(pw).length;
-      if(np>12) body+=`<li class="tr-dim">…and ${np-12} more</li>`;
-      body+=`</ul></div>`;
-    } else if(c.mapped){
-      body+=`<div class="tr-dim" style="margin-top:10px">No lesson plan PDFs opened.</div>`;
+      if(np>12) pbody+=`<li class="tr-dim">…and ${np-12} more</li>`;
+      pbody+=`</ul>`;
+      pbody+=`<div class="tr-dim">Green dot = opened in the selected period. Lifetime total ${c.pdfs.length} PDF opens.</div>`;
+    } else {
+      pbody+=`<div class="tr-dim">No lesson plan PDFs opened.</div>`;
     }
     if(R.from<LP_PDF_FROM){
-      body+=`<div class="tr-dim" style="margin-top:6px">PDF tracking only began 29 Jun 2026, so PDF counts before then are absent by default, not zero.</div>`;
+      pbody+=`<div class="tr-dim" style="margin-top:6px">PDF tracking only began 29 Jun 2026, so counts before then are absent by default, not zero.</div>`;
     }
+
     const id=`${pfx}-${i}`;
+    // default pane: whichever has activity this period (videos win a tie)
+    const startPdf = (!c.inP.length && c.inPdf.length) ? true : false;
+    const body=`<div class="lp-subtabs">
+        <div class="lp-sub ${startPdf?'':'on'}" data-sub="v" data-for="${id}">Videos <span class="lp-n">${c.inP.length}</span></div>
+        <div class="lp-sub ${startPdf?'on':''}" data-sub="p" data-for="${id}">PDFs <span class="lp-n">${c.inPdf.length}</span></div>
+      </div>
+      <div class="lp-pane lp-pane-v" ${startPdf?'style="display:none"':''}>${vbody}</div>
+      <div class="lp-pane lp-pane-p" ${startPdf?'':'style="display:none"'}>${pbody}</div>`;
     return `<div class="tr-cc st-${st}" id="lpc-${id}">
       <div class="tr-cn" data-lp="${id}"><span class="tr-caret">&#9656;</span>${esc(c.fullName)}</div>
       <div class="tr-cmeta" data-lp="${id}">${esc(meta(c))}</div>
@@ -1691,6 +1709,15 @@ function renderLessons(){
   el.querySelectorAll('[data-lp]').forEach(n=>n.onclick=()=>{
     const c=document.getElementById('lpc-'+n.dataset.lp);
     if(c) c.classList.toggle('open');
+  });
+  el.querySelectorAll('.lp-sub').forEach(n=>n.onclick=(ev)=>{
+    ev.stopPropagation();
+    const card=document.getElementById('lpc-'+n.dataset.for); if(!card) return;
+    const pdf=n.dataset.sub==='p';
+    card.querySelectorAll('.lp-sub').forEach(s=>s.classList.toggle('on',s===n));
+    const pv=card.querySelector('.lp-pane-v'), pp=card.querySelector('.lp-pane-p');
+    if(pv) pv.style.display=pdf?'none':'block';
+    if(pp) pp.style.display=pdf?'block':'none';
   });
 }
 
