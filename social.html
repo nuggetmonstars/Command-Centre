@@ -148,12 +148,14 @@ a.plink:hover{text-decoration:underline}
       <div class="tab" data-v="posts">Posts</div>
       <div class="tab" data-v="formats">Formats</div>
       <div class="tab" data-v="timing">Timing</div>
+      <div class="tab" data-v="bymonth">By Month</div>
     </div>
 
     <div class="view on" id="v-channels"></div>
     <div class="view" id="v-posts"></div>
     <div class="view" id="v-formats"></div>
     <div class="view" id="v-timing"></div>
+    <div class="view" id="v-bymonth"></div>
   </div>
 </div>
 
@@ -423,13 +425,134 @@ function renderTiming(){
 }
 
 /* ============ boot ============ */
+
+/* ============ view: by month ============ */
+/* Monthly totals per platform. Count metrics are SUMMED; engagementRate is AVERAGED
+   over posts that report it. Only metrics a platform actually emits are shown (no
+   invented columns). Thin metrics (reported by <25% of that month's posts on that
+   platform) are flagged. Each platform row expands to its posts for that month. */
+var BM_SUM = ['reach','impressions','views','reactions','comments','shares','saves','clicks','follows','likes','reposts'];
+var BM_open = {};   // key "month|service" -> bool
+
+function bmMonthLabel(ym){
+  var parts = ym.split('-'); var y=+parts[0], m=+parts[1];
+  var names=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  return names[m-1]+' '+y;
+}
+
+function renderByMonth(){
+  var posts = DATA.posts || [];
+  // bucket: month -> service -> [posts]
+  var byMonth = {};
+  posts.forEach(function(p){
+    var ym = (p.sentDate||'').slice(0,7); if(!ym) return;
+    var svc = p.service||'other';
+    (byMonth[ym] = byMonth[ym] || {});
+    (byMonth[ym][svc] = byMonth[ym][svc] || []).push(p);
+  });
+  var months = Object.keys(byMonth).sort().reverse();   // newest first
+
+  var h = '<div class="card"><div style="font-size:13px;color:#7d93a3;margin-bottom:12px">'+
+    'Posts and their metrics per platform, month by month. Count metrics are totals for the month; '+
+    'eng. rate is the average. A metric marked <span style="color:var(--orange)">thin</span> was reported '+
+    'by only some posts, so treat it as indicative.</div>';
+
+  if(!months.length){ h += '<div class="empty">No dated posts.</div></div>';
+    document.getElementById('v-bymonth').innerHTML = h; return; }
+
+  months.forEach(function(ym){
+    var svcs = Object.keys(byMonth[ym]).sort();
+    var monthTotal = svcs.reduce(function(a,sv){ return a + byMonth[ym][sv].length; }, 0);
+    h += '<div style="margin:18px 0 6px"><span style="font-family:MarkerFelt,cursive;'+
+         'font-size:20px;color:var(--red)">'+bmMonthLabel(ym)+'</span>'+
+         '<span style="color:#94a7b5;font-size:13px;margin-left:8px">'+monthTotal+' posts</span></div>';
+
+    svcs.forEach(function(svc){
+      var list = byMonth[ym][svc];
+      var n = list.length;
+      // which metrics does this platform emit this month?
+      var present = {};
+      list.forEach(function(p){ for(var k in (p.metrics||{})) present[k]=(present[k]||0)+1; });
+      var metricKeys = BM_SUM.filter(function(k){ return present[k]; });
+      var hasER = !!present['engagementRate'];
+
+      // aggregate
+      var sums = {}; metricKeys.forEach(function(k){ sums[k]=0; });
+      var erVals = [];
+      list.forEach(function(p){
+        var m=p.metrics||{};
+        metricKeys.forEach(function(k){ if(typeof m[k]==='number') sums[k]+=m[k]; });
+        if(typeof m['engagementRate']==='number' && m['engagementRate']>0) erVals.push(m['engagementRate']);
+      });
+      var erAvg = erVals.length ? (erVals.reduce(function(a,b){return a+b;},0)/erVals.length) : null;
+
+      var key = ym+'|'+svc, isOpen = !!BM_open[key];
+      h += '<div class="bm-row" data-k="'+key+'" style="cursor:pointer;display:flex;flex-wrap:wrap;'+
+           'align-items:center;gap:14px;padding:9px 12px;border:1px solid var(--line);'+
+           'border-radius:10px;margin-bottom:7px;background:#fff">';
+      h += '<span style="min-width:120px;font-weight:700;white-space:nowrap">'+
+           '<span class="svc" style="background:'+(SVC_COLOUR[svc]||'#999')+'"></span>'+svc+'</span>';
+      h += '<span style="color:#243746;font-weight:700;min-width:64px">'+n+' post'+(n===1?'':'s')+'</span>';
+      // metric chips
+      metricKeys.forEach(function(k){
+        var thin = present[k] < Math.max(1, Math.ceil(n*0.25));
+        h += '<span style="font-size:12.5px;color:#4a5f6d">'+(METRIC_LABEL[k]||k)+' '+
+             '<b style="color:#243746">'+fmt(sums[k])+'</b>'+
+             (thin?' <span style="color:var(--orange);font-size:11px">thin</span>':'')+'</span>';
+      });
+      if(hasER && erAvg!==null){
+        h += '<span style="font-size:12.5px;color:#4a5f6d">'+(METRIC_LABEL['engagementRate'])+' '+
+             '<b style="color:#243746">'+erAvg.toFixed(1)+'%</b></span>';
+      }
+      h += '<span style="margin-left:auto;color:var(--blue);font-size:12px">'+(isOpen?'hide':'posts')+' '+(isOpen?'&uarr;':'&darr;')+'</span>';
+      h += '</div>';
+
+      // expanded posts
+      if(isOpen){
+        h += '<div style="margin:-2px 0 10px 12px;padding-left:12px;border-left:2px solid var(--line)">';
+        var live = metricKeys.concat(hasER?['engagementRate']:[]);
+        list.slice().sort(function(a,b){ return (a.sentDate<b.sentDate)?1:-1; }).forEach(function(p){
+          var mp = melbParts(p.sentAt);
+          h += '<div style="display:flex;gap:10px;align-items:flex-start;padding:6px 0;border-bottom:1px solid #f0f4f6">';
+          h += p.thumb ? '<img class="thumb" src="'+p.thumb+'" loading="lazy" onerror="this.style.display=\'none\'">'
+                       : '<div class="nothumb"></div>';
+          h += '<div style="flex:1;min-width:0">';
+          h += '<div style="font-size:12px;color:#94a7b5">'+(mp?mp.day+' '+mp.month+' &middot; '+mp.weekday:p.sentDate)+
+               (p.format?' &middot; '+p.format:'')+'</div>';
+          h += '<div class="ptext" style="font-size:12.5px">'+(p.text||'<i style="color:#bbb">no caption</i>')+'</div>';
+          h += '<div style="font-size:12px;color:#4a5f6d;margin-top:2px">';
+          live.forEach(function(k){
+            var v=(p.metrics||{})[k];
+            if(v===undefined) return;
+            h += (METRIC_LABEL[k]||k)+' <b>'+(k==='engagementRate'?(v.toFixed(1)+'%'):fmt(v))+'</b> &nbsp; ';
+          });
+          h += '</div>';
+          if(p.link) h += '<a class="plink" href="'+p.link+'" target="_blank" rel="noopener">open post &rarr;</a>';
+          h += '</div></div>';
+        });
+        h += '</div>';
+      }
+    });
+  });
+  h += '</div>';
+  document.getElementById('v-bymonth').innerHTML = h;
+
+  Array.prototype.forEach.call(document.querySelectorAll('#v-bymonth .bm-row'), function(row){
+    row.onclick = function(){
+      var k = row.getAttribute('data-k');
+      BM_open[k] = !BM_open[k];
+      renderByMonth();
+    };
+  });
+}
+
 function renderAll(){
   var d = new Date(DATA.generated);
   var ago = Math.round((Date.now()-d.getTime())/3600000);
   document.getElementById('stamp').innerHTML =
     '<b>'+DATA.posts.length+'</b> posts &middot; last '+DATA.windowDays+' days<br>'+
     'refreshed '+(ago<1?'just now':ago+'h ago')+' &middot; '+DATA.requestsUsed+' API calls';
-  renderChannels(); renderPosts(); renderFormats(); renderTiming();
+  renderChannels(); renderPosts(); renderFormats(); renderTiming(); renderByMonth();
 }
 Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
   t.onclick = function(){
