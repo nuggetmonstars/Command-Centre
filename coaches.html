@@ -417,6 +417,10 @@ body::before {
 .lp-sub .lp-n{background:rgba(0,0,0,.12);border-radius:10px;padding:0 7px;font-size:11px}
 .lp-sub.on .lp-n{background:rgba(255,255,255,.25)}
 .lp-pane ul{margin:4px 0 10px 17px;padding:0}
+
+.lp-prog{font-family:'MarkerFelt',cursive;font-size:13px;color:var(--blue);margin:8px 0 2px;text-transform:uppercase;letter-spacing:.5px}
+.lp-wkn{font-weight:700;color:var(--ink)}
+.lp-pane li{margin-bottom:4px;line-height:1.35}
 </style>
 </head>
 <body>
@@ -1601,54 +1605,64 @@ function renderLessons(){
   const card=(c,i,pfx,meta)=>{
     const st=STL.includes(c.state)?c.state:'none';
     // drill-down: full history, program -> week, period views marked
+    // videos in the selected period only, grouped program -> week -> video
+    const pv=c.views.filter(v=>inR(v.date));
     const byProg={};
-    c.views.forEach(v=>{ (byProg[v.prog]=byProg[v.prog]||{})[v.week]=(byProg[v.prog][v.week]||[]); byProg[v.prog][v.week].push(v); });
+    pv.forEach(v=>{
+      const wk=(byProg[v.prog]=byProg[v.prog]||{});
+      const vids=(wk[v.week]=wk[v.week]||{});
+      const k=v.name||'(video)';
+      if(!vids[k]) vids[k]={n:0,last:0};
+      vids[k].n++; if(v.date>vids[k].last) vids[k].last=v.date;
+    });
     let vbody='';
     const progs=Object.keys(byProg).sort();
     if(progs.length){
       progs.forEach(p=>{
         const wks=byProg[p];
-        const tot=Object.values(wks).reduce((a,b)=>a+b.length,0);
-        vbody+=`<b>${esc(p)}</b> <span class="tr-dim">${tot} view${tot===1?'':'s'}</span><ul>`;
+        const tot=Object.values(wks).reduce((a,w)=>a+Object.values(w).reduce((x,y)=>x+y.n,0),0);
+        vbody+=`<div class="lp-prog">Program · ${esc(p)} <span class="tr-dim">${tot} view${tot===1?'':'s'}</span></div><ul>`;
         Object.entries(wks)
-          .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
-          .slice(0,12)
-          .forEach(([wk,vs])=>{
-            const lastW=Math.max(...vs.map(v=>v.date));
-            const inP=vs.some(v=>inR(v.date));
-            vbody+=`<li>${esc(wk)} <span class="tr-dim">${vs.length}×, ${fdate(lastW)}</span>`+
-                  `${inP?' <b style="color:#3d8b2f">•</b>':''}</li>`;
+          .sort((a,b)=>Math.max(...Object.values(b[1]).map(v=>v.last))-Math.max(...Object.values(a[1]).map(v=>v.last)))
+          .forEach(([wk,vids])=>{
+            Object.entries(vids)
+              .sort((a,b)=>b[1].last-a[1].last)
+              .forEach(([nme,d])=>{
+                vbody+=`<li><span class="lp-wkn">${esc(wk)}</span> — ${esc(nme)}`+
+                       `<span class="tr-dim"> ${d.n>1?d.n+'×, ':''}${fdate(d.last)}</span></li>`;
+              });
           });
-        const nw=Object.keys(wks).length;
-        if(nw>12) vbody+=`<li class="tr-dim">…and ${nw-12} more weeks</li>`;
         vbody+=`</ul>`;
       });
-      vbody+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} video views.</div>`;
+      vbody+=`<div class="tr-dim" style="margin-top:4px">${pv.length} view${pv.length===1?'':'s'} in ${esc(R.label)}. Lifetime total ${c.views.length}.</div>`;
     } else if(!c.pdfs.length&&!c.mapped){
       vbody=`<div class="tr-dim">This coach has no app ID on record yet, so their activity can't be matched. It isn't evidence they haven't watched anything — the map fills in as they use the app.</div>`;
     } else {
-      vbody=`<div class="tr-dim">No lesson plan videos watched.</div>`;
+      vbody=`<div class="tr-dim">No videos watched in ${esc(R.label)}.`+
+            `${c.views.length?` Lifetime total ${c.views.length} views.`:''}</div>`;
     }
     // PDF plan views
     let pbody='';
-    if(c.pdfs.length){
-      const pw={};
-      c.pdfs.forEach(p=>{ const k=`${p.prog} · ${p.week}`; (pw[k]=pw[k]||[]).push(p); });
-      pbody+=`<ul>`;
-      Object.entries(pw)
-        .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
-        .slice(0,12)
-        .forEach(([k,vs])=>{
-          const lastP=Math.max(...vs.map(v=>v.date));
-          pbody+=`<li>${esc(k)} <span class="tr-dim">${vs.length}×, ${fdate(lastP)}</span>`+
-                `${vs.some(v=>inR(v.date))?' <b style="color:#3d8b2f">•</b>':''}</li>`;
+    const pp2=c.pdfs.filter(v=>inR(v.date));
+    if(pp2.length){
+      const pgrp={};
+      pp2.forEach(p=>{ (pgrp[p.prog]=pgrp[p.prog]||{}); const w=pgrp[p.prog];
+        if(!w[p.week]) w[p.week]={n:0,last:0};
+        w[p.week].n++; if(p.date>w[p.week].last) w[p.week].last=p.date; });
+      Object.keys(pgrp).sort().forEach(p=>{
+        const wks=pgrp[p];
+        const tot=Object.values(wks).reduce((a,b)=>a+b.n,0);
+        pbody+=`<div class="lp-prog">Program · ${esc(p)} <span class="tr-dim">${tot} open${tot===1?'':'s'}</span></div><ul>`;
+        Object.entries(wks).sort((a,b)=>b[1].last-a[1].last).forEach(([wk,d])=>{
+          pbody+=`<li><span class="lp-wkn">${esc(wk)}</span>`+
+                 `<span class="tr-dim"> ${d.n>1?d.n+'×, ':''}${fdate(d.last)}</span></li>`;
         });
-      const np=Object.keys(pw).length;
-      if(np>12) pbody+=`<li class="tr-dim">…and ${np-12} more</li>`;
-      pbody+=`</ul>`;
-      pbody+=`<div class="tr-dim">Green dot = opened in the selected period. Lifetime total ${c.pdfs.length} PDF opens.</div>`;
+        pbody+=`</ul>`;
+      });
+      pbody+=`<div class="tr-dim">${pp2.length} open${pp2.length===1?'':'s'} in ${esc(R.label)}. Lifetime total ${c.pdfs.length}.</div>`;
     } else {
-      pbody+=`<div class="tr-dim">No lesson plan PDFs opened.</div>`;
+      pbody+=`<div class="tr-dim">No lesson plan PDFs opened in ${esc(R.label)}.`+
+             `${c.pdfs.length?` Lifetime total ${c.pdfs.length} opens.`:''}</div>`;
     }
     if(R.from<LP_PDF_FROM){
       pbody+=`<div class="tr-dim" style="margin-top:6px">PDF tracking only began 29 Jun 2026, so counts before then are absent by default, not zero.</div>`;
@@ -1691,7 +1705,7 @@ function renderLessons(){
     </div>`;
 
   h+=sec(`Active in ${plabel}`, watched, 'w',
-        c=>`${c.state||'—'} · ${c.inP.length} video${c.inP.length===1?'':'s'} · ${c.inPdf.length} PDF${c.inPdf.length===1?'':'s'} · last ${fdate(c.last)}`);
+        c=>`${c.state||'—'} · ${c.inP.length} video${c.inP.length===1?'':'s'} · ${c.inPdf.length} PDF${c.inPdf.length===1?'':'s'} · last active ${fdate(c.last)}`);
   h+=sec(`Nothing in ${plabel}`, quiet, 'q',
         c=>`${c.state||'—'} · last active ${fdate(c.last)} · ${c.views.length} videos, ${c.pdfs.length} PDFs lifetime`, true);
   h+=sec(`No lesson plan activity on record`, never, 'n',
