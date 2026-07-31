@@ -406,6 +406,10 @@ body::before {
 .tr-sec .n{background:var(--blue);color:#fff;border-radius:12px;font-size:12px;padding:2px 10px}
 .tr-none .tr-sec .n{background:var(--red)}
 .tr-dim{opacity:.55;font-size:12px}
+
+.lp-weeks{margin-top:-4px;margin-bottom:12px;padding-left:2px}
+.tr-pill.lp-wk{font-size:11px;padding:5px 12px;border-color:#cfe0ea}
+.tr-pill.lp-wk.on{background:var(--blue);border-color:var(--blue);color:#fff}
 </style>
 </head>
 <body>
@@ -523,6 +527,7 @@ body::before {
     <div style="padding:0 24px 6px">
       <input id="lp-search" class="filter-select" type="text" placeholder="🔍  Search coaches by name…" style="width:100%;margin-bottom:12px">
       <div class="tr-pills" id="lp-periods"></div>
+      <div class="tr-pills lp-weeks" id="lp-weeks"></div>
       <div class="tr-pills" id="lp-pills"></div>
     </div>
     <div id="lessons-content"><div class="loading"><div class="spinner"></div><p>Loading…</p></div></div>
@@ -1414,17 +1419,45 @@ function renderTraining() {
 }
 
 // ── LESSON PLANS TAB ──────────────────────────────────────────────────────────
-let LP_STATE='ALL', LP_PERIOD='month', LP_VIEWS=null, LP_LOADING=false;
+let LP_STATE='ALL', LP_VIEWS=null, LP_LOADING=false;
+// LP_MODE: 'month' | 'ytd' | 'all'.  LP_MONTH = 0-11 when mode is 'month'.
+// LP_WEEK = index into the selected month's weeks, or null for the whole month.
+let LP_MODE='month', LP_MONTH=new Date().getMonth(), LP_WEEK=null;
 
-const LP_PERIODS=[['week','This week'],['month','This month'],['ytd','Year to date'],['all','All time']];
+const LP_MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const LP_DAY=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-function lpPeriodStart(p){
-  const now=new Date();
-  if(p==='week'){ const d=new Date(now); const dow=(d.getDay()+6)%7; // Monday = 0
-    d.setDate(d.getDate()-dow); d.setHours(0,0,0,0); return d.getTime(); }
-  if(p==='month') return new Date(now.getFullYear(),now.getMonth(),1).getTime();
-  if(p==='ytd')   return new Date(now.getFullYear(),0,1).getTime();
-  return 0;
+// Monday-start weeks, clipped to the month at both ends.
+function lpWeeksOf(year,month){
+  const first=new Date(year,month,1), last=new Date(year,month+1,0);
+  const out=[]; let cur=new Date(first);
+  while(cur<=last){
+    const dow=(cur.getDay()+6)%7;                 // Mon=0
+    const wStart=new Date(cur); wStart.setDate(cur.getDate()-dow);
+    const wEnd=new Date(wStart); wEnd.setDate(wStart.getDate()+6);
+    const s=wStart<first?new Date(first):wStart;
+    const e=wEnd>last?new Date(last):wEnd;
+    s.setHours(0,0,0,0); e.setHours(23,59,59,999);
+    out.push({start:s.getTime(),end:e.getTime(),
+      label:`${LP_DAY[s.getDay()]} ${s.getDate()} ${LP_MON[s.getMonth()]} – ${LP_DAY[e.getDay()]} ${e.getDate()} ${LP_MON[e.getMonth()]}`});
+    cur=new Date(wEnd); cur.setDate(cur.getDate()+1);
+  }
+  return out;
+}
+
+// Returns {from,to,label} for whatever is currently selected.
+function lpRange(){
+  const now=new Date(), y=now.getFullYear();
+  if(LP_MODE==='all') return {from:0,to:Infinity,label:'all time'};
+  if(LP_MODE==='ytd') return {from:new Date(y,0,1).getTime(),to:Infinity,label:'year to date'};
+  const wks=lpWeeksOf(y,LP_MONTH);
+  if(LP_WEEK!=null && wks[LP_WEEK]){
+    const w=wks[LP_WEEK];
+    return {from:w.start,to:w.end,label:w.label.toLowerCase()};
+  }
+  return {from:new Date(y,LP_MONTH,1).getTime(),
+          to:new Date(y,LP_MONTH+1,0,23,59,59,999).getTime(),
+          label:`${LP_MON[LP_MONTH]} ${y}`};
 }
 
 async function lpLoadViews(){
@@ -1467,14 +1500,43 @@ function renderLessons(){
 
   const qF=((document.getElementById('lp-search')||{}).value||'').toLowerCase().trim();
   const all=buildLessons();
-  const cut=lpPeriodStart(LP_PERIOD);
+  const R=lpRange();
+  const now=new Date(), yr=now.getFullYear();
 
-  // period pills
+  // month pills (current calendar year, up to this month) + YTD + All time
   const pp=document.getElementById('lp-periods');
   if(pp){
-    pp.innerHTML=LP_PERIODS.map(([k,lbl])=>
-      `<div class="tr-pill ${LP_PERIOD===k?'on':''}" data-st="ALL" data-p="${k}">${lbl}</div>`).join('');
-    pp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{LP_PERIOD=p.dataset.p;renderLessons();});
+    let ph='';
+    for(let m=0;m<=now.getMonth();m++){
+      const on=(LP_MODE==='month'&&LP_MONTH===m)?'on':'';
+      ph+=`<div class="tr-pill ${on}" data-st="ALL" data-m="${m}">${LP_MON[m]}</div>`;
+    }
+    ph+=`<span style="width:10px"></span>`;
+    ph+=`<div class="tr-pill ${LP_MODE==='ytd'?'on':''}" data-st="ALL" data-mode="ytd">Year to date</div>`;
+    ph+=`<div class="tr-pill ${LP_MODE==='all'?'on':''}" data-st="ALL" data-mode="all">All time</div>`;
+    pp.innerHTML=ph;
+    pp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{
+      if(p.dataset.mode){ LP_MODE=p.dataset.mode; LP_WEEK=null; }
+      else { const m=+p.dataset.m;
+             if(LP_MODE==='month'&&LP_MONTH===m){ LP_WEEK=null; }   // re-click = whole month
+             LP_MODE='month'; LP_MONTH=m; LP_WEEK=null; }
+      renderLessons();
+    });
+  }
+
+  // week pills — only when a month is selected
+  const wp=document.getElementById('lp-weeks');
+  if(wp){
+    if(LP_MODE==='month'){
+      const wks=lpWeeksOf(yr,LP_MONTH);
+      wp.style.display='flex';
+      wp.innerHTML=`<div class="tr-pill lp-wk ${LP_WEEK==null?'on':''}" data-st="ALL" data-w="all">Whole month</div>`+
+        wks.map((w,i)=>`<div class="tr-pill lp-wk ${LP_WEEK===i?'on':''}" data-st="ALL" data-w="${i}">${w.label}</div>`).join('');
+      wp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{
+        LP_WEEK = p.dataset.w==='all' ? null : +p.dataset.w;
+        renderLessons();
+      });
+    } else { wp.style.display='none'; wp.innerHTML=''; }
   }
 
   // state pills
@@ -1491,7 +1553,8 @@ function renderLessons(){
   if(LP_STATE!=='ALL') list=list.filter(c=>(c.state||'')===LP_STATE);
   if(qF) list=list.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
 
-  list.forEach(c=>{ c.inP=c.views.filter(v=>v.date>=cut); c.last=c.views.length?Math.max(...c.views.map(v=>v.date)):0; });
+  const inR=d=>d>=R.from&&d<=R.to;
+  list.forEach(c=>{ c.inP=c.views.filter(v=>inR(v.date)); c.last=c.views.length?Math.max(...c.views.map(v=>v.date)):0; });
 
   const abc=(a,b)=>(a.fullName||'').localeCompare(b.fullName||'');
   const watched = list.filter(c=>c.mapped&&c.inP.length).sort(abc);
@@ -1520,7 +1583,7 @@ function renderLessons(){
           .slice(0,12)
           .forEach(([wk,vs])=>{
             const lastW=Math.max(...vs.map(v=>v.date));
-            const inP=vs.some(v=>v.date>=cut);
+            const inP=vs.some(v=>inR(v.date));
             body+=`<li>${esc(wk)} <span class="tr-dim">${vs.length}×, ${fdate(lastW)}</span>`+
                   `${inP?' <b style="color:#3d8b2f">•</b>':''}</li>`;
           });
@@ -1549,21 +1612,21 @@ function renderLessons(){
     return s;
   };
 
-  const plabel=(LP_PERIODS.find(p=>p[0]===LP_PERIOD)||['','' ])[1].toLowerCase();
-  const totalIn=all.filter(c=>c.mapped&&c.views.some(v=>v.date>=cut)).length;
+  const plabel=R.label;
+  const totalIn=all.filter(c=>c.mapped&&c.views.some(v=>inR(v.date))).length;
   const mappedN=all.filter(c=>c.mapped).length;
 
   let h=`<div style="padding:0 24px 24px">
     <div class="stats-row" style="margin-bottom:4px">
       <div class="stat-card"><div class="stat-num">${totalIn}</div><div class="stat-lbl">watched ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!c.views.some(v=>v.date>=cut)).length}</div><div class="stat-lbl">nothing ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>(v.date||0)>=cut).length}</div><div class="stat-lbl">total views ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!c.views.some(v=>inR(v.date))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>inR(v.date||0)).length}</div><div class="stat-lbl">total views in ${plabel}</div></div>
       <div class="stat-card"><div class="stat-num">${mappedN}/${all.length}</div><div class="stat-lbl">coaches trackable</div></div>
     </div>`;
 
-  h+=sec(`Watched ${plabel}`, watched, 'w',
+  h+=sec(`Watched in ${plabel}`, watched, 'w',
         c=>`${c.state||'—'} · ${c.inP.length} view${c.inP.length===1?'':'s'} · last ${fdate(c.last)}`);
-  h+=sec(`Nothing ${plabel}`, quiet, 'q',
+  h+=sec(`Nothing in ${plabel}`, quiet, 'q',
         c=>`${c.state||'—'} · last watched ${fdate(c.last)} · ${c.views.length} lifetime`, true);
   h+=sec(`No lesson plan activity on record`, never, 'n',
         c=>`${c.state||'—'} · never watched`, true);
