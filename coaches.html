@@ -1472,10 +1472,16 @@ async function lpLoadViews(){
   renderLessons();
 }
 
+// Which activity-tab types count as a plan view. Add 'OVERVIEW' to include those.
+const LP_TABS=['PDF'];
+// coach-viewed-activity-tabs has no data before this date — used to caption
+// periods where a zero is an absence of tracking, not an absence of prep.
+const LP_PDF_FROM=new Date(2026,5,29).getTime();   // 29 Jun 2026
+
 function buildLessons(){
-  const {appMap,learnCats,learnSubs,learnActs}=RAW;
+  const {appMap,learnCats,learnSubs,learnActs,viewTabs}=RAW;
   const roster=(COACHES||[]).map(c=>({id:c.id,fullName:c.fullName,state:c.state}));
-  const byCoach={}; roster.forEach(c=>{byCoach[c.id]={...c,views:[],mapped:false};});
+  const byCoach={}; roster.forEach(c=>{byCoach[c.id]={...c,views:[],pdfs:[],mapped:false};});
   Object.values(appMap).forEach(cid=>{ if(byCoach[cid]) byCoach[cid].mapped=true; });
 
   (LP_VIEWS||[]).forEach(v=>{
@@ -1487,6 +1493,18 @@ function buildLessons(){
       prog:learnCats[v.categoryId]||'Other',
       week:sub.name||'(unknown week)',
       name:learnActs[v.activityId]||'(video)'
+    });
+  });
+
+  // PDF plan views — these docs carry coachId directly, no map needed.
+  (viewTabs||[]).forEach(v=>{
+    if(!LP_TABS.includes(v.tab)) return;
+    const t=byCoach[v.coachId]; if(!t) return;
+    t.mapped=true;   // seen in the app, so trackable regardless of short-id map
+    t.pdfs.push({
+      date:v.date||0,
+      prog:(v.categoryName||learnCats[v.categoryId]||'Other').trim(),
+      week:(v.subCategoryName||'(unknown week)').trim()
     });
   });
   return Object.values(byCoach);
@@ -1554,12 +1572,19 @@ function renderLessons(){
   if(qF) list=list.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
 
   const inR=d=>d>=R.from&&d<=R.to;
-  list.forEach(c=>{ c.inP=c.views.filter(v=>inR(v.date)); c.last=c.views.length?Math.max(...c.views.map(v=>v.date)):0; });
+  list.forEach(c=>{
+    c.inP=c.views.filter(v=>inR(v.date));
+    c.inPdf=c.pdfs.filter(v=>inR(v.date));
+    const dates=c.views.map(v=>v.date).concat(c.pdfs.map(v=>v.date));
+    c.last=dates.length?Math.max(...dates):0;
+  });
 
   const abc=(a,b)=>(a.fullName||'').localeCompare(b.fullName||'');
-  const watched = list.filter(c=>c.mapped&&c.inP.length).sort(abc);
-  const quiet   = list.filter(c=>c.mapped&&!c.inP.length&&c.views.length).sort(abc);
-  const never   = list.filter(c=>c.mapped&&!c.views.length).sort(abc);
+  const anyP=c=>c.inP.length||c.inPdf.length;
+  const anyEver=c=>c.views.length||c.pdfs.length;
+  const watched = list.filter(c=>c.mapped&&anyP(c)).sort(abc);
+  const quiet   = list.filter(c=>c.mapped&&!anyP(c)&&anyEver(c)).sort(abc);
+  const never   = list.filter(c=>c.mapped&&!anyEver(c)).sort(abc);
   const unknown = list.filter(c=>!c.mapped).sort(abc);
 
   const fdate=t=>t?new Date(Number(t)).toLocaleDateString('en-AU',{day:'2-digit',month:'2-digit',year:'numeric'}):'—';
@@ -1591,11 +1616,33 @@ function renderLessons(){
         if(nw>12) body+=`<li class="tr-dim">…and ${nw-12} more weeks</li>`;
         body+=`</ul>`;
       });
-      body+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} views.</div>`;
-    } else if(!c.mapped){
+      body+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} video views.</div>`;
+    } else if(!c.pdfs.length&&!c.mapped){
       body=`<div class="tr-dim">This coach has no app ID on record yet, so their activity can't be matched. It isn't evidence they haven't watched anything — the map fills in as they use the app.</div>`;
     } else {
       body=`<div class="tr-dim">No lesson plan videos watched.</div>`;
+    }
+    // PDF plan views
+    if(c.pdfs.length){
+      const pw={};
+      c.pdfs.forEach(p=>{ const k=`${p.prog} · ${p.week}`; (pw[k]=pw[k]||[]).push(p); });
+      body+=`<div style="margin-top:10px"><b>Lesson plan PDFs opened</b><ul>`;
+      Object.entries(pw)
+        .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
+        .slice(0,12)
+        .forEach(([k,vs])=>{
+          const lastP=Math.max(...vs.map(v=>v.date));
+          body+=`<li>${esc(k)} <span class="tr-dim">${vs.length}×, ${fdate(lastP)}</span>`+
+                `${vs.some(v=>inR(v.date))?' <b style="color:#3d8b2f">•</b>':''}</li>`;
+        });
+      const np=Object.keys(pw).length;
+      if(np>12) body+=`<li class="tr-dim">…and ${np-12} more</li>`;
+      body+=`</ul></div>`;
+    } else if(c.mapped){
+      body+=`<div class="tr-dim" style="margin-top:10px">No lesson plan PDFs opened.</div>`;
+    }
+    if(R.from<LP_PDF_FROM){
+      body+=`<div class="tr-dim" style="margin-top:6px">PDF tracking only began 29 Jun 2026, so PDF counts before then are absent by default, not zero.</div>`;
     }
     const id=`${pfx}-${i}`;
     return `<div class="tr-cc st-${st}" id="lpc-${id}">
@@ -1613,26 +1660,30 @@ function renderLessons(){
   };
 
   const plabel=R.label;
-  const totalIn=all.filter(c=>c.mapped&&c.views.some(v=>inR(v.date))).length;
+  const totalIn=all.filter(c=>c.mapped&&(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length;
   const mappedN=all.filter(c=>c.mapped).length;
 
   let h=`<div style="padding:0 24px 24px">
     <div class="stats-row" style="margin-bottom:4px">
-      <div class="stat-card"><div class="stat-num">${totalIn}</div><div class="stat-lbl">watched ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!c.views.some(v=>inR(v.date))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>inR(v.date||0)).length}</div><div class="stat-lbl">total views in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${totalIn}</div><div class="stat-lbl">active in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>inR(v.date||0)).length}</div><div class="stat-lbl">videos watched</div></div>
+      <div class="stat-card"><div class="stat-num">${((RAW.viewTabs)||[]).filter(v=>LP_TABS.includes(v.tab)&&inR(v.date||0)).length}</div><div class="stat-lbl">PDFs opened</div></div>
       <div class="stat-card"><div class="stat-num">${mappedN}/${all.length}</div><div class="stat-lbl">coaches trackable</div></div>
     </div>`;
 
-  h+=sec(`Watched in ${plabel}`, watched, 'w',
-        c=>`${c.state||'—'} · ${c.inP.length} view${c.inP.length===1?'':'s'} · last ${fdate(c.last)}`);
+  h+=sec(`Active in ${plabel}`, watched, 'w',
+        c=>`${c.state||'—'} · ${c.inP.length} video${c.inP.length===1?'':'s'} · ${c.inPdf.length} PDF${c.inPdf.length===1?'':'s'} · last ${fdate(c.last)}`);
   h+=sec(`Nothing in ${plabel}`, quiet, 'q',
-        c=>`${c.state||'—'} · last watched ${fdate(c.last)} · ${c.views.length} lifetime`, true);
+        c=>`${c.state||'—'} · last active ${fdate(c.last)} · ${c.views.length} videos, ${c.pdfs.length} PDFs lifetime`, true);
   h+=sec(`No lesson plan activity on record`, never, 'n',
-        c=>`${c.state||'—'} · never watched`, true);
+        c=>`${c.state||'—'} · no videos or PDFs`);
   h+=sec(`Can't verify — no app ID mapped yet`, unknown, 'u',
         c=>`${c.state||'—'} · unverified`);
 
+  if(R.from<LP_PDF_FROM){
+    h+=`<p class="tr-dim" style="margin-top:12px;max-width:760px"><b>Note:</b> lesson plan PDF tracking only began on 29 Jun 2026. For periods before that, a zero PDF count means the data was not being recorded yet — not that coaches did not open their plans.</p>`;
+  }
   h+=`<p class="tr-dim" style="margin-top:14px;max-width:760px">Coaches under "can't verify" have no entry in the app ID map. Their activity can't be matched yet, so they are deliberately kept out of the counts above rather than shown as having watched nothing. The map fills in automatically as coaches use the app.</p>`;
   h+=`</div>`;
   el.innerHTML=h;
