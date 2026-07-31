@@ -1739,6 +1739,38 @@ h1,h2,h3,h4,h5,.mf,
   #zoombar .zsep{width:2px;height:22px;background:rgba(255,255,255,0.25);margin:0 3px}
   @media (max-width:760px){#zoombar .zlabel,#zoombar .preset{display:none}}
   #zoomroot{transform-origin:top left;width:100%}
+
+/* ── TRAINING TAB ─────────────────────────────────────────────────────────── */
+.tr-pills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.tr-pill{font-family:'MarkerFelt',cursive;padding:6px 15px;border-radius:30px;font-size:12px;cursor:pointer;border:2px solid var(--lightblue);background:#fff;color:var(--blue);user-select:none}
+.tr-pill.on{color:#fff}
+.tr-pill.on[data-st="ALL"]{background:var(--red);border-color:var(--red)}
+.tr-pill.on[data-st="VIC"]{background:#1f8fd6;border-color:#1f8fd6}
+.tr-pill.on[data-st="NSW"]{background:#6FC04F;border-color:#6FC04F}
+.tr-pill.on[data-st="QLD"]{background:#E5568F;border-color:#E5568F}
+.tr-pill.on[data-st="SA"]{background:#E52520;border-color:#E52520}
+.tr-pill.on[data-st="WA"]{background:#7B4EA8;border-color:#7B4EA8}
+.tr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:13px;margin-bottom:8px}
+.tr-cc{background:var(--white);border-radius:18px;border:3px solid #e7eef3;overflow:hidden;box-shadow:var(--shadow);color:#fff}
+.tr-cc.st-VIC{background:#1f8fd6;border-color:#1f8fd6}
+.tr-cc.st-NSW{background:#6FC04F;border-color:#6FC04F}
+.tr-cc.st-QLD{background:#E5568F;border-color:#E5568F}
+.tr-cc.st-SA{background:#E52520;border-color:#E52520}
+.tr-cc.st-WA{background:#7B4EA8;border-color:#7B4EA8}
+.tr-cc.st-none{background:#8fa3b0;border-color:#8fa3b0}
+.tr-cn{font-family:'MarkerFelt',cursive;font-size:16px;padding:13px 15px 4px;cursor:pointer;line-height:1.25}
+.tr-caret{font-size:12px;opacity:.9;margin-right:4px;display:inline-block;vertical-align:middle;transition:transform .12s}
+.tr-cc.open .tr-caret{transform:rotate(90deg)}
+.tr-cmeta{font-size:11px;letter-spacing:.7px;text-transform:uppercase;opacity:.85;padding:0 15px 12px;cursor:pointer}
+.tr-cbody{display:none;background:#fff;color:var(--ink);padding:12px 15px;font-size:13px;border-top:3px solid rgba(0,0,0,.08)}
+.tr-cc.open .tr-cbody{display:block}
+.tr-cbody b{color:var(--blue)}
+.tr-cbody ul{margin:4px 0 10px 17px;padding:0}
+.tr-cbody li{margin-bottom:3px}
+.tr-sec{font-family:'MarkerFelt',cursive;font-size:17px;color:var(--blue);margin:22px 0 11px;display:flex;align-items:center;gap:9px}
+.tr-sec .n{background:var(--blue);color:#fff;border-radius:12px;font-size:12px;padding:2px 10px}
+.tr-none .tr-sec .n{background:var(--red)}
+.tr-dim{opacity:.55;font-size:12px}
 </style>
 </head>
 <body>
@@ -2012,14 +2044,9 @@ h1,h2,h3,h4,h5,.mf,
 
   <!-- TRAINING TAB -->
   <div id="tab-training" style="display:none">
-    <div class="tr-controls" style="padding:0 24px 14px">
-      <select id="tr-state" class="filter-select">
-        <option value="">All states</option>
-        <option value="VIC">VIC</option><option value="NSW">NSW</option>
-        <option value="QLD">QLD</option><option value="SA">SA</option>
-        <option value="WA">WA</option>
-      </select>
-      <input id="tr-search" class="filter-select" type="text" placeholder="Search coach…" style="min-width:200px">
+    <div style="padding:0 24px 6px">
+      <input id="tr-search" class="filter-select" type="text" placeholder="🔍  Search coaches by name…" style="width:100%;margin-bottom:12px">
+      <div class="tr-pills" id="tr-pills"></div>
     </div>
     <div id="training-content"><div class="loading"><div class="spinner"></div><p>Loading…</p></div></div>
   </div>
@@ -3266,6 +3293,7 @@ function startAutoRefresh() {
 }
 
 // ── TRAINING TAB ──────────────────────────────────────────────────────────────
+let TR_STATE='ALL';
 function buildTraining() {
   const {users,brainCats,brainActs,brainWatched,testActs,testProg,testDone,testSubs}=RAW;
   const roster=(COACHES||[]).map(c=>({id:c.id,fullName:c.fullName,state:c.state}));
@@ -3311,71 +3339,88 @@ function buildTraining() {
 
 function renderTraining() {
   const el=document.getElementById('training-content');
-  const stF=(document.getElementById('tr-state')||{}).value||'';
+  if(!el) return;
   const qF=((document.getElementById('tr-search')||{}).value||'').toLowerCase().trim();
-  let all=buildTraining();
-  if(stF) all=all.filter(c=>(c.state||'')===stF);
-  if(qF)  all=all.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
+  const all=buildTraining();
 
-  const active=all.filter(c=>c.academy.length||c.testing.length||c.completed.length);
-  const none=all.filter(c=>!(c.academy.length||c.testing.length||c.completed.length));
-  const acad=all.filter(c=>c.academy.length).length;
-  const done=all.filter(c=>c.completed.length).length;
+  // pills (counts are pre-search, post-nothing — the full roster per state)
+  const STATES=['VIC','NSW','QLD','SA','WA'];
+  const counts={}; STATES.forEach(s=>counts[s]=all.filter(c=>(c.state||'')===s).length);
+  const pw=document.getElementById('tr-pills');
+  if(pw){
+    pw.innerHTML=`<div class="tr-pill ${TR_STATE==='ALL'?'on':''}" data-st="ALL">All States</div>`+
+      STATES.map(s=>`<div class="tr-pill ${TR_STATE===s?'on':''}" data-st="${s}">${s}: ${counts[s]}</div>`).join('');
+    pw.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{TR_STATE=p.dataset.st;renderTraining();});
+  }
+
+  let list=all;
+  if(TR_STATE!=='ALL') list=list.filter(c=>(c.state||'')===TR_STATE);
+  if(qF) list=list.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
+
+  const has=c=>c.academy.length||c.testing.length||c.completed.length;
+  const abc=(a,b)=>(a.fullName||'').localeCompare(b.fullName||'');
+  const started=list.filter(has).sort(abc);
+  const none=list.filter(c=>!has(c)).sort(abc);
 
   const fdate=t=>t?new Date(Number(t)).toLocaleDateString('en-AU',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
   const mmss=s=>`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 
-  let h=`<div class="rewards-wrap">
-    <p class="rewards-intro">Coach Academy videos and medal coach testing. Counts are all-time and are not affected by the period filter.</p>
-    <div class="stats-row" style="margin-bottom:16px">
-      <div class="stat-card"><div class="stat-num">${acad}</div><div class="stat-lbl">opened Coach Academy</div></div>
-      <div class="stat-card"><div class="stat-num">${done}</div><div class="stat-lbl">completed medal testing</div></div>
-      <div class="stat-card"><div class="stat-num">${none.length}</div><div class="stat-lbl">no training on record</div></div>
+  const card=(c,i,pfx)=>{
+    const st=STATES.includes(c.state)?c.state:'none';
+    const meta=has(c)
+      ? `${c.state||'—'} · ${c.academy.length} academy · ${c.completed.length}/2 modules`
+      : `${c.state||'—'} · no training`;
+    const cats={}; c.academy.forEach(a=>{(cats[a.cat]=cats[a.cat]||[]).push(a);});
+    let body='';
+    if(Object.keys(cats).length){
+      Object.entries(cats).forEach(([cat,vids])=>{
+        body+=`<b>${esc(cat)}</b><ul>`;
+        vids.sort((a,b)=>b.date-a.date).forEach(v=>{body+=`<li>${esc(v.name)} <span class="tr-dim">${fdate(v.date)}</span></li>`;});
+        body+=`</ul>`;
+      });
+    } else { body+=`<div class="tr-dim" style="margin-bottom:8px">No Academy videos watched</div>`; }
+    if(c.testing.length){
+      body+=`<b>Medal testing</b><ul>`;
+      c.testing.sort((a,b)=>b.date-a.date).forEach(t=>{
+        const fin=c.completed.some(x=>x===t.name);
+        body+=`<li>${esc(t.name)} — watched ${mmss(t.secs)}${t.unlocked?', questions unlocked':''}`+
+              `${fin?' <b style="color:#3d8b2f">✓ completed</b>':''} <span class="tr-dim">${fdate(t.date)}</span></li>`;
+      });
+      body+=`</ul>`;
+    } else { body+=`<div class="tr-dim">No medal testing started</div>`; }
+    if(c.quizTotal) body+=`<div style="margin-top:6px"><b>Quiz</b> ${c.quizRight}/${c.quizTotal} correct</div>`;
+    const id=`${pfx}-${i}`;
+    return `<div class="tr-cc st-${st}" id="trc-${id}">
+      <div class="tr-cn" data-tr="${id}"><span class="tr-caret">&#9656;</span>${esc(c.fullName)}</div>
+      <div class="tr-cmeta" data-tr="${id}">${esc(meta)}</div>
+      <div class="tr-cbody">${body}</div>
+    </div>`;
+  };
+
+  let h=`<div style="padding:0 24px 24px">
+    <div class="stats-row" style="margin-bottom:4px">
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.academy.length).length}</div><div class="stat-lbl">opened Coach Academy</div></div>
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.completed.length).length}</div><div class="stat-lbl">completed medal testing</div></div>
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>!has(c)).length}</div><div class="stat-lbl">no training on record</div></div>
       <div class="stat-card"><div class="stat-num">${all.length}</div><div class="stat-lbl">active coaches</div></div>
     </div>`;
 
-  if(active.length){
-    h+=`<h3 style="margin:18px 0 10px">Started training (${active.length})</h3>`;
-    active.sort((a,b)=>(b.academy.length+b.completed.length)-(a.academy.length+a.completed.length));
-    active.forEach(c=>{
-      const cats={};
-      c.academy.forEach(a=>{(cats[a.cat]=cats[a.cat]||[]).push(a);});
-      const quiz=c.quizTotal?` · quiz ${c.quizRight}/${c.quizTotal}`:'';
-      h+=`<details class="tr-row" style="background:#fff;border:2px solid var(--blue);border-radius:10px;padding:10px 14px;margin-bottom:8px">
-        <summary style="cursor:pointer;font-weight:700;color:var(--blue)">
-          ${c.fullName} <span style="font-weight:500;opacity:.75">— ${c.state||'?'} · ${c.academy.length} academy video${c.academy.length===1?'':'s'} · ${c.completed.length}/2 modules${quiz}</span>
-        </summary>
-        <div style="padding:10px 4px 2px;font-size:14px">`;
-      if(Object.keys(cats).length){
-        Object.entries(cats).forEach(([cat,vids])=>{
-          h+=`<div style="margin-bottom:8px"><b>${cat}</b><ul style="margin:4px 0 0 18px">`;
-          vids.sort((a,b)=>b.date-a.date).forEach(v=>{h+=`<li>${v.name} <span style="opacity:.6">${fdate(v.date)}</span></li>`;});
-          h+=`</ul></div>`;
-        });
-      } else { h+=`<div style="opacity:.7;margin-bottom:8px">No Academy videos watched</div>`; }
-      if(c.testing.length){
-        h+=`<div><b>Medal testing</b><ul style="margin:4px 0 0 18px">`;
-        c.testing.sort((a,b)=>b.date-a.date).forEach(t=>{
-          const fin=c.completed.some(x=>x===t.name);
-          h+=`<li>${t.name} — watched ${mmss(t.secs)}${t.unlocked?', questions unlocked':''}${fin?' <b style="color:var(--green)">✓ completed</b>':''} <span style="opacity:.6">${fdate(t.date)}</span></li>`;
-        });
-        h+=`</ul></div>`;
-      } else { h+=`<div style="opacity:.7">No medal testing started</div>`; }
-      h+=`</div></details>`;
-    });
-  }
+  h+=`<div class="tr-sec">Started training <span class="n">${started.length}</span></div>`;
+  h+= started.length ? `<div class="tr-grid">${started.map((c,i)=>card(c,i,'s')).join('')}</div>`
+                     : `<div class="tr-dim" style="margin-bottom:8px">None in this view</div>`;
 
-  if(none.length){
-    h+=`<h3 style="margin:22px 0 8px">No training on record (${none.length})</h3>
-        <p style="font-size:14px;opacity:.8;margin-bottom:10px">These coaches have no Coach Academy or medal testing activity recorded.</p>
-        <div style="display:flex;flex-wrap:wrap;gap:6px">`;
-    none.sort((a,b)=>(a.fullName||'').localeCompare(b.fullName||''));
-    none.forEach(c=>{h+=`<span style="background:#fff;border:1.5px solid var(--red);border-radius:14px;padding:4px 11px;font-size:13px;color:var(--blue)">${c.fullName} <span style="opacity:.6">${c.state||'?'}</span></span>`;});
-    h+=`</div>`;
-  }
+  h+=`<div class="tr-none"><div class="tr-sec">No training on record <span class="n">${none.length}</span></div></div>`;
+  h+= none.length ? `<div class="tr-grid">${none.map((c,i)=>card(c,i,'n')).join('')}</div>`
+                  : `<div class="tr-dim">None in this view</div>`;
 
   h+=`</div>`;
   el.innerHTML=h;
+
+  el.querySelectorAll('[data-tr]').forEach(n=>n.onclick=()=>{
+    const c=document.getElementById('trc-'+n.dataset.tr);
+    if(c) c.classList.toggle('open');
+  });
 }
 
 function renderAll() {
@@ -3443,7 +3488,7 @@ document.getElementById('need-support-pill').addEventListener('click', () => {
   document.getElementById(id).addEventListener('input',()=>{ if(COACHES) renderLeaderboard(); });
 });
 document.getElementById('lb-period').addEventListener('change',()=>{ if(RAW) renderAll(); });
-['tr-search','tr-state'].forEach(id=>{
+['tr-search'].forEach(id=>{
   const e=document.getElementById(id);
   if(e) e.addEventListener('input',()=>{ if(COACHES) renderTraining(); });
 });
