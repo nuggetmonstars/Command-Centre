@@ -651,7 +651,7 @@ function tierInfo(s) {
 let RAW = null, COACHES = null;
 
 async function loadRaw() {
-  const [uSnap,fbSnap,hcSnap,evSnap,attSnap,vtSnap,chkSnap,trSnap] = await Promise.all([
+  const [uSnap,fbSnap,hcSnap,evSnap,attSnap,vtSnap,chkSnap,trSnap,fsSnap] = await Promise.all([
     getDocs(collection(db,'users')),
     getDocs(collection(db,'feedbacks')),
     getDocs(collection(db,'head-coach-feedbacks')),
@@ -659,9 +659,10 @@ async function loadRaw() {
     getDocs(query(collection(db,'events'),where('sessionStatus','==','Attended'))),
     getDocs(collection(db,'coach-viewed-activity-tabs')),
     getDocs(collection(db,'children-checks')),
-    getDocs(collection(db,'education-trials'))
+    getDocs(collection(db,'education-trials')),
+    getDocs(collection(db,'five-star-feedbacks'))
   ]);
-  const users={},feedbacks=[],hcFbs=[],allEvents=[],attended=[],viewTabs=[],checks={},trials=[];
+  const users={},feedbacks=[],hcFbs=[],allEvents=[],attended=[],viewTabs=[],checks={},trials=[],fiveStarFbs=[];
   uSnap.forEach(d=>{users[d.id]={id:d.id,...d.data()};});
   fbSnap.forEach(d=>feedbacks.push({id:d.id,...d.data()}));
   hcSnap.forEach(d=>hcFbs.push({id:d.id,...d.data()}));
@@ -670,7 +671,8 @@ async function loadRaw() {
   vtSnap.forEach(d=>viewTabs.push({id:d.id,...d.data()}));
   chkSnap.forEach(d=>{ const x=d.data(); if(x.coachId){(checks[x.coachId]=checks[x.coachId]||[]).push(x);} });
   trSnap.forEach(d=>trials.push({id:d.id,...d.data()}));
-  RAW={users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials};
+  fsSnap.forEach(d=>fiveStarFbs.push({id:d.id,...d.data()}));
+  RAW={users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials,fiveStarFbs};
 }
 
 function normaliseActivity(activity) {
@@ -685,7 +687,7 @@ function normaliseActivity(activity) {
 }
 
 function computeCoaches(period) {
-  const {users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials}=RAW;
+  const {users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials,fiveStarFbs}=RAW;
   const pStart=getPeriodStart(period), now=new Date();
 
   const coachList = Object.values(users).filter(u=>{
@@ -800,7 +802,8 @@ function computeCoaches(period) {
       }
     }
 
-    const fiveStars=allFbs.filter(f=>window.scoreDescription(f.desc||f.description)===5).length;
+    const fiveStars=(fiveStarFbs||[]).filter(f=>f.coachId===cid).length;
+    const positiveNotes=allFbs.filter(f=>window.scoreDescription(f.desc||f.description)===5).length;
 
     return {
       id:cid, firstName:coach.firstName||'', lastName:coach.lastName||'',
@@ -808,7 +811,7 @@ function computeCoaches(period) {
       totalFeedbacks:allFbs.length, allTimeAtt, attRate, attPeriod, missPeriod,
       pillars, totalScore:Math.round(totalScore*10)/10,
       volBonus, uniqueCentres, trialBonus, converted, failed,
-      alerts, programs:[...progs], fiveStars, wwccExpired,
+      alerts, programs:[...progs], fiveStars, positiveNotes, wwccExpired,
       qualified:allFbs.length>=10&&allTimeAtt>=20
     };
   });
@@ -1143,9 +1146,12 @@ function renderAlerts() {
 // ── RENDER REWARDS ────────────────────────────────────────────────────────────
 function renderRewards() {
   const el=document.getElementById('reward-content');
-  el.innerHTML=`<div class="rewards-wrap"><p class="rewards-intro">Coaches who accumulate 10 or more five-star reviews earn a $300 cash reward.</p><div class="reward-grid" id="rg"></div></div>`;
-  const coaches=(COACHES||[]).filter(c=>c.fiveStars>=5).sort((a,b)=>b.fiveStars-a.fiveStars);
-  if(!coaches.length){document.getElementById('rg').innerHTML='<div class="empty">No coaches near the reward threshold yet</div>';return;}
+  const all=(COACHES||[]);
+  const withReviews=all.filter(c=>c.fiveStars>0).length;
+  const noReviews=all.length-withReviews;
+  el.innerHTML=`<div class="rewards-wrap"><p class="rewards-intro">Coaches who accumulate 10 or more five-star reviews earn a $300 cash reward. Counts are lifetime and are not affected by the period filter.</p><p class="rewards-intro" style="font-weight:500;font-size:14px;opacity:.85">${withReviews} of ${all.length} active coaches have at least one review logged \u2014 ${noReviews} have none on record. Reviews only appear here once someone enters them, so gaps reflect capture, not performance.</p><div class="reward-grid" id="rg"></div></div>`;
+  const coaches=all.filter(c=>c.fiveStars>=1).sort((a,b)=>b.fiveStars-a.fiveStars);
+  if(!coaches.length){document.getElementById('rg').innerHTML='<div class="empty">No five-star reviews logged yet</div>';return;}
   const rg=document.getElementById('rg');
   coaches.forEach(c=>{
     const filled=Math.min(c.fiveStars,10);
