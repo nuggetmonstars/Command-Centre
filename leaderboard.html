@@ -1771,6 +1771,10 @@ h1,h2,h3,h4,h5,.mf,
 .tr-sec .n{background:var(--blue);color:#fff;border-radius:12px;font-size:12px;padding:2px 10px}
 .tr-none .tr-sec .n{background:var(--red)}
 .tr-dim{opacity:.55;font-size:12px}
+
+.lp-weeks{margin-top:-4px;margin-bottom:12px;padding-left:2px}
+.tr-pill.lp-wk{font-size:11px;padding:5px 12px;border-color:#cfe0ea}
+.tr-pill.lp-wk.on{background:var(--blue);border-color:var(--blue);color:#fff}
 </style>
 </head>
 <body>
@@ -1985,6 +1989,7 @@ h1,h2,h3,h4,h5,.mf,
     <button class="nav-tab" data-tab="alerts">Alerts</button>
     <button class="nav-tab" data-tab="rewards">Rewards</button>
     <button class="nav-tab" data-tab="training">Training</button>
+    <button class="nav-tab" data-tab="lessons">Lesson Plans</button>
   </div>
 
   <!-- LEADERBOARD TAB -->
@@ -2049,6 +2054,17 @@ h1,h2,h3,h4,h5,.mf,
       <div class="tr-pills" id="tr-pills"></div>
     </div>
     <div id="training-content"><div class="loading"><div class="spinner"></div><p>Loading…</p></div></div>
+  </div>
+
+  <!-- LESSON PLANS TAB -->
+  <div id="tab-lessons" style="display:none">
+    <div style="padding:0 24px 6px">
+      <input id="lp-search" class="filter-select" type="text" placeholder="🔍  Search coaches by name…" style="width:100%;margin-bottom:12px">
+      <div class="tr-pills" id="lp-periods"></div>
+      <div class="tr-pills lp-weeks" id="lp-weeks"></div>
+      <div class="tr-pills" id="lp-pills"></div>
+    </div>
+    <div id="lessons-content"><div class="loading"><div class="spinner"></div><p>Loading…</p></div></div>
   </div>
 </div>
 
@@ -2723,7 +2739,7 @@ function tierInfo(s) {
 let RAW = null, COACHES = null;
 
 async function loadRaw() {
-  const [uSnap,fbSnap,hcSnap,evSnap,attSnap,vtSnap,chkSnap,trSnap,fsSnap,bcSnap,baSnap,bwSnap,tcaSnap,tvpSnap,tcSnap,tsSnap] = await Promise.all([
+  const [uSnap,fbSnap,hcSnap,evSnap,attSnap,vtSnap,chkSnap,trSnap,fsSnap,bcSnap,baSnap,bwSnap,tcaSnap,tvpSnap,tcSnap,tsSnap,amSnap,lcSnap,lsSnap,laSnap] = await Promise.all([
     getDocs(collection(db,'users')),
     getDocs(collection(db,'feedbacks')),
     getDocs(collection(db,'head-coach-feedbacks')),
@@ -2739,7 +2755,11 @@ async function loadRaw() {
     getDocs(collection(db,'testing-coach-activities')),
     getDocs(collection(db,'coach-testing-video-progress')),
     getDocs(collection(db,'coach-testing-completed')),
-    getDocs(collection(db,'coach-testing-submissions'))
+    getDocs(collection(db,'coach-testing-submissions')),
+    getDocs(collection(db,'coach-app-map')),
+    getDocs(collection(db,'learn-categories')),
+    getDocs(collection(db,'learn-subcategories')),
+    getDocs(collection(db,'learn-activities'))
   ]);
   const users={},feedbacks=[],hcFbs=[],allEvents=[],attended=[],viewTabs=[],checks={},trials=[],fiveStarFbs=[];
   uSnap.forEach(d=>{users[d.id]={id:d.id,...d.data()};});
@@ -2759,7 +2779,12 @@ async function loadRaw() {
   tvpSnap.forEach(d=>testProg.push({id:d.id,...d.data()}));
   tcSnap.forEach(d=>testDone.push({id:d.id,...d.data()}));
   tsSnap.forEach(d=>testSubs.push({id:d.id,...d.data()}));
-  RAW={users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials,fiveStarFbs,brainCats,brainActs,brainWatched,testActs,testProg,testDone,testSubs};
+  const appMap={},learnCats={},learnSubs={},learnActs={};
+  amSnap.forEach(d=>{const x=d.data(); if(x.coachId) appMap[d.id]=x.coachId;});
+  lcSnap.forEach(d=>{learnCats[d.id]=((d.data().name)||'').trim();});
+  lsSnap.forEach(d=>{learnSubs[d.id]={name:(d.data().name||'').trim(),parentId:d.data().parentId};});
+  laSnap.forEach(d=>{learnActs[d.id]=(d.data().name||'').trim();});
+  RAW={users,feedbacks,hcFbs,allEvents,attended,viewTabs,checks,trials,fiveStarFbs,brainCats,brainActs,brainWatched,testActs,testProg,testDone,testSubs,appMap,learnCats,learnSubs,learnActs};
 }
 
 function normaliseActivity(activity) {
@@ -3423,10 +3448,236 @@ function renderTraining() {
   });
 }
 
+// ── LESSON PLANS TAB ──────────────────────────────────────────────────────────
+let LP_STATE='ALL', LP_VIEWS=null, LP_LOADING=false;
+// LP_MODE: 'month' | 'ytd' | 'all'.  LP_MONTH = 0-11 when mode is 'month'.
+// LP_WEEK = index into the selected month's weeks, or null for the whole month.
+let LP_MODE='month', LP_MONTH=new Date().getMonth(), LP_WEEK=null;
+
+const LP_MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const LP_DAY=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+// Monday-start weeks, clipped to the month at both ends.
+function lpWeeksOf(year,month){
+  const first=new Date(year,month,1), last=new Date(year,month+1,0);
+  const out=[]; let cur=new Date(first);
+  while(cur<=last){
+    const dow=(cur.getDay()+6)%7;                 // Mon=0
+    const wStart=new Date(cur); wStart.setDate(cur.getDate()-dow);
+    const wEnd=new Date(wStart); wEnd.setDate(wStart.getDate()+6);
+    const s=wStart<first?new Date(first):wStart;
+    const e=wEnd>last?new Date(last):wEnd;
+    s.setHours(0,0,0,0); e.setHours(23,59,59,999);
+    out.push({start:s.getTime(),end:e.getTime(),
+      label:`${LP_DAY[s.getDay()]} ${s.getDate()} ${LP_MON[s.getMonth()]} – ${LP_DAY[e.getDay()]} ${e.getDate()} ${LP_MON[e.getMonth()]}`});
+    cur=new Date(wEnd); cur.setDate(cur.getDate()+1);
+  }
+  return out;
+}
+
+// Returns {from,to,label} for whatever is currently selected.
+function lpRange(){
+  const now=new Date(), y=now.getFullYear();
+  if(LP_MODE==='all') return {from:0,to:Infinity,label:'all time'};
+  if(LP_MODE==='ytd') return {from:new Date(y,0,1).getTime(),to:Infinity,label:'year to date'};
+  const wks=lpWeeksOf(y,LP_MONTH);
+  if(LP_WEEK!=null && wks[LP_WEEK]){
+    const w=wks[LP_WEEK];
+    return {from:w.start,to:w.end,label:w.label.toLowerCase()};
+  }
+  return {from:new Date(y,LP_MONTH,1).getTime(),
+          to:new Date(y,LP_MONTH+1,0,23,59,59,999).getTime(),
+          label:`${LP_MON[LP_MONTH]} ${y}`};
+}
+
+async function lpLoadViews(){
+  if(LP_VIEWS||LP_LOADING) return;
+  LP_LOADING=true;
+  try{
+    const snap=await getDocs(collection(db,'watched-video'));
+    const out=[]; snap.forEach(d=>out.push(d.data()));
+    LP_VIEWS=out;
+  }catch(e){ console.error('watched-video load failed',e); LP_VIEWS=[]; }
+  LP_LOADING=false;
+  renderLessons();
+}
+
+function buildLessons(){
+  const {appMap,learnCats,learnSubs,learnActs}=RAW;
+  const roster=(COACHES||[]).map(c=>({id:c.id,fullName:c.fullName,state:c.state}));
+  const byCoach={}; roster.forEach(c=>{byCoach[c.id]={...c,views:[],mapped:false};});
+  Object.values(appMap).forEach(cid=>{ if(byCoach[cid]) byCoach[cid].mapped=true; });
+
+  (LP_VIEWS||[]).forEach(v=>{
+    const cid=appMap[v.userId]; if(!cid) return;
+    const t=byCoach[cid]; if(!t) return;
+    const sub=learnSubs[v.parentId]||{};
+    t.views.push({
+      date:v.date||0,
+      prog:learnCats[v.categoryId]||'Other',
+      week:sub.name||'(unknown week)',
+      name:learnActs[v.activityId]||'(video)'
+    });
+  });
+  return Object.values(byCoach);
+}
+
+function renderLessons(){
+  const el=document.getElementById('lessons-content');
+  if(!el) return;
+  if(!LP_VIEWS){ lpLoadViews();
+    el.innerHTML='<div class="loading"><div class="spinner"></div><p>Loading lesson plan activity…</p></div>'; return; }
+
+  const qF=((document.getElementById('lp-search')||{}).value||'').toLowerCase().trim();
+  const all=buildLessons();
+  const R=lpRange();
+  const now=new Date(), yr=now.getFullYear();
+
+  // month pills (current calendar year, up to this month) + YTD + All time
+  const pp=document.getElementById('lp-periods');
+  if(pp){
+    let ph='';
+    for(let m=0;m<=now.getMonth();m++){
+      const on=(LP_MODE==='month'&&LP_MONTH===m)?'on':'';
+      ph+=`<div class="tr-pill ${on}" data-st="ALL" data-m="${m}">${LP_MON[m]}</div>`;
+    }
+    ph+=`<span style="width:10px"></span>`;
+    ph+=`<div class="tr-pill ${LP_MODE==='ytd'?'on':''}" data-st="ALL" data-mode="ytd">Year to date</div>`;
+    ph+=`<div class="tr-pill ${LP_MODE==='all'?'on':''}" data-st="ALL" data-mode="all">All time</div>`;
+    pp.innerHTML=ph;
+    pp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{
+      if(p.dataset.mode){ LP_MODE=p.dataset.mode; LP_WEEK=null; }
+      else { const m=+p.dataset.m;
+             if(LP_MODE==='month'&&LP_MONTH===m){ LP_WEEK=null; }   // re-click = whole month
+             LP_MODE='month'; LP_MONTH=m; LP_WEEK=null; }
+      renderLessons();
+    });
+  }
+
+  // week pills — only when a month is selected
+  const wp=document.getElementById('lp-weeks');
+  if(wp){
+    if(LP_MODE==='month'){
+      const wks=lpWeeksOf(yr,LP_MONTH);
+      wp.style.display='flex';
+      wp.innerHTML=`<div class="tr-pill lp-wk ${LP_WEEK==null?'on':''}" data-st="ALL" data-w="all">Whole month</div>`+
+        wks.map((w,i)=>`<div class="tr-pill lp-wk ${LP_WEEK===i?'on':''}" data-st="ALL" data-w="${i}">${w.label}</div>`).join('');
+      wp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{
+        LP_WEEK = p.dataset.w==='all' ? null : +p.dataset.w;
+        renderLessons();
+      });
+    } else { wp.style.display='none'; wp.innerHTML=''; }
+  }
+
+  // state pills
+  const STATES=['VIC','NSW','QLD','SA','WA'];
+  const counts={}; STATES.forEach(s=>counts[s]=all.filter(c=>(c.state||'')===s).length);
+  const sp=document.getElementById('lp-pills');
+  if(sp){
+    sp.innerHTML=`<div class="tr-pill ${LP_STATE==='ALL'?'on':''}" data-st="ALL">All States</div>`+
+      STATES.map(s=>`<div class="tr-pill ${LP_STATE===s?'on':''}" data-st="${s}">${s}: ${counts[s]}</div>`).join('');
+    sp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{LP_STATE=p.dataset.st;renderLessons();});
+  }
+
+  let list=all;
+  if(LP_STATE!=='ALL') list=list.filter(c=>(c.state||'')===LP_STATE);
+  if(qF) list=list.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
+
+  const inR=d=>d>=R.from&&d<=R.to;
+  list.forEach(c=>{ c.inP=c.views.filter(v=>inR(v.date)); c.last=c.views.length?Math.max(...c.views.map(v=>v.date)):0; });
+
+  const abc=(a,b)=>(a.fullName||'').localeCompare(b.fullName||'');
+  const watched = list.filter(c=>c.mapped&&c.inP.length).sort(abc);
+  const quiet   = list.filter(c=>c.mapped&&!c.inP.length&&c.views.length).sort(abc);
+  const never   = list.filter(c=>c.mapped&&!c.views.length).sort(abc);
+  const unknown = list.filter(c=>!c.mapped).sort(abc);
+
+  const fdate=t=>t?new Date(Number(t)).toLocaleDateString('en-AU',{day:'2-digit',month:'2-digit',year:'numeric'}):'—';
+  const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const STL=['VIC','NSW','QLD','SA','WA'];
+
+  const card=(c,i,pfx,meta)=>{
+    const st=STL.includes(c.state)?c.state:'none';
+    // drill-down: full history, program -> week, period views marked
+    const byProg={};
+    c.views.forEach(v=>{ (byProg[v.prog]=byProg[v.prog]||{})[v.week]=(byProg[v.prog][v.week]||[]); byProg[v.prog][v.week].push(v); });
+    let body='';
+    const progs=Object.keys(byProg).sort();
+    if(progs.length){
+      progs.forEach(p=>{
+        const wks=byProg[p];
+        const tot=Object.values(wks).reduce((a,b)=>a+b.length,0);
+        body+=`<b>${esc(p)}</b> <span class="tr-dim">${tot} view${tot===1?'':'s'}</span><ul>`;
+        Object.entries(wks)
+          .sort((a,b)=>Math.max(...b[1].map(v=>v.date))-Math.max(...a[1].map(v=>v.date)))
+          .slice(0,12)
+          .forEach(([wk,vs])=>{
+            const lastW=Math.max(...vs.map(v=>v.date));
+            const inP=vs.some(v=>inR(v.date));
+            body+=`<li>${esc(wk)} <span class="tr-dim">${vs.length}×, ${fdate(lastW)}</span>`+
+                  `${inP?' <b style="color:#3d8b2f">•</b>':''}</li>`;
+          });
+        const nw=Object.keys(wks).length;
+        if(nw>12) body+=`<li class="tr-dim">…and ${nw-12} more weeks</li>`;
+        body+=`</ul>`;
+      });
+      body+=`<div class="tr-dim" style="margin-top:4px">Green dot = viewed in the selected period. Lifetime total ${c.views.length} views.</div>`;
+    } else if(!c.mapped){
+      body=`<div class="tr-dim">This coach has no app ID on record yet, so their activity can't be matched. It isn't evidence they haven't watched anything — the map fills in as they use the app.</div>`;
+    } else {
+      body=`<div class="tr-dim">No lesson plan videos watched.</div>`;
+    }
+    const id=`${pfx}-${i}`;
+    return `<div class="tr-cc st-${st}" id="lpc-${id}">
+      <div class="tr-cn" data-lp="${id}"><span class="tr-caret">&#9656;</span>${esc(c.fullName)}</div>
+      <div class="tr-cmeta" data-lp="${id}">${esc(meta(c))}</div>
+      <div class="tr-cbody">${body}</div>
+    </div>`;
+  };
+
+  const sec=(title,arr,pfx,meta,red)=>{
+    let s=`<div class="${red?'tr-none':''}"><div class="tr-sec">${title} <span class="n">${arr.length}</span></div></div>`;
+    s+= arr.length ? `<div class="tr-grid">${arr.map((c,i)=>card(c,i,pfx,meta)).join('')}</div>`
+                   : `<div class="tr-dim" style="margin-bottom:10px">None in this view</div>`;
+    return s;
+  };
+
+  const plabel=R.label;
+  const totalIn=all.filter(c=>c.mapped&&c.views.some(v=>inR(v.date))).length;
+  const mappedN=all.filter(c=>c.mapped).length;
+
+  let h=`<div style="padding:0 24px 24px">
+    <div class="stats-row" style="margin-bottom:4px">
+      <div class="stat-card"><div class="stat-num">${totalIn}</div><div class="stat-lbl">watched ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!c.views.some(v=>inR(v.date))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>inR(v.date||0)).length}</div><div class="stat-lbl">total views in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${mappedN}/${all.length}</div><div class="stat-lbl">coaches trackable</div></div>
+    </div>`;
+
+  h+=sec(`Watched in ${plabel}`, watched, 'w',
+        c=>`${c.state||'—'} · ${c.inP.length} view${c.inP.length===1?'':'s'} · last ${fdate(c.last)}`);
+  h+=sec(`Nothing in ${plabel}`, quiet, 'q',
+        c=>`${c.state||'—'} · last watched ${fdate(c.last)} · ${c.views.length} lifetime`, true);
+  h+=sec(`No lesson plan activity on record`, never, 'n',
+        c=>`${c.state||'—'} · never watched`, true);
+  h+=sec(`Can't verify — no app ID mapped yet`, unknown, 'u',
+        c=>`${c.state||'—'} · unverified`);
+
+  h+=`<p class="tr-dim" style="margin-top:14px;max-width:760px">Coaches under "can't verify" have no entry in the app ID map. Their activity can't be matched yet, so they are deliberately kept out of the counts above rather than shown as having watched nothing. The map fills in automatically as coaches use the app.</p>`;
+  h+=`</div>`;
+  el.innerHTML=h;
+
+  el.querySelectorAll('[data-lp]').forEach(n=>n.onclick=()=>{
+    const c=document.getElementById('lpc-'+n.dataset.lp);
+    if(c) c.classList.toggle('open');
+  });
+}
+
 function renderAll() {
   COACHES = computeCoaches(document.getElementById('lb-period').value);
   ['lb-content','dev-content','alert-content','reward-content','training-content'].forEach(id=>{const e=document.getElementById(id); if(e) e.innerHTML='';});
   renderLeaderboard(); renderDeveloping(); renderAlerts(); renderRewards(); renderTraining();
+  if(LP_VIEWS) renderLessons();
 }
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
@@ -3462,9 +3713,10 @@ document.querySelectorAll('.nav-tab').forEach(btn=>{
     document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
     btn.classList.add('active');
     const tab=btn.dataset.tab;
-    ['leaderboard','developing','alerts','rewards','training'].forEach(t=>{
+    ['leaderboard','developing','alerts','rewards','training','lessons'].forEach(t=>{
       const e=document.getElementById('tab-'+t); if(e) e.style.display=t===tab?'block':'none';
     });
+    if(tab==='lessons') renderLessons();
   });
 });
 
@@ -3474,7 +3726,7 @@ document.getElementById('need-support-pill').addEventListener('click', () => {
   // Make sure leaderboard tab is active
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector('[data-tab="leaderboard"]').classList.add('active');
-  ['leaderboard','developing','alerts','rewards','training'].forEach(t=>{
+  ['leaderboard','developing','alerts','rewards','training','lessons'].forEach(t=>{
     const e=document.getElementById('tab-'+t); if(e) e.style.display=t==='leaderboard'?'block':'none';
   });
   // Scroll to first needs-support card
@@ -3492,6 +3744,8 @@ document.getElementById('lb-period').addEventListener('change',()=>{ if(RAW) ren
   const e=document.getElementById(id);
   if(e) e.addEventListener('input',()=>{ if(COACHES) renderTraining(); });
 });
+(function(){ const e=document.getElementById('lp-search');
+  if(e) e.addEventListener('input',()=>{ if(COACHES&&LP_VIEWS) renderLessons(); }); })();
 ['dev-search','dev-state'].forEach(id=>{
   document.getElementById(id).addEventListener('input',()=>{ if(COACHES) renderDeveloping(); });
 });
