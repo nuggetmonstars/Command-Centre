@@ -1,7 +1,7 @@
 {
- "generated": "2026-08-01T05:22:29Z",
+ "generated": "2026-08-02T07:32:13Z",
  "windowDays": 365,
- "windowStart": "2025-08-01T05:22:29Z",
+ "windowStart": "2025-08-02T07:32:13Z",
  "orgId": "6790322299197b9b6809ecd3",
  "requestsUsed": 11,
  "channels": {
@@ -10,62 +10,62 @@
    "service": "instagram",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 133,
+   "postCount": 131,
    "metrics": {
     "reactions": {
-     "seen": 131,
-     "nonzero": 121,
+     "seen": 129,
+     "nonzero": 119,
      "max": 61,
-     "avg": 4.12,
+     "avg": 4.16,
      "confidence": "high"
     },
     "comments": {
-     "seen": 131,
+     "seen": 129,
      "nonzero": 11,
      "max": 3,
-     "avg": 0.11,
+     "avg": 0.12,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 131,
-     "nonzero": 124,
+     "seen": 129,
+     "nonzero": 122,
      "max": 6.976744186046512,
-     "avg": 2.22,
+     "avg": 2.23,
      "confidence": "high"
     },
     "views": {
-     "seen": 131,
-     "nonzero": 131,
+     "seen": 129,
+     "nonzero": 129,
      "max": 1081,
-     "avg": 320.39,
+     "avg": 321.91,
      "confidence": "high"
     },
     "shares": {
-     "seen": 131,
-     "nonzero": 33,
+     "seen": 129,
+     "nonzero": 32,
      "max": 5,
      "avg": 0.35,
      "confidence": "low"
     },
     "saves": {
-     "seen": 131,
+     "seen": 129,
      "nonzero": 13,
      "max": 11,
      "avg": 0.18,
-     "confidence": "unreliable"
+     "confidence": "low"
     },
     "follows": {
-     "seen": 131,
+     "seen": 129,
      "nonzero": 4,
      "max": 10,
      "avg": 0.11,
      "confidence": "unreliable"
     },
     "reach": {
-     "seen": 131,
-     "nonzero": 130,
+     "seen": 129,
+     "nonzero": 128,
      "max": 2851,
-     "avg": 208.39,
+     "avg": 208.56,
      "confidence": "high"
     }
    }
@@ -75,48 +75,48 @@
    "service": "facebook",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 140,
+   "postCount": 138,
    "metrics": {
     "reactions": {
-     "seen": 140,
-     "nonzero": 104,
+     "seen": 138,
+     "nonzero": 102,
      "max": 11,
      "avg": 1.84,
      "confidence": "high"
     },
     "comments": {
-     "seen": 140,
+     "seen": 138,
      "nonzero": 3,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 140,
-     "nonzero": 113,
+     "seen": 138,
+     "nonzero": 111,
      "max": 13.11,
-     "avg": 3.28,
+     "avg": 3.25,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 140,
-     "nonzero": 120,
+     "seen": 138,
+     "nonzero": 118,
      "max": 1342,
-     "avg": 141.91,
+     "avg": 143.08,
      "confidence": "high"
     },
     "shares": {
-     "seen": 140,
-     "nonzero": 23,
+     "seen": 138,
+     "nonzero": 22,
      "max": 2,
-     "avg": 0.21,
+     "avg": 0.2,
      "confidence": "low"
     },
     "clicks": {
-     "seen": 140,
-     "nonzero": 95,
+     "seen": 138,
+     "nonzero": 94,
      "max": 61,
-     "avg": 3.09,
+     "avg": 3.12,
      "confidence": "high"
     }
    }
@@ -126,34 +126,34 @@
    "service": "youtube",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 105,
+   "postCount": 103,
    "metrics": {
     "reactions": {
-     "seen": 105,
-     "nonzero": 74,
+     "seen": 103,
+     "nonzero": 72,
      "max": 18,
      "avg": 2.37,
      "confidence": "high"
     },
     "comments": {
-     "seen": 105,
+     "seen": 103,
      "nonzero": 1,
      "max": 1,
      "avg": 0.01,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 105,
-     "nonzero": 32,
+     "seen": 103,
+     "nonzero": 30,
      "max": 2.68,
-     "avg": 0.38,
+     "avg": 0.36,
      "confidence": "low"
     },
     "views": {
-     "seen": 105,
-     "nonzero": 104,
+     "seen": 103,
+     "nonzero": 102,
      "max": 22024,
-     "avg": 578.95,
+     "avg": 585.7,
      "confidence": "high"
     }
    }
@@ -190,7 +190,7 @@
      "seen": 44,
      "nonzero": 43,
      "max": 66,
-     "avg": 17.36,
+     "avg": 17.43,
      "confidence": "high"
     },
     "shares": {
@@ -228,48 +228,48 @@
    "service": "tiktok",
    "name": "theminimonstars",
    "disconnected": false,
-   "postCount": 41,
+   "postCount": 39,
    "metrics": {
     "reactions": {
-     "seen": 41,
-     "nonzero": 41,
+     "seen": 39,
+     "nonzero": 39,
      "max": 16,
-     "avg": 4.02,
+     "avg": 4.13,
      "confidence": "high"
     },
     "comments": {
-     "seen": 41,
+     "seen": 39,
      "nonzero": 0,
      "max": 0.0,
      "avg": 0.0,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 41,
-     "nonzero": 40,
+     "seen": 39,
+     "nonzero": 39,
      "max": 5.84,
-     "avg": 2.13,
+     "avg": 2.23,
      "confidence": "high"
     },
     "views": {
-     "seen": 41,
-     "nonzero": 41,
+     "seen": 39,
+     "nonzero": 39,
      "max": 1091,
-     "avg": 199.22,
+     "avg": 202.28,
      "confidence": "high"
     },
     "shares": {
-     "seen": 41,
+     "seen": 39,
      "nonzero": 4,
      "max": 1,
      "avg": 0.1,
-     "confidence": "unreliable"
+     "confidence": "low"
     },
     "reach": {
-     "seen": 41,
-     "nonzero": 41,
+     "seen": 39,
+     "nonzero": 39,
      "max": 996,
-     "avg": 161.24,
+     "avg": 163.82,
      "confidence": "high"
     }
    }
@@ -292,12 +292,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785205621850/6a3a82cd-e02d-44c4-9a00-7af868ee5444.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 24
+    "views": 33
    }
   },
   {
@@ -316,12 +316,12 @@
    "thumb": "https://i.ytimg.com/vi/-dIJ680SJXI/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 1
+    "views": 4
    }
   },
   {
@@ -340,12 +340,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6809db5994fbc2360681a0/0a85b8099d65fbdbad3145cca268daba20655c16_3abc9463c5d0c144654269b66c7499831ae269dd_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T19:08:26.067Z",
+   "metricsUpdatedAt": "2026-08-01T17:37:25.447Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 10,
+    "impressions": 13,
     "shares": 0
    }
   },
@@ -365,12 +365,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a6812453b89e0c6d00ea3a2/362c63ba2a93dc93de9cc5a00fd4eda3.original_thumbnail.0000000.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 45
+    "views": 53
    }
   },
   {
@@ -389,12 +389,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785204611407/31ca8343-0fc7-4670-af47-3aedb9f810e7.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 69
+    "views": 85
    }
   },
   {
@@ -413,7 +413,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6808f011def76369058a7f/5bf56f3535b49dc1d3fea4aae9d4e9b72fd02915_db0a026fbff8564559899f0a7fdc986a33fcc4c5_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T19:08:26.067Z",
+   "metricsUpdatedAt": "2026-08-01T17:37:25.447Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -438,16 +438,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a62e4deb1be6bc10c039abe/8713b100172fdb95cb45c1ecc24f546cec208831_ee8805e8942e377193dd1f5d500b22a0edb29eee_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.392Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.622Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 4.511278195488721,
-    "views": 252,
+    "engagementRate": 4.477611940298507,
+    "views": 254,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 133
+    "reach": 134
    }
   },
   {
@@ -466,12 +466,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091604414/de12819b-66a1-41bb-bee8-1113dc506644.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.5,
-    "views": 40
+    "engagementRate": 2.38,
+    "views": 42
    }
   },
   {
@@ -490,7 +490,7 @@
    "thumb": "https://i.ytimg.com/vi/1CTUdZzkDLM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -514,12 +514,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091494288/c33eb243-f649-4d69-9af8-d6909ccfc58e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.18,
-    "views": 85
+    "engagementRate": 1.1,
+    "views": 91
    }
   },
   {
@@ -538,7 +538,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a58dc323c08b770e82e77c6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.446Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.789Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -566,12 +566,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091306158/018274ee-1f48-4929-bdd1-7c61014d8e22.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.04,
-    "views": 49
+    "engagementRate": 1.96,
+    "views": 51
    }
   },
   {
@@ -590,7 +590,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c3656010aecb040a3c32/9f7772fd850eb6377de19b9fde9f83d5fdaf6535_7f41100b739e3e267d8edbc1c46c6f9c9ef4b0f3_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.383Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.584Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -618,7 +618,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c364f6fcd5bea703f6a2/95582e2c4b5b95e5df83f9f3fb8439dc0be769a2_3e0c8a84e2faf09c17a8da7e9318353ca124bf8b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T15:56:19.441Z",
+   "metricsUpdatedAt": "2026-08-01T14:56:27.888Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -644,7 +644,7 @@
    "thumb": "https://i.ytimg.com/vi/f8rxZ3dOiBM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -668,7 +668,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208de24b2159a4029fce/26781a9cbb8814b4969b79a36f73043972dc12bd_40cb5796e87cbf22949171f3768ab8445ddb20a9_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T15:56:19.441Z",
+   "metricsUpdatedAt": "2026-08-01T14:56:27.888Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -694,7 +694,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208dbf98a0bd9e008bdb/cc0f334282d85dfe3ecc7df33f78a929e269dcd3_8b178d53d94cd6d5b09bd27758cd3eb3161a5bec_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.361Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.607Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -722,7 +722,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c98577316ef710e797d/c27bf4d419b8559b430cde04c5183c447e297173_41df784b94e544fefd01080570eba211fecb4bda_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.429Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.657Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
@@ -750,7 +750,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c9736666955660d7693/4329f1cfdc83963cf5cd7540cc7c7ad611038867_ed2e81119f86c2be754f9c3d94e8155ecb9ba5f2_facebook",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T15:56:19.441Z",
+   "metricsUpdatedAt": "2026-08-01T14:56:27.888Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -776,12 +776,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782709269953/fd03926b-093d-45d7-81e2-d6a930206bc9.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.611Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.710Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 69
+    "views": 71
    }
   },
   {
@@ -800,7 +800,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3c595d1420e403bbe5/4c2db386c096490dc26f60033966ea2141759052_30e04c9cc2721bc2b593ac1ae7bc4dee574ad54b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T15:56:19.441Z",
+   "metricsUpdatedAt": "2026-08-01T14:56:27.889Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -826,7 +826,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3d6f56558f610a8970/4c2db386c096490dc26f60033966ea2141759052_8e0e368137a9b5e1341cd7b85867b5ecb9047f4e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.437Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.781Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
@@ -854,7 +854,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a4c396d392fad0533b01098_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T14:48:53.762Z",
+   "metricsUpdatedAt": "2026-08-01T13:49:04.414Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -882,7 +882,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a4c396d392fad0533b01091_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.426Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.600Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
@@ -910,12 +910,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782709166230/36c3f5ac-0242-4018-8b8c-c9fa068d0d7f.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.612Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.711Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 35
+    "views": 38
    }
   },
   {
@@ -934,12 +934,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a41f58c23e5f2cc1705c418/ee2020ae0abff7f20785c907db705e03.original_thumbnail.0000000.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.612Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.711Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 51
+    "views": 54
    }
   },
   {
@@ -958,7 +958,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782954118038/480dd207-7cd2-4935-a5a6-0a3934d9a45a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.397Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.737Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -986,7 +986,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782954118038/480dd207-7cd2-4935-a5a6-0a3934d9a45a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T15:56:19.441Z",
+   "metricsUpdatedAt": "2026-08-01T14:56:27.889Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1012,12 +1012,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782708776368/6886ecb3-74f2-49a6-bcf2-014756a428d5.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-01T04:06:29.612Z",
+   "metricsUpdatedAt": "2026-08-02T03:08:04.711Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.08,
-    "views": 93
+    "engagementRate": 1.02,
+    "views": 98
    }
   },
   {
@@ -1060,7 +1060,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a45be8c5b8c55ec5ef635df_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.461Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.531Z",
    "metrics": {
     "reactions": 9,
     "comments": 2,
@@ -1114,7 +1114,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f91406e2b5fdb2029a82/055a67c05cda5a17ef8e289cb9f784e3d3b8254c_31e2fad0e2102e03bb72da82e962791c7305dbce_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.435Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.662Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1190,7 +1190,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f5915e8956bc530ea8e4/1e1c6388294cfff49002bcbba8841a5ba0882784_4c1f33e272b325467eaf0b79a696183ecd9cc36b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.356Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.626Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1268,7 +1268,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf34f_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.440Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.596Z",
    "metrics": {
     "reactions": 4,
     "comments": 1,
@@ -1296,7 +1296,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf361_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.463Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.611Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
@@ -1350,7 +1350,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38ce82f50028297904ba12/42f43301fec6e57a1ea45795827d37123bdc1f67_808f2c858659cfa18460cc0769afd22e4aa6821d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.380Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.701Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1378,7 +1378,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38cc448d9804a5b00ddaf1/0d68d17863fe5d0859e06529b24424ca2375d2e0_9f62da986431c01f6778420368629a812b7dcf57_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.386Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.638Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -1432,7 +1432,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782106308980/30f99c05-b146-4490-a6b1-625248f6bd9a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.414Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.649Z",
    "metrics": {
     "reactions": 1,
     "comments": 3,
@@ -1460,7 +1460,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38c966794224c3c706cb36/f58445636893301c168f0ba696ff83ea4bdc8754_f9514aba265555bb99e931bf575ac89f4ce508f4_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.419Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.698Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1514,7 +1514,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3a88c488dc9c188d3b2878_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.449Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.592Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -1542,7 +1542,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a39454921017b6ab62ad369_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.458Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.745Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -1595,7 +1595,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278927_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.451Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.777Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
@@ -1623,7 +1623,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278932_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.444Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.712Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
@@ -1651,7 +1651,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f914d0c19e666fc0317a2/4419a24b069c4d66f3e8553d1722512c8065a98b_b4c11f9d8f2e91cb84a52587c7719c0e4c278c0d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.416Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.535Z",
    "metrics": {
     "reactions": 22,
     "comments": 0,
@@ -1705,7 +1705,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a343763f650c592ea50fde9_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.369Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.541Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -1759,7 +1759,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a279aa421bebf089c0cba5f/b3b4ae20ad4a8900a1de115095be641761654395_63c9c8ef160f3bff73884b93720fb5cfca03df89_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.399Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.767Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1787,7 +1787,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a32f3e9d020ac57a6726564_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.372Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.772Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1866,7 +1866,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f8f60fca5e717350fef56/f90e42c896359d5c9731a1833af4b8d637aa45a9_32d6cb3f333db12e7874c521a422cf2154b1e55c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.395Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.719Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
@@ -1894,7 +1894,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2798320817be156901cc06/590e7a10571c6ec1c5f1b3cddb182b66261ad204_7092d5098ce86e47eb5604bb9a2eab55321dea73_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.411Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.678Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -1974,7 +1974,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2797221815df2b1707a788/45d3dfd88079ecfbcda776296140a24ab7d3d28e_352b0b1a112c6bb93d61b214af93e3e63211f3ae_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.404Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.690Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2028,7 +2028,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a279618ce7a284462022a7b/7f4735cf1f42add937f972da1d19650206482637_48d70678964313b499d8e46323f738dc41b3d9f8_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.456Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.715Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2082,7 +2082,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a261c2bbf0a0ad9720fcd20/d0648baaea67f101ccefb6220593ed368adfa877_3bec93756c7a8e0b6e88039dec6f91d6d765e3e4_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.454Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.774Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
@@ -2110,7 +2110,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a261b4e8eba86932b057a80/6cc19f31f6a13eee5c3626fb3e524222e70dc749_7eb1de00aad8679d48a87761229b996a928dce27_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.376Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.618Z",
    "metrics": {
     "reactions": 10,
     "comments": 1,
@@ -2190,7 +2190,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d95698867d273001a51e/b7a5df81b1ec84803220ee052e0cb1927cf32c40_f832bf371e8ae55e1910dbd4e66b0f04638010a0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.424Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.785Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2244,7 +2244,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d8881abadd6cd50636d7/4874492433f2ba94f6622cc27e4b7885973c1f45_a932fb1a2116e0d572204bc91f757bf7fb7edc69_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.523Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.705Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2272,7 +2272,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d71208ea80dec40c7e9c/3f0f47a9607e5b39ccf444048d529ad1d871a7f4_a8e76dcd9285814c95fc16919954d27fe0632039_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.407Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.685Z",
    "metrics": {
     "reactions": 5,
     "comments": 1,
@@ -2352,7 +2352,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a1d79e18388ab7e803fe53a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.402Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.673Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -2430,7 +2430,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a19af4dd2abce0fb04f65ea_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.432Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.851Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2484,7 +2484,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a19af4dd2abce0fb04f65ed_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.422Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.666Z",
    "metrics": {
     "reactions": 14,
     "comments": 0,
@@ -2538,7 +2538,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d24b1b2945034206da6b/0728838b7e5dc73944ef41bc13fae2bbc3d7fee3_41ea59433bd3d901430db471416ce2b99a2980a0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.364Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.750Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2616,7 +2616,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/69f82814b1cb7e94f407bfe3/6c7f3d3459bdab403ba24858ddb144d88bb64c68_582bd13eec65a9d7d83278db5418375e265cf8b2_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-07-31T21:30:10.390Z",
+   "metricsUpdatedAt": "2026-08-01T20:30:15.539Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -12140,214 +12140,6 @@
     "impressions": 0,
     "shares": 0,
     "clicks": 0
-   }
-  },
-  {
-   "id": "6889c58ac9618b9baa0f4a6c",
-   "channelId": "67903f48a31978b79c6582e7",
-   "channel": "theminimonstars",
-   "service": "tiktok",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-08-01T22:02:47.467Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 22,
-   "text": "60 Minutes of Yoga Nursery Rhymes fun! \ud83d\udcd8 Sing, groove and move along with the MINI MONSTAR! \ud83e\uddd8\u200d\u2642\ufe0f OUT NOW ON YOUTUBE: https://youtu.be/tdE2a7h6_ic?si=wgiZkrSyjaeXBYZV Like and Subscribe. #kids #YouTube #video #learn #yoga #mindfulness #app #children",
-   "link": "https://www.tiktok.com/@theminimonstars/video/7533740523559881990?utm_campaign=tt4d_open_api&utm_source=7103819247981182978",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753859358902/7b521bc7-f8c7-4621-9964-e10996274c8b.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2026-08-01T00:37:09.691Z",
-   "metrics": {
-    "reactions": 1,
-    "comments": 0,
-    "engagementRate": 0.68,
-    "views": 147,
-    "shares": 0,
-    "reach": 117
-   }
-  },
-  {
-   "id": "6889c58a935ca8a9e0014652",
-   "channelId": "67903bd2a31978b79c3f7cb5",
-   "channel": "minimonstars",
-   "service": "instagram",
-   "format": "reel",
-   "via": "buffer",
-   "sentAt": "2025-08-01T22:02:33.875Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 22,
-   "text": "60 Minutes of Yoga Nursery Rhymes fun! \ud83d\udcd8 \nSing, groove and move along with the MINI MONSTAR! \ud83e\uddd8\u200d\u2642\ufe0f \n\nOUT NOW ON YOUTUBE:\nhttps://youtu.be/tdE2a7h6_ic?si=wgiZkrSyjaeXBYZV \n\nLike and Subscribe.\n#kids #YouTube  #video #learn #yoga #mindfulness #app #children",
-   "link": "https://www.instagram.com/reel/DM1BN5XBnKC/",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753859358902/7b521bc7-f8c7-4621-9964-e10996274c8b.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-10-23T18:21:47.498Z",
-   "metrics": {
-    "reactions": 2,
-    "comments": 0,
-    "engagementRate": 2.083333333333333,
-    "views": 154,
-    "shares": 1,
-    "saves": 0,
-    "follows": 0,
-    "reach": 144
-   }
-  },
-  {
-   "id": "6889c58ac18550eb720e48dc",
-   "channelId": "6790325fa31978b79cd370a6",
-   "channel": "Mini Monstars",
-   "service": "youtube",
-   "format": "short",
-   "via": "buffer",
-   "sentAt": "2025-08-01T22:01:40.445Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 22,
-   "text": "60 Minutes of Yoga Nursery Rhymes fun! \ud83d\udcd8 \nSing, groove and move along with the MINI MONSTAR! \ud83e\uddd8\u200d\u2642\ufe0f \n\nOUT NOW ON YOUTUBE:\nhttps://youtu.be/tdE2a7h6_ic?si=wgiZkrSyjaeXBYZV \n\nLike and Subscribe.\n#kids #YouTube  #video #learn #yoga #mindfulness #app #children",
-   "link": "https://www.youtube.com/watch?v=SPNmFgTIZIA",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753859358902/7b521bc7-f8c7-4621-9964-e10996274c8b.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-09-30T18:58:13.475Z",
-   "metrics": {
-    "reactions": 1,
-    "comments": 0,
-    "engagementRate": 0.43,
-    "views": 232
-   }
-  },
-  {
-   "id": "6889c58a9841c76b910e1633",
-   "channelId": "67997c68a31978b79c616ae4",
-   "channel": "Mini Monstars",
-   "service": "facebook",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-08-01T22:01:11.616Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 22,
-   "text": "60 Minutes of Yoga Nursery Rhymes fun! \ud83d\udcd8 \nSing, groove and move along with the MINI MONSTAR! \ud83e\uddd8\u200d\u2642\ufe0f \n\nOUT NOW ON YOUTUBE:\nhttps://youtu.be/tdE2a7h6_ic?si=wgiZkrSyjaeXBYZV \n\nLike and Subscribe.\n#kids #YouTube  #video #learn #yoga #mindfulness #app #children",
-   "link": "https://www.facebook.com/1416893109688950/videos/723687583974332",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753859358902/7b521bc7-f8c7-4621-9964-e10996274c8b.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-08-31T04:48:02.355Z",
-   "metrics": {
-    "reactions": 1,
-    "comments": 0,
-    "engagementRate": 1.56,
-    "impressions": 59,
-    "shares": 0,
-    "clicks": 0
-   }
-  },
-  {
-   "id": "68885c9b7761e28d470b6d52",
-   "channelId": "67903f48a31978b79c6582e7",
-   "channel": "theminimonstars",
-   "service": "tiktok",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-08-01T06:02:29.214Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 6,
-   "text": "\ud83c\udfc5MONSTAR CHALLENGE\ud83c\udfc5 The MONSTAR CHALLENGE section adds an extra layer of excitement to the MINI MONSTARS APP! Children must complete specific activities to unlock new levels and more difficult games. Download the app for FREE: https://www.minimonstars.net/mini-monstars-app #kids ",
-   "link": "https://www.tiktok.com/@theminimonstars/video/7533493027369700614?utm_campaign=tt4d_open_api&utm_source=7103819247981182978",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753766892418/9f2e38b8-09e8-45f4-82a2-c6e6e9721391.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-11-25T06:55:05.499Z",
-   "metrics": {
-    "reactions": 3,
-    "comments": 0,
-    "engagementRate": 0,
-    "views": 132,
-    "shares": 0,
-    "reach": 105
-   }
-  },
-  {
-   "id": "68885c9b230bd76874075ddc",
-   "channelId": "67903bd2a31978b79c3f7cb5",
-   "channel": "minimonstars",
-   "service": "instagram",
-   "format": "reel",
-   "via": "buffer",
-   "sentAt": "2025-08-01T06:01:29.924Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 6,
-   "text": "\ud83c\udfc5MONSTAR CHALLENGE\ud83c\udfc5 \n\nThe MONSTAR CHALLENGE section adds an extra layer of excitement to the MINI MONSTARS APP! Children must complete specific activities to unlock new levels and more difficult games. \n\nDownload the app for FREE: https://www.minimonstars.net/mini-monstars-app \n\n",
-   "link": "https://www.instagram.com/reel/DMzTP0iRq-3/",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753766892418/9f2e38b8-09e8-45f4-82a2-c6e6e9721391.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-10-22T19:15:17.354Z",
-   "metrics": {
-    "reactions": 1,
-    "comments": 0,
-    "engagementRate": 0.3968253968253968,
-    "views": 293,
-    "shares": 0,
-    "saves": 0,
-    "follows": 0,
-    "reach": 252
-   }
-  },
-  {
-   "id": "68885c9bc4c6d02b7803e5f4",
-   "channelId": "67997c68a31978b79c616ae4",
-   "channel": "Mini Monstars",
-   "service": "facebook",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-08-01T06:01:07.169Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 6,
-   "text": "\ud83c\udfc5MONSTAR CHALLENGE\ud83c\udfc5 \n\nThe MONSTAR CHALLENGE section adds an extra layer of excitement to the MINI MONSTARS APP! Children must complete specific activities to unlock new levels and more difficult games. \n\nDownload the app for FREE: https://www.minimonstars.net/mini-monstars-app \n\n",
-   "link": "https://www.facebook.com/1416893109688950/videos/1272451204552414",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753766892418/9f2e38b8-09e8-45f4-82a2-c6e6e9721391.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-08-31T04:48:02.355Z",
-   "metrics": {
-    "reactions": 3,
-    "comments": 0,
-    "engagementRate": 9.23,
-    "impressions": 63,
-    "shares": 2,
-    "clicks": 1
-   }
-  },
-  {
-   "id": "68885c9ba62f2cb8c300ebb5",
-   "channelId": "6790325fa31978b79cd370a6",
-   "channel": "Mini Monstars",
-   "service": "youtube",
-   "format": "short",
-   "via": "buffer",
-   "sentAt": "2025-08-01T06:00:35.382Z",
-   "sentDate": "2025-08-01",
-   "weekday": "Fri",
-   "hourUTC": 6,
-   "text": "\ud83c\udfc5MONSTAR CHALLENGE\ud83c\udfc5 \n\nThe MONSTAR CHALLENGE section adds an extra layer of excitement to the MINI MONSTARS APP! Children must complete specific activities to unlock new levels and more difficult games. \n\nDownload the app for FREE: https://www.minimonstars.net/mini-monstars-app \n\n",
-   "link": "https://www.youtube.com/watch?v=VuNXHqHRPsk",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1753766892418/9f2e38b8-09e8-45f4-82a2-c6e6e9721391.jpeg",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2025-09-30T18:58:13.475Z",
-   "metrics": {
-    "reactions": 4,
-    "comments": 0,
-    "engagementRate": 1.72,
-    "views": 290
    }
   }
  ],
