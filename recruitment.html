@@ -7162,7 +7162,13 @@ function buildBoard(){
     <button class="fbtn on" style="margin-left:auto;background:var(--green);border-color:var(--green)" onclick="openAdd()">+ Add coach</button></div>`;
   h += `<div class="board">`;
   stages.forEach((st,i)=>{
-    const inCol = coaches.filter(c=>c.stage===st);
+    const inCol = coaches.filter(c=>c.stage===st).sort((a,b)=>{
+      const da=(a.appliedDate||a.dateApplied||''), db=(b.appliedDate||b.dateApplied||'');
+      if(da&&db) return db.localeCompare(da);   // newest applied first
+      if(da&&!db) return -1;                      // dated ones above undated
+      if(!da&&db) return 1;
+      return (a.name||'').localeCompare(b.name||'');
+    });
     h += `<div class="col s${i}"><div class="colhead"><span>${esc(st)}</span><span class="cn">${inCol.length}</span></div>`;
     if (inCol.length===0){
       h += `<div class="colempty">none</div>`;
