@@ -1,7 +1,7 @@
 {
- "generated": "2026-08-03T02:16:56Z",
+ "generated": "2026-08-04T02:26:18Z",
  "windowDays": 365,
- "windowStart": "2025-08-03T02:16:56Z",
+ "windowStart": "2025-08-04T02:26:18Z",
  "orgId": "6790322299197b9b6809ecd3",
  "requestsUsed": 11,
  "channels": {
@@ -37,7 +37,7 @@
      "seen": 129,
      "nonzero": 129,
      "max": 1082,
-     "avg": 321.92,
+     "avg": 322.18,
      "confidence": "high"
     },
     "shares": {
@@ -65,7 +65,7 @@
      "seen": 129,
      "nonzero": 128,
      "max": 2851,
-     "avg": 208.56,
+     "avg": 208.71,
      "confidence": "high"
     }
    }
@@ -102,7 +102,7 @@
      "seen": 138,
      "nonzero": 118,
      "max": 1342,
-     "avg": 143.08,
+     "avg": 143.12,
      "confidence": "high"
     },
     "shares": {
@@ -153,7 +153,7 @@
      "seen": 103,
      "nonzero": 102,
      "max": 22024,
-     "avg": 586.14,
+     "avg": 586.54,
      "confidence": "high"
     }
    }
@@ -163,48 +163,48 @@
    "service": "linkedin",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 44,
+   "postCount": 45,
    "metrics": {
     "reactions": {
-     "seen": 44,
-     "nonzero": 11,
+     "seen": 45,
+     "nonzero": 12,
      "max": 4,
-     "avg": 0.55,
+     "avg": 0.56,
      "confidence": "low"
     },
     "comments": {
-     "seen": 44,
+     "seen": 45,
      "nonzero": 0,
      "max": 0.0,
      "avg": 0.0,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 44,
-     "nonzero": 33,
+     "seen": 45,
+     "nonzero": 35,
      "max": 78.78787878787878,
-     "avg": 9.62,
+     "avg": 9.73,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 44,
-     "nonzero": 43,
+     "seen": 45,
+     "nonzero": 44,
      "max": 66,
-     "avg": 17.43,
+     "avg": 17.6,
      "confidence": "high"
     },
     "shares": {
-     "seen": 44,
+     "seen": 45,
      "nonzero": 6,
      "max": 1,
-     "avg": 0.14,
+     "avg": 0.13,
      "confidence": "low"
     },
     "views": {
      "seen": 14,
      "nonzero": 14,
      "max": 38,
-     "avg": 13.36,
+     "avg": 13.43,
      "confidence": "high"
     },
     "totalTimeWatched": {
@@ -218,7 +218,7 @@
      "seen": 14,
      "nonzero": 14,
      "max": 34,
-     "avg": 10.43,
+     "avg": 10.5,
      "confidence": "high"
     }
    }
@@ -277,6 +277,31 @@
  },
  "posts": [
   {
+   "id": "6a680b0745777e488006b798",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-03T03:00:49.244Z",
+   "sentDate": "2026-08-03",
+   "weekday": "Mon",
+   "hourUTC": 3,
+   "text": "Early educators are some of the most undervalued professionals in this country. Full stop.\n\n\u2764\ufe0f They shape how kids learn to share, regulate, and be curious about the world. Most days, nobody outside the centre sees any of what you do!\n\n3 things we try to do differently at Mini Mo",
+   "link": "https://www.linkedin.com/feed/update/urn:li:share:7489877910070194176",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680b0745777e488006b798/82a2fedd2fb5e085034c0ecd86e40902ac357b88_1e3fd981d5f6c4545c809ea7fc151e11d789bb5e_thumbnail",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-04T00:13:26.994Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 8.571428571428571,
+    "impressions": 13,
+    "shares": 0
+   }
+  },
+  {
    "id": "6a681436e22f60b47902272a",
    "channelId": "6790325fa31978b79cd370a6",
    "channel": "Mini Monstars",
@@ -292,12 +317,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785205621850/6a3a82cd-e02d-44c4-9a00-7af868ee5444.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.038Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 40
+    "views": 46
    }
   },
   {
@@ -316,12 +341,12 @@
    "thumb": "https://i.ytimg.com/vi/-dIJ680SJXI/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.038Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 7
+    "views": 12
    }
   },
   {
@@ -340,12 +365,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6809db5994fbc2360681a0/0a85b8099d65fbdbad3145cca268daba20655c16_3abc9463c5d0c144654269b66c7499831ae269dd_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T16:37:37.174Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.998Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 13,
+    "engagementRate": 7.4074074074074066,
+    "impressions": 15,
     "shares": 0
    }
   },
@@ -365,12 +390,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a6812453b89e0c6d00ea3a2/362c63ba2a93dc93de9cc5a00fd4eda3.original_thumbnail.0000000.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 71
+    "views": 93
    }
   },
   {
@@ -389,12 +414,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785204611407/31ca8343-0fc7-4670-af47-3aedb9f810e7.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 94
+    "views": 98
    }
   },
   {
@@ -413,12 +438,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6808f011def76369058a7f/5bf56f3535b49dc1d3fea4aae9d4e9b72fd02915_db0a026fbff8564559899f0a7fdc986a33fcc4c5_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T16:37:37.174Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.017Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 3.9215686274509802,
-    "impressions": 29,
+    "engagementRate": 3.7037037037037033,
+    "impressions": 32,
     "shares": 0
    }
   },
@@ -438,16 +463,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a62e4deb1be6bc10c039abe/8713b100172fdb95cb45c1ecc24f546cec208831_ee8805e8942e377193dd1f5d500b22a0edb29eee_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.596Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.942Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 4.477611940298507,
-    "views": 254,
+    "engagementRate": 4.444444444444445,
+    "views": 256,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 134
+    "reach": 135
    }
   },
   {
@@ -466,7 +491,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091604414/de12819b-66a1-41bb-bee8-1113dc506644.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -490,12 +515,12 @@
    "thumb": "https://i.ytimg.com/vi/1CTUdZzkDLM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 30
+    "views": 31
    }
   },
   {
@@ -514,12 +539,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091494288/c33eb243-f649-4d69-9af8-d6909ccfc58e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.03,
-    "views": 97
+    "engagementRate": 1,
+    "views": 100
    }
   },
   {
@@ -538,7 +563,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a58dc323c08b770e82e77c6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.594Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.920Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -566,12 +591,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091306158/018274ee-1f48-4929-bdd1-7c61014d8e22.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.96,
-    "views": 51
+    "engagementRate": 1.92,
+    "views": 52
    }
   },
   {
@@ -590,16 +615,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c3656010aecb040a3c32/9f7772fd850eb6377de19b9fde9f83d5fdaf6535_7f41100b739e3e267d8edbc1c46c6f9c9ef4b0f3_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.660Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.897Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.278688524590164,
-    "views": 199,
+    "engagementRate": 3.225806451612903,
+    "views": 201,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 122
+    "reach": 124
    }
   },
   {
@@ -618,12 +643,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c364f6fcd5bea703f6a2/95582e2c4b5b95e5df83f9f3fb8439dc0be769a2_3e0c8a84e2faf09c17a8da7e9318353ca124bf8b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T13:56:37.319Z",
+   "metricsUpdatedAt": "2026-08-03T12:56:47.240Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.32,
-    "impressions": 151,
+    "engagementRate": 1.3,
+    "impressions": 154,
     "shares": 0,
     "clicks": 1
    }
@@ -644,7 +669,7 @@
    "thumb": "https://i.ytimg.com/vi/f8rxZ3dOiBM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -668,12 +693,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208de24b2159a4029fce/26781a9cbb8814b4969b79a36f73043972dc12bd_40cb5796e87cbf22949171f3768ab8445ddb20a9_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T13:56:37.319Z",
+   "metricsUpdatedAt": "2026-08-03T12:56:47.240Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 4.08,
-    "impressions": 147,
+    "engagementRate": 4,
+    "impressions": 150,
     "shares": 0,
     "clicks": 1
    }
@@ -694,16 +719,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208dbf98a0bd9e008bdb/cc0f334282d85dfe3ecc7df33f78a929e269dcd3_8b178d53d94cd6d5b09bd27758cd3eb3161a5bec_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.731Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.061Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.0526315789473684,
-    "views": 172,
+    "engagementRate": 1.0416666666666665,
+    "views": 174,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 95
+    "reach": 96
    }
   },
   {
@@ -722,12 +747,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c98577316ef710e797d/c27bf4d419b8559b430cde04c5183c447e297173_41df784b94e544fefd01080570eba211fecb4bda_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.605Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.011Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
     "engagementRate": 4.635761589403973,
-    "views": 368,
+    "views": 370,
     "shares": 0,
     "saves": 0,
     "follows": 0,
@@ -750,7 +775,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c9736666955660d7693/4329f1cfdc83963cf5cd7540cc7c7ad611038867_ed2e81119f86c2be754f9c3d94e8155ecb9ba5f2_facebook",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T13:56:37.319Z",
+   "metricsUpdatedAt": "2026-08-03T12:56:47.240Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -776,7 +801,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782709269953/fd03926b-093d-45d7-81e2-d6a930206bc9.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -800,7 +825,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3c595d1420e403bbe5/4c2db386c096490dc26f60033966ea2141759052_30e04c9cc2721bc2b593ac1ae7bc4dee574ad54b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T13:56:37.319Z",
+   "metricsUpdatedAt": "2026-08-03T12:56:47.240Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -826,16 +851,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3d6f56558f610a8970/4c2db386c096490dc26f60033966ea2141759052_8e0e368137a9b5e1341cd7b85867b5ecb9047f4e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.589Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.912Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 4.895104895104895,
-    "views": 256,
+    "engagementRate": 4.861111111111112,
+    "views": 259,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 143
+    "reach": 144
    }
   },
   {
@@ -854,16 +879,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a4c396d392fad0533b01098_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T12:49:13.916Z",
+   "metricsUpdatedAt": "2026-08-03T11:49:23.554Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 0.06474820143884892,
-    "views": 210,
+    "engagementRate": 0.06428571428571428,
+    "views": 213,
     "shares": 3,
     "saves": 1,
     "follows": 0,
-    "reach": 139
+    "reach": 140
    }
   },
   {
@@ -882,16 +907,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a4c396d392fad0533b01091_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.733Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.043Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
-    "engagementRate": 3.3333333333333335,
-    "views": 369,
+    "engagementRate": 3.322259136212625,
+    "views": 371,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 300
+    "reach": 301
    }
   },
   {
@@ -910,7 +935,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782709166230/36c3f5ac-0242-4018-8b8c-c9fa068d0d7f.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-03T02:09:39.039Z",
+   "metricsUpdatedAt": "2026-08-04T01:11:09.378Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -958,16 +983,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782954118038/480dd207-7cd2-4935-a5a6-0a3934d9a45a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.598Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.960Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.34375,
-    "views": 410,
+    "engagementRate": 2.3346303501945527,
+    "views": 412,
     "shares": 2,
     "saves": 0,
     "follows": 0,
-    "reach": 256
+    "reach": 257
    }
   },
   {
@@ -1060,12 +1085,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a45be8c5b8c55ec5ef635df_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.711Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.021Z",
    "metrics": {
     "reactions": 9,
     "comments": 2,
     "engagementRate": 3.1835205992509366,
-    "views": 710,
+    "views": 712,
     "shares": 5,
     "saves": 0,
     "follows": 0,
@@ -1114,7 +1139,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f91406e2b5fdb2029a82/055a67c05cda5a17ef8e289cb9f784e3d3b8254c_31e2fad0e2102e03bb72da82e962791c7305dbce_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.651Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.881Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1190,7 +1215,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f5915e8956bc530ea8e4/1e1c6388294cfff49002bcbba8841a5ba0882784_4c1f33e272b325467eaf0b79a696183ecd9cc36b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.649Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.947Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1268,16 +1293,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf34f_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.537Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.900Z",
    "metrics": {
     "reactions": 4,
     "comments": 1,
-    "engagementRate": 3.546099290780142,
-    "views": 212,
+    "engagementRate": 3.5211267605633805,
+    "views": 213,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 141
+    "reach": 142
    }
   },
   {
@@ -1296,16 +1321,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf361_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.714Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.952Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 3.0172413793103448,
-    "views": 282,
+    "engagementRate": 3.004291845493562,
+    "views": 283,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 232
+    "reach": 233
    }
   },
   {
@@ -1350,7 +1375,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38ce82f50028297904ba12/42f43301fec6e57a1ea45795827d37123bdc1f67_808f2c858659cfa18460cc0769afd22e4aa6821d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.529Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.985Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1378,7 +1403,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38cc448d9804a5b00ddaf1/0d68d17863fe5d0859e06529b24424ca2375d2e0_9f62da986431c01f6778420368629a812b7dcf57_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.613Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.977Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -1432,16 +1457,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782106308980/30f99c05-b146-4490-a6b1-625248f6bd9a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.646Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.962Z",
    "metrics": {
     "reactions": 1,
     "comments": 3,
-    "engagementRate": 2.346041055718475,
-    "views": 417,
+    "engagementRate": 2.3391812865497075,
+    "views": 418,
     "shares": 3,
     "saves": 1,
     "follows": 0,
-    "reach": 341
+    "reach": 342
    }
   },
   {
@@ -1460,7 +1485,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38c966794224c3c706cb36/f58445636893301c168f0ba696ff83ea4bdc8754_f9514aba265555bb99e931bf575ac89f4ce508f4_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.671Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.007Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1514,16 +1539,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3a88c488dc9c188d3b2878_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.674Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.053Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.4691358024691357,
-    "views": 232,
+    "engagementRate": 2.4539877300613497,
+    "views": 233,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 162
+    "reach": 163
    }
   },
   {
@@ -1542,16 +1567,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a39454921017b6ab62ad369_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.657Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.955Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.4492753623188406,
+    "engagementRate": 1.4388489208633095,
     "views": 261,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 138
+    "reach": 139
    }
   },
   {
@@ -1570,12 +1595,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a30a85238b95b1062087b9a/61fa7bf93d71b742287b31d30da15ed83c14915e_2b4abf05dcd194d4f6429ebba261b0d1c756dfc1_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.472Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.083Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 2,
-    "impressions": 16,
+    "engagementRate": 1.9607843137254901,
+    "impressions": 17,
     "shares": 0
    }
   },
@@ -1595,16 +1620,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278927_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.532Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.917Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
-    "engagementRate": 5.88235294117647,
+    "engagementRate": 5.839416058394161,
     "views": 262,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 136
+    "reach": 137
    }
   },
   {
@@ -1623,16 +1648,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278932_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.630Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.876Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
-    "engagementRate": 5.487804878048781,
-    "views": 235,
+    "engagementRate": 5.454545454545454,
+    "views": 236,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 164
+    "reach": 165
    }
   },
   {
@@ -1651,7 +1676,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f914d0c19e666fc0317a2/4419a24b069c4d66f3e8553d1722512c8065a98b_b4c11f9d8f2e91cb84a52587c7719c0e4c278c0d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.720Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.939Z",
    "metrics": {
     "reactions": 22,
     "comments": 0,
@@ -1705,16 +1730,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a343763f650c592ea50fde9_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.616Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.908Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 1.646090534979424,
-    "views": 304,
+    "engagementRate": 1.639344262295082,
+    "views": 308,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 243
+    "reach": 244
    }
   },
   {
@@ -1759,7 +1784,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a279aa421bebf089c0cba5f/b3b4ae20ad4a8900a1de115095be641761654395_63c9c8ef160f3bff73884b93720fb5cfca03df89_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.620Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.889Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -1787,16 +1812,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a32f3e9d020ac57a6726564_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.667Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.905Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 1.0362694300518136,
-    "views": 496,
+    "engagementRate": 1.03359173126615,
+    "views": 497,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 386
+    "reach": 387
    }
   },
   {
@@ -1815,12 +1840,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a30a6377fbd3a727a043323/0d3a25534abbf54e99f6fceff5240080e9ae7c9b_c734b09ea4b44160551521b94710264c146ad6ce_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.606Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.940Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 2.631578947368421,
-    "impressions": 56,
+    "engagementRate": 2.5974025974025974,
+    "impressions": 57,
     "shares": 0
    }
   },
@@ -1866,7 +1891,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f8f60fca5e717350fef56/f90e42c896359d5c9731a1833af4b8d637aa45a9_32d6cb3f333db12e7874c521a422cf2154b1e55c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.706Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.914Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
@@ -1894,7 +1919,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2798320817be156901cc06/590e7a10571c6ec1c5f1b3cddb182b66261ad204_7092d5098ce86e47eb5604bb9a2eab55321dea73_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.694Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.970Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -1974,7 +1999,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2797221815df2b1707a788/45d3dfd88079ecfbcda776296140a24ab7d3d28e_352b0b1a112c6bb93d61b214af93e3e63211f3ae_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.704Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.965Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2028,7 +2053,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a279618ce7a284462022a7b/7f4735cf1f42add937f972da1d19650206482637_48d70678964313b499d8e46323f738dc41b3d9f8_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.728Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.894Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2082,7 +2107,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a261c2bbf0a0ad9720fcd20/d0648baaea67f101ccefb6220593ed368adfa877_3bec93756c7a8e0b6e88039dec6f91d6d765e3e4_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.662Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.027Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
@@ -2110,7 +2135,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a261b4e8eba86932b057a80/6cc19f31f6a13eee5c3626fb3e524222e70dc749_7eb1de00aad8679d48a87761229b996a928dce27_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.602Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.003Z",
    "metrics": {
     "reactions": 10,
     "comments": 1,
@@ -2190,7 +2215,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d95698867d273001a51e/b7a5df81b1ec84803220ee052e0cb1927cf32c40_f832bf371e8ae55e1910dbd4e66b0f04638010a0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.654Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.975Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2244,7 +2269,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d8881abadd6cd50636d7/4874492433f2ba94f6622cc27e4b7885973c1f45_a932fb1a2116e0d572204bc91f757bf7fb7edc69_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.701Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.950Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2272,7 +2297,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d71208ea80dec40c7e9c/3f0f47a9607e5b39ccf444048d529ad1d871a7f4_a8e76dcd9285814c95fc16919954d27fe0632039_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.722Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.018Z",
    "metrics": {
     "reactions": 5,
     "comments": 1,
@@ -2352,16 +2377,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a1d79e18388ab7e803fe53a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.640Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.968Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 1.9083969465648856,
-    "views": 342,
+    "engagementRate": 1.9011406844106464,
+    "views": 343,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 262
+    "reach": 263
    }
   },
   {
@@ -2430,16 +2455,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a19af4dd2abce0fb04f65ea_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.637Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.886Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.0689655172413794,
-    "views": 183,
+    "engagementRate": 2.054794520547945,
+    "views": 184,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 145
+    "reach": 146
    }
   },
   {
@@ -2484,16 +2509,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a19af4dd2abce0fb04f65ed_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.610Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.957Z",
    "metrics": {
     "reactions": 14,
     "comments": 0,
-    "engagementRate": 4.093567251461988,
-    "views": 462,
+    "engagementRate": 4.081632653061225,
+    "views": 463,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 342
+    "reach": 343
    }
   },
   {
@@ -2538,7 +2563,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a13d24b1b2945034206da6b/0728838b7e5dc73944ef41bc13fae2bbc3d7fee3_41ea59433bd3d901430db471416ce2b99a2980a0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.644Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:35.972Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2616,7 +2641,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/69f82814b1cb7e94f407bfe3/6c7f3d3459bdab403ba24858ddb144d88bb64c68_582bd13eec65a9d7d83278db5418375e265cf8b2_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T19:30:27.633Z",
+   "metricsUpdatedAt": "2026-08-03T18:30:36.057Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -4930,12 +4955,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/698abe0f0718f057d702fce5/5949f9f82461baa8f5631c18abf3fc6a104c6a38_cae4198936e8833573f5f0a669b3b8d8239cc316_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.503Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.197Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 4,
-    "impressions": 57,
+    "engagementRate": 3.9215686274509802,
+    "impressions": 58,
     "shares": 0
    }
   },
@@ -5135,12 +5160,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/698ab65e7b57734ca6c33089_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.520Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.052Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 3.79746835443038,
-    "impressions": 32,
+    "engagementRate": 3.75,
+    "impressions": 33,
     "shares": 0
    }
   },
@@ -5160,12 +5185,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6966fa6fe8617dcf90034d8b/96733ed39cbe5709580c41ef563c4021fb226707_e681ed7d46c5680e12810807cdebdadc1b658065_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.475Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.109Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 36.95652173913043,
-    "impressions": 27,
+    "engagementRate": 36.55913978494624,
+    "impressions": 28,
     "shares": 0
    }
   },
@@ -5263,12 +5288,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/694092d2ee219010050bce6c/930509d8ff2f6abff2b842382a6556fe7b5677ea_f8037e54f8da3b5c9f1525a2e33551a773244ab0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.694Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.987Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 14.000000000000002,
-    "impressions": 21,
+    "engagementRate": 13.725490196078432,
+    "impressions": 22,
     "shares": 0
    }
   },
@@ -5810,16 +5835,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1763426017630/f55ca005-22af-4995-aeab-9a91318caaf3.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.457Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.116Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 18.51851851851852,
-    "impressions": 28,
+    "engagementRate": 18.181818181818183,
+    "impressions": 29,
     "shares": 0,
-    "views": 20,
-    "totalTimeWatched": 5.34,
-    "viewers": 16
+    "views": 21,
+    "totalTimeWatched": 5.38,
+    "viewers": 17
    }
   },
   {
@@ -7000,7 +7025,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/690162013b570accf60eaac5/f0216846ede0cf5f1f01edf8b8834f39490ca61a_52be5b0a58ab839dc38fe983920fee3285380a68_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.702Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.287Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -7471,7 +7496,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68f6c534ea527f607403dd11/88b8a84b66b2dfc027ded8ba444489b1767c3b21_6fa604058c647d1b2d34324a58fd184bdb3e3217_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.481Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.009Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -7550,7 +7575,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68eee6f1a2cfbb268506c823/3fd46a8b1f3b6f856a15c7f14fa62acc5f6e7d2f_1b1777d8cf2c8879fb8044e522807079a7b33576_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.447Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.926Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8143,7 +8168,7 @@
    "thumb": null,
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.588Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.943Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8168,7 +8193,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68d5d1ab4eb69dc7c4f75147_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.461Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.186Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8302,7 +8327,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68d23053d1ae25edeb07f91f/8b7d3725229d68eb5837836c04b3ec4a18d1e93b_8503c5de6029bd28b31ef3efde2c807b40e08792_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.558Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.076Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8397,7 +8422,7 @@
    "thumb": null,
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.517Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.936Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8631,7 +8656,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c76298f52452144307a382/c3af51d9dce8921776c13432135c92281946de3a_075a0533bce9f344502bc232f93a8beaf15ead2c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.512Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.194Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8818,7 +8843,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1758090945484/09ebdb32-11f3-444f-adfe-3983a45f4ce6.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.514Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.929Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -8896,7 +8921,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c76262072c73f039014a64/d63759a06569e189a7f409baa6073e00119e380a_e31b560de755f3f5e86d9c6a43adcb86b5070196_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.522Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.159Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9001,7 +9026,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c7623b3e1099c1f502a342/30b3d93fa783fcba002c63355900d43cb41d2d64_a85ac99baa37f582e91a2904aeb9ebc2afe148c8_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.466Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.947Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9187,7 +9212,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757653764796/39a25455-fc88-455f-b4f1-f9775e3a3631.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.487Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.279Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9265,7 +9290,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c267c003043dabf40f3762/684e52ffb8d2761fbb36787b3b699c2e2ad2854a_f1af6d4a3ce9ba547b94e89264b76c74b61bbb72_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.506Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.063Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -9474,7 +9499,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757455733645/4957075f-7db8-4984-8268-1ac7b035640e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.692Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.921Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -9526,7 +9551,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68be9d7ba79ffc65b380a320_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.573Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.933Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -9763,7 +9788,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757030428380/ab5a67af-b320-4792-9a01-277181347735.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.750Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.096Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9841,7 +9866,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68bbb7d0d045191ca3130b27_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.478Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.182Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -9894,7 +9919,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68b92162c44bcae1b40aea55/65c57697ea8b1aa4aba2557ccaf0b36f126f9856_733b6636239c292acd3d3bf3d9aa4a309c65644c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.524Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.100Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9945,7 +9970,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b8d11774481d1439ce1542_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.450Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.042Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -9996,7 +10021,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b8d11774481d1439ce1545_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.759Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.191Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -10021,7 +10046,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b5ec6c31ec6edc63849b12_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.469Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.067Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -10254,7 +10279,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1756354931686/39ef5d38-eed1-4ca9-a81b-43d631707c7c.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.563Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.297Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -10386,7 +10411,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1756271767638/7ead30cd-c5de-41a8-a7f4-c5b755d985ea.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.455Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.056Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -10594,7 +10619,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/68ae9187c7736f724b0dc493/17e93f0a6f351ffbdb6de5805a7d0c57.original.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.755Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.005Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -10911,7 +10936,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1755498375063/01bc2455-33b6-4953-b795-dc4fdfe32e3b.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.578Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:26.951Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -11093,7 +11118,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1755037542516/a5f60dda-e24a-4c94-ac96-0cfceec76df4.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.484Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.087Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -11199,7 +11224,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68a41df47f1988f0ca070906/cb96c5ce9343250c110dbf70975fe5b2bd4f95cd_7a5aa13ec722b8c8f1d7f8b0e79e4269890421b3_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.761Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.073Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -11371,7 +11396,7 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.464Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.176Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -11500,7 +11525,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1754996673072/b2ea7024-94d4-4bfc-ad7c-8b60fcbca751.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.753Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.140Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -11814,7 +11839,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1754995408743/58a00d60-cb02-4ba6-9117-bfa8d28153e7.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-02T09:03:08.672Z",
+   "metricsUpdatedAt": "2026-08-04T00:13:27.285Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
