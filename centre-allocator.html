@@ -117,8 +117,14 @@ body::before {
 
     <div class="al-card" id="dupe-card" style="display:none">
       <div class="al-h">&#9888;&#65039; Duplicates <span class="al-badge" id="dupe-count">0</span></div>
-      <div style="font-size:13px;color:var(--muted)">Already in a rep's book (same name + phone). NOT added. Clears on refresh.</div>
+      <div style="font-size:13px;color:var(--muted)">Same normalised name already in this rep's book. NOT added. Clears on refresh.</div>
       <div class="al-list" id="dupe-list"></div>
+    </div>
+
+    <div class="al-card" id="review-card" style="display:none">
+      <div class="al-h">&#128269; Review &ndash; phone match <span class="al-badge" id="review-count">0</span></div>
+      <div style="font-size:13px;color:var(--muted)">New name, but the phone matches an existing centre for this rep &mdash; likely a shared switchboard (e.g. the Rumpus Room's sites on one line). Eyeball each; click <b>Assign as new</b> if it&#39;s a genuinely distinct centre. Not auto-added.</div>
+      <div class="al-list" id="review-list"></div>
     </div>
 
     <div class="al-card" id="new-card" style="display:none">
@@ -155,11 +161,29 @@ const COLL = "sales-crm-centres";
 
 const $ = id => document.getElementById(id);
 const esc = s => String(s==null?"":s).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-const normName  = s => String(s||"").toLowerCase().trim().replace(/\s+/g," ");
-const normPhone = s => String(s||"").replace(/\D/g,"");
-const keyOf = (name,phone) => normName(name) + "|" + normPhone(phone);
+// Ported from crm_dedup.py (verified). Name is the PRIMARY key; phone is a SECONDARY
+// review signal only. normName: case/spacing/punctuation-insensitive, &->and, drops
+// legal/filler words (pty/ltd/inc/the) but KEEPS the suburb token so distinct sites
+// (Grove Edgeworth vs Grove Charlestown) never collapse.
+const normName = s => String(s||"")
+  .toLowerCase()
+  .replace(/&/g, " and ")
+  .replace(/[^a-z0-9\s]/g, " ")
+  .replace(/\b(pty|ltd|inc|incorporated|the)\b/g, " ")
+  .replace(/\s+/g, " ")
+  .trim();
+// normPhone: digits only, drop +61, ensure leading 0, first 10 digits — so a messy
+// field like "0418331556 or service 0249408686 (op 4)" reduces to one clean number.
+const normPhone = s => {
+  let d = String(s||"").replace(/\D/g,"");
+  if (d.startsWith("61")) d = "0" + d.slice(2);
+  if (d && !d.startsWith("0")) d = "0" + d;
+  return d.slice(0,10);
+};
 
-let EXISTING = [], existKeys = new Set(), repMax = {}, NEWROWS = [];
+// PARSED = uploaded rows (stable _i index); classification is recomputed per assigned rep.
+let EXISTING = [], repMax = {}, PARSED = [], NEWROWS = [], REVIEWROWS = [], PROMOTED = new Set();
+let existNameKeys = new Set(), existPhoneKeys = new Set();
 
 // ---- auth ----
 onAuthStateChanged(auth, user => {
@@ -179,7 +203,6 @@ async function loadExisting(){
   try {
     const snap = await getDocs(collection(db, COLL));
     EXISTING = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    existKeys = new Set(EXISTING.map(c => keyOf(c.name, c.phone)));
     repMax = {};
     EXISTING.forEach(c => { const n = Number(c.num)||0; if (!(c.rep in repMax) || n > repMax[c.rep]) repMax[c.rep] = n; });
     $("upload-status").textContent = `Ready. ${EXISTING.length} existing centres loaded across all reps. Upload a CSV/XLSX.`;
@@ -210,17 +233,49 @@ function pick(row, names){   // case-insensitive header match, tolerant of extra
   return "";
 }
 function processRows(rows){
-  const parsed = rows.map(r => ({
+  PARSED = rows.map(r => ({
     name:    String(pick(r, ["name","centre","centre name"]) || "").trim(),
     address: String(pick(r, ["address"]) || "").trim(),
     phone:   String(pick(r, ["phone","phone number","tel"]) || "").trim(),
     email:   String(pick(r, ["email","e-mail"]) || "").trim()
-  })).filter(r => r.name);   // skip blank rows
-  const dupes = [], news = [];
-  parsed.forEach(r => { (existKeys.has(keyOf(r.name, r.phone)) ? dupes : news).push(r); });
-  NEWROWS = news;
-  $("upload-status").textContent = `${parsed.length} centres loaded — ${news.length} new, ${dupes.length} duplicate${dupes.length===1?"":"s"}.`;
+  })).filter(r => r.name)                 // skip blank rows
+     .map((r, i) => ({ ...r, _i: i }));   // stable id so promotions survive re-classify
+  PROMOTED = new Set();
+  classifyAndRender();
+}
+
+// Build the PRIMARY (name) + SECONDARY (phone) index for one rep's existing book.
+function buildRepIndex(rep){
+  const repDocs = EXISTING.filter(c => c.rep === rep);
+  return {
+    names:  new Set(repDocs.map(c => normName(c.name)).filter(Boolean)),
+    phones: new Set(repDocs.map(c => normPhone(c.phone)).filter(Boolean)),
+  };
+}
+
+// Three-way classify against the ASSIGNED rep's book, seeding the index as we go so
+// intra-sheet repeats collapse too (mirrors crm_dedup.plan seeding created rows).
+function classifyAndRender(){
+  const rep = $("assign-rep").value;
+  const idx = buildRepIndex(rep);
+  existNameKeys = idx.names; existPhoneKeys = idx.phones;
+  const seenNames = new Set(idx.names), seenPhones = new Set(idx.phones);
+  const dupes = [], review = [], news = [];
+  PARSED.forEach(r => {
+    const nk = normName(r.name), pk = normPhone(r.phone);
+    if (nk && seenNames.has(nk)) { dupes.push(r); return; }        // NAME match -> duplicate (skip)
+    // created (new or review); phone-only match -> review, unless Shane promoted it
+    if (!PROMOTED.has(r._i) && pk && seenPhones.has(pk)) review.push(r);
+    else news.push(r);
+    if (nk) seenNames.add(nk);                                     // seed for later rows in the sheet
+    if (pk) seenPhones.add(pk);
+  });
+  NEWROWS = news; REVIEWROWS = review;
+  $("upload-status").textContent =
+    `${PARSED.length} centres loaded → ${news.length} new · ${dupes.length} duplicate (name) · `
+    + `${review.length} review (phone) · matching against ${rep}'s book`;
   renderDupes(dupes);
+  renderReview();
   renderNew();
 }
 
@@ -237,6 +292,22 @@ function renderNew(){
   $("new-count").textContent = NEWROWS.length;
   $("new-list").innerHTML = NEWROWS.length ? NEWROWS.map(r => rowItem(r)).join("") : `<div class="al-empty">No new centres left to assign.</div>`;
 }
+function renderReview(){
+  $("review-card").style.display = REVIEWROWS.length ? "block" : "none";
+  $("review-count").textContent = REVIEWROWS.length;
+  $("review-list").innerHTML = REVIEWROWS.length
+    ? REVIEWROWS.map(r =>
+        `<div class="al-rowitem al-review"><span class="nm">${esc(r.name)}</span>`
+        + `<span class="sub">${esc(r.address||"—")}</span><span class="sub">${esc(r.phone||"—")}</span>`
+        + `<span class="sub">${esc(r.email||"—")}</span>`
+        + `<button class="al-btn" style="padding:4px 10px;font-size:12px" onclick="window.alPromote(${r._i})">Assign as new</button></div>`
+      ).join("")
+    : `<div class="al-empty">None</div>`;
+}
+// Promote a phone-review row to "new" (a genuinely distinct centre on a shared switchboard).
+window.alPromote = function(i){ PROMOTED.add(i); classifyAndRender(); };
+// Re-classify against the newly selected rep's book when the assign rep changes.
+$("assign-rep").addEventListener("change", () => { if (PARSED.length) classifyAndRender(); });
 
 // ---- state derivation: address regex, else phone area code ----
 function deriveState(address, phone){
@@ -269,19 +340,17 @@ $("assign-btn").addEventListener("click", async () => {
       crmCallCount: 0, source: "allocator"
     });
     nums.push(num);
-    EXISTING.push({ id, num, rep, name: r.name, phone: r.phone });
-    existKeys.add(keyOf(r.name, r.phone));
+    EXISTING.push({ id, num, rep, name: r.name, phone: r.phone });   // so re-classify dedups it
   });
   $("assign-btn").disabled = true;
   try {
     await batch.commit();
     repMax[rep] = start + take.length - 1;
-    NEWROWS = NEWROWS.slice(take.length);
     const line = document.createElement("div");
     line.textContent = `Assigned ${take.length} to ${rep}, IDs ${nums[0]}-${nums[nums.length-1]}.`;
     $("assign-log").appendChild(line);
     $("assign-n").value = "";
-    renderNew();
+    classifyAndRender();   // assigned rows are now in EXISTING -> re-classify drops them to duplicate
   } catch (e) {
     $("upload-err").textContent = "Write failed: " + (e.message||e);
     // roll back local optimistic additions
