@@ -1,7 +1,7 @@
 {
- "generated": "2026-08-06T02:15:15Z",
+ "generated": "2026-08-07T02:16:06Z",
  "windowDays": 365,
- "windowStart": "2025-08-06T02:15:15Z",
+ "windowStart": "2025-08-07T02:16:06Z",
  "orgId": "6790322299197b9b6809ecd3",
  "requestsUsed": 11,
  "channels": {
@@ -10,63 +10,63 @@
    "service": "instagram",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 140,
+   "postCount": 143,
    "metrics": {
-    "reactions": {
-     "seen": 136,
-     "nonzero": 125,
-     "max": 61,
-     "avg": 4.1,
+    "views": {
+     "seen": 141,
+     "nonzero": 141,
+     "max": 1099,
+     "avg": 306.79,
+     "confidence": "high"
+    },
+    "reach": {
+     "seen": 141,
+     "nonzero": 140,
+     "max": 2851,
+     "avg": 197.95,
      "confidence": "high"
     },
     "comments": {
-     "seen": 136,
+     "seen": 141,
      "nonzero": 12,
      "max": 3,
-     "avg": 0.12,
+     "avg": 0.11,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 136,
-     "nonzero": 128,
-     "max": 11.363636363636363,
-     "avg": 2.38,
+     "seen": 141,
+     "nonzero": 134,
+     "max": 11.11111111111111,
+     "avg": 2.57,
      "confidence": "high"
     },
-    "views": {
-     "seen": 136,
-     "nonzero": 136,
-     "max": 1097,
-     "avg": 313.51,
+    "reactions": {
+     "seen": 141,
+     "nonzero": 131,
+     "max": 61,
+     "avg": 4.11,
      "confidence": "high"
     },
     "shares": {
-     "seen": 136,
+     "seen": 140,
      "nonzero": 34,
      "max": 5,
-     "avg": 0.36,
+     "avg": 0.35,
      "confidence": "low"
     },
     "saves": {
-     "seen": 136,
+     "seen": 140,
      "nonzero": 13,
      "max": 11,
-     "avg": 0.17,
+     "avg": 0.16,
      "confidence": "unreliable"
     },
     "follows": {
-     "seen": 136,
+     "seen": 140,
      "nonzero": 4,
      "max": 10,
      "avg": 0.1,
      "confidence": "unreliable"
-    },
-    "reach": {
-     "seen": 136,
-     "nonzero": 135,
-     "max": 2851,
-     "avg": 202.26,
-     "confidence": "high"
     }
    }
   },
@@ -75,48 +75,48 @@
    "service": "facebook",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 142,
+   "postCount": 143,
    "metrics": {
     "reactions": {
-     "seen": 142,
-     "nonzero": 105,
+     "seen": 143,
+     "nonzero": 107,
      "max": 11,
-     "avg": 1.82,
+     "avg": 1.83,
      "confidence": "high"
     },
     "comments": {
-     "seen": 142,
+     "seen": 143,
      "nonzero": 3,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 142,
-     "nonzero": 116,
+     "seen": 143,
+     "nonzero": 118,
      "max": 13.11,
-     "avg": 3.37,
+     "avg": 3.43,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 142,
-     "nonzero": 123,
+     "seen": 143,
+     "nonzero": 125,
      "max": 1342,
-     "avg": 140.7,
+     "avg": 141.13,
      "confidence": "high"
     },
     "shares": {
-     "seen": 142,
+     "seen": 143,
      "nonzero": 22,
      "max": 2,
      "avg": 0.19,
      "confidence": "low"
     },
     "clicks": {
-     "seen": 142,
-     "nonzero": 99,
+     "seen": 143,
+     "nonzero": 101,
      "max": 61,
-     "avg": 3.1,
+     "avg": 3.11,
      "confidence": "high"
     }
    }
@@ -153,7 +153,7 @@
      "seen": 102,
      "nonzero": 101,
      "max": 22797,
-     "avg": 739.75,
+     "avg": 740.01,
      "confidence": "high"
     }
    }
@@ -163,69 +163,69 @@
    "service": "linkedin",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 51,
+   "postCount": 53,
    "metrics": {
     "reactions": {
-     "seen": 51,
+     "seen": 53,
      "nonzero": 12,
      "max": 4,
-     "avg": 0.49,
+     "avg": 0.47,
      "confidence": "low"
     },
     "comments": {
-     "seen": 51,
+     "seen": 53,
      "nonzero": 0,
      "max": 0.0,
      "avg": 0.0,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 51,
-     "nonzero": 39,
-     "max": 85.71428571428571,
-     "avg": 13.04,
+     "seen": 53,
+     "nonzero": 41,
+     "max": 84.21052631578947,
+     "avg": 13.15,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 51,
-     "nonzero": 48,
-     "max": 153,
-     "avg": 33.9,
+     "seen": 53,
+     "nonzero": 51,
+     "max": 235,
+     "avg": 38.4,
      "confidence": "high"
     },
     "reach": {
-     "seen": 51,
-     "nonzero": 48,
+     "seen": 53,
+     "nonzero": 51,
      "max": 66,
-     "avg": 16.1,
+     "avg": 16.43,
      "confidence": "high"
     },
     "shares": {
-     "seen": 51,
+     "seen": 53,
      "nonzero": 5,
      "max": 1,
-     "avg": 0.1,
+     "avg": 0.09,
      "confidence": "unreliable"
     },
     "views": {
-     "seen": 14,
-     "nonzero": 14,
+     "seen": 15,
+     "nonzero": 15,
      "max": 38,
-     "avg": 11.93,
+     "avg": 11.67,
      "confidence": "high"
     },
     "totalTimeWatched": {
-     "seen": 14,
-     "nonzero": 14,
+     "seen": 15,
+     "nonzero": 15,
      "max": 11.71,
-     "avg": 3.08,
+     "avg": 2.95,
      "confidence": "high"
     },
     "viewers": {
-     "seen": 14,
-     "nonzero": 14,
+     "seen": 15,
+     "nonzero": 15,
      "max": 34,
-     "avg": 9.5,
+     "avg": 9.33,
      "confidence": "high"
     }
    }
@@ -241,7 +241,7 @@
      "seen": 39,
      "nonzero": 39,
      "max": 16,
-     "avg": 4.08,
+     "avg": 4.1,
      "confidence": "high"
     },
     "comments": {
@@ -255,14 +255,14 @@
      "seen": 39,
      "nonzero": 39,
      "max": 5.84,
-     "avg": 2.21,
+     "avg": 2.22,
      "confidence": "high"
     },
     "views": {
      "seen": 39,
      "nonzero": 39,
      "max": 1091,
-     "avg": 199.97,
+     "avg": 201.72,
      "confidence": "high"
     },
     "shares": {
@@ -274,15 +274,149 @@
     },
     "reach": {
      "seen": 39,
-     "nonzero": 38,
+     "nonzero": 39,
      "max": 996,
-     "avg": 160.13,
+     "avg": 161.54,
      "confidence": "high"
     }
    }
   }
  },
  "posts": [
+  {
+   "id": "6a73c8822770c3bfc7581d61",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-06T23:34:01.027Z",
+   "sentDate": "2026-08-06",
+   "weekday": "Thu",
+   "hourUTC": 23,
+   "text": "Most kids rush the splits and collapse sideways the second it gets hard.\n\nHere's what actually works:\nGo back to the hips before you go anywhere near the floor.\nSquare hips facing forward. Hands on the ground. One hand on each side of the front leg \u2014 not both on one side.\nThen sl",
+   "link": "https://www.linkedin.com/feed/update/urn:li:share:7491275417786417152",
+   "thumb": null,
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-05T23:34:26.774Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6a74635d96dbfbc4bb136889",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-06T05:20:35.000Z",
+   "sentDate": "2026-08-06",
+   "weekday": "Thu",
+   "hourUTC": 5,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstars/3957523919724416022",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a74635d96dbfbc4bb136889_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-06T22:47:04.510Z",
+   "metrics": {
+    "views": 60,
+    "reach": 43,
+    "comments": 0,
+    "engagementRate": 6.976744186046512,
+    "reactions": 3
+   }
+  },
+  {
+   "id": "6a72bec2c82d97b511ba7def",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-06T03:45:34.271Z",
+   "sentDate": "2026-08-06",
+   "weekday": "Thu",
+   "hourUTC": 3,
+   "text": "The colour emotions - heres how you can handle colour jealousy in a kids' session. (Note this may not work all the time - but it works a lot)\n\n#coaching #earlychildhood #kidsfitness",
+   "link": "https://www.instagram.com/p/Dbrx3oWjwYS/",
+   "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-06T15:31:08.009Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 11.11111111111111,
+    "views": 67,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 27
+   }
+  },
+  {
+   "id": "6a72bf99c6717b2bad699aa8",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-06T03:45:29.383Z",
+   "sentDate": "2026-08-06",
+   "weekday": "Thu",
+   "hourUTC": 3,
+   "text": "The colour emotions - heres how you can handle colour jealousy in a kids' session. (Note this may not work all the time - but it works a lot)\n\n#coaching #earlychildhood #kidsfitness",
+   "link": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7490976315148439552",
+   "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-06T12:43:34.686Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 5.88235294117647,
+    "impressions": 17,
+    "reach": 9,
+    "shares": 0,
+    "views": 5,
+    "totalTimeWatched": 0.62,
+    "viewers": 5
+   }
+  },
+  {
+   "id": "6a72bec4c6717b2bad699678",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-06T03:45:21.130Z",
+   "sentDate": "2026-08-06",
+   "weekday": "Thu",
+   "hourUTC": 3,
+   "text": "The colour emotions - heres how you can handle colour jealousy in a kids' session. (Note this may not work all the time - but it works a lot)\n\n#coaching #earlychildhood #kidsfitness",
+   "link": "https://www.facebook.com/1416893109688950/posts/1914920276552895",
+   "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 13.04,
+    "impressions": 23,
+    "shares": 0,
+    "clicks": 3
+   }
+  },
   {
    "id": "6a72bee8beaf5fe35556df99",
    "channelId": "679b1442a31978b79c2ada52",
@@ -299,13 +433,13 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T04:41:12.426Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 0,
-    "reach": 0,
+    "impressions": 18,
+    "reach": 13,
     "shares": 0
    }
   },
@@ -325,8 +459,17 @@
    "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T04:44:04.832Z",
-   "metrics": {}
+   "metricsUpdatedAt": "2026-08-06T15:31:07.874Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 1.1764705882352942,
+    "views": 98,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 85
+   }
   },
   {
    "id": "6a72bf96beaf5fe35556e521",
@@ -344,14 +487,14 @@
    "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:04:04.302Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
-    "reactions": 0,
+    "reactions": 3,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 0,
+    "engagementRate": 4.35,
+    "impressions": 115,
     "shares": 0,
-    "clicks": 0
+    "clicks": 2
    }
   },
   {
@@ -370,14 +513,42 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T04:40:38.903Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.686Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 0,
-    "reach": 0,
+    "engagementRate": 28.57142857142857,
+    "impressions": 7,
+    "reach": 4,
     "shares": 0
+   }
+  },
+  {
+   "id": "6a74a8bbd62e804300fb8613",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-05T23:00:06.000Z",
+   "sentDate": "2026-08-05",
+   "weekday": "Wed",
+   "hourUTC": 23,
+   "text": "Centre staff are already planning, nurturing, documenting, and showing up fully for every child, every day. \n\nAnd that can be exhausting at times! (They are the un-sung hero afterall)\n\nThat\u2019s a big job. It shouldn\u2019t come with extra jobs attached like planning incursion programs. ",
+   "link": "https://www.instagram.com/reel/DbrRO7RBG3g/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a74a8bbd62e804300fb8613_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-06T15:31:08.086Z",
+   "metrics": {
+    "reactions": 5,
+    "comments": 0,
+    "engagementRate": 6.8493150684931505,
+    "views": 96,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 73
    }
   },
   {
@@ -396,8 +567,17 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a714478a432c6b7d0027889/7709373ca2cde346e5863d9524230d3219d293e8_bf1fe95783109c19c0ccb87529ab2c4e63469800_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": null,
-   "metrics": {}
+   "metricsUpdatedAt": "2026-08-06T15:31:08.199Z",
+   "metrics": {
+    "reactions": 5,
+    "comments": 0,
+    "engagementRate": 10.869565217391305,
+    "views": 86,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 46
+   }
   },
   {
    "id": "6a72bbc24207e0dee53fd787",
@@ -415,16 +595,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.805Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.104Z",
    "metrics": {
-    "reactions": 0,
+    "reactions": 1,
     "comments": 0,
-    "engagementRate": 0,
-    "views": 40,
+    "engagementRate": 4.3478260869565215,
+    "views": 52,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 16
+    "reach": 23
    }
   },
   {
@@ -443,13 +623,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680bbb8877281a20037c49/9142027a3455356795811c31e404e74f6a3a2c2f_ea7478226fb370d76c387a62dc7a1236b8800425_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.686Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 9.090909090909092,
-    "impressions": 11,
-    "reach": 4,
+    "impressions": 22,
+    "reach": 11,
     "shares": 0
    }
   },
@@ -469,13 +649,13 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 66.66666666666666,
-    "impressions": 12,
-    "reach": 4,
+    "engagementRate": 53.333333333333336,
+    "impressions": 15,
+    "reach": 6,
     "shares": 0
    }
   },
@@ -495,12 +675,12 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 4.35,
-    "impressions": 23,
+    "engagementRate": 3.03,
+    "impressions": 33,
     "shares": 0,
     "clicks": 1
    }
@@ -521,16 +701,16 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.794Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:07.878Z",
    "metrics": {
-    "reactions": 4,
+    "reactions": 5,
     "comments": 0,
-    "engagementRate": 4.807692307692308,
-    "views": 126,
+    "engagementRate": 4.054054054054054,
+    "views": 182,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 104
+    "reach": 148
    }
   },
   {
@@ -549,17 +729,17 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 18.75,
-    "impressions": 16,
-    "reach": 5,
+    "engagementRate": 16.666666666666664,
+    "impressions": 18,
+    "reach": 6,
     "shares": 0,
-    "views": 3,
-    "totalTimeWatched": 1.25,
-    "viewers": 3
+    "views": 5,
+    "totalTimeWatched": 1.4,
+    "viewers": 4
    }
   },
   {
@@ -578,12 +758,12 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 5.13,
-    "impressions": 39,
+    "engagementRate": 2.94,
+    "impressions": 68,
     "shares": 0,
     "clicks": 1
    }
@@ -604,16 +784,16 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.727Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.136Z",
    "metrics": {
-    "reactions": 3,
+    "reactions": 6,
     "comments": 0,
-    "engagementRate": 1.4084507042253522,
-    "views": 256,
+    "engagementRate": 2.6200873362445414,
+    "views": 277,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 213
+    "reach": 229
    }
   },
   {
@@ -632,12 +812,12 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
-    "reactions": 0,
+    "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.49,
-    "impressions": 67,
+    "engagementRate": 2.67,
+    "impressions": 75,
     "shares": 0,
     "clicks": 1
    }
@@ -658,17 +838,17 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 8.333333333333332,
-    "impressions": 12,
-    "reach": 6,
+    "engagementRate": 10.526315789473683,
+    "impressions": 19,
+    "reach": 9,
     "shares": 0,
-    "views": 4,
-    "totalTimeWatched": 1.47,
-    "viewers": 3
+    "views": 5,
+    "totalTimeWatched": 1.78,
+    "viewers": 4
    }
   },
   {
@@ -687,16 +867,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.735Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.039Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 5.263157894736842,
-    "views": 45,
+    "engagementRate": 4.166666666666666,
+    "views": 67,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 19
+    "reach": 24
    }
   },
   {
@@ -715,14 +895,14 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T03:28:03.416Z",
+   "metricsUpdatedAt": "2026-08-07T01:30:01.724Z",
    "metrics": {
-    "reactions": 1,
+    "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.06,
-    "views": 94,
+    "engagementRate": 1.23,
+    "views": 162,
     "shares": 0,
-    "reach": 0
+    "reach": 55
    }
   },
   {
@@ -741,12 +921,12 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 9.09,
-    "impressions": 22,
+    "engagementRate": 7.69,
+    "impressions": 26,
     "shares": 0,
     "clicks": 1
    }
@@ -767,13 +947,13 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 85.71428571428571,
-    "impressions": 21,
-    "reach": 14,
+    "engagementRate": 74.19354838709677,
+    "impressions": 31,
+    "reach": 19,
     "shares": 0
    }
   },
@@ -793,16 +973,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7144289ab0942e750f1e18/cdc5377a40386f800f5140340ac3f8d7838eb25e_5c036138f768295404a14eddf4f9d2e712800192_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.757Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.133Z",
    "metrics": {
     "reactions": 4,
     "comments": 1,
-    "engagementRate": 11.363636363636363,
-    "views": 74,
+    "engagementRate": 9.090909090909092,
+    "views": 91,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 44
+    "reach": 55
    }
   },
   {
@@ -821,16 +1001,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7221c9aca9e35c6dcd108a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.882Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:07.974Z",
    "metrics": {
-    "reactions": 3,
+    "reactions": 4,
     "comments": 0,
-    "engagementRate": 5.660377358490567,
-    "views": 134,
+    "engagementRate": 6.779661016949152,
+    "views": 156,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 53
+    "reach": 59
    }
   },
   {
@@ -849,13 +1029,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7170162e9d172962a95714/83c6e5ab1051259430d388fbdbd2cd08ac2df81e_c5edd36502cfd607a90224790159575c2906b17a_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.580Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.684Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 56.25,
-    "impressions": 16,
-    "reach": 10,
+    "engagementRate": 68.18181818181817,
+    "impressions": 22,
+    "reach": 12,
     "shares": 0
    }
   },
@@ -875,12 +1055,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7170152e9d172962a956f1/83c6e5ab1051259430d388fbdbd2cd08ac2df81e_63ca358927b737df9e3ca735d41aeba02bc1faa2_facebook",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 9.21,
-    "impressions": 76,
+    "engagementRate": 8.64,
+    "impressions": 81,
     "shares": 0,
     "clicks": 5
    }
@@ -901,16 +1081,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7143c18aee7dcc2d056035/892c0f7a429274a1f6b07d9575aafaf40355c9ac_fdf85df16f504e31f9df27a12544f9569bf89525_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.714Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.191Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 6.122448979591836,
-    "views": 206,
+    "engagementRate": 5.5045871559633035,
+    "views": 228,
     "shares": 3,
     "saves": 0,
     "follows": 0,
-    "reach": 98
+    "reach": 109
    }
   },
   {
@@ -929,16 +1109,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7221c9aca9e35c6dcd109a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.746Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:07.881Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 5.454545454545454,
-    "views": 121,
+    "engagementRate": 5,
+    "views": 134,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 55
+    "reach": 60
    }
   },
   {
@@ -957,13 +1137,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680b0745777e488006b798/82a2fedd2fb5e085034c0ecd86e40902ac357b88_1e3fd981d5f6c4545c809ea7fc151e11d789bb5e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.686Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 7.894736842105263,
-    "impressions": 38,
-    "reach": 15,
+    "engagementRate": 7.142857142857142,
+    "impressions": 42,
+    "reach": 17,
     "shares": 0
    }
   },
@@ -983,12 +1163,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785205621850/6a3a82cd-e02d-44c4-9a00-7af868ee5444.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 52
+    "views": 54
    }
   },
   {
@@ -1007,12 +1187,12 @@
    "thumb": "https://i.ytimg.com/vi/-dIJ680SJXI/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 37
+    "views": 38
    }
   },
   {
@@ -1031,13 +1211,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6809db5994fbc2360681a0/0a85b8099d65fbdbad3145cca268daba20655c16_3abc9463c5d0c144654269b66c7499831ae269dd_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.686Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 6.0606060606060606,
-    "impressions": 33,
-    "reach": 19,
+    "engagementRate": 5.88235294117647,
+    "impressions": 34,
+    "reach": 20,
     "shares": 0
    }
   },
@@ -1057,12 +1237,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a6812453b89e0c6d00ea3a2/362c63ba2a93dc93de9cc5a00fd4eda3.original_thumbnail.0000000.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 142
+    "views": 155
    }
   },
   {
@@ -1081,12 +1261,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1785204611407/31ca8343-0fc7-4670-af47-3aedb9f810e7.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 113
+    "views": 117
    }
   },
   {
@@ -1105,13 +1285,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6808f011def76369058a7f/5bf56f3535b49dc1d3fea4aae9d4e9b72fd02915_db0a026fbff8564559899f0a7fdc986a33fcc4c5_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T13:54:20.581Z",
+   "metricsUpdatedAt": "2026-08-06T12:43:34.685Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 3.508771929824561,
-    "impressions": 57,
-    "reach": 34,
+    "engagementRate": 3.4482758620689653,
+    "impressions": 58,
+    "reach": 35,
     "shares": 0
    }
   },
@@ -1131,16 +1311,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a62e4deb1be6bc10c039abe/8713b100172fdb95cb45c1ecc24f546cec208831_ee8805e8942e377193dd1f5d500b22a0edb29eee_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.845Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.081Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 4.25531914893617,
-    "views": 274,
+    "engagementRate": 4.225352112676056,
+    "views": 275,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 141
+    "reach": 142
    }
   },
   {
@@ -1159,12 +1339,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091604414/de12819b-66a1-41bb-bee8-1113dc506644.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.22,
-    "views": 45
+    "engagementRate": 2.13,
+    "views": 47
    }
   },
   {
@@ -1183,7 +1363,7 @@
    "thumb": "https://i.ytimg.com/vi/1CTUdZzkDLM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1207,12 +1387,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091494288/c33eb243-f649-4d69-9af8-d6909ccfc58e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.97,
-    "views": 103
+    "engagementRate": 0.94,
+    "views": 106
    }
   },
   {
@@ -1231,7 +1411,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a58dc323c08b770e82e77c6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.709Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:07.862Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -1259,12 +1439,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1784091306158/018274ee-1f48-4929-bdd1-7c61014d8e22.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.92,
-    "views": 52
+    "engagementRate": 1.89,
+    "views": 53
    }
   },
   {
@@ -1283,16 +1463,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c3656010aecb040a3c32/9f7772fd850eb6377de19b9fde9f83d5fdaf6535_7f41100b739e3e267d8edbc1c46c6f9c9ef4b0f3_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.848Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.030Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.125,
-    "views": 215,
+    "engagementRate": 3.076923076923077,
+    "views": 217,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 128
+    "reach": 130
    }
   },
   {
@@ -1311,12 +1491,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c364f6fcd5bea703f6a2/95582e2c4b5b95e5df83f9f3fb8439dc0be769a2_3e0c8a84e2faf09c17a8da7e9318353ca124bf8b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.422Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.28,
-    "impressions": 156,
+    "engagementRate": 1.27,
+    "impressions": 158,
     "shares": 0,
     "clicks": 1
    }
@@ -1337,7 +1517,7 @@
    "thumb": "https://i.ytimg.com/vi/f8rxZ3dOiBM/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.091Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1361,12 +1541,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208de24b2159a4029fce/26781a9cbb8814b4969b79a36f73043972dc12bd_40cb5796e87cbf22949171f3768ab8445ddb20a9_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.423Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 4,
-    "impressions": 150,
+    "engagementRate": 3.95,
+    "impressions": 152,
     "shares": 0,
     "clicks": 1
    }
@@ -1387,16 +1567,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208dbf98a0bd9e008bdb/cc0f334282d85dfe3ecc7df33f78a929e269dcd3_8b178d53d94cd6d5b09bd27758cd3eb3161a5bec_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.729Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.045Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1,
-    "views": 185,
+    "engagementRate": 0.9900990099009901,
+    "views": 187,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 100
+    "reach": 101
    }
   },
   {
@@ -1415,12 +1595,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c98577316ef710e797d/c27bf4d419b8559b430cde04c5183c447e297173_41df784b94e544fefd01080570eba211fecb4bda_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.812Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.222Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
     "engagementRate": 4.516129032258064,
-    "views": 380,
+    "views": 382,
     "shares": 0,
     "saves": 0,
     "follows": 0,
@@ -1443,12 +1623,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a431c9736666955660d7693/4329f1cfdc83963cf5cd7540cc7c7ad611038867_ed2e81119f86c2be754f9c3d94e8155ecb9ba5f2_facebook",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.423Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 5.85,
-    "impressions": 188,
+    "engagementRate": 5.79,
+    "impressions": 190,
     "shares": 0,
     "clicks": 9
    }
@@ -1469,7 +1649,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782709269953/fd03926b-093d-45d7-81e2-d6a930206bc9.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T23:26:40.092Z",
+   "metricsUpdatedAt": "2026-08-06T22:28:04.494Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1493,12 +1673,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3c595d1420e403bbe5/4c2db386c096490dc26f60033966ea2141759052_30e04c9cc2721bc2b593ac1ae7bc4dee574ad54b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T10:57:10.423Z",
+   "metricsUpdatedAt": "2026-08-06T09:57:19.782Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 4.23,
-    "impressions": 213,
+    "engagementRate": 4.19,
+    "impressions": 215,
     "shares": 0,
     "clicks": 7
    }
@@ -1519,7 +1699,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a4c4c3d6f56558f610a8970/4c2db386c096490dc26f60033966ea2141759052_8e0e368137a9b5e1341cd7b85867b5ecb9047f4e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.886Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.159Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
@@ -1575,16 +1755,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a4c396d392fad0533b01091_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.912Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.178Z",
    "metrics": {
     "reactions": 10,
     "comments": 0,
-    "engagementRate": 3.361344537815126,
-    "views": 456,
+    "engagementRate": 3.3333333333333335,
+    "views": 458,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 357
+    "reach": 360
    }
   },
   {
@@ -1651,16 +1831,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782954118038/480dd207-7cd2-4935-a5a6-0a3934d9a45a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.712Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.098Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.2304832713754648,
-    "views": 433,
+    "engagementRate": 2.214022140221402,
+    "views": 435,
     "shares": 2,
     "saves": 0,
     "follows": 0,
-    "reach": 269
+    "reach": 271
    }
   },
   {
@@ -1753,16 +1933,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a45be8c5b8c55ec5ef635df_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.868Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.063Z",
    "metrics": {
     "reactions": 9,
     "comments": 2,
-    "engagementRate": 3.148148148148148,
-    "views": 726,
+    "engagementRate": 3.1307550644567224,
+    "views": 727,
     "shares": 5,
     "saves": 0,
     "follows": 0,
-    "reach": 540
+    "reach": 543
    }
   },
   {
@@ -1807,7 +1987,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f91406e2b5fdb2029a82/055a67c05cda5a17ef8e289cb9f784e3d3b8254c_31e2fad0e2102e03bb72da82e962791c7305dbce_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.861Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.184Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1883,16 +2063,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a41f5915e8956bc530ea8e4/1e1c6388294cfff49002bcbba8841a5ba0882784_4c1f33e272b325467eaf0b79a696183ecd9cc36b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.791Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.077Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.0408163265306123,
-    "views": 266,
+    "engagementRate": 2.027027027027027,
+    "views": 267,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 147
+    "reach": 148
    }
   },
   {
@@ -1961,16 +2141,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf34f_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.901Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.035Z",
    "metrics": {
     "reactions": 4,
     "comments": 1,
-    "engagementRate": 3.3112582781456954,
-    "views": 223,
+    "engagementRate": 3.2679738562091507,
+    "views": 225,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 151
+    "reach": 153
    }
   },
   {
@@ -1989,16 +2169,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3e533399d0cee5a98bf361_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.809Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.100Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 2.880658436213992,
-    "views": 292,
+    "engagementRate": 2.8688524590163933,
+    "views": 293,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 243
+    "reach": 244
    }
   },
   {
@@ -2043,7 +2223,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38ce82f50028297904ba12/42f43301fec6e57a1ea45795827d37123bdc1f67_808f2c858659cfa18460cc0769afd22e4aa6821d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.755Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.094Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2071,7 +2251,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38cc448d9804a5b00ddaf1/0d68d17863fe5d0859e06529b24424ca2375d2e0_9f62da986431c01f6778420368629a812b7dcf57_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.851Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.055Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -2125,16 +2305,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1782106308980/30f99c05-b146-4490-a6b1-625248f6bd9a.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.854Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.142Z",
    "metrics": {
     "reactions": 1,
     "comments": 3,
-    "engagementRate": 2.2857142857142856,
-    "views": 427,
+    "engagementRate": 2.272727272727273,
+    "views": 429,
     "shares": 3,
     "saves": 1,
     "follows": 0,
-    "reach": 350
+    "reach": 352
    }
   },
   {
@@ -2153,7 +2333,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a38c966794224c3c706cb36/f58445636893301c168f0ba696ff83ea4bdc8754_f9514aba265555bb99e931bf575ac89f4ce508f4_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.743Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.155Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2207,16 +2387,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a3a88c488dc9c188d3b2878_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.798Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.059Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.366863905325444,
-    "views": 239,
+    "engagementRate": 2.3529411764705883,
+    "views": 241,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 169
+    "reach": 170
    }
   },
   {
@@ -2235,16 +2415,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a39454921017b6ab62ad369_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.749Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.128Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.3888888888888888,
-    "views": 270,
+    "engagementRate": 1.3793103448275863,
+    "views": 271,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 144
+    "reach": 145
    }
   },
   {
@@ -2263,12 +2443,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a30a85238b95b1062087b9a/61fa7bf93d71b742287b31d30da15ed83c14915e_2b4abf05dcd194d4f6429ebba261b0d1c756dfc1_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.083Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.265Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.9607843137254901,
-    "impressions": 51,
+    "engagementRate": 1.9230769230769231,
+    "impressions": 52,
     "reach": 17,
     "shares": 0
    }
@@ -2289,16 +2469,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278927_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.786Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:07.867Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
-    "engagementRate": 5.633802816901409,
-    "views": 268,
+    "engagementRate": 5.555555555555555,
+    "views": 270,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 142
+    "reach": 144
    }
   },
   {
@@ -2317,16 +2497,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a357adbc387b8da69278932_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.705Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.026Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
-    "engagementRate": 5.202312138728324,
-    "views": 243,
+    "engagementRate": 5.172413793103448,
+    "views": 244,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 173
+    "reach": 174
    }
   },
   {
@@ -2345,12 +2525,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f914d0c19e666fc0317a2/4419a24b069c4d66f3e8553d1722512c8065a98b_b4c11f9d8f2e91cb84a52587c7719c0e4c278c0d_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.752Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.207Z",
    "metrics": {
     "reactions": 22,
     "comments": 0,
     "engagementRate": 4.324324324324325,
-    "views": 1097,
+    "views": 1099,
     "shares": 2,
     "saves": 0,
     "follows": 2,
@@ -2399,16 +2579,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a343763f650c592ea50fde9_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.842Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.092Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 1.593625498007968,
-    "views": 314,
+    "engagementRate": 1.5873015873015872,
+    "views": 315,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 251
+    "reach": 252
    }
   },
   {
@@ -2453,7 +2633,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a279aa421bebf089c0cba5f/b3b4ae20ad4a8900a1de115095be641761654395_63c9c8ef160f3bff73884b93720fb5cfca03df89_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.915Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.145Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2481,12 +2661,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a32f3e9d020ac57a6726564_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.722Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.169Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
     "engagementRate": 1.0126582278481013,
-    "views": 505,
+    "views": 506,
     "shares": 1,
     "saves": 0,
     "follows": 0,
@@ -2509,7 +2689,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a30a6377fbd3a727a043323/0d3a25534abbf54e99f6fceff5240080e9ae7c9b_c734b09ea4b44160551521b94710264c146ad6ce_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.940Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.232Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2561,7 +2741,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2f8f60fca5e717350fef56/f90e42c896359d5c9731a1833af4b8d637aa45a9_32d6cb3f333db12e7874c521a422cf2154b1e55c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.857Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.211Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
@@ -2589,7 +2769,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a2798320817be156901cc06/590e7a10571c6ec1c5f1b3cddb182b66261ad204_7092d5098ce86e47eb5604bb9a2eab55321dea73_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-05T16:30:53.802Z",
+   "metricsUpdatedAt": "2026-08-06T15:31:08.149Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -5625,12 +5805,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/698abe0f0718f057d702fce5/5949f9f82461baa8f5631c18abf3fc6a104c6a38_cae4198936e8833573f5f0a669b3b8d8239cc316_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.197Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.347Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 3.9215686274509802,
-    "impressions": 153,
+    "engagementRate": 3.829787234042553,
+    "impressions": 235,
     "reach": 58,
     "shares": 0
    }
@@ -5831,12 +6011,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/698ab65e7b57734ca6c33089_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.052Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.359Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 3.75,
-    "impressions": 80,
+    "engagementRate": 3.125,
+    "impressions": 128,
     "reach": 33,
     "shares": 0
    }
@@ -5857,12 +6037,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6966fa6fe8617dcf90034d8b/96733ed39cbe5709580c41ef563c4021fb226707_e681ed7d46c5680e12810807cdebdadc1b658065_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.109Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.303Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 36.55913978494624,
-    "impressions": 93,
+    "engagementRate": 40.17857142857143,
+    "impressions": 112,
     "reach": 28,
     "shares": 0
    }
@@ -5961,12 +6141,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/694092d2ee219010050bce6c/930509d8ff2f6abff2b842382a6556fe7b5677ea_f8037e54f8da3b5c9f1525a2e33551a773244ab0_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.987Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.235Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 13.725490196078432,
-    "impressions": 51,
+    "engagementRate": 12.903225806451612,
+    "impressions": 62,
     "reach": 22,
     "shares": 0
    }
@@ -6509,12 +6689,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1763426017630/f55ca005-22af-4995-aeab-9a91318caaf3.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.116Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.268Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 18.181818181818183,
-    "impressions": 55,
+    "engagementRate": 22.22222222222222,
+    "impressions": 63,
     "reach": 29,
     "shares": 0,
     "views": 21,
@@ -7700,7 +7880,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/690162013b570accf60eaac5/f0216846ede0cf5f1f01edf8b8834f39490ca61a_52be5b0a58ab839dc38fe983920fee3285380a68_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.287Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.300Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8172,7 +8352,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68f6c534ea527f607403dd11/88b8a84b66b2dfc027ded8ba444489b1767c3b21_6fa604058c647d1b2d34324a58fd184bdb3e3217_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.009Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.521Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8252,7 +8432,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68eee6f1a2cfbb268506c823/3fd46a8b1f3b6f856a15c7f14fa62acc5f6e7d2f_1b1777d8cf2c8879fb8044e522807079a7b33576_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.926Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.272Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8846,7 +9026,7 @@
    "thumb": null,
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.943Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.310Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -8872,12 +9052,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68d5d1ab4eb69dc7c4f75147_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.186Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.217Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 8.571428571428571,
-    "impressions": 35,
+    "engagementRate": 7.5,
+    "impressions": 40,
     "reach": 18,
     "shares": 0,
     "views": 17,
@@ -9007,12 +9187,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68d23053d1ae25edeb07f91f/8b7d3725229d68eb5837836c04b3ec4a18d1e93b_8503c5de6029bd28b31ef3efde2c807b40e08792_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.076Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.281Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 2.272727272727273,
-    "impressions": 44,
+    "engagementRate": 1.9230769230769231,
+    "impressions": 52,
     "reach": 13,
     "shares": 1
    }
@@ -9104,7 +9284,7 @@
    "thumb": null,
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.936Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.444Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9340,7 +9520,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c76298f52452144307a382/c3af51d9dce8921776c13432135c92281946de3a_075a0533bce9f344502bc232f93a8beaf15ead2c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.194Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.259Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9528,12 +9708,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1758090945484/09ebdb32-11f3-444f-adfe-3983a45f4ce6.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.929Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.313Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 16.129032258064516,
-    "impressions": 31,
+    "engagementRate": 17.142857142857142,
+    "impressions": 35,
     "reach": 19,
     "shares": 0,
     "views": 14,
@@ -9607,7 +9787,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c76262072c73f039014a64/d63759a06569e189a7f409baa6073e00119e380a_e31b560de755f3f5e86d9c6a43adcb86b5070196_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.159Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.240Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9713,7 +9893,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c7623b3e1099c1f502a342/30b3d93fa783fcba002c63355900d43cb41d2d64_a85ac99baa37f582e91a2904aeb9ebc2afe148c8_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.947Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.286Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -9901,12 +10081,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757653764796/39a25455-fc88-455f-b4f1-f9775e3a3631.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.279Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.564Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 2.7777777777777777,
-    "impressions": 36,
+    "engagementRate": 2.0408163265306123,
+    "impressions": 49,
     "reach": 12,
     "shares": 0,
     "views": 7,
@@ -9980,7 +10160,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68c267c003043dabf40f3762/684e52ffb8d2761fbb36787b3b699c2e2ad2854a_f1af6d4a3ce9ba547b94e89264b76c74b61bbb72_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.063Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.562Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -10190,12 +10370,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757455733645/4957075f-7db8-4984-8268-1ac7b035640e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.921Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.289Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 8.108108108108109,
-    "impressions": 37,
+    "engagementRate": 9.30232558139535,
+    "impressions": 43,
     "reach": 16,
     "shares": 0,
     "views": 11,
@@ -10243,12 +10423,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68be9d7ba79ffc65b380a320_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:26.933Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.476Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 78.78787878787878,
-    "impressions": 33,
+    "engagementRate": 84.21052631578947,
+    "impressions": 38,
     "reach": 12,
     "shares": 0
    }
@@ -10481,12 +10661,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1757030428380/ab5a67af-b320-4792-9a01-277181347735.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.096Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.228Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 14,
+    "impressions": 19,
     "reach": 9,
     "shares": 0,
     "views": 4,
@@ -10560,7 +10740,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68bbb7d0d045191ca3130b27_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.182Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.225Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -10614,12 +10794,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/68b92162c44bcae1b40aea55/65c57697ea8b1aa4aba2557ccaf0b36f126f9856_733b6636239c292acd3d3bf3d9aa4a309c65644c_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.100Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.555Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 3.7037037037037033,
-    "impressions": 27,
+    "engagementRate": 3.225806451612903,
+    "impressions": 31,
     "reach": 12,
     "shares": 0
    }
@@ -10666,7 +10846,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b8d11774481d1439ce1542_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.042Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.366Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -10718,7 +10898,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b8d11774481d1439ce1545_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.191Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.386Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -10744,7 +10924,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/679b1442a31978b79c2ada52/68b5ec6c31ec6edc63849b12_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-04T00:13:27.067Z",
+   "metricsUpdatedAt": "2026-08-06T07:58:53.544Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
