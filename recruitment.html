@@ -7094,7 +7094,7 @@ function render(){
       <td>${n.coachesNeeded!=null?n.coachesNeeded:'<span class="s">set</span>'}</td>
       <td>${n.urgency?`<span class="pill ${/high/i.test(n.urgency)?'r':/med/i.test(n.urgency)?'o':'g'}">${esc(n.urgency)}</span>`:''}</td>
       <td>${n.dateRaised?dmy(n.dateRaised):'<span class="s">set</span>'}</td>
-      <td style="font-size:12px;color:#7a8b98;max-width:240px">${esc(n.reason||'')}</td>
+      <td style="font-size:12px;color:#7a8b98;max-width:240px">${esc(n.reason||'')}${n.filledBy?`<div style="color:var(--green);font-weight:bold">✓ ${esc(n.filledBy)}</div>`:''}</td>
       <td>${st==='open'?'<span class="mini ok">open</span>':st==='filled'?'<span class="mini na">filled</span>':'<span class="mini na">closed</span>'}</td></tr>`; });
     v += `</tbody></table></div>`;
   }
@@ -7286,6 +7286,7 @@ window.saveNeedProgs = function(id){ saveNeed(id, {programs: readProgs('ne_prog_
 window.openNeed = function(id){
   const n = NEEDS.find(x=>x.id===id); if(!n) return;
   const opt = (cur,arr)=>arr.map(x=>`<option ${x===cur?'selected':''}>${x}</option>`).join('');
+  const coachOpts = [...new Set((CANDS||[]).map(c=>c.name).filter(Boolean))].sort((a,b)=>a.localeCompare(b)).map(nm=>`<option value="${esc(nm)}">`).join('');
   document.getElementById('modalHost').innerHTML = `<div class="modalbg" onclick="if(event.target===this)closeCard()">
     <div class="modal">
       <h3>${esc(n.location||'Need')}</h3>
@@ -7306,6 +7307,9 @@ window.openNeed = function(id){
       <input class="fsel" style="width:100%;max-width:100%" type="date" value="${esc(n.dateRaised||'')}" onchange="saveNeed('${id}',{dateRaised:this.value})">
       <div class="mrow" style="margin-top:8px"><b>Reason</b></div>
       <textarea class="fsel" style="width:100%;max-width:100%;min-height:54px" onchange="saveNeed('${id}',{reason:this.value})">${esc(n.reason||'')}</textarea>
+      <div class="mrow" style="margin-top:8px"><b>Filled by (coach)</b></div>
+      <input class="fsel" list="coachNames_${id}" style="width:100%;max-width:100%" placeholder="Search coach name" value="${esc(n.filledBy||'')}" onchange="saveNeed('${id}',{filledBy:this.value})">
+      <datalist id="coachNames_${id}">${coachOpts}</datalist>
       <div style="margin-top:14px">
         ${(n.status||'open')==='open'
           ? `<button class="mclose" style="background:var(--green)" onclick="saveNeed('${id}',{status:'filled'});closeCard()">Mark filled</button>
