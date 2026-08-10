@@ -6973,6 +6973,7 @@ async function saveStage(id, stage){
   } else { toast('Preview only, not saved'); }
   render(); openCard(id);
 }
+window.saveStage = saveStage;
 async function saveCheck(id, key, val){
   const c = CANDS.find(x=>x.id===id); if(!c) return;
   c.checklist = { ...(c.checklist||{}), [key]: val };
@@ -6984,6 +6985,7 @@ async function saveCheck(id, key, val){
   } else { toast('Preview only, not saved'); }
   render(); openCard(id);
 }
+window.saveCheck = saveCheck;
 async function saveCand(id, patch){
   const c = CANDS.find(x=>x.id===id); if(!c) return;
   Object.assign(c, patch);
