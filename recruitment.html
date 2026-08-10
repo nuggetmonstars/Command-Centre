@@ -6974,6 +6974,16 @@ async function saveStage(id, stage){
   render(); openCard(id);
 }
 window.saveStage = saveStage;
+window.onStageChange = function(id){
+  const c = CANDS.find(x=>x.id===id); if(!c) return;
+  const sel = document.getElementById('stageSel_'+id);
+  const btn = document.getElementById('stageSave_'+id);
+  if (sel && btn) btn.style.display = (sel.value !== (c.stage||'Applied')) ? 'inline-block' : 'none';
+};
+window.commitStage = function(id){
+  const sel = document.getElementById('stageSel_'+id);
+  if (sel) saveStage(id, sel.value);
+};
 async function saveCheck(id, key, val){
   const c = CANDS.find(x=>x.id===id); if(!c) return;
   c.checklist = { ...(c.checklist||{}), [key]: val };
@@ -7223,7 +7233,8 @@ window.openCard = function(id){
       <h3>${esc(c.name)}</h3>
       <div class="msub">${esc(c.town||'')}${c.state?', '+esc(c.state):''}${c.source==='indeed'?' · <span style="color:var(--blue)">Indeed applicant</span>':''}</div>
       <div class="mrow" style="margin:10px 0 4px"><b>Stage</b></div>
-      <select class="fsel" style="max-width:100%;width:100%" onchange="saveStage('${id}',this.value)">${stageOpts}</select>
+      <select class="fsel" id="stageSel_${id}" style="max-width:100%;width:100%" onchange="onStageChange('${id}')">${stageOpts}</select>
+      <button id="stageSave_${id}" style="display:none;margin-top:6px;background:var(--green);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-family:'MarkerFelt',cursive;cursor:pointer" onclick="commitStage('${id}')">Save move</button>
       ${c.email?`<div class="mrow" style="margin-top:10px"><b>Email:</b> ${esc(c.email)}</div>`:''}
       ${c.phone?`<div class="mrow"><b>Phone:</b> ${esc(c.phone)}</div>`:''}
       ${c.location?`<div class="mrow"><b>Applied for:</b> ${esc(c.location)}</div>`:''}
