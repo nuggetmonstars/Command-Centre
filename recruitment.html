@@ -6944,6 +6944,7 @@ async function saveNeed(id, patch){
   } else { toast('Preview only, not saved'); }
   render();
 }
+window.saveNeed = saveNeed;
 async function createNeed(o){
   const rec = { state:o.state||'', location:o.location||'', programs:o.programs||'',
     coachesNeeded:(o.coachesNeeded===''?null:Number(o.coachesNeeded)), urgency:o.urgency||'',
