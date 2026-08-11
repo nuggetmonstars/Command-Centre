@@ -7070,10 +7070,18 @@ function render(){
   }
   if (active==="Pipeline") v += buildBoard();
   if (active==="Outcomes"){
-    const ns = DATA.candidates.filter(x=>x.tab==="Not Suitable");
-    const by = {}; ns.forEach(x=>{const k=x.outcome||'No reason logged'; by[k]=(by[k]||0)+1;});
-    v += `<div class="card"><h3>Why candidates fell out (${ns.length})</h3>${bars(by)}</div>`;
-    v += table(ns, false);
+    const closed = CANDS.filter(x=>x.stage==='Closed').map(x=>({
+      name:x.name, suburbState:(x.town?x.town+', ':'')+(x.state||''), location:x.location||'',
+      stage:'Closed', dropStage:(x.dropStage||'Other'),
+      outcome:(x.dropReason||x.inactiveReason||x.outcome||''),
+      dateApplied:x.appliedDate||x.dateApplied||'', interviewDate:x.interviewDate||'',
+      wwcc:(x.wwccState==='valid'?'Yes':''), issues:x.issues||[]
+    })).sort((a,b)=>(a.name||'').localeCompare(b.name||''));
+    const order=["Applied","Interview","Signed up to app","Documents in","Trial session","Active coach","Withdrew (onboarding)","Other"];
+    const by={}; closed.forEach(x=>{const k=order.includes(x.dropStage)?x.dropStage:'Other'; by[k]=(by[k]||0)+1;});
+    const ordered={}; order.forEach(k=>{ if(by[k]) ordered['Dropped at '+k]=by[k]; });
+    v += `<div class="card"><h3>Where coaches drop off (${closed.length} closed)</h3>${bars(ordered)}</div>`;
+    v += table(closed, false);
   }
   if (active==="Open Needs"){
     const URGRANK = {high:3, medium:2, low:1};
