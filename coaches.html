@@ -1580,8 +1580,9 @@ function renderLessons(){
     sp.querySelectorAll('.tr-pill').forEach(p=>p.onclick=()=>{LP_STATE=p.dataset.st;renderLessons();});
   }
 
-  let list=all;
-  if(LP_STATE!=='ALL') list=list.filter(c=>(c.state||'')===LP_STATE);
+  // stats follow the state pills but NOT the search box
+  const statBase = LP_STATE==='ALL' ? all : all.filter(c=>(c.state||'')===LP_STATE);
+  let list=statBase;
   if(qF) list=list.filter(c=>(c.fullName||'').toLowerCase().includes(qF));
 
   const inR=d=>d>=R.from&&d<=R.to;
@@ -1694,16 +1695,16 @@ function renderLessons(){
   };
 
   const plabel=R.label;
-  const totalIn=all.filter(c=>c.mapped&&(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length;
-  const mappedN=all.filter(c=>c.mapped).length;
+  const totalIn=statBase.filter(c=>c.mapped&&(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length;
+  const mappedN=statBase.filter(c=>c.mapped).length;
 
   let h=`<div style="padding:0 24px 24px">
     <div class="stats-row" style="margin-bottom:4px">
       <div class="stat-card"><div class="stat-num">${totalIn}</div><div class="stat-lbl">active in ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${all.filter(c=>c.mapped&&!(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
-      <div class="stat-card"><div class="stat-num">${(LP_VIEWS||[]).filter(v=>inR(v.date||0)).length}</div><div class="stat-lbl">videos watched</div></div>
-      <div class="stat-card"><div class="stat-num">${((RAW.viewTabs)||[]).filter(v=>LP_TABS.includes(v.tab)&&inR(v.date||0)).length}</div><div class="stat-lbl">PDFs opened</div></div>
-      <div class="stat-card"><div class="stat-num">${mappedN}/${all.length}</div><div class="stat-lbl">coaches trackable</div></div>
+      <div class="stat-card"><div class="stat-num">${statBase.filter(c=>c.mapped&&!(c.views.some(v=>inR(v.date))||c.pdfs.some(v=>inR(v.date)))).length}</div><div class="stat-lbl">nothing in ${plabel}</div></div>
+      <div class="stat-card"><div class="stat-num">${statBase.reduce((a,c)=>a+c.views.filter(v=>inR(v.date)).length,0)}</div><div class="stat-lbl">videos watched</div></div>
+      <div class="stat-card"><div class="stat-num">${statBase.reduce((a,c)=>a+c.pdfs.filter(v=>inR(v.date)).length,0)}</div><div class="stat-lbl">PDFs opened</div></div>
+      <div class="stat-card"><div class="stat-num">${mappedN}/${statBase.length}</div><div class="stat-lbl">coaches trackable</div></div>
     </div>`;
 
   h+=sec(`Active in ${plabel}`, watched, 'w',
