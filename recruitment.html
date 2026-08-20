@@ -6861,6 +6861,13 @@ const COLL = "recruitment-pipeline";
 const TABS = ["Overview","Pipeline","Open Needs","Outcomes","Bench","Ad Spend"];
 let active = "Overview";
 const ALL_STATES = ["VIC","NSW","QLD","SA","WA"];
+const HUBS_BY_STATE = {
+  VIC: ["Melbourne","Geelong","Ballarat","Bendigo","Gippsland"],
+  NSW: ["Sydney","Wollongong","Newcastle"],
+  QLD: ["Brisbane","Sunshine Coast","Gold Coast","Mackay","Toowoomba","Townsville","Cairns"],
+  SA:  ["Adelaide"],
+  WA:  ["Perth"]
+};
 let fState = "All", fTown = "All";
 
 const $ = s => document.querySelector(s);
@@ -7184,8 +7191,12 @@ window.setState = function(s){ fState=s; fTown="All"; render(); };
 window.setTown  = function(t){ fTown=t; render(); };
 
 function townOptions(){
-  const pool = activeCoaches().filter(c=>fState==="All"||c.state===fState);
-  const hubs = [...new Set(pool.map(c=>c.hub).filter(Boolean))].sort();
+  // complete region list for the state: the fixed map UNION any hubs present in the data
+  let base = [];
+  if (fState==="All") { base = Object.values(HUBS_BY_STATE).flat(); }
+  else { base = (HUBS_BY_STATE[fState]||[]).slice(); }
+  const seen = CANDS.filter(c=>fState==="All"||c.state===fState).map(c=>c.hub).filter(Boolean);
+  const hubs = [...new Set([...base, ...seen])].sort();
   let o = `<option value="All">All regions (${hubs.length})</option>`;
   o += hubs.map(t=>`<option value="${esc(t)}" ${t===fTown?'selected':''}>${esc(t)}</option>`).join('');
   return o;
