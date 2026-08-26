@@ -2479,7 +2479,9 @@ h1,h2,h3,h4,h5,.mf,
         <option value="1hr+ fortnightly">1hr+ fortnightly · 5</option>
         <option value="40min fortnightly">40min fortnightly · 4</option>
         <option value="Offer">Offer · 1</option>
+        <option value="Custom">Custom · type points</option>
       </select>
+      <input class="filter-input" id="as-custompts" type="number" step="0.1" min="0.1" placeholder="Points…" style="min-width:110px; display:none;">
       <select class="filter-select" id="as-city">
         <option value="M">Melbourne · M</option>
         <option value="S">Sydney · S</option>
@@ -6354,8 +6356,23 @@ window.__initSales = function(){
     if (repSel) repSel.innerHTML = DATA.reps.map(function(r){ return '<option value="'+r.name+'">'+r.name+'</option>'; }).join('');
     var dateEl = document.getElementById('as-date'); if (dateEl && !dateEl.value) dateEl.value = new Date().toISOString().slice(0,10);
     var sessEl = document.getElementById('as-session'), ptsEl = document.getElementById('as-points');
-    function preview(){ if (sessEl && ptsEl) ptsEl.textContent = (POINTS[sessEl.value]||0) + ' pts'; }
-    if (sessEl) sessEl.addEventListener('change', preview); preview();
+    var cpEl = document.getElementById('as-custompts');
+    // Custom: reveal the typed-points input and mirror it in the live preview.
+    function isCustom(){ return sessEl && sessEl.value === 'Custom'; }
+    function customVal(){ return cpEl ? Number(String(cpEl.value).trim()) : NaN; }
+    function preview(){
+      if (cpEl) cpEl.style.display = isCustom() ? '' : 'none';
+      if (!ptsEl) return;
+      if (isCustom()){
+        var v = customVal();
+        ptsEl.textContent = (cpEl && String(cpEl.value).trim() !== '' && isFinite(v) && v > 0) ? (v + ' pts') : '— pts';
+      } else {
+        ptsEl.textContent = (POINTS[sessEl ? sessEl.value : '']||0) + ' pts';
+      }
+    }
+    if (sessEl) sessEl.addEventListener('change', preview);
+    if (cpEl) cpEl.addEventListener('input', preview);
+    preview();
     var msgEl = document.getElementById('as-msg');
     function msg(t,c){ if (msgEl){ msgEl.textContent = t; msgEl.style.color = c || 'var(--muted)'; } }
     var btn = document.getElementById('as-submit'); if (!btn) return;
@@ -6367,7 +6384,18 @@ window.__initSales = function(){
       var city   = (document.getElementById('as-city')||{}).value;
       if (!rep || !centre || !date){ msg('Rep, centre and date are required.', '#c0392b'); return; }
       if (!window.__sales || !window.__db || !window.__loadLiveData){ msg('Not connected — sign in and reload.', '#c0392b'); return; }
-      var points = POINTS[session];
+      // points resolved BEFORE the citySplit object is built below, so Custom lands in both.
+      var points;
+      if (session === 'Custom'){
+        var rawC = cpEl ? String(cpEl.value).trim() : '';
+        points = Number(rawC);
+        if (rawC === '' || !isFinite(points) || points <= 0){
+          msg('Custom points must be a number greater than 0 (decimals OK).', '#c0392b');
+          return;   // nothing written
+        }
+      } else {
+        points = POINTS[session];
+      }
       btn.disabled = true; msg('Saving…', 'var(--muted)');
       try {
         await window.__sales.addDoc(
@@ -6689,6 +6717,15 @@ const COLLECTION = "sales-entries";
      daily-activity : {rep, date, counts:{TCC:{A,P,B,S,M}, NC:{...}, ...}}
    ============================================================ */
 const SESSION_POINTS={"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
+/* Resolve an entry's full point value from its sessionType, falling back to its OWN stored
+   points when the type isn't in the map ("Custom", or any legacy/blank type). A Custom entry
+   must never resolve to 0 just because the map has no key for it. */
+function sessionPointsFor(e){
+  if(!e) return 0;
+  const t=e.sessionType;
+  if(t && Object.prototype.hasOwnProperty.call(SESSION_POINTS,t)) return SESSION_POINTS[t];
+  return Number(e.points)||0;
+}
 const CITY_FULL={A:"Adelaide",P:"Perth",B:"Brisbane",S:"Sydney",M:"Melbourne"};
 const MONTH_LABELS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 const TIER_THRESHOLDS={gold:70,green:50,blue:30};
@@ -6712,7 +6749,11 @@ function buildPointEvents(sales, offers){
       ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer"});
     }
     if(o.status==="ongoing" && o.conversionDate && o.sessionType){
-      const remain=(SESSION_POINTS[o.sessionType]||0)-1;
+      // "Custom" (and any type not in the map) has no map value — fall back to the entry's
+      // OWN stored points so a Custom conversion never silently scores 0. Sales already use
+      // stored points (buildPointEvents above), so only this offer path needed the fallback.
+      const full = sessionPointsFor(o);
+      const remain=full-1;
       if(remain>0) ev.push({rep:o.rep,date:o.conversionDate,centre:o.centre,points:remain,
                             city:o.city||null,kind:"conversion"});
     }
@@ -7078,7 +7119,7 @@ function ccInit(){
   // counter expand toggle
   ccEl("cc-counter-toggle").addEventListener("click",()=>{ const g=ccEl("cc-counter-grid"); const open=g.style.display==="none"; g.style.display=open?"":"none"; ccEl("cc-counter-toggle").innerHTML=(open?"&#9662;":"&#9656;")+" Today's breakdown"; });
   // delegated: result change (callback auto-fill + session toggle) and Log Call save
-  ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel){ ccOnResultChange(sel); return; } const cb=e.target.closest("[data-logcb]"); if(cb) ccCallbackDayLoad(cb.getAttribute("data-logcb")); });
+  ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel){ ccOnResultChange(sel); return; } const ss=e.target.closest("[data-logsession]"); if(ss){ ccSyncCustomPts(ss.getAttribute("data-logsession")); return; } const cb=e.target.closest("[data-logcb]"); if(cb) ccCallbackDayLoad(cb.getAttribute("data-logcb")); });
   ccEl("cc-list").addEventListener("click", e=>{ const b=e.target.closest("[data-logsave]"); if(b) ccLogCall(b.getAttribute("data-logsave")); });
   // callbacks filter toggle (today + overdue only)
   ccEl("cc-cbfilter").addEventListener("click",()=>{ ccFilter=(ccFilter==="callbacks")?"all":"callbacks"; ccRenderChips(); ccRenderList(); });
@@ -7594,7 +7635,10 @@ function ccLogForm(c){
   const today=ccTodayISO(), num=crmEsc(c.num);
   const resultOpts=[["","— pick result —"],["very_interested","Very interested"],["interested","Interested"],["not_interested","Not interested"],["call_eoy","Call EOY"],["no_answer","No answer"],["booked_sale","Booked sale"],["booked_offer","Booked offer"],["followup_nc","Follow-up (no status change)"]]
     .map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("");
-  const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${crmEsc(s)}">${crmEsc(s)} · ${CRM_SESSIONS[s]}pt</option>`).join("");
+  // "Custom" is appended here, NOT added to CRM_SESSIONS — that map also feeds the offer
+  // pipeline's convert dropdown (repPipeline), where a Custom type has no points to resolve.
+  const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${crmEsc(s)}">${crmEsc(s)} · ${CRM_SESSIONS[s]}pt</option>`).join("")
+    +`<option value="Custom">Custom · type points</option>`;
   return `<div class="cc-logform">
     <div class="cc-tlh">Log Call</div>
     <div class="cc-logrow">
@@ -7602,6 +7646,7 @@ function ccLogForm(c){
       <div class="cc-logfield"><label>Result</label><select data-logresult="${num}">${resultOpts}</select></div>
       <div class="cc-logfield"><label>Callback date</label><input type="date" data-logcb="${num}"><span class="cc-cbload" data-cbload="${num}"></span></div>
       <div class="cc-logfield" data-logsessionwrap="${num}" style="display:none"><label>Session</label><select data-logsession="${num}">${sessOpts}</select></div>
+      <div class="cc-logfield" data-logcustomwrap="${num}" style="display:none"><label>Custom points</label><input type="number" step="0.1" min="0.1" placeholder="e.g. 27 or 7.4" data-logcustompts="${num}"></div>
     </div>
     <div class="cc-logrow" style="align-items:stretch"><div class="cc-logfield" style="flex:1;width:100%"><label>Description</label><textarea data-logdesc="${num}" placeholder="What happened on the call…"></textarea></div></div>
     <div><button class="cc-logsave" data-logsave="${num}">Log Call</button><span class="cc-logmsg" data-logmsg="${num}"></span></div>
@@ -7616,6 +7661,15 @@ function ccOnResultChange(sel){
   ccCallbackDayLoad(num);   // refresh day-load indicator if the date changed programmatically
   const sw=row.querySelector(`[data-logsessionwrap="${num}"]`);
   if(sw) sw.style.display = val==="booked_sale" ? "" : "none";
+  ccSyncCustomPts(num);            // Custom points field follows the session choice
+}
+// Show the Custom points input only when result=booked_sale AND session=Custom.
+function ccSyncCustomPts(num){
+  const row=document.getElementById("cc-row-"+num); if(!row) return;
+  const res=(row.querySelector(`[data-logresult="${num}"]`)||{}).value;
+  const ses=(row.querySelector(`[data-logsession="${num}"]`)||{}).value;
+  const cw=row.querySelector(`[data-logcustomwrap="${num}"]`);
+  if(cw) cw.style.display = (res==="booked_sale" && ses==="Custom") ? "" : "none";
 }
 async function ccLogCall(num){
   const row=document.getElementById("cc-row-"+num);
@@ -7628,6 +7682,19 @@ async function ccLogCall(num){
   const desc=q(`[data-logdesc="${num}"]`).value.trim();
   const cb=q(`[data-logcb="${num}"]`).value.trim();
   if(!result){ if(msg){ msg.style.color="var(--red)"; msg.textContent="Pick a result."; } return; }
+  // ---- Custom points: resolve + VALIDATE BEFORE ANY WRITE ----
+  // This runs ahead of the centre-doc / daily-activity / sales-entries writes, so an invalid
+  // Custom value blocks the whole log rather than leaving a half-written call.
+  const sessionSel=(q(`[data-logsession="${num}"]`)||{}).value||Object.keys(CRM_SESSIONS)[0];
+  let customPts=null;
+  if(result==="booked_sale" && sessionSel==="Custom"){
+    const rawCustom=((q(`[data-logcustompts="${num}"]`)||{}).value||"").trim();
+    customPts=Number(rawCustom);
+    if(rawCustom==="" || !Number.isFinite(customPts) || customPts<=0){
+      if(msg){ msg.style.color="var(--red)"; msg.textContent="Custom points must be a number greater than 0 (decimals OK)."; }
+      return;   // nothing written
+    }
+  }
   const CITY=ccCity(c.state) || "O";   // default unknown/blank state to "O" (Other) so stateless calls still count
   const NEWCALL = (c.crmCallCount||0)===0 && !(Array.isArray(c.history) && c.history.length>0);
   const save=q(`[data-logsave="${num}"]`); if(save) save.disabled=true;
@@ -7668,8 +7735,10 @@ async function ccLogCall(num){
     else { await addDoc(collection(db,"daily-activity"),{rep:ccPinRep, date, counts}); }
     // (c) booked → sales-entries / offer-centres (exact existing shapes)
     if(result==="booked_sale"){
-      const session=(q(`[data-logsession="${num}"]`)||{}).value||Object.keys(CRM_SESSIONS)[0];
-      const points=CRM_SESSIONS[session]||0;
+      const session=sessionSel;
+      // points is resolved FIRST, then citySplit is built from that same variable — so a
+      // Custom value always lands in both, and the two can never disagree.
+      const points = session==="Custom" ? customPts : (CRM_SESSIONS[session]||0);
       await addDoc(collection(db,"sales-entries"),{rep:ccPinRep, centre:c.name, date, points, city:CITY, citySplit:{[CITY]:points}, sessionType:session, source:"crm"});
       if(date===ccTodayISO()) ccBookedToday++;
     } else if(result==="booked_offer"){
