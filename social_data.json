@@ -1,68 +1,68 @@
 {
- "generated": "2026-08-25T12:08:46Z",
+ "generated": "2026-08-26T02:19:58Z",
  "windowDays": 365,
- "windowStart": "2025-08-25T12:08:46Z",
+ "windowStart": "2025-08-26T02:19:58Z",
  "orgId": "6790322299197b9b6809ecd3",
- "requestsUsed": 11,
+ "requestsUsed": 12,
  "channels": {
   "67903bd2a31978b79c3f7cb5": {
    "label": "instagram / minimonstars",
    "service": "instagram",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 191,
+   "postCount": 193,
    "metrics": {
     "views": {
-     "seen": 187,
-     "nonzero": 154,
+     "seen": 189,
+     "nonzero": 156,
      "max": 1106,
-     "avg": 253.43,
+     "avg": 252.59,
      "confidence": "high"
     },
     "reach": {
-     "seen": 187,
-     "nonzero": 186,
+     "seen": 189,
+     "nonzero": 188,
      "max": 2851,
-     "avg": 169.78,
+     "avg": 169.41,
      "confidence": "high"
     },
     "comments": {
-     "seen": 187,
+     "seen": 189,
      "nonzero": 15,
      "max": 4,
      "avg": 0.13,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 187,
-     "nonzero": 145,
-     "max": 8.11,
-     "avg": 2.01,
+     "seen": 189,
+     "nonzero": 147,
+     "max": 8.89,
+     "avg": 2.02,
      "confidence": "high"
     },
     "reactions": {
-     "seen": 187,
-     "nonzero": 141,
+     "seen": 189,
+     "nonzero": 143,
      "max": 61,
-     "avg": 3.42,
+     "avg": 3.41,
      "confidence": "high"
     },
     "shares": {
-     "seen": 152,
-     "nonzero": 33,
+     "seen": 154,
+     "nonzero": 34,
      "max": 5,
      "avg": 0.32,
      "confidence": "low"
     },
     "saves": {
-     "seen": 152,
+     "seen": 154,
      "nonzero": 15,
      "max": 11,
      "avg": 0.17,
      "confidence": "unreliable"
     },
     "follows": {
-     "seen": 116,
+     "seen": 118,
      "nonzero": 5,
      "max": 10,
      "avg": 0.13,
@@ -75,48 +75,48 @@
    "service": "facebook",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 149,
+   "postCount": 152,
    "metrics": {
     "reactions": {
-     "seen": 149,
-     "nonzero": 112,
+     "seen": 152,
+     "nonzero": 114,
      "max": 11,
-     "avg": 1.79,
+     "avg": 1.77,
      "confidence": "high"
     },
     "comments": {
-     "seen": 149,
+     "seen": 152,
      "nonzero": 3,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 149,
-     "nonzero": 124,
-     "max": 24.39,
-     "avg": 3.31,
+     "seen": 152,
+     "nonzero": 126,
+     "max": 20,
+     "avg": 3.23,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 149,
-     "nonzero": 132,
+     "seen": 152,
+     "nonzero": 134,
      "max": 1342,
-     "avg": 154.75,
+     "avg": 155.06,
      "confidence": "high"
     },
     "shares": {
-     "seen": 149,
+     "seen": 152,
      "nonzero": 25,
      "max": 2,
      "avg": 0.2,
      "confidence": "low"
     },
     "clicks": {
-     "seen": 149,
-     "nonzero": 109,
+     "seen": 152,
+     "nonzero": 111,
      "max": 61,
-     "avg": 3.47,
+     "avg": 3.46,
      "confidence": "high"
     }
    }
@@ -163,69 +163,69 @@
    "service": "linkedin",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 61,
+   "postCount": 64,
    "metrics": {
     "reactions": {
-     "seen": 61,
+     "seen": 64,
      "nonzero": 13,
      "max": 4,
-     "avg": 0.41,
+     "avg": 0.39,
      "confidence": "low"
     },
     "comments": {
-     "seen": 61,
+     "seen": 64,
      "nonzero": 1,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 61,
-     "nonzero": 43,
+     "seen": 64,
+     "nonzero": 44,
      "max": 78.04878048780488,
-     "avg": 11.14,
+     "avg": 10.68,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 61,
-     "nonzero": 59,
+     "seen": 64,
+     "nonzero": 60,
      "max": 284,
-     "avg": 44.11,
+     "avg": 42.94,
      "confidence": "high"
     },
     "reach": {
-     "seen": 61,
-     "nonzero": 59,
+     "seen": 64,
+     "nonzero": 60,
      "max": 97,
-     "avg": 19.82,
+     "avg": 19.59,
      "confidence": "high"
     },
     "shares": {
-     "seen": 61,
-     "nonzero": 4,
+     "seen": 64,
+     "nonzero": 5,
      "max": 1,
-     "avg": 0.07,
+     "avg": 0.08,
      "confidence": "unreliable"
     },
     "views": {
-     "seen": 13,
-     "nonzero": 13,
-     "max": 46,
-     "avg": 13.0,
+     "seen": 14,
+     "nonzero": 14,
+     "max": 45,
+     "avg": 14.93,
      "confidence": "high"
     },
     "totalTimeWatched": {
-     "seen": 13,
-     "nonzero": 13,
-     "max": 11.82,
-     "avg": 3.5,
+     "seen": 14,
+     "nonzero": 14,
+     "max": 11.83,
+     "avg": 3.71,
      "confidence": "high"
     },
     "viewers": {
-     "seen": 13,
-     "nonzero": 13,
-     "max": 39,
-     "avg": 10.38,
+     "seen": 14,
+     "nonzero": 14,
+     "max": 40,
+     "avg": 12.5,
      "confidence": "high"
     }
    }
@@ -240,6 +240,200 @@
   }
  },
  "posts": [
+  {
+   "id": "6a8bc9e0c4b64880621d0d44",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-26T02:06:28.521Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 2,
+   "text": "Coaching Tip of the week \nShow and Tell\n\nAs coaches - especially for the younger age groups 1-5yo we need to be both demonstrating what the activity/skill looks like as well as telling the kids.\n\nFor younger age groups, a lot of the time this is the first time they are doing that",
+   "link": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7498199154356060160",
+   "thumb": "https://images.buffer.com/thumbnail/GWi6G-oUfl1LQGoblDmgFPstTq9nfeerur8E-RHncK8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c05.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-24T04:34:40.025Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6a8bc9dbc4b64880621d0d13",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-08-26T02:06:23.216Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 2,
+   "text": "Coaching Tip of the week \nShow and Tell\n\nAs coaches - especially for the younger age groups 1-5yo we need to be both demonstrating what the activity/skill looks like as well as telling the kids.\n\nFor younger age groups, a lot of the time this is the first time they are doing that",
+   "link": "https://www.facebook.com/reel/2844550682581451/",
+   "thumb": "https://images.buffer.com/thumbnail/GWi6G-oUfl1LQGoblDmgFPstTq9nfeerur8E-RHncK8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c05.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-26T02:08:04.601Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
+  {
+   "id": "6a8ce8d87fa16d24f522dd46",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-26T00:58:50.334Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 0,
+   "text": "How can we engage the toddler age groups when running a sports, music, gymnastics, etc. session??\n\nThe first thing I would look at is whether it matches where the toddlers are at in their development\nIf it's too hard and they will lose interest in wha they are doing, if it's too ",
+   "link": "https://www.instagram.com/p/Dce-rnZjtpq/",
+   "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c06/slide-01.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-25T00:59:04.237Z",
+   "metrics": {}
+  },
+  {
+   "id": "6a8ce8d99bf578c9ef1bf1e9",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-26T00:58:28.941Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 0,
+   "text": "How can we engage the toddler age groups when running a sports, music, gymnastics, etc. session??\n\nThe first thing I would look at is whether it matches where the toddlers are at in their development\nIf it's too hard and they will lose interest in wha they are doing, if it's too ",
+   "link": "https://www.facebook.com/1416893109688950/posts/1934087177969538",
+   "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c06/slide-01.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-26T00:59:34.019Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
+  {
+   "id": "6a8ce8daf3e29401b8039479",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-26T00:58:25.329Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 0,
+   "text": "How can we engage the toddler age groups when running a sports, music, gymnastics, etc. session??\n\nThe first thing I would look at is whether it matches where the toddlers are at in their development\nIf it's too hard and they will lose interest in wha they are doing, if it's too ",
+   "link": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7498182028018892800",
+   "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c06/slide-01.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-25T00:59:06.714Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6a7bcafddee6fae800d51100",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-25T23:43:21.397Z",
+   "sentDate": "2026-08-25",
+   "weekday": "Tue",
+   "hourUTC": 23,
+   "text": "Standing over a kid while you're talking to them is confronting.\nThey feel small. They tune out.\nGet down to their level.\nSpeak at eye level.\nWhether you're explaining a game, helping them kick a footy, or working through anything else, you're down there with them, not talking ov",
+   "link": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7498163136752021504",
+   "thumb": "https://images.buffer.com/thumbnail/aE0NDamHSdLZ_5qb7tYVaZCTcswIB2t7I62IP6aFvUA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c03.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-12T01:23:09.803Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6a82927ecb536143d5fcf3cc",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-25T21:01:59.970Z",
+   "sentDate": "2026-08-25",
+   "weekday": "Tue",
+   "hourUTC": 21,
+   "text": "Coach Sarah with Centre Director Matt from Happy Hearts Warner working together to bring movement, confidence and plenty of fun to little learners! \u2b50 \n\n#MiniMonstars #HappyHeartsWarner #EarlyLearning #ActiveKids #ChildrensFitness ",
+   "link": "https://www.instagram.com/p/DcejlIkn_QG/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a82923f76705c9a0e019d3b/caa86b021f4e08d649ff39b0e1106681.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-17T04:47:58.348Z",
+   "metrics": {}
+  },
+  {
+   "id": "6a82927ecb536143d5fcf3cb",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-25T21:01:51.694Z",
+   "sentDate": "2026-08-25",
+   "weekday": "Tue",
+   "hourUTC": 21,
+   "text": "Coach Sarah with Centre Director Matt from Happy Hearts Warner working together to bring movement, confidence and plenty of fun to little learners! \u2b50 \n\n#MiniMonstars #HappyHeartsWarner #EarlyLearning #ActiveKids #ChildrensFitness",
+   "link": "https://www.facebook.com/1416893109688950/posts/1933950604649862",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a82923f76705c9a0e019d3b/caa86b021f4e08d649ff39b0e1106681.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
   {
    "id": "6a8bc9a953c54dc08766dd31",
    "channelId": "67997c68a31978b79c616ae4",
@@ -282,10 +476,10 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8d5015e98076c5d805f6fb_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T11:21:12.887Z",
+   "metricsUpdatedAt": "2026-08-25T23:30:17.999Z",
    "metrics": {
-    "views": 26,
-    "reach": 23,
+    "views": 37,
+    "reach": 33,
     "comments": 0,
     "engagementRate": 0,
     "reactions": 0
@@ -307,8 +501,17 @@
    "thumb": "https://images.buffer.com/thumbnail/PACzFlLNbzWp5lwZtwoXTYTZ5EIECJUkvP_P2_Jflcg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c06.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:58:16.339Z",
-   "metrics": {}
+   "metricsUpdatedAt": "2026-08-25T19:45:45.356Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 2.52,
+    "views": 144,
+    "shares": 1,
+    "saves": 0,
+    "follows": 0,
+    "reach": 119
+   }
   },
   {
    "id": "6a8ce8ac9bf578c9ef1beffc",
@@ -326,14 +529,17 @@
    "thumb": "https://images.buffer.com/thumbnail/PACzFlLNbzWp5lwZtwoXTYTZ5EIECJUkvP_P2_Jflcg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c06.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:58:20.446Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 0,
-    "reach": 0,
-    "shares": 0
+    "engagementRate": 3.571428571428571,
+    "impressions": 56,
+    "reach": 44,
+    "shares": 1,
+    "views": 41,
+    "totalTimeWatched": 6.4,
+    "viewers": 40
    }
   },
   {
@@ -352,14 +558,14 @@
    "thumb": "https://images.buffer.com/thumbnail/PACzFlLNbzWp5lwZtwoXTYTZ5EIECJUkvP_P2_Jflcg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c06.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T02:31:50.547Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
-    "reactions": 0,
+    "reactions": 1,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 0,
+    "engagementRate": 0.97,
+    "impressions": 207,
     "shares": 0,
-    "clicks": 0
+    "clicks": 1
    }
   },
   {
@@ -378,8 +584,17 @@
    "thumb": "https://images.buffer.com/thumbnail/aE0NDamHSdLZ_5qb7tYVaZCTcswIB2t7I62IP6aFvUA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-12T01:23:02.779Z",
-   "metrics": {}
+   "metricsUpdatedAt": "2026-08-25T19:45:45.385Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 2.63,
+    "views": 56,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 38
+   }
   },
   {
    "id": "6a7bcafbdee6fae800d510d6",
@@ -397,14 +612,14 @@
    "thumb": "https://images.buffer.com/thumbnail/aE0NDamHSdLZ_5qb7tYVaZCTcswIB2t7I62IP6aFvUA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T23:04:35.262Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0,
-    "impressions": 0,
+    "engagementRate": 1.21,
+    "impressions": 165,
     "shares": 0,
-    "clicks": 0
+    "clicks": 2
    }
   },
   {
@@ -423,16 +638,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.958Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.414Z",
    "metrics": {
-    "reactions": 3,
+    "reactions": 4,
     "comments": 0,
-    "engagementRate": 8.11,
-    "views": 81,
+    "engagementRate": 8.89,
+    "views": 110,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 37
+    "reach": 45
    }
   },
   {
@@ -451,14 +666,14 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 24.39,
-    "impressions": 41,
+    "engagementRate": 20,
+    "impressions": 55,
     "shares": 0,
-    "clicks": 7
+    "clicks": 8
    }
   },
   {
@@ -477,7 +692,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.262Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -503,14 +718,14 @@
    "thumb": "https://images.buffer.com/thumbnail/IB5lqzFxYt9WoAadWJ6YjV6tHzOSxaxquU9byX9ek58?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260805-153241-monstars-challenge-splits-app%2Fclips%2F20260805-153241-monstars-challenge-splits-app-c05.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.15,
-    "impressions": 93,
+    "engagementRate": 2.86,
+    "impressions": 105,
     "shares": 0,
-    "clicks": 1
+    "clicks": 2
    }
   },
   {
@@ -529,15 +744,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8cad6e23135717898ae3b6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.898Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.312Z",
    "metrics": {
-    "reactions": 4,
+    "reactions": 5,
     "comments": 0,
-    "engagementRate": 2.34,
-    "views": 235,
+    "engagementRate": 2.51,
+    "views": 261,
     "shares": 0,
     "saves": 0,
-    "reach": 171
+    "reach": 199
    }
   },
   {
@@ -556,14 +771,14 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a81711c0139b3d96e029e8c/a4d5f5a3311b30064184a7e1f188f63e.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
-    "reactions": 0,
+    "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.91,
-    "impressions": 309,
+    "engagementRate": 3.76,
+    "impressions": 372,
     "shares": 1,
-    "clicks": 8
+    "clicks": 12
    }
   },
   {
@@ -582,16 +797,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a81711c0139b3d96e029e8c/a4d5f5a3311b30064184a7e1f188f63e.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.087Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.328Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.94,
-    "views": 138,
+    "engagementRate": 2.63,
+    "views": 152,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 68
+    "reach": 76
    }
   },
   {
@@ -610,16 +825,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787294985802/49d875b9-9331-4af5-ba9f-ad8c694ebd2e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.083Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.447Z",
    "metrics": {
     "reactions": 12,
     "comments": 4,
-    "engagementRate": 8.06,
-    "views": 336,
+    "engagementRate": 7.81,
+    "views": 344,
     "shares": 2,
     "saves": 2,
     "follows": 0,
-    "reach": 248
+    "reach": 256
    }
   },
   {
@@ -662,12 +877,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787294985802/49d875b9-9331-4af5-ba9f-ad8c694ebd2e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 3.45,
-    "impressions": 348,
+    "engagementRate": 3.41,
+    "impressions": 352,
     "shares": 0,
     "clicks": 8
    }
@@ -713,12 +928,12 @@
    "thumb": "https://images.buffer.com/thumbnail/IomTqpaCY4LVAY4R_SmePOlmWn3QrsXwNG7kN5uwHVw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260820-180204-coach-upskilling-meetings-3%2Fclips%2F20260820-180204-coach-upskilling-meetings-3-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.64,
-    "impressions": 183,
+    "engagementRate": 1.61,
+    "impressions": 186,
     "shares": 0,
     "clicks": 2
    }
@@ -739,13 +954,13 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.203Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 26,
-    "reach": 19,
+    "impressions": 27,
+    "reach": 20,
     "shares": 0
    }
   },
@@ -765,16 +980,16 @@
    "thumb": "https://images.buffer.com/thumbnail/IomTqpaCY4LVAY4R_SmePOlmWn3QrsXwNG7kN5uwHVw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260820-180204-coach-upskilling-meetings-3%2Fclips%2F20260820-180204-coach-upskilling-meetings-3-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.883Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.474Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 2.73,
-    "views": 240,
+    "engagementRate": 2.7,
+    "views": 242,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 183
+    "reach": 185
    }
   },
   {
@@ -843,12 +1058,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a868c0e12369502ee03ee6a/199485abb0e9f00d59a59c8fbcd6c588.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 3.66,
-    "impressions": 82,
+    "engagementRate": 3.61,
+    "impressions": 83,
     "shares": 0,
     "clicks": 1
    }
@@ -869,16 +1084,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a868c0e12369502ee03ee6a/199485abb0e9f00d59a59c8fbcd6c588.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.935Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.379Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 131,
+    "views": 136,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 59
+    "reach": 62
    }
   },
   {
@@ -972,15 +1187,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a865c0c908956588702555b_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.969Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.276Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.67,
-    "views": 119,
+    "engagementRate": 2.56,
+    "views": 122,
     "shares": 0,
     "saves": 0,
-    "reach": 75
+    "reach": 78
    }
   },
   {
@@ -999,16 +1214,16 @@
    "thumb": "https://images.buffer.com/thumbnail/nh5azzH3HRK_S7bv0w4E2qt2o3Vt9nVdPEQYBVD3Y6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.151Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.286Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.56,
-    "views": 221,
+    "engagementRate": 0.55,
+    "views": 224,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 180
+    "reach": 183
    }
   },
   {
@@ -1027,7 +1242,7 @@
    "thumb": "https://images.buffer.com/thumbnail/nh5azzH3HRK_S7bv0w4E2qt2o3Vt9nVdPEQYBVD3Y6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.211Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1056,12 +1271,12 @@
    "thumb": "https://images.buffer.com/thumbnail/nh5azzH3HRK_S7bv0w4E2qt2o3Vt9nVdPEQYBVD3Y6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 3.25,
-    "impressions": 154,
+    "engagementRate": 3.23,
+    "impressions": 155,
     "shares": 0,
     "clicks": 4
    }
@@ -1107,7 +1322,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a80242cdd2f868f0bdbf2/65f8df07a26e7a31e29660d7a5b0de49.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.273Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1133,15 +1348,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8518911de4be9682204ecc_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.019Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.298Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 3.42,
-    "views": 191,
+    "engagementRate": 3.39,
+    "views": 192,
     "shares": 0,
     "saves": 0,
-    "reach": 117
+    "reach": 118
    }
   },
   {
@@ -1185,16 +1400,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a816fc700475e92bd0ddaac/945dd4b07a879c78c49ec0e0da766ae0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.888Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.640Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.8,
-    "views": 164,
+    "engagementRate": 3.7,
+    "views": 168,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 79
+    "reach": 81
    }
   },
   {
@@ -1213,12 +1428,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a816fc700475e92bd0ddaac/945dd4b07a879c78c49ec0e0da766ae0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 5.8,
-    "impressions": 500,
+    "engagementRate": 5.39,
+    "impressions": 538,
     "shares": 1,
     "clicks": 26
    }
@@ -1289,15 +1504,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a83d51a7b7f46c9c9b2350f_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.954Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.359Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.69,
-    "views": 178,
+    "engagementRate": 1.68,
+    "views": 179,
     "shares": 0,
     "saves": 0,
-    "reach": 118
+    "reach": 119
    }
   },
   {
@@ -1316,16 +1531,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d50a29f474780a50bb2f6/0fbd639b9619bc7fbfa37ae1f564b2a0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.015Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.349Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.26,
-    "views": 167,
+    "engagementRate": 3.23,
+    "views": 168,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 92
+    "reach": 93
    }
   },
   {
@@ -1344,12 +1559,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d50a29f474780a50bb2f6/0fbd639b9619bc7fbfa37ae1f564b2a0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.45,
-    "impressions": 69,
+    "engagementRate": 1.43,
+    "impressions": 70,
     "shares": 0,
     "clicks": 1
    }
@@ -1395,16 +1610,16 @@
    "thumb": "https://images.buffer.com/thumbnail/6ts8483idKu1ZsVEs948BxCypldvXaijTVOMQ8kA61w?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260805-210952-coach-upskilling-meetings-4%2Fclips%2F20260805-210952-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.939Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.301Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 3.06,
-    "views": 271,
+    "engagementRate": 3.05,
+    "views": 272,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 196
+    "reach": 197
    }
   },
   {
@@ -1423,12 +1638,12 @@
    "thumb": "https://images.buffer.com/thumbnail/6ts8483idKu1ZsVEs948BxCypldvXaijTVOMQ8kA61w?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260805-210952-coach-upskilling-meetings-4%2Fclips%2F20260805-210952-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 3.75,
-    "impressions": 320,
+    "engagementRate": 3.74,
+    "impressions": 321,
     "shares": 1,
     "clicks": 9
    }
@@ -1449,7 +1664,7 @@
    "thumb": "https://images.buffer.com/thumbnail/6ts8483idKu1ZsVEs948BxCypldvXaijTVOMQ8kA61w?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260805-210952-coach-upskilling-meetings-4%2Fclips%2F20260805-210952-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.420Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1457,8 +1672,8 @@
     "impressions": 44,
     "reach": 24,
     "shares": 1,
-    "views": 46,
-    "totalTimeWatched": 11.82,
+    "views": 45,
+    "totalTimeWatched": 11.83,
     "viewers": 39
    }
   },
@@ -1503,15 +1718,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a82919e244d2310faebba73_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.965Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.373Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 2.45,
-    "views": 358,
+    "engagementRate": 2.44,
+    "views": 361,
     "shares": 0,
     "saves": 0,
-    "reach": 245
+    "reach": 246
    }
   },
   {
@@ -1530,7 +1745,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a7db0747baa426c070145/362f9384923310130775b90c91b5bf35.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.206Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1581,12 +1796,12 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d485c4c9a7a67910b4909/7e49aa2e8c01d6999f9570692df3f909.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.438Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.54,
-    "impressions": 130,
+    "engagementRate": 1.53,
+    "impressions": 131,
     "shares": 0,
     "clicks": 2
    }
@@ -1607,16 +1822,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d485c4c9a7a67910b4909/7e49aa2e8c01d6999f9570692df3f909.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.974Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.318Z",
    "metrics": {
     "reactions": 5,
     "comments": 2,
-    "engagementRate": 2.56,
-    "views": 484,
+    "engagementRate": 2.51,
+    "views": 491,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 312
+    "reach": 319
    }
   },
   {
@@ -1660,7 +1875,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a7c5727fdd5233a0aa2ec/bb663f6b695d43b9834fb532b10f6189.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.265Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 1,
     "comments": 1,
@@ -1736,15 +1951,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7d55ffac90af38d2e2c4b3_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.037Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.627Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
-    "engagementRate": 4.26,
-    "views": 238,
+    "engagementRate": 4.23,
+    "views": 239,
     "shares": 0,
     "saves": 0,
-    "reach": 188
+    "reach": 189
    }
   },
   {
@@ -1763,7 +1978,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a7bb2c8dc890d16084aba/12ab6f8a1b25a5298a9d4bebec157fc9.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.407Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1864,7 +2079,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7951419a5d80dd9a04762d/c371df7d1b664ed25d99c82413dbc72f.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -1890,16 +2105,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7951419a5d80dd9a04762d/c371df7d1b664ed25d99c82413dbc72f.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.141Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.610Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
-    "engagementRate": 4.79,
-    "views": 312,
+    "engagementRate": 4.68,
+    "views": 319,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 167
+    "reach": 171
    }
   },
   {
@@ -1918,7 +2133,7 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.294Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1944,7 +2159,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a7b1b062d66d8120ed136/2c433af808394c937ad25f91de7ad5ac.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.312Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -1970,7 +2185,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7a7a70d06d0fecf7090083/5b4e2a18ab9e4a43a66f87f5484020c8.original.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.209Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2046,16 +2261,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a75661cb3574542ce0ec8fa/b18f39780609b68d517a206969cb43fac3df5bd4_254ada407bdda44fd054381ce25476daa700b50e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.115Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.421Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
     "engagementRate": 0.67,
-    "views": 248,
+    "views": 249,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 149
+    "reach": 150
    }
   },
   {
@@ -2074,7 +2289,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a75661baf60d1df0f0b7284/b18f39780609b68d517a206969cb43fac3df5bd4_82ff9ee4a119d30444a7baec9a64c6b94e5bf9af_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2100,7 +2315,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680da6999f52eb210f18e7/f8b3b0f35723475f8c6ca4b916942152bda27f39_88e964ab8a5d178d90f4f5d1d4e0f977b051f2fa_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.381Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2301,15 +2516,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a79b8b0bf3e7dc424873289_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.024Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.335Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 2.47,
-    "views": 323,
+    "engagementRate": 2.46,
+    "views": 324,
     "shares": 0,
     "saves": 0,
-    "reach": 243
+    "reach": 244
    }
   },
   {
@@ -2378,7 +2593,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a75545ef1467b2d94051ac4/7d4a5de37c107368eee80505adee9795.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -2404,16 +2619,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a75545ef1467b2d94051ac4/7d4a5de37c107368eee80505adee9795.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.894Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.377Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 3.67,
-    "views": 198,
+    "engagementRate": 3.64,
+    "views": 199,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 109
+    "reach": 110
    }
   },
   {
@@ -2482,16 +2697,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7572503f7cdd0ba900d042/5c96b5e6c9ed3224df2bee5ace680825.original.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.136Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.409Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.38,
-    "views": 162,
+    "engagementRate": 2.35,
+    "views": 164,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 84
+    "reach": 85
    }
   },
   {
@@ -2510,7 +2725,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7572503f7cdd0ba900d042/5c96b5e6c9ed3224df2bee5ace680825.original.jpg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2561,16 +2776,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7563f8ce591cc91601510f/2295fe1f3b1e711370c3c4b82f56dd9b1e54ba21_9064ca41fd63dce9b2aebc5734a3545418fc1525_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.885Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.369Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.04,
-    "views": 366,
+    "engagementRate": 2.03,
+    "views": 367,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 196
+    "reach": 197
    }
   },
   {
@@ -2589,7 +2804,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7563f8776bf892620cbdca/2295fe1f3b1e711370c3c4b82f56dd9b1e54ba21_5b65db845f2c9aa4fb3d6e35461b90011369d65a_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -2634,7 +2849,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7552a3bab56091f20c5554/5931d525e044c3ec8aabc064c1842408.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -2660,7 +2875,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680cf28acfee04dd021d92/984325acac214c927ffbd44c26cf6898e13c4440_75449314733fe23b02b6c576a9a33ea8b62e4f9b_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.259Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2686,7 +2901,7 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.433Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2737,16 +2952,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.942Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.462Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.57,
-    "views": 203,
+    "engagementRate": 3.53,
+    "views": 204,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 84
+    "reach": 85
    }
   },
   {
@@ -2765,7 +2980,7 @@
    "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.350Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2794,7 +3009,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.502Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2820,7 +3035,7 @@
    "thumb": null,
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.398Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2846,16 +3061,16 @@
    "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.947Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.366Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.27,
-    "views": 206,
+    "engagementRate": 2.26,
+    "views": 207,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 176
+    "reach": 177
    }
   },
   {
@@ -2874,7 +3089,7 @@
    "thumb": "https://images.buffer.com/thumbnail/cuX0cIDmBPQd6y2dl98mSD3TsUS_0h4BG98NaJbAueg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c08%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2900,7 +3115,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.199Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2926,15 +3141,15 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a74a8bbd62e804300fb8613_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.932Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.320Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 4.91,
-    "views": 220,
+    "engagementRate": 4.88,
+    "views": 221,
     "shares": 0,
     "saves": 1,
-    "reach": 163
+    "reach": 164
    }
   },
   {
@@ -2953,16 +3168,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a714478a432c6b7d0027889/7709373ca2cde346e5863d9524230d3219d293e8_bf1fe95783109c19c0ccb87529ab2c4e63469800_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.993Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.338Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 4.95,
-    "views": 186,
+    "engagementRate": 4.9,
+    "views": 187,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 101
+    "reach": 102
    }
   },
   {
@@ -2981,16 +3196,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.001Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.636Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 3.17,
-    "views": 151,
+    "engagementRate": 3.13,
+    "views": 152,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 63
+    "reach": 64
    }
   },
   {
@@ -3009,7 +3224,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680bbb8877281a20037c49/9142027a3455356795811c31e404e74f6a3a2c2f_ea7478226fb370d76c387a62dc7a1236b8800425_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.317Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3035,7 +3250,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.334Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3061,7 +3276,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260804-160451-coach-upskilling-meetings-3/20260804-160451-coach-upskilling-meetings-3-c05/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3087,16 +3302,16 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.056Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.308Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 3.17,
-    "views": 231,
+    "engagementRate": 3.16,
+    "views": 232,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 189
+    "reach": 190
    }
   },
   {
@@ -3115,7 +3330,7 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.416Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3144,7 +3359,7 @@
    "thumb": "https://images.buffer.com/thumbnail/Y0UXNiuuQ1TJFzku2979-tQJXSucgTQ9Ek901vHnHNg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c05%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3170,16 +3385,16 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.950Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.403Z",
    "metrics": {
     "reactions": 11,
     "comments": 0,
-    "engagementRate": 3.64,
-    "views": 366,
+    "engagementRate": 3.63,
+    "views": 367,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 302
+    "reach": 303
    }
   },
   {
@@ -3198,7 +3413,7 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3224,7 +3439,7 @@
    "thumb": "https://images.buffer.com/thumbnail/MdvSSgsZJJxNZf7MISL4cqWh3GEFTHi56lIwA1nZRPg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260804-160451-coach-upskilling-meetings-3%2F20260804-160451-coach-upskilling-meetings-3-c03%2Fvideo.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.253Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3253,16 +3468,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.156Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.267Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.67,
-    "views": 161,
+    "engagementRate": 1.64,
+    "views": 162,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 60
+    "reach": 61
    }
   },
   {
@@ -3281,7 +3496,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3307,7 +3522,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260801-211329-chapter-2-v2-final/20260801-211329-chapter-2-v2-final-c07/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.268Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3333,16 +3548,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7144289ab0942e750f1e18/cdc5377a40386f800f5140340ac3f8d7838eb25e_5c036138f768295404a14eddf4f9d2e712800192_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.892Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.645Z",
    "metrics": {
     "reactions": 6,
     "comments": 1,
-    "engagementRate": 6.25,
-    "views": 181,
+    "engagementRate": 6.19,
+    "views": 182,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 112
+    "reach": 113
    }
   },
   {
@@ -3361,16 +3576,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7221c9aca9e35c6dcd108a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.876Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.390Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 4.81,
-    "views": 271,
+    "engagementRate": 4.76,
+    "views": 272,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 104
+    "reach": 105
    }
   },
   {
@@ -3389,7 +3604,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7170162e9d172962a95714/83c6e5ab1051259430d388fbdbd2cd08ac2df81e_c5edd36502cfd607a90224790159575c2906b17a_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.429Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3415,7 +3630,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7170152e9d172962a956f1/83c6e5ab1051259430d388fbdbd2cd08ac2df81e_63ca358927b737df9e3ca735d41aeba02bc1faa2_facebook",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T22:08:14.439Z",
+   "metricsUpdatedAt": "2026-08-25T21:08:24.503Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -3441,16 +3656,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a7143c18aee7dcc2d056035/892c0f7a429274a1f6b07d9575aafaf40355c9ac_fdf85df16f504e31f9df27a12544f9569bf89525_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.007Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.621Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.73,
-    "views": 323,
+    "engagementRate": 3.7,
+    "views": 324,
     "shares": 3,
     "saves": 0,
     "follows": 1,
-    "reach": 161
+    "reach": 162
    }
   },
   {
@@ -3469,16 +3684,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7221c9aca9e35c6dcd109a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.962Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.398Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.88,
-    "views": 222,
+    "engagementRate": 2.86,
+    "views": 223,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 104
+    "reach": 105
    }
   },
   {
@@ -3497,7 +3712,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a680b0745777e488006b798/82a2fedd2fb5e085034c0ecd86e40902ac357b88_1e3fd981d5f6c4545c809ea7fc151e11d789bb5e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.340Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3571,7 +3786,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6809db5994fbc2360681a0/0a85b8099d65fbdbad3145cca268daba20655c16_3abc9463c5d0c144654269b66c7499831ae269dd_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.284Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.994Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3645,7 +3860,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6808f011def76369058a7f/5bf56f3535b49dc1d3fea4aae9d4e9b72fd02915_db0a026fbff8564559899f0a7fdc986a33fcc4c5_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-25T00:48:36.347Z",
+   "metricsUpdatedAt": "2026-08-25T21:56:02.993Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3671,16 +3886,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a62e4deb1be6bc10c039abe/8713b100172fdb95cb45c1ecc24f546cec208831_ee8805e8942e377193dd1f5d500b22a0edb29eee_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.989Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.643Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 3.95,
-    "views": 290,
+    "engagementRate": 3.92,
+    "views": 291,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 152
+    "reach": 153
    }
   },
   {
@@ -3771,7 +3986,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a58dc323c08b770e82e77c6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:34.872Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.601Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -3822,16 +4037,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a45c3656010aecb040a3c32/9f7772fd850eb6377de19b9fde9f83d5fdaf6535_7f41100b739e3e267d8edbc1c46c6f9c9ef4b0f3_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.050Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.323Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.84,
-    "views": 236,
+    "engagementRate": 2.82,
+    "views": 237,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 141
+    "reach": 142
    }
   },
   {
@@ -3926,16 +4141,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a43208dbf98a0bd9e008bdb/cc0f334282d85dfe3ecc7df33f78a929e269dcd3_8b178d53d94cd6d5b09bd27758cd3eb3161a5bec_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-08-24T20:45:35.120Z",
+   "metricsUpdatedAt": "2026-08-25T19:45:45.330Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.91,
-    "views": 203,
+    "engagementRate": 0.9,
+    "views": 204,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 110
+    "reach": 111
    }
   },
   {
