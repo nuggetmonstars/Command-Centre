@@ -149,6 +149,7 @@ a.plink:hover{text-decoration:underline}
       <div class="tab" data-v="formats">Formats</div>
       <div class="tab" data-v="timing">Timing</div>
       <div class="tab" data-v="bymonth">By Month</div>
+      <div class="tab" data-v="byweek">Weekly Rankings</div>
     </div>
 
     <div class="view on" id="v-channels"></div>
@@ -156,6 +157,7 @@ a.plink:hover{text-decoration:underline}
     <div class="view" id="v-formats"></div>
     <div class="view" id="v-timing"></div>
     <div class="view" id="v-bymonth"></div>
+    <div class="view" id="v-byweek"></div>
   </div>
 </div>
 
@@ -546,6 +548,347 @@ function renderByMonth(){
   });
 }
 
+/* ============ view: weekly rankings ============ */
+/* Monday-start ISO weeks taken from sentDate. A post is scored against every post
+   on the SAME channel across the whole window in the file, not just the shown week,
+   so the week selector only decides what is displayed - the percentile is the post's
+   all-time standing on its own channel. Raw numbers are not comparable across
+   networks, so nothing is ever ranked on a raw count.
+   "Reach" is a different field on every network, hence the map below. */
+var WR_REACH_FIELD = { instagram:'reach', facebook:'impressions', youtube:'views', linkedin:'impressions' };
+var WR_COUNT_METRICS = ['reactions','comments','shares','saves','follows','clicks'];
+var WR_SPARSE   = 0.20;   /* non-zero rate below this on a channel -> show a dash, never a confident zero */
+var WR_FLOOR_PCT = 25;    /* reach under this percentile of its own channel -> ineligible for the top 10% */
+var WR_TOP_PCT   = 90;
+var WR_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+var wrWeek = '', wrSvc = '', wrChan = '', wrMetric = 'engagementRate';
+var WR_STATS = null;
+
+function wrEsc(s){
+  return String(s===null||s===undefined?'':s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function wrKey(p){ return (p.service||'other')+'|'+(p.channelId||p.channel||''); }
+
+/* --- dates: sentDate is a plain YYYY-MM-DD, keep it out of local-timezone maths --- */
+function wrDayShift(dstr,n){
+  var a = dstr.split('-');
+  var d = new Date(Date.UTC(+a[0], +a[1]-1, +a[2]));
+  d.setUTCDate(d.getUTCDate()+n);
+  return d.toISOString().slice(0,10);
+}
+function wrWeekStart(dstr){
+  var a = dstr.split('-');
+  var d = new Date(Date.UTC(+a[0], +a[1]-1, +a[2]));
+  return wrDayShift(dstr, -(((d.getUTCDay()+6)%7)));   /* 0 = Monday */
+}
+function wrWeekLabel(ws){
+  var we = wrDayShift(ws,6), a = ws.split('-'), b = we.split('-');
+  var s = (+a[2])+' '+WR_MONTHS[+a[1]-1] + (a[0]!==b[0] ? ' '+a[0] : '');
+  return s+' &ndash; '+(+b[2])+' '+WR_MONTHS[+b[1]-1]+' '+b[0];
+}
+function wrToday(){
+  var f = new Intl.DateTimeFormat('en-AU',{timeZone:'Australia/Melbourne',
+    year:'numeric', month:'2-digit', day:'2-digit'});
+  var p = {}; f.formatToParts(new Date()).forEach(function(x){ p[x.type]=x.value; });
+  return p.year+'-'+p.month+'-'+p.day;
+}
+function wrOrd(n){
+  n = Math.round(n);
+  var s = ['th','st','nd','rd'], v = n%100;
+  return n + (s[(v-20)%10] || s[v] || s[0]);
+}
+
+/* --- percentiles --- */
+function wrPctRank(sorted, v){          /* where v sits in sorted, 0-100 */
+  if(!sorted || !sorted.length) return null;
+  var lo=0, hi=sorted.length, m;
+  while(lo<hi){ m=(lo+hi)>>1; if(sorted[m]<v) lo=m+1; else hi=m; }
+  var below = lo;
+  lo=0; hi=sorted.length;
+  while(lo<hi){ m=(lo+hi)>>1; if(sorted[m]<=v) lo=m+1; else hi=m; }
+  var equal = lo - below;
+  return ((below + equal/2)/sorted.length)*100;
+}
+function wrPctValue(sorted, pct){       /* the value at percentile pct */
+  if(!sorted || !sorted.length) return null;
+  var i = (pct/100)*(sorted.length-1), lo = Math.floor(i), hi = Math.ceil(i);
+  return lo===hi ? sorted[lo] : sorted[lo] + (sorted[hi]-sorted[lo])*(i-lo);
+}
+
+function wrEligible(p, c){              /* above its own channel's reach floor */
+  if(!c.reachField || c.floor===null || c.floor===undefined) return true;
+  var v = (p.metrics||{})[c.reachField];
+  if(typeof v!=='number') return false;
+  return v >= c.floor;
+}
+
+/* Built once per data load: per-channel value distributions over the FULL window. */
+function wrBuildStats(){
+  if(WR_STATS && WR_STATS._gen===DATA.generated) return WR_STATS;
+  var st = { _gen: DATA.generated, ch: {}, top: {} };
+  var posts = DATA.posts || [];
+
+  posts.forEach(function(p){
+    var k = wrKey(p);
+    var c = st.ch[k] || (st.ch[k] = { n:0, vals:{}, nz:{}, seen:{},
+      service:p.service||'other', name:p.channel||'', channelId:p.channelId||'' });
+    c.n++;
+    var m = p.metrics || {};
+    for(var t in m){
+      if(typeof m[t] !== 'number') continue;
+      (c.vals[t] = c.vals[t] || []).push(m[t]);
+      c.seen[t] = (c.seen[t]||0)+1;
+      if(m[t] > 0) c.nz[t] = (c.nz[t]||0)+1;
+    }
+  });
+
+  Object.keys(st.ch).forEach(function(k){
+    var c = st.ch[k];
+    c.sorted = {}; c.rate = {};
+    Object.keys(c.vals).forEach(function(t){
+      c.sorted[t] = c.vals[t].slice().sort(function(a,b){ return a-b; });
+      c.rate[t]   = (c.nz[t]||0) / c.n;
+    });
+    var rf = WR_REACH_FIELD[c.service];
+    if(!rf || !c.sorted[rf]){
+      rf = null;
+      for(var i=0;i<HEADLINE.length;i++){ if(c.sorted[HEADLINE[i]]){ rf = HEADLINE[i]; break; } }
+    }
+    c.reachField = rf;
+    c.floor = rf ? wrPctValue(c.sorted[rf], WR_FLOOR_PCT) : null;
+  });
+
+  /* top-10% threshold per channel per metric, from the ELIGIBLE pool only -
+     low-reach posts neither qualify nor drag the bar down. */
+  var pool = {};
+  posts.forEach(function(p){
+    var k = wrKey(p), c = st.ch[k];
+    if(!c || !wrEligible(p,c)) return;
+    var m = p.metrics || {};
+    ['engagementRate', c.reachField].forEach(function(t){
+      if(!t || typeof m[t] !== 'number') return;
+      (pool[k+'|'+t] = pool[k+'|'+t] || []).push(m[t]);
+    });
+  });
+  Object.keys(pool).forEach(function(kk){
+    pool[kk].sort(function(a,b){ return a-b; });
+    st.top[kk] = wrPctValue(pool[kk], WR_TOP_PCT);
+  });
+
+  WR_STATS = st;
+  return st;
+}
+
+function wrMetricFor(c){ return wrMetric==='engagementRate' ? 'engagementRate' : c.reachField; }
+function wrSparse(c, t){ return !t || c.rate[t]===undefined || c.rate[t] < WR_SPARSE; }
+function wrVal(c, t, v){
+  if(v===undefined || v===null || typeof v!=='number') return '<span style="color:#c9d6de">&mdash;</span>';
+  if(wrSparse(c,t)) return '<span style="color:#c9d6de" title="'+wrEsc(c.service)+
+    ' returns a non-zero '+wrEsc(METRIC_LABEL[t]||t)+' on only '+
+    Math.round((c.rate[t]||0)*100)+'% of its posts, so no number is shown">&mdash;</span>';
+  return '<b style="color:#243746">'+(t==='engagementRate' ? v.toFixed(1)+'%' : fmt(v))+'</b>';
+}
+
+/* --- media: Buffer thumbnails wrap the real Studio clip in a url= parameter --- */
+function wrClipURL(thumb){
+  if(!thumb || thumb.indexOf('url=') < 0) return null;
+  var m = /[?&]url=([^&]+)/.exec(thumb);
+  if(!m) return null;
+  var u;
+  try { u = decodeURIComponent(m[1]); } catch(e){ return null; }
+  if(u.indexOf('storage.googleapis.com') < 0) return null;
+  if(!/\.mp4($|\?|#)/i.test(u)) return null;
+  return u;
+}
+function wrStillHTML(thumb, link){
+  var inner = thumb
+    ? '<img src="'+wrEsc(thumb)+'" loading="lazy" style="width:100%;height:100%;object-fit:cover;'+
+      'border-radius:10px;display:block" onerror="this.style.visibility=\'hidden\'">'
+    : '<div style="width:100%;height:100%;border-radius:10px;background:#eef3f6"></div>';
+  if(link) inner = '<a href="'+wrEsc(link)+'" target="_blank" rel="noopener" '+
+    'style="display:block;width:100%;height:100%">'+inner+'</a>';
+  return inner;
+}
+function wrMediaHTML(p){
+  var thumb = p.thumb || '', clip = wrClipURL(thumb);
+  var box = 'width:150px;height:150px;flex:0 0 150px;border-radius:10px;overflow:hidden;background:#eef3f6';
+  if(clip){
+    return '<div style="'+box+'">'+
+      '<video controls preload="none" playsinline src="'+wrEsc(clip)+'" poster="'+wrEsc(thumb)+'" '+
+      'data-thumb="'+wrEsc(thumb)+'" data-link="'+wrEsc(p.link||'')+'" onerror="wrVidFail(this)" '+
+      'style="width:100%;height:100%;object-fit:cover;display:block;background:#000"></video></div>';
+  }
+  return '<div style="'+box+'">'+wrStillHTML(thumb, p.link)+'</div>';
+}
+function wrVidFail(el){
+  var box = el.parentNode; if(!box) return;
+  box.innerHTML = wrStillHTML(el.getAttribute('data-thumb')||'', el.getAttribute('data-link')||'');
+}
+window.wrVidFail = wrVidFail;
+
+function renderByWeek(){
+  var st = wrBuildStats();
+  var posts = DATA.posts || [];
+
+  var weeks = {};
+  posts.forEach(function(p){
+    if(!p.sentDate) return;
+    var w = wrWeekStart(p.sentDate);
+    (weeks[w] = weeks[w] || []).push(p);
+  });
+  var wkeys = Object.keys(weeks).sort().reverse();
+
+  var h = '<div class="card">';
+  if(!wkeys.length){
+    h += '<div class="empty">No dated posts.</div></div>';
+    document.getElementById('v-byweek').innerHTML = h; return;
+  }
+
+  /* default: the most recent week that has actually finished, not the partial one */
+  var today = wrToday();
+  var complete = wkeys.filter(function(w){ return wrDayShift(w,6) < today; });
+  if(!wrWeek || wkeys.indexOf(wrWeek) < 0) wrWeek = complete.length ? complete[0] : wkeys[0];
+
+  /* ---- controls ---- */
+  var svcs = {}; Object.keys(st.ch).forEach(function(k){ svcs[st.ch[k].service] = 1; });
+  var svcList = Object.keys(svcs).sort();
+  var chanList = Object.keys(st.ch).filter(function(k){ return !wrSvc || st.ch[k].service===wrSvc; }).sort();
+  if(wrChan && chanList.indexOf(wrChan) < 0) wrChan = '';
+
+  h += '<div class="controls">';
+  h += '<select id="wr-week">';
+  wkeys.forEach(function(w){
+    var partial = wrDayShift(w,6) >= today;
+    h += '<option value="'+w+'"'+(wrWeek===w?' selected':'')+'>'+wrWeekLabel(w)+
+         ' &middot; '+weeks[w].length+' posts'+(partial?' (in progress)':'')+'</option>';
+  });
+  h += '</select>';
+  h += '<select id="wr-svc"><option value="">All platforms</option>';
+  svcList.forEach(function(s){
+    h += '<option value="'+wrEsc(s)+'"'+(wrSvc===s?' selected':'')+'>'+wrEsc(s)+'</option>'; });
+  h += '</select>';
+  h += '<select id="wr-chan"><option value="">All handles'+(wrSvc?' on '+wrEsc(wrSvc):'')+'</option>';
+  chanList.forEach(function(k){
+    h += '<option value="'+wrEsc(k)+'"'+(wrChan===k?' selected':'')+'>'+
+         wrEsc(st.ch[k].service)+' &middot; '+wrEsc(st.ch[k].name)+'</option>'; });
+  h += '</select>';
+  h += '<span style="display:inline-flex;gap:0;border:1px solid #e7eef3;border-radius:999px;overflow:hidden">';
+  [['engagementRate','Engagement rate'],['reach','Reach']].forEach(function(o){
+    var on = wrMetric===o[0];
+    h += '<button class="wr-mt" data-m="'+o[0]+'" style="border:0;cursor:pointer;padding:6px 14px;'+
+         'font:inherit;font-size:12.5px;font-weight:700;background:'+(on?'var(--blue)':'#fff')+';'+
+         'color:'+(on?'#fff':'#5b7a8f')+'">'+o[1]+'</button>';
+  });
+  h += '</span>';
+  h += '<span style="font-size:12px;color:#7d93a3" id="wr-count"></span>';
+  h += '</div>';
+
+  /* ---- rank the selected week ---- */
+  var rows = weeks[wrWeek].filter(function(p){
+    if(wrSvc && p.service!==wrSvc) return false;
+    if(wrChan && wrKey(p)!==wrChan) return false;
+    return true;
+  }).map(function(p){
+    var c = st.ch[wrKey(p)], t = c ? wrMetricFor(c) : null;
+    var v = t ? (p.metrics||{})[t] : undefined;
+    var pct = (c && t && typeof v==='number') ? wrPctRank(c.sorted[t], v) : null;
+    var thr = (c && t) ? st.top[wrKey(p)+'|'+t] : null;
+    var elig = c ? wrEligible(p,c) : false;
+    /* a metric the platform barely reports cannot carry a top-10% claim */
+    var top = !!(elig && pct!==null && thr!==null && thr!==undefined && v>=thr && c && !wrSparse(c,t));
+    return { p:p, c:c, t:t, v:v, pct:pct, top:top, elig:elig };
+  }).sort(function(a,b){
+    var x = a.pct===null ? -1 : a.pct, y = b.pct===null ? -1 : b.pct;
+    if(y!==x) return y-x;
+    return (a.p.sentDate < b.p.sentDate) ? 1 : -1;
+  });
+
+  var nTop = rows.filter(function(r){ return r.top; }).length;
+
+  h += '<div style="margin:4px 0 12px"><span style="font-family:MarkerFelt,cursive;font-size:20px;'+
+       'color:var(--red)">'+wrWeekLabel(wrWeek)+'</span>'+
+       '<span style="color:#94a7b5;font-size:13px;margin-left:8px">'+rows.length+' post'+
+       (rows.length===1?'':'s')+' &middot; '+nTop+' in the top 10%</span></div>';
+  h += '<div class="note" style="margin-bottom:12px">Every post is scored against <b>all posts on its own '+
+       'channel over the last '+(DATA.windowDays||365)+' days</b>, not against the other networks &mdash; '+
+       'a 4% engagement rate means something different on YouTube than on Instagram. '+
+       'The week only decides what is listed. Posts whose reach sits below the 25th percentile of their own '+
+       'channel are shown but cannot be flagged top 10%, so a post nobody saw does not win on a lucky ratio. '+
+       'A <span style="color:#c9d6de">&mdash;</span> means that platform returns a non-zero value on under 20% '+
+       'of its posts, so we will not print a number.</div>';
+
+  if(!rows.length){
+    h += '<div class="empty">Nothing posted in this week on that selection.</div>';
+  }
+
+  rows.forEach(function(r, i){
+    var p = r.p, c = r.c;
+    var col = SVC_COLOUR[p.service] || '#999';
+    var mp = melbParts(p.sentAt);
+    h += '<div style="display:flex;gap:14px;align-items:flex-start;padding:12px;margin-bottom:9px;'+
+         'border:1px solid '+(r.top?'var(--green)':'#e7eef3')+';border-left:5px solid '+
+         (r.top?'var(--green)':col)+';border-radius:12px;background:'+(r.top?'#f4fbf0':'#fff')+'">';
+
+    h += '<div style="min-width:28px;text-align:right;font-weight:800;font-size:15px;color:#94a7b5;'+
+         'padding-top:2px">'+(i+1)+'</div>';
+    h += wrMediaHTML(p);
+
+    h += '<div style="flex:1;min-width:0">';
+    h += '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:4px">';
+    h += '<span style="font-size:12.5px;font-weight:700"><span class="svc" style="background:'+col+
+         '"></span>'+wrEsc(p.service)+' &middot; '+wrEsc(p.channel||'')+'</span>';
+    h += '<span style="font-size:12px;color:#94a7b5">'+
+         (mp ? mp.weekday+' '+mp.day+' '+mp.month : wrEsc(p.sentDate))+
+         (p.format ? ' &middot; '+wrEsc(p.format) : '')+'</span>';
+    if(r.pct!==null){
+      h += '<span class="badge" style="background:'+(r.top?'var(--green)':'#eef3f6')+';color:'+
+           (r.top?'#fff':'#5b7a8f')+'">'+wrOrd(r.pct)+' pct on this channel</span>';
+    } else {
+      h += '<span class="badge" style="background:#eef3f6;color:#5b7a8f">not scored</span>';
+    }
+    if(r.top) h += '<span class="badge" style="background:var(--yellow);color:var(--ink)">TOP 10%</span>';
+    else if(!r.elig) h += '<span class="badge" style="background:#eef3f6;color:#94a7b5" '+
+      'title="Reach below the 25th percentile for this channel, so it is not eligible for the top 10% and is '+
+      'not counted when setting that bar">below reach floor</span>';
+    h += '</div>';
+
+    h += '<div class="ptext" style="font-size:13px;max-width:none;-webkit-line-clamp:3">'+(p.text ? wrEsc(p.text) :
+         '<i style="color:#bbb">no caption</i>')+'</div>';
+
+    h += '<div style="font-size:12.5px;color:#4a5f6d;margin-top:5px;display:flex;flex-wrap:wrap;gap:12px">';
+    var shown = {}, m = p.metrics || {};
+    [c && c.reachField, 'engagementRate'].concat(WR_COUNT_METRICS).forEach(function(t){
+      if(!t || shown[t]) return;
+      if(!c || m[t]===undefined) return;
+      shown[t] = 1;
+      h += '<span'+(t===r.t?' style="color:var(--blue)"':'')+'>'+(METRIC_LABEL[t]||t)+' '+
+           wrVal(c,t,m[t])+'</span>';
+    });
+    h += '</div>';
+
+    if(c && wrSparse(c, r.t)){
+      h += '<div style="font-size:11px;color:var(--orange);margin-top:3px">'+wrEsc(p.service)+
+           ' does not reliably report '+wrEsc(METRIC_LABEL[r.t]||r.t||'this metric')+
+           ', so this post is listed but not ranked on it.</div>';
+    }
+    if(p.link) h += '<a class="plink" href="'+wrEsc(p.link)+'" target="_blank" rel="noopener">open post &rarr;</a>';
+    h += '</div></div>';
+  });
+
+  h += '</div>';
+  document.getElementById('v-byweek').innerHTML = h;
+  document.getElementById('wr-count').textContent = rows.length+' ranked';
+
+  document.getElementById('wr-week').onchange = function(){ wrWeek = this.value; renderByWeek(); };
+  document.getElementById('wr-svc').onchange  = function(){ wrSvc  = this.value; renderByWeek(); };
+  document.getElementById('wr-chan').onchange = function(){ wrChan = this.value; renderByWeek(); };
+  Array.prototype.forEach.call(document.querySelectorAll('#v-byweek .wr-mt'), function(b){
+    b.onclick = function(){ wrMetric = b.getAttribute('data-m'); renderByWeek(); };
+  });
+}
+
 function renderAll(){
   var d = new Date(DATA.generated);
   var ago = Math.round((Date.now()-d.getTime())/3600000);
@@ -553,6 +896,7 @@ function renderAll(){
     '<b>'+DATA.posts.length+'</b> posts &middot; last '+DATA.windowDays+' days<br>'+
     'refreshed '+(ago<1?'just now':ago+'h ago')+' &middot; '+DATA.requestsUsed+' API calls';
   renderChannels(); renderPosts(); renderFormats(); renderTiming(); renderByMonth();
+  renderByWeek();
 }
 Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
   t.onclick = function(){
