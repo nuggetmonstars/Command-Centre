@@ -1,72 +1,72 @@
 {
- "generated": "2026-09-06T10:28:56Z",
+ "generated": "2026-09-07T02:32:46Z",
  "windowDays": 365,
- "windowStart": "2025-09-06T10:28:56Z",
+ "windowStart": "2025-09-07T02:32:46Z",
  "orgId": "6790322299197b9b6809ecd3",
- "requestsUsed": 13,
+ "requestsUsed": 15,
  "channels": {
   "67903bd2a31978b79c3f7cb5": {
    "label": "instagram / minimonstars",
    "service": "instagram",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 230,
+   "postCount": 232,
    "metrics": {
-    "views": {
-     "seen": 227,
-     "nonzero": 187,
-     "max": 1766,
-     "avg": 247.96,
-     "confidence": "high"
-    },
-    "reach": {
-     "seen": 227,
-     "nonzero": 226,
-     "max": 2851,
-     "avg": 176.9,
+    "reactions": {
+     "seen": 229,
+     "nonzero": 170,
+     "max": 65,
+     "avg": 3.87,
      "confidence": "high"
     },
     "comments": {
-     "seen": 227,
+     "seen": 229,
      "nonzero": 16,
      "max": 4,
      "avg": 0.12,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 227,
-     "nonzero": 173,
-     "max": 15.79,
-     "avg": 2.17,
+     "seen": 229,
+     "nonzero": 175,
+     "max": 15.38,
+     "avg": 2.2,
      "confidence": "high"
     },
-    "reactions": {
-     "seen": 227,
-     "nonzero": 168,
-     "max": 65,
-     "avg": 3.88,
+    "views": {
+     "seen": 229,
+     "nonzero": 190,
+     "max": 1767,
+     "avg": 246.68,
      "confidence": "high"
     },
     "shares": {
-     "seen": 186,
+     "seen": 188,
      "nonzero": 37,
      "max": 6,
-     "avg": 0.32,
+     "avg": 0.31,
      "confidence": "low"
     },
     "saves": {
-     "seen": 186,
-     "nonzero": 22,
+     "seen": 188,
+     "nonzero": 23,
      "max": 11,
      "avg": 0.22,
      "confidence": "low"
     },
     "follows": {
-     "seen": 148,
+     "seen": 150,
      "nonzero": 6,
      "max": 10,
      "avg": 0.11,
      "confidence": "unreliable"
+    },
+    "reach": {
+     "seen": 229,
+     "nonzero": 228,
+     "max": 2851,
+     "avg": 175.95,
+     "confidence": "high"
     },
     "totalTimeWatched": {
      "seen": 38,
@@ -84,53 +84,132 @@
     }
    }
   },
+  "6a6838cc4b2d03035f54093e": {
+   "label": "instagram / minimonstarsapp",
+   "service": "instagram",
+   "name": "minimonstarsapp",
+   "disconnected": false,
+   "postCount": 60,
+   "metrics": {
+    "reactions": {
+     "seen": 59,
+     "nonzero": 39,
+     "max": 8,
+     "avg": 1.56,
+     "confidence": "high"
+    },
+    "comments": {
+     "seen": 59,
+     "nonzero": 2,
+     "max": 1,
+     "avg": 0.03,
+     "confidence": "unreliable"
+    },
+    "engagementRate": {
+     "seen": 59,
+     "nonzero": 39,
+     "max": 25,
+     "avg": 6.08,
+     "confidence": "high"
+    },
+    "views": {
+     "seen": 59,
+     "nonzero": 59,
+     "max": 276,
+     "avg": 55.24,
+     "confidence": "high"
+    },
+    "shares": {
+     "seen": 48,
+     "nonzero": 7,
+     "max": 5,
+     "avg": 0.25,
+     "confidence": "low"
+    },
+    "saves": {
+     "seen": 48,
+     "nonzero": 0,
+     "max": 0.0,
+     "avg": 0.0,
+     "confidence": "unreliable"
+    },
+    "follows": {
+     "seen": 42,
+     "nonzero": 1,
+     "max": 1,
+     "avg": 0.02,
+     "confidence": "unreliable"
+    },
+    "reach": {
+     "seen": 59,
+     "nonzero": 59,
+     "max": 203,
+     "avg": 38.41,
+     "confidence": "high"
+    },
+    "totalTimeWatched": {
+     "seen": 6,
+     "nonzero": 5,
+     "max": 21.38,
+     "avg": 12.97,
+     "confidence": "high"
+    },
+    "averageTimeWatched": {
+     "seen": 6,
+     "nonzero": 5,
+     "max": 6.6,
+     "avg": 4.25,
+     "confidence": "high"
+    }
+   }
+  },
   "67997c68a31978b79c616ae4": {
    "label": "facebook / Mini Monstars",
    "service": "facebook",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 174,
+   "postCount": 176,
    "metrics": {
     "reactions": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 119,
      "max": 11,
-     "avg": 1.56,
+     "avg": 1.54,
      "confidence": "high"
     },
     "comments": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 3,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 145,
      "max": 25,
-     "avg": 3.63,
+     "avg": 3.59,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 163,
      "max": 1342,
-     "avg": 151.35,
+     "avg": 149.63,
      "confidence": "high"
     },
     "shares": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 26,
      "max": 2,
      "avg": 0.17,
      "confidence": "low"
     },
     "clicks": {
-     "seen": 174,
+     "seen": 176,
      "nonzero": 129,
      "max": 61,
-     "avg": 3.22,
+     "avg": 3.19,
      "confidence": "high"
     }
    }
@@ -140,34 +219,71 @@
    "service": "youtube",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 95,
+   "postCount": 96,
    "metrics": {
     "reactions": {
-     "seen": 95,
+     "seen": 96,
      "nonzero": 64,
      "max": 24,
-     "avg": 2.4,
+     "avg": 2.38,
      "confidence": "high"
     },
     "comments": {
-     "seen": 95,
+     "seen": 96,
      "nonzero": 2,
      "max": 1,
      "avg": 0.02,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 95,
+     "seen": 96,
      "nonzero": 16,
      "max": 7.5,
-     "avg": 0.25,
+     "avg": 0.24,
      "confidence": "low"
     },
     "views": {
-     "seen": 95,
-     "nonzero": 94,
+     "seen": 96,
+     "nonzero": 95,
      "max": 22859,
-     "avg": 811.28,
+     "avg": 804.76,
+     "confidence": "high"
+    }
+   }
+  },
+  "6a94f56e065799be465a4606": {
+   "label": "youtube / More Than Movement Podcast",
+   "service": "youtube",
+   "name": "More Than Movement Podcast ",
+   "disconnected": false,
+   "postCount": 20,
+   "metrics": {
+    "reactions": {
+     "seen": 20,
+     "nonzero": 8,
+     "max": 9,
+     "avg": 1.2,
+     "confidence": "low"
+    },
+    "comments": {
+     "seen": 20,
+     "nonzero": 0,
+     "max": 0.0,
+     "avg": 0.0,
+     "confidence": "unreliable"
+    },
+    "engagementRate": {
+     "seen": 20,
+     "nonzero": 8,
+     "max": 2.5,
+     "avg": 0.38,
+     "confidence": "low"
+    },
+    "views": {
+     "seen": 20,
+     "nonzero": 16,
+     "max": 1036,
+     "avg": 213.6,
      "confidence": "high"
     }
    }
@@ -177,45 +293,45 @@
    "service": "linkedin",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 72,
+   "postCount": 73,
    "metrics": {
     "reactions": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 13,
      "max": 4,
      "avg": 0.29,
      "confidence": "low"
     },
     "comments": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 1,
      "max": 3,
      "avg": 0.04,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 49,
      "max": 78.04878048780488,
-     "avg": 9.63,
+     "avg": 9.5,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 71,
      "max": 284,
-     "avg": 43.32,
+     "avg": 42.73,
      "confidence": "high"
     },
     "reach": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 71,
      "max": 98,
-     "avg": 21.25,
+     "avg": 20.96,
      "confidence": "high"
     },
     "shares": {
-     "seen": 72,
+     "seen": 73,
      "nonzero": 7,
      "max": 2,
      "avg": 0.11,
@@ -255,6 +371,212 @@
  },
  "posts": [
   {
+   "id": "6a9a2d903134b0c21abe10f4",
+   "channelId": "6790325fa31978b79cd370a6",
+   "channel": "Mini Monstars",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-07T02:31:07.265Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 2,
+   "text": "There's no place like home.\n\n#parenting #mindfulness #earlychildhood #yoga",
+   "link": "https://www.youtube.com/shorts/tOSscptpvBs",
+   "thumb": "https://images.buffer.com/thumbnail/6mi3jH8iyPhPzi6Pk6kd4_CSdEWJ_2Swv2oMsXdDlB4?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260904-115353-yoga-sarahbell-thewizardofoz%2Fclips%2F20260904-115353-yoga-sarahbell-thewizardofoz-c02.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T02:32:29.881Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 0
+   }
+  },
+  {
+   "id": "6a98c4020584976e91d392ba",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-07T02:00:49.760Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 2,
+   "text": "We love seeing our coaches immerse themselves inside daycare centres, we form part of your community! We may be an excursion provider, BUT we like to call ourselves part of your family! \n\n#MiniMonstars #ChildcareIncursions #DaycareActivities #EarlyLearning #EarlyChildhoodEducatio",
+   "link": "https://www.linkedin.com/feed/update/urn:li:share:7502546387079802880",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a98c34ba5b4c90cb704d30d/ee2d02a64beb5cf14a4f1e02f02ff15d.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-03T00:49:06.727Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6a98c4020584976e91d392b9",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-07T02:00:38.986Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 2,
+   "text": "We love seeing our coaches immerse themselves inside daycare centres, we form part of your community! We may be an excursion provider, BUT we like to call ourselves part of your family! \n\n#MiniMonstars #ChildcareIncursions #DaycareActivities #EarlyLearning #EarlyChildhoodEducatio",
+   "link": "https://www.instagram.com/p/Dc9_TKooPJ8/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a98c34ba5b4c90cb704d30d/ee2d02a64beb5cf14a4f1e02f02ff15d.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 4,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 0
+   }
+  },
+  {
+   "id": "6a98c4020584976e91d392b8",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-07T02:00:31.600Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 2,
+   "text": "We love seeing our coaches immerse themselves inside daycare centres, we form part of your community! We may be an excursion provider, BUT we like to call ourselves part of your family! \n\n#MiniMonstars #ChildcareIncursions #DaycareActivities #EarlyLearning #EarlyChildhoodEducatio",
+   "link": "https://www.facebook.com/1416893109688950/posts/1945610696817186",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a98c34ba5b4c90cb704d30d/ee2d02a64beb5cf14a4f1e02f02ff15d.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T02:01:35.108Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
+  {
+   "id": "6a9e082dc3f65d238efbb853",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-07T01:00:08.539Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 1,
+   "text": "People need to be reminded more than they need to be told. Telling isn't teaching.\n\n#coaching #earlychildhood #movement #kidsfitness",
+   "link": "https://www.youtube.com/shorts/CWd2sm-f1YQ",
+   "thumb": "https://images.buffer.com/thumbnail/AxnhlOx-Yj3G4u3Q42mRsQFHIRllm162bbqbWSomNH8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c01.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T01:01:52.870Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 0
+   }
+  },
+  {
+   "id": "6a98c0592b1b4d897b9702ea",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-07T00:33:07.705Z",
+   "sentDate": "2026-09-07",
+   "weekday": "Mon",
+   "hourUTC": 0,
+   "text": "My biggest Coaching Pet Peeve: There's a line of 20 kids and the activity lasts about 20 seconds.\nWaiting around kills engagement faster than anything else. \n\nWe teach our 70+ coaches these quick coaching tips to fix this probem:\n1: Avoid lines at all costs - Waiting time is the ",
+   "link": "https://www.youtube.com/shorts/mGEenAmrzwU",
+   "thumb": "https://images.buffer.com/thumbnail/q5vS8DvFvbdi2G0ZvTck1B0xr6RkWKPtavdPm-fAgVk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c09.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T00:34:33.474Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 0
+   }
+  },
+  {
+   "id": "6a9114bfae8294e4836f3f5b",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-06T22:56:00.099Z",
+   "sentDate": "2026-09-06",
+   "weekday": "Sun",
+   "hourUTC": 22,
+   "text": "Two rules for outdoor coaching: get down on their level, and never put the sun in their eyes. The difference between a session they listen to and one they tune out.\n\n#coaching #earlychildhood #movement #kidsfitness",
+   "link": "https://www.instagram.com/reel/Dc9qFl4gGKz/",
+   "thumb": "https://images.buffer.com/thumbnail/Bg5yO9HC2Qy0h9xRG3JcLOO5lktKlqtq7oJzDQUk1uY?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c06.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 9.68,
+    "views": 44,
+    "shares": 0,
+    "saves": 1,
+    "follows": 0,
+    "reach": 31
+   }
+  },
+  {
+   "id": "6a9114c1ae8294e4836f3f80",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-06T22:55:22.279Z",
+   "sentDate": "2026-09-06",
+   "weekday": "Sun",
+   "hourUTC": 22,
+   "text": "Two rules for outdoor coaching: get down on their level, and never put the sun in their eyes. The difference between a session they listen to and one they tune out.\n\n#coaching #earlychildhood #movement #kidsfitness",
+   "link": "https://www.facebook.com/reel/2273392803201059/",
+   "thumb": "https://images.buffer.com/thumbnail/Bg5yO9HC2Qy0h9xRG3JcLOO5lktKlqtq7oJzDQUk1uY?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c06.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T22:56:52.735Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
+  {
    "id": "6a9d16fdbe735eaf3e940b60",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -270,13 +592,65 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a9d16fdbe735eaf3e940b60_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:32:13.161Z",
+   "metricsUpdatedAt": "2026-09-07T01:38:39.549Z",
    "metrics": {
-    "views": 0,
-    "reach": 0,
+    "views": 62,
+    "reach": 51,
+    "comments": 0,
+    "engagementRate": 3.92,
+    "reactions": 2
+   }
+  },
+  {
+   "id": "6a98bfbb726e841d98855842",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-06T00:26:08.432Z",
+   "sentDate": "2026-09-06",
+   "weekday": "Sun",
+   "hourUTC": 0,
+   "text": "You read to your kids for literacy. Why not move with them for motor skills? Both build your kid. One just gets the airtime.\n\n#parenting #earlychildhood #movement #kidsfitness",
+   "link": "https://www.youtube.com/shorts/2CXMnna5I8Q",
+   "thumb": "https://images.buffer.com/thumbnail/1vsZ1vZ4Pa_v3kaKqcMJe5UcjHOY-bh4GV8NQozTOvM?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c08.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 0.56,
+    "views": 533
+   }
+  },
+  {
+   "id": "6a9619770f92a66e76cf257d",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-06T00:16:59.942Z",
+   "sentDate": "2026-09-06",
+   "weekday": "Sun",
+   "hourUTC": 0,
+   "text": "Did someone say a splits challenge ? Kids are loving this one!\n\nCheck out the full challenge - link in bio!\n\n#movement #earlychildhood #kidsfitness #parenting",
+   "link": "https://www.instagram.com/reel/Dc7Ok8JAdvi/",
+   "thumb": "https://images.buffer.com/thumbnail/TEu2i4KdyhcDFlygqWQXts0I1Uipe47O_Im8X-kOT6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c05.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.233Z",
+   "metrics": {
+    "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "reactions": 0
+    "views": 25,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 14
    }
   },
   {
@@ -295,12 +669,12 @@
    "thumb": "https://images.buffer.com/thumbnail/TEu2i4KdyhcDFlygqWQXts0I1Uipe47O_Im8X-kOT6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c05.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T04:10:39.661Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.372Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 0
+    "views": 19
    }
   },
   {
@@ -319,16 +693,16 @@
    "thumb": "https://images.buffer.com/thumbnail/JZs7qEH-MJJeNUEqwBwuMquO3zQc2RzlZBX1ZiAoU5E?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260902-160251-coach-upskilling-meetings-6%2Fclips%2F20260902-160251-coach-upskilling-meetings-6-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.760Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.86,
-    "views": 93,
+    "engagementRate": 2.67,
+    "views": 101,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 70
+    "reach": 75
    }
   },
   {
@@ -358,6 +732,34 @@
    }
   },
   {
+   "id": "6a9618e20f92a66e76cf15ad",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-05T06:14:57.198Z",
+   "sentDate": "2026-09-05",
+   "weekday": "Sat",
+   "hourUTC": 6,
+   "text": "Come try our new splits challenge with Coach Rhi!\n\nFull challenge inside our link in bio!\n\n#movement #parenting #earlychildhood #kidsfitness",
+   "link": "https://www.instagram.com/reel/Dc5SuqZlK06/",
+   "thumb": "https://images.buffer.com/thumbnail/O0Ud5Y4YJQ0eIBEV7YU6WFbyXo064SR6Zo1Z3CO31JQ?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c04.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.239Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 3.03,
+    "views": 38,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 33
+   }
+  },
+  {
    "id": "6a9618e0cde36d9831178157",
    "channelId": "6790325fa31978b79cd370a6",
    "channel": "Mini Monstars",
@@ -373,12 +775,12 @@
    "thumb": "https://images.buffer.com/thumbnail/O0Ud5Y4YJQ0eIBEV7YU6WFbyXo064SR6Zo1Z3CO31JQ?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c04.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.596Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.372Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 169
+    "views": 313
    }
   },
   {
@@ -397,16 +799,16 @@
    "thumb": "https://images.buffer.com/thumbnail/Nd7a3ENaUPemacS7xlTTR8Z3uwD_Nmzlkkgp8aIf92g?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260820-180204-coach-upskilling-meetings-3%2Fclips%2F20260820-180204-coach-upskilling-meetings-3-c09.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.762Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
    "metrics": {
-    "reactions": 7,
+    "reactions": 8,
     "comments": 0,
-    "engagementRate": 4.67,
-    "views": 175,
+    "engagementRate": 4.88,
+    "views": 204,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 150
+    "reach": 164
    }
   },
   {
@@ -480,16 +882,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260902-160251-coach-upskilling-meetings-6/carousels/20260902-160251-coach-upskilling-meetings-6-c03/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.731Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 15.79,
-    "views": 102,
+    "engagementRate": 15.38,
+    "views": 107,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 38
+    "reach": 39
    }
   },
   {
@@ -534,7 +936,7 @@
    "thumb": "https://images.buffer.com/thumbnail/G3UKRRpifi_Zi-FJDnKCSd2HIaP2cTPqT6HE7RxGEik?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c04.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.739Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -588,16 +990,16 @@
    "thumb": "https://images.buffer.com/thumbnail/Aa71Q5eBwfJgPPdwsSOTylK-8g6bTLtHeoi2lggCkQE?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260902-160251-coach-upskilling-meetings-6%2Fclips%2F20260902-160251-coach-upskilling-meetings-6-c02.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.764Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.761Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.92,
-    "views": 58,
+    "engagementRate": 1.89,
+    "views": 59,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 52
+    "reach": 53
    }
   },
   {
@@ -642,17 +1044,36 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a9a505dd9b864b86e009e25/820764be889c51265c651e4d011bd9ef.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.741Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.67,
-    "views": 106,
+    "engagementRate": 1.61,
+    "views": 109,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 60
+    "reach": 62
    }
+  },
+  {
+   "id": "6a9a4864d867938009493821",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-04T04:45:11.302Z",
+   "sentDate": "2026-09-04",
+   "weekday": "Fri",
+   "hourUTC": 4,
+   "text": "Great partnerships in early learning and movement = happy and engaged children!\n\n#MiniMonstars #ChildcarePartnership #EarlyLearning #EarlyChildhoodEducation #DaycareActivities ",
+   "link": "https://www.instagram.com/p/Dc2jveLkXrM/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a9a480788b727aa640bb18d/17260a4c38936c47ca07dabcb2535c32.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-04T04:26:12.075Z",
+   "metrics": {}
   },
   {
    "id": "6a9a4864d867938009493820",
@@ -678,6 +1099,30 @@
     "impressions": 32,
     "shares": 0,
     "clicks": 0
+   }
+  },
+  {
+   "id": "6a98be6878e03e506f78ec2c",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-04T04:24:12.365Z",
+   "sentDate": "2026-09-04",
+   "weekday": "Fri",
+   "hourUTC": 4,
+   "text": "Coaching Tip of the week \nShow and Tell\n\nAs coaches - especially for the younger age groups 1-5yo we need to be both demonstrating what the activity/skill looks like as well as telling the kids.\n\nFor younger age groups, a lot of the time this is the first time they are doing that",
+   "link": "https://www.youtube.com/shorts/u7a1lxnMDCs",
+   "thumb": "https://images.buffer.com/thumbnail/GWi6G-oUfl1LQGoblDmgFPstTq9nfeerur8E-RHncK8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c05.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 28
    }
   },
   {
@@ -767,16 +1212,16 @@
    "thumb": "https://images.buffer.com/thumbnail/ViEK6pRtKXOh89gwdGrnf5KnRXGkzmMRx6Eoet71Obk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.721Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 94,
+    "views": 95,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 82
+    "reach": 83
    }
   },
   {
@@ -806,6 +1251,34 @@
    }
   },
   {
+   "id": "6a9a2d73cfb379682d065ff6",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-04T03:30:54.123Z",
+   "sentDate": "2026-09-04",
+   "weekday": "Fri",
+   "hourUTC": 3,
+   "text": "The wicked witch melts to the ground!\nFull body engagement, pure imagination, zero boredom.\n\n#kids #earlychildhood #movement #health",
+   "link": "https://www.instagram.com/reel/Dc2bLVDiaAf/",
+   "thumb": "https://images.buffer.com/thumbnail/8Wsk8X_ymhfooaXmE1S9QM85VnaL1A7kH1nK2o2akyw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260904-115353-yoga-sarahbell-thewizardofoz%2Fclips%2F20260904-115353-yoga-sarahbell-thewizardofoz-c01.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.144Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 5.56,
+    "views": 29,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 18
+   }
+  },
+  {
    "id": "6a9a2d71bc2e4059f2c3aab2",
    "channelId": "6790325fa31978b79cd370a6",
    "channel": "Mini Monstars",
@@ -821,12 +1294,12 @@
    "thumb": "https://images.buffer.com/thumbnail/8Wsk8X_ymhfooaXmE1S9QM85VnaL1A7kH1nK2o2akyw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260904-115353-yoga-sarahbell-thewizardofoz%2Fclips%2F20260904-115353-yoga-sarahbell-thewizardofoz-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.372Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 28
+    "views": 38
    }
   },
   {
@@ -845,12 +1318,12 @@
    "thumb": "https://images.buffer.com/thumbnail/VyDJhgx42hIrLeYBJ8CSEFjhTwmdjxBYP7g9xlcXfXA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 206
+    "views": 211
    }
   },
   {
@@ -869,16 +1342,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260902-160251-coach-upskilling-meetings-6/carousels/20260902-160251-coach-upskilling-meetings-6-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.758Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 9.76,
-    "views": 107,
+    "engagementRate": 9.3,
+    "views": 111,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 41
+    "reach": 43
    }
   },
   {
@@ -923,7 +1396,7 @@
    "thumb": "https://images.buffer.com/thumbnail/Gsjw3Oxv4ohr8EiTjHy-gGFUWwlw_EZ9lEKXaC0bwb4?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c09.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.718Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -991,6 +1464,30 @@
    }
   },
   {
+   "id": "6a96218dc3ff10bad2eb5221",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T23:51:06.730Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 23,
+   "text": "It's so much more than just movement for kids\n\n#earlychildhood #parenting #movement #kidsfitness",
+   "link": "https://www.youtube.com/shorts/lUH-Xe6zBNA",
+   "thumb": "https://images.buffer.com/thumbnail/Gsjw3Oxv4ohr8EiTjHy-gGFUWwlw_EZ9lEKXaC0bwb4?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c09.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 2
+   }
+  },
+  {
    "id": "6a9110c5b12b8efbe7366738",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1006,7 +1503,7 @@
    "thumb": "https://images.buffer.com/thumbnail/XEjoYlRD4wu12v9deMNws1w4SGlCUcCwPO7U3HTZulA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.772Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -1016,6 +1513,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 145
+   }
+  },
+  {
+   "id": "6a961ea0eef9adc610b0de7d",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-03T23:38:59.241Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 23,
+   "text": "Are you excited to see our new splits challenge with Coach Rhi? Coming out tomorrow! \n\n#movement #kidsfitness #earlychildhood #coaching",
+   "link": "https://www.instagram.com/reel/Dc2Ani-APmt/",
+   "thumb": "https://images.buffer.com/thumbnail/L8ELpUIrIj4OM3vCKaFQW5Eya4WCAjbdhFyaSX0pijQ?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c10.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.173Z",
+   "metrics": {
+    "reactions": 5,
+    "comments": 0,
+    "engagementRate": 11.32,
+    "views": 84,
+    "shares": 1,
+    "saves": 0,
+    "follows": 0,
+    "reach": 53
    }
   },
   {
@@ -1034,12 +1559,12 @@
    "thumb": "https://images.buffer.com/thumbnail/L8ELpUIrIj4OM3vCKaFQW5Eya4WCAjbdhFyaSX0pijQ?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 3.33,
-    "views": 30
+    "engagementRate": 3.13,
+    "views": 32
    }
   },
   {
@@ -1095,6 +1620,134 @@
    }
   },
   {
+   "id": "6a9618ba627e8a73130a5f79",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-03T21:02:31.213Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 21,
+   "text": "Watch this space!!! new splits challenge out tomorrow \n\nLink for full video in bio\n\n#movement #earlychildhood #parenting #kidsfitness",
+   "link": "https://www.instagram.com/reel/Dc1uscPCUXv/",
+   "thumb": "https://images.buffer.com/thumbnail/VyDJhgx42hIrLeYBJ8CSEFjhTwmdjxBYP7g9xlcXfXA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c03.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.150Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 6.25,
+    "views": 67,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 48
+   }
+  },
+  {
+   "id": "6a9651d62a41c475ac4b5e38",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-03T20:38:10.422Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 20,
+   "text": "Mikey cant hold in his excitement any longer! \n\nIts time for our new challenge with Coach Rhi!! Keep your eyes peeled, launching tomorrow! \n\n#MiniMonstars #SplitsChallenge #GymnasticsForKids #KidsGymnastics #LittleGymnasts",
+   "link": "https://www.instagram.com/p/Dc1sAgRj2sG/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a96518e432227f3470087da/9fd5becf7c52af7cae5f015b8dc5bf1a.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.135Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 9.09,
+    "views": 19,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 11
+   }
+  },
+  {
+   "id": "6a98c03599622a9a0a55603d",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T11:44:08.187Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 11,
+   "text": "Coaching Pet Peeves:\nLining up kids aged 2-5yo in big lines\n\n#parenting #movement #kidsfitness #earlychildhood",
+   "link": "https://www.youtube.com/shorts/m04hX7n2UKc",
+   "thumb": "https://images.buffer.com/thumbnail/Dufs37M3NwjMkLX6YVH1cOWXLBBYjU3hhB8nqSNO8IU?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c10.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 0
+   }
+  },
+  {
+   "id": "6a98be8dde6f9cf7d4eb6e6c",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T10:30:32.977Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 10,
+   "text": "How can we engage the toddler age groups when running a sports, music, gymnastics, etc. session??\n\nThe first thing I would look at is whether it matches where the toddlers are at in their development\nIf it's too hard and they will lose interest in wha they are doing, if it's too ",
+   "link": "https://www.youtube.com/shorts/r8HP1O73pgc",
+   "thumb": "https://images.buffer.com/thumbnail/PACzFlLNbzWp5lwZtwoXTYTZ5EIECJUkvP_P2_Jflcg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c06.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 0
+   }
+  },
+  {
+   "id": "6a98bd9478e03e506f78e3c8",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T10:29:06.811Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 10,
+   "text": "Losing children's attention is super common for the 2-6yo age group. \nMany things can contribute to this, but the best way I have found to reengage them, is the 'Copy the Coach'\n\ndo an action and see which kids copy:\n\nBalls on the head.\nBalls on the belly.\nBalls on your feet.\nBal",
+   "link": "https://www.youtube.com/shorts/OvdHkoogHCU",
+   "thumb": "https://images.buffer.com/thumbnail/JCGV3ilHo9m0pdgZQFA0-gDK92I9ifDltXMm6gfkzZg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c01.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.692Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 160
+   }
+  },
+  {
    "id": "6a98fe344979a5ac3e6cd520",
    "channelId": "679b1442a31978b79c2ada52",
    "channel": "minimonstars",
@@ -1136,16 +1789,16 @@
    "thumb": "https://images.buffer.com/thumbnail/SG-j5anqk7ncAQRgEHxRB2kDU4rH6FUVyVryUJoyS5Y?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260902-160251-coach-upskilling-meetings-6%2Fclips%2F20260902-160251-coach-upskilling-meetings-6-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.713Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 96,
+    "views": 97,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 94
+    "reach": 95
    }
   },
   {
@@ -1175,6 +1828,30 @@
    }
   },
   {
+   "id": "6a99a94215af1370ebe13f99",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-09-03T06:29:35.000Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 6,
+   "text": "In Episode 2 of More Than Movement, Nug and Rhi get into the practical coaching tools that can make an immediate difference to the way children learn, move and engage in a session.\n\nOne of the biggest challenges every coach faces is, what do you do when you\u2019ve lost the kid's atte",
+   "link": "https://www.youtube.com/watch?v=S8oXpMLh5PI",
+   "thumb": "https://i.ytimg.com/vi/S8oXpMLh5PI/hqdefault.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 3
+   }
+  },
+  {
    "id": "6a98fda14979a5ac3e6cd1db",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1190,16 +1867,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260902-160251-coach-upskilling-meetings-6/carousels/20260902-160251-coach-upskilling-meetings-6-c01/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.822Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 15.63,
-    "views": 91,
+    "engagementRate": 14.71,
+    "views": 94,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 32
+    "reach": 34
    }
   },
   {
@@ -1244,16 +1921,16 @@
    "thumb": "https://images.buffer.com/thumbnail/jXfAkfK5qUE4_g6Ez0Rp5gIe2Ta9_KRcywzIQB-iQxo?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c09.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.781Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
     "engagementRate": 1.12,
-    "views": 212,
+    "views": 213,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 178
+    "reach": 179
    }
   },
   {
@@ -1283,6 +1960,30 @@
    }
   },
   {
+   "id": "6a98be3678e03e506f78ea58",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T04:24:06.804Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 4,
+   "text": "We obsess over reading and maths homework. Motor skills? They barely get a mention. Yet they're fundamental for everything kids do.\n\n#movement #parenting #earlychildhood #kidsfitness",
+   "link": "https://www.youtube.com/shorts/oylYkfNKRn0",
+   "thumb": "https://images.buffer.com/thumbnail/nS7u00LM936YTV1g0r1oHaGiGQ7mw8rFkv44GSX_Y8A?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c04.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 0.46,
+    "views": 653
+   }
+  },
+  {
    "id": "6a991c3243a35be85613247b",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1308,6 +2009,30 @@
    }
   },
   {
+   "id": "6a98bdea78e03e506f78e69e",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-03T01:22:05.772Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 1,
+   "text": "Waiting in line is the engagement killer.\n\nDaily practice at home is what builds the skill.\n\n#earlychildhood #movement #parenting #kidsfitness",
+   "link": "https://www.youtube.com/watch?v=r2Sev2y-q2A",
+   "thumb": "https://images.buffer.com/thumbnail/GKZKSWH2dL_VX4eog3NXW1Ex8P4WtbO2TdSOkZMNQz0?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c03.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 0.19,
+    "views": 1036
+   }
+  },
+  {
    "id": "6a96187fcde36d9831177ab7",
    "channelId": "6790325fa31978b79cd370a6",
    "channel": "Mini Monstars",
@@ -1323,12 +2048,12 @@
    "thumb": "https://images.buffer.com/thumbnail/4lLZW7-te-CloJHAGLvo7JUme9_4D7IjlRkf8sEqhII?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c02.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
     "engagementRate": 0.7,
-    "views": 995
+    "views": 999
    }
   },
   {
@@ -1373,16 +2098,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a98c164ef9267cec2069ed7/b565691893bea284afc3f411bf4b5fa2.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.809Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 5.06,
+    "engagementRate": 5.03,
     "views": 252,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 158
+    "reach": 159
    }
   },
   {
@@ -1412,6 +2137,34 @@
    }
   },
   {
+   "id": "6a961881eef9adc610b0620d",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-03T00:02:43.565Z",
+   "sentDate": "2026-09-03",
+   "weekday": "Thu",
+   "hourUTC": 0,
+   "text": "Come join coach Rhi as and learn the splits! New challenge out this Saturday, mark your calendars! \n\n#movement #parenting #earlychildhood #kidsfitness",
+   "link": "https://www.instagram.com/reel/DczeixHgFeP/",
+   "thumb": "https://images.buffer.com/thumbnail/4lLZW7-te-CloJHAGLvo7JUme9_4D7IjlRkf8sEqhII?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c02.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.194Z",
+   "metrics": {
+    "reactions": 8,
+    "comments": 1,
+    "engagementRate": 4.46,
+    "views": 234,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 202
+   }
+  },
+  {
    "id": "6a9110a2efbc4adde786a43f",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1427,16 +2180,16 @@
    "thumb": "https://images.buffer.com/thumbnail/742NfvBw5XaiJL79p-u9xCrWHeCZ0Ii08LsNFesf6ag?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c07.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.755Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.77,
-    "views": 158,
+    "engagementRate": 0.76,
+    "views": 160,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 130
+    "reach": 131
    }
   },
   {
@@ -1466,6 +2219,58 @@
    }
   },
   {
+   "id": "6a9651476923b2e36a96915e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-02T22:03:08.086Z",
+   "sentDate": "2026-09-02",
+   "weekday": "Wed",
+   "hourUTC": 22,
+   "text": "Mikey has done his stretching and he's all warmed up and ready for what Coach Rhi has planned...\n\nHere's a quick hint - it sounds like .... banana S P L I T\n\n#GymnasticsForKids #KidsGymnastics #LittleGymnasts #KidsMovement #ActiveKids",
+   "link": "https://www.instagram.com/p/DczQxtgoNGn/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a96508fb980d704900024e6/6beb2e891e47dfd8635f4eddbb1c1b4a.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.159Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 37,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 19
+   }
+  },
+  {
+   "id": "6a94fdcdb87fd53f71555fc5",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-02T09:06:07.489Z",
+   "sentDate": "2026-09-02",
+   "weekday": "Wed",
+   "hourUTC": 9,
+   "text": "One word. They repeat it back. Next week they remember it.\n\n#coaching #earlychildhood #movement #kidsfitness",
+   "link": "https://www.youtube.com/shorts/zLORoTLjXfk",
+   "thumb": "https://images.buffer.com/thumbnail/jXfAkfK5qUE4_g6Ez0Rp5gIe2Ta9_KRcywzIQB-iQxo?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c09.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 1.06,
+    "views": 189
+   }
+  },
+  {
    "id": "6a9113b1df4be5293ae2628b",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1481,16 +2286,16 @@
    "thumb": "https://images.buffer.com/thumbnail/khHjSKjuxA9nETj7G_3_fkhJrtaBMf3eitFkfuIwIWs?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.723Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 4.55,
-    "views": 97,
+    "engagementRate": 4.3,
+    "views": 103,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 88
+    "reach": 93
    }
   },
   {
@@ -1535,16 +2340,16 @@
    "thumb": "https://images.buffer.com/thumbnail/PKNQgwzLPsdACDukilK5sB7oB9MTlyaF1wVqIh_wYt8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c05.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.735Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.29,
-    "views": 173,
+    "engagementRate": 1.27,
+    "views": 175,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 155
+    "reach": 157
    }
   },
   {
@@ -1589,12 +2394,12 @@
    "thumb": "https://images.buffer.com/thumbnail/Fttc5yaWGKrNdzhBIE6un2Hds1Z2eRhJ7Zir_yWEG2c?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
     "engagementRate": 0.61,
-    "views": 819
+    "views": 820
    }
   },
   {
@@ -1613,16 +2418,16 @@
    "thumb": "https://images.buffer.com/thumbnail/TCo86KeELO4WlsmRA_v98CbG9seDVi5FBZlUd6goUms?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.733Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 30,
     "comments": 0,
     "engagementRate": 2.04,
-    "views": 1656,
+    "views": 1657,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 1519
+    "reach": 1520
    }
   },
   {
@@ -1652,6 +2457,34 @@
    }
   },
   {
+   "id": "6a961851814fc696b8e51515",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-09-02T00:05:55.738Z",
+   "sentDate": "2026-09-02",
+   "weekday": "Wed",
+   "hourUTC": 0,
+   "text": "New splits challenge! Coming out this weekend, keep your eyes peeled!... \n\n#movement #coaching #kidsfitness #earlychildhood",
+   "link": "https://www.instagram.com/reel/Dcw59fQkylO/",
+   "thumb": "https://images.buffer.com/thumbnail/Fttc5yaWGKrNdzhBIE6un2Hds1Z2eRhJ7Zir_yWEG2c?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260831-105128-monstars-challenge-splits-app%2Fclips%2F20260831-105128-monstars-challenge-splits-app-c01.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.217Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 7.5,
+    "views": 52,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 40
+   }
+  },
+  {
    "id": "6a97724e3ef4c0b9d0fafb86",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1677,6 +2510,34 @@
    }
   },
   {
+   "id": "6a962ab4a2e7a17eaed76340",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-09-01T22:02:20.901Z",
+   "sentDate": "2026-09-01",
+   "weekday": "Tue",
+   "hourUTC": 22,
+   "text": "Something is coming \ud83d\udc40 \n\nDrop your guess below!\n\n#MiniMonstarsChallenge #KidsMovement #KidsFitness #ActiveKids #MovementForKids",
+   "link": "https://www.instagram.com/p/Dcwr8VJIAMp/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a962a5098bafe8c570e62d5/1cd77e8cc522654b7fe2e048538bc811.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.171Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 15.38,
+    "views": 28,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 13
+   }
+  },
+  {
    "id": "6a96ba625e5ba45807827b6e",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1692,16 +2553,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a96ba17ab3c7c4d03067190/90e10adec7845d65eaf39e662973b9fb.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.836Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 14,
     "comments": 0,
-    "engagementRate": 12.03,
-    "views": 306,
+    "engagementRate": 11.85,
+    "views": 310,
     "shares": 0,
     "saves": 1,
     "follows": 1,
-    "reach": 133
+    "reach": 135
    }
   },
   {
@@ -1772,16 +2633,16 @@
    "thumb": "https://images.buffer.com/thumbnail/IPfeAPb1P2G0HAUnXggvDCI0E1WrmsLwtUnSrJwxAJI?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.838Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.2,
-    "views": 193,
+    "engagementRate": 1.19,
+    "views": 195,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 167
+    "reach": 168
    }
   },
   {
@@ -1840,6 +2701,30 @@
    }
   },
   {
+   "id": "6a94fd1e5554a1cf831491a1",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-09-01T11:02:38.098Z",
+   "sentDate": "2026-09-01",
+   "weekday": "Tue",
+   "hourUTC": 11,
+   "text": "When you're looking at programs for your kids, observe a session. Watch the coach's energy. That's where the learning actually happens.\n\n#parenting #earlychildhood #coaching #movement",
+   "link": "https://www.youtube.com/watch?v=g99vDFwMNCI",
+   "thumb": "https://images.buffer.com/thumbnail/IPfeAPb1P2G0HAUnXggvDCI0E1WrmsLwtUnSrJwxAJI?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c01.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 123
+   }
+  },
+  {
    "id": "6a91107baec1e6b643ffe638",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -1855,7 +2740,7 @@
    "thumb": "https://images.buffer.com/thumbnail/YSWS768Uf1EMhxStUQ6mr2wTpsm1Cw6X-cZmy7idtq0?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c06.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.807Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -1934,7 +2819,7 @@
    "thumb": "https://images.buffer.com/thumbnail/Xa6ysNbjHCQ4wwB-b-AQ_xi7pkwXpuDPkT7MxUvQmDk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c02.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.751Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.762Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -2014,16 +2899,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a950cd5faadee6a3d0610c6/a679d6d45ad59223e6accd6832d2625a.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.773Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 5.05,
-    "views": 159,
+    "engagementRate": 4.95,
+    "views": 163,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 99
+    "reach": 101
    }
   },
   {
@@ -2068,7 +2953,7 @@
    "thumb": "https://images.buffer.com/thumbnail/AxnhlOx-Yj3G4u3Q42mRsQFHIRllm162bbqbWSomNH8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260827-153816-more-than-movement-ep-3%2Fclips%2F20260827-153816-more-than-movement-ep-3-c01.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.716Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -2107,6 +2992,78 @@
    }
   },
   {
+   "id": "6a94fcd95ff58b53ab1e437a",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-08-31T23:02:07.238Z",
+   "sentDate": "2026-08-31",
+   "weekday": "Mon",
+   "hourUTC": 23,
+   "text": "Coaching tips for junior coaches who want to improve engagement during their sports/gymnastics sessions\n\n#parenting #earlychildhood #movement #coaching",
+   "link": "https://www.youtube.com/watch?v=_O0g9iBpqvw",
+   "thumb": "https://images.buffer.com/thumbnail/L4PDrt-qxmEcYq_THEK75a_WFPgYYQRCDm2UvsRHBQI?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c03.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 13
+   }
+  },
+  {
+   "id": "6a94fc80b87fd53f71553da8",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-08-31T11:43:06.733Z",
+   "sentDate": "2026-08-31",
+   "weekday": "Mon",
+   "hourUTC": 11,
+   "text": "As a coach do you have a lesson plan or do you hope for the best when running your sessions?\n\n#coaching #earlychildhood #movement #leadership",
+   "link": "https://www.youtube.com/watch?v=l87iOg8KkG8",
+   "thumb": "https://images.buffer.com/thumbnail/XvNFsRSVIFvi3cR5OTB4j1O4y9pT1h4OlhTC7rdP8yk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c08.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 2.5,
+    "views": 40
+   }
+  },
+  {
+   "id": "6a94fcaab87fd53f715546ca",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-08-31T10:01:58.794Z",
+   "sentDate": "2026-08-31",
+   "weekday": "Mon",
+   "hourUTC": 10,
+   "text": "As parents we need to stop comparing our kids to other kids\n\n#parenting #earlychildhood #movement #kidsfitness",
+   "link": "https://www.youtube.com/shorts/kdANX_WPGk0",
+   "thumb": "https://images.buffer.com/thumbnail/fHOq_L82MtKPJ6KBSZvezFZo4nf8juTdeZZS9P7VLuk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c04.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 1,
+    "views": 200
+   }
+  },
+  {
    "id": "6a94fbfc5554a1cf83145b23",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -2122,16 +3079,16 @@
    "thumb": "https://images.buffer.com/thumbnail/LVMmErZqb4zr7syP_xyWyejlmVVNR58BiQkb76XpXlU?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c07.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.802Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.68,
-    "views": 169,
+    "engagementRate": 0.67,
+    "views": 170,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 148
+    "reach": 149
    }
   },
   {
@@ -2190,6 +3147,30 @@
    }
   },
   {
+   "id": "6a94fc043a95861bee235c67",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "short",
+   "via": "buffer",
+   "sentAt": "2026-08-31T06:58:04.208Z",
+   "sentDate": "2026-08-31",
+   "weekday": "Mon",
+   "hourUTC": 6,
+   "text": "Why going to the playground can be so important for your child's development\n#earlychildhood #movement #parenting #kidsfitness",
+   "link": "https://www.youtube.com/watch?v=r-9eXv9i1H0",
+   "thumb": "https://images.buffer.com/thumbnail/LVMmErZqb4zr7syP_xyWyejlmVVNR58BiQkb76XpXlU?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260819-134708-more-than-movement-ep-1%2Fclips%2F20260819-134708-more-than-movement-ep-1-c07.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 0.43,
+    "views": 465
+   }
+  },
+  {
    "id": "6a95071a83ec9b4267026631",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -2205,16 +3186,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a95062c760557df080b162f/d63d6bbff5c37ee3400c26dd935e2dc8.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.811Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 6.78,
-    "views": 156,
+    "engagementRate": 6.67,
+    "views": 159,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 59
+    "reach": 60
    }
   },
   {
@@ -2311,7 +3292,7 @@
    "thumb": "https://images.buffer.com/thumbnail/nS7u00LM936YTV1g0r1oHaGiGQ7mw8rFkv44GSX_Y8A?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c04.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.777Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -2394,7 +3375,7 @@
    "thumb": "https://images.buffer.com/thumbnail/1vsZ1vZ4Pa_v3kaKqcMJe5UcjHOY-bh4GV8NQozTOvM?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.727Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -2462,6 +3443,54 @@
    }
   },
   {
+   "id": "6a94f570b2a8955bd8bd692a",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-08-29T20:39:47.000Z",
+   "sentDate": "2026-08-29",
+   "weekday": "Sat",
+   "hourUTC": 20,
+   "text": "",
+   "link": "https://www.youtube.com/shorts/sjB7t4_rGTA",
+   "thumb": "https://i.ytimg.com/vi/sjB7t4_rGTA/hqdefault.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 132
+   }
+  },
+  {
+   "id": "6a94f570b2a8955bd8bd692c",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-08-29T09:26:04.000Z",
+   "sentDate": "2026-08-29",
+   "weekday": "Sat",
+   "hourUTC": 9,
+   "text": "",
+   "link": "https://www.youtube.com/shorts/V8B-kiC-5fo",
+   "thumb": "https://i.ytimg.com/vi/V8B-kiC-5fo/hqdefault.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 9,
+    "comments": 0,
+    "engagementRate": 1.36,
+    "views": 661
+   }
+  },
+  {
    "id": "6a8e565e5be0bf3451da8218",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -2477,7 +3506,7 @@
    "thumb": "https://images.buffer.com/thumbnail/Dmke0p6KKV0g0yOzQS4AErzzTpXPQZ18CLHp9K7jY1I?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c07.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.737Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2560,16 +3589,16 @@
    "thumb": "https://images.buffer.com/thumbnail/pehMHqgUT3YcC17j8gZK4cXe7zXCh0_zmVm6wdUdUGM?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.798Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 65,
     "comments": 3,
-    "engagementRate": 9.01,
-    "views": 926,
+    "engagementRate": 9,
+    "views": 927,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 766
+    "reach": 767
    }
   },
   {
@@ -2588,16 +3617,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a8fc65ed92531e812044669/8c0798c8c0e99fb35926a55bb355cc05.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.754Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.46,
-    "views": 200,
+    "engagementRate": 2.44,
+    "views": 201,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 122
+    "reach": 123
    }
   },
   {
@@ -2668,7 +3697,7 @@
    "thumb": "https://images.buffer.com/thumbnail/aHxss5vK0Iav32ZX-XXXyu97fXeLOI_UCo9t4mpOAiw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c02.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.720Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -2725,16 +3754,16 @@
    "thumb": "https://images.buffer.com/thumbnail/iWxgOsi4_NlSE4Xj-N6sStcOkREChWTXqetOldYx0v8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260825-160141-coach-upskilling-meetings-7%2Fclips%2F20260825-160141-coach-upskilling-meetings-7-c05.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.825Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 2.26,
-    "views": 201,
+    "engagementRate": 2.25,
+    "views": 203,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 177
+    "reach": 178
    }
   },
   {
@@ -2761,6 +3790,30 @@
     "impressions": 65,
     "shares": 0,
     "clicks": 0
+   }
+  },
+  {
+   "id": "6a94f570b2a8955bd8bd692e",
+   "channelId": "6a94f56e065799be465a4606",
+   "channel": "More Than Movement Podcast ",
+   "service": "youtube",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-08-27T05:30:06.000Z",
+   "sentDate": "2026-08-27",
+   "weekday": "Thu",
+   "hourUTC": 5,
+   "text": "Nug and Rhi kick off More Than Movement by sharing the stories behind their combined 30+ years of coaching experience, working with children from as young as two through to adults.\n\nThey talk about how they got into coaching, what they\u2019ve learned along the way, and why great coac",
+   "link": "https://www.youtube.com/watch?v=8synJ5i1s24",
+   "thumb": "https://i.ytimg.com/vi/8synJ5i1s24/hqdefault.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T20:37:21.693Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 34
    }
   },
   {
@@ -2804,7 +3857,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a9077ddeb5cf16d53988585_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.775Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -2812,8 +3865,8 @@
     "views": 241,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 19.47,
-    "averageTimeWatched": 5.41,
+    "totalTimeWatched": 19.48,
+    "averageTimeWatched": 5.39,
     "reach": 208
    }
   },
@@ -2859,12 +3912,12 @@
    "thumb": "https://images.buffer.com/thumbnail/Dufs37M3NwjMkLX6YVH1cOWXLBBYjU3hhB8nqSNO8IU?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.779Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
-    "reactions": 52,
+    "reactions": 53,
     "comments": 0,
-    "engagementRate": 4.05,
-    "views": 1766,
+    "engagementRate": 4.11,
+    "views": 1767,
     "shares": 3,
     "saves": 7,
     "follows": 0,
@@ -2942,16 +3995,16 @@
    "thumb": "https://images.buffer.com/thumbnail/GWi6G-oUfl1LQGoblDmgFPstTq9nfeerur8E-RHncK8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c05.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.813Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.02,
-    "views": 121,
+    "engagementRate": 2,
+    "views": 122,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 99
+    "reach": 100
    }
   },
   {
@@ -2970,7 +4023,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8f3461ca40e3d96fbcc182_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.766Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
@@ -2981,6 +4034,34 @@
     "totalTimeWatched": 33.35,
     "averageTimeWatched": 7.76,
     "reach": 245
+   }
+  },
+  {
+   "id": "6a8e41356e9086bcd5b8997e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-08-26T04:00:47.685Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 4,
+   "text": "Animal Escape is the ULTIMATE kids warm up song! \n\nCheck it out in the Mini Monstars App!\n\n#earlychildhood #movement #kidsfitness #kidsapp",
+   "link": "https://www.instagram.com/reel/DcfTcw4iV4S/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787707632257/9d0400a2-6e07-40d2-bbe6-06fe39db0d17.jpeg",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.230Z",
+   "metrics": {
+    "reactions": 4,
+    "comments": 0,
+    "engagementRate": 5.8,
+    "views": 82,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 69
    }
   },
   {
@@ -2999,7 +4080,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787707632257/9d0400a2-6e07-40d2-bbe6-06fe39db0d17.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 2,
     "comments": 1,
@@ -3023,7 +4104,7 @@
    "thumb": "https://images.buffer.com/thumbnail/YcnEqttQeNApILYpjyH_P9zIKue27G_tPSd_eB7Ynwo?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c07.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.725Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.763Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3033,6 +4114,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 83
+   }
+  },
+  {
+   "id": "6a8bc9e2a3b8277a83a57208",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-08-26T02:06:59.720Z",
+   "sentDate": "2026-08-26",
+   "weekday": "Wed",
+   "hourUTC": 2,
+   "text": "Coaching Tip of the week \nShow and Tell\n\nAs coaches - especially for the younger age groups 1-5yo we need to be both demonstrating what the activity/skill looks like as well as telling the kids.\n\nFor younger age groups, a lot of the time this is the first time they are doing that",
+   "link": "https://www.instagram.com/reel/DcfGapQCp-W/",
+   "thumb": "https://images.buffer.com/thumbnail/GWi6G-oUfl1LQGoblDmgFPstTq9nfeerur8E-RHncK8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c05.mp4",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.090Z",
+   "metrics": {
+    "reactions": 5,
+    "comments": 0,
+    "engagementRate": 3.36,
+    "views": 188,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 149
    }
   },
   {
@@ -3131,7 +4240,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c06/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.768Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3240,16 +4349,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a82923f76705c9a0e019d3b/caa86b021f4e08d649ff39b0e1106681.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T07:47:44.872Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 9,
     "comments": 0,
-    "engagementRate": 9.57,
-    "views": 174,
+    "engagementRate": 9.47,
+    "views": 178,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 94
+    "reach": 95
    }
   },
   {
@@ -3345,7 +4454,7 @@
    "thumb": "https://images.buffer.com/thumbnail/PACzFlLNbzWp5lwZtwoXTYTZ5EIECJUkvP_P2_Jflcg?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260821-114331-more-than-movement-ep-2%2Fclips%2F20260821-114331-more-than-movement-ep-2-c06.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -3428,7 +4537,7 @@
    "thumb": "https://images.buffer.com/thumbnail/aE0NDamHSdLZ_5qb7tYVaZCTcswIB2t7I62IP6aFvUA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3482,7 +4591,7 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20260821-114331-more-than-movement-ep-2/carousels/20260821-114331-more-than-movement-ep-2-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -3588,7 +4697,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8cad6e23135717898ae3b6_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -3643,7 +4752,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a81711c0139b3d96e029e8c/a4d5f5a3311b30064184a7e1f188f63e.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -3653,6 +4762,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 97
+   }
+  },
+  {
+   "id": "6a87f5f052d2096d39962604",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "buffer",
+   "sentAt": "2026-08-21T07:01:40.937Z",
+   "sentDate": "2026-08-21",
+   "weekday": "Fri",
+   "hourUTC": 7,
+   "text": "Last day of work vibes! \nIntroducing our newest employee.\n\n#mikeymonstar #work #office #newera",
+   "link": "https://www.instagram.com/reel/DcSwIIxDPVP/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787294985802/49d875b9-9331-4af5-ba9f-ad8c694ebd2e.jpeg",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.169Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 2.13,
+    "views": 156,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 141
    }
   },
   {
@@ -3671,7 +4808,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787294985802/49d875b9-9331-4af5-ba9f-ad8c694ebd2e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 13,
     "comments": 4,
@@ -3699,7 +4836,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd1/uploads/1787294985802/49d875b9-9331-4af5-ba9f-ad8c694ebd2e.jpeg",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-05T16:52:22.597Z",
+   "metricsUpdatedAt": "2026-09-06T15:53:17.373Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -3826,7 +4963,7 @@
    "thumb": "https://images.buffer.com/thumbnail/IomTqpaCY4LVAY4R_SmePOlmWn3QrsXwNG7kN5uwHVw?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260820-180204-coach-upskilling-meetings-3%2Fclips%2F20260820-180204-coach-upskilling-meetings-3-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
@@ -3930,7 +5067,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a868c0e12369502ee03ee6a/199485abb0e9f00d59a59c8fbcd6c588.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -4033,7 +5170,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a865c0c908956588702555b_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.568Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -4062,7 +5199,7 @@
    "thumb": "https://images.buffer.com/thumbnail/nh5azzH3HRK_S7bv0w4E2qt2o3Vt9nVdPEQYBVD3Y6o?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260811-141327-coach-upskilling-meetings-4%2Fclips%2F20260811-141327-coach-upskilling-meetings-4-c10.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.764Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -4196,7 +5333,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a8518911de4be9682204ecc_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -4250,7 +5387,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a816fc700475e92bd0ddaac/945dd4b07a879c78c49ec0e0da766ae0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -4354,7 +5491,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a83d51a7b7f46c9c9b2350f_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -4383,7 +5520,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d50a29f474780a50bb2f6/0fbd639b9619bc7fbfa37ae1f564b2a0.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -4462,7 +5599,7 @@
    "thumb": "https://images.buffer.com/thumbnail/6ts8483idKu1ZsVEs948BxCypldvXaijTVOMQ8kA61w?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260805-210952-coach-upskilling-meetings-4%2Fclips%2F20260805-210952-coach-upskilling-meetings-4-c03.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
@@ -4570,7 +5707,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a82919e244d2310faebba73_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
@@ -4607,6 +5744,31 @@
     "impressions": 37,
     "reach": 19,
     "shares": 0
+   }
+  },
+  {
+   "id": "6a8245778996b76e5ddb8289",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-16T22:44:53.000Z",
+   "sentDate": "2026-08-16",
+   "weekday": "Sun",
+   "hourUTC": 22,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3965297282799338660",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a8245778996b76e5ddb8289_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-17T22:34:54.206Z",
+   "metrics": {
+    "views": 20,
+    "reach": 18,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
    }
   },
   {
@@ -4676,16 +5838,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7d485c4c9a7a67910b4909/7e49aa2e8c01d6999f9570692df3f909.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 5,
     "comments": 2,
     "engagementRate": 2.33,
-    "views": 525,
+    "views": 526,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 343
+    "reach": 344
    }
   },
   {
@@ -4765,6 +5927,60 @@
    }
   },
   {
+   "id": "6a7d7658a5966fa6b2717434",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-13T06:18:53.000Z",
+   "sentDate": "2026-08-13",
+   "weekday": "Thu",
+   "hourUTC": 6,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3962626691168421895",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a7d7658a5966fa6b2717434_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-14T06:08:54.471Z",
+   "metrics": {
+    "views": 16,
+    "reach": 15,
+    "comments": 0,
+    "engagementRate": 6.67,
+    "reactions": 1
+   }
+  },
+  {
+   "id": "6a7dbc8d9fb1e75dd403144c",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-13T06:18:29.000Z",
+   "sentDate": "2026-08-13",
+   "weekday": "Thu",
+   "hourUTC": 6,
+   "text": "Come meet coach Rhi \ud83d\udc4b\n\nShe\u2019s one of our coaches inside our Mini Monstars app \n\nOur app makes movement easy: anytime, anywhere ! \n\nSimply choose your adventure and press play for the fun to begin \u2728\ud83d\udc95\n\n#minimonstars #minimonstarsapp #activekids #kidsmovement #learningthroughplay\u2764\ufe0f",
+   "link": "https://www.instagram.com/reel/Db-EQRTzych/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a7dbc8d9fb1e75dd403144c_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.129Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 2.02,
+    "views": 243,
+    "shares": 1,
+    "saves": 0,
+    "totalTimeWatched": 18.65,
+    "averageTimeWatched": 5.21,
+    "reach": 198
+   }
+  },
+  {
    "id": "6a7d6143e5d225203e3b86fb",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -4805,7 +6021,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a7d55ffac90af38d2e2c4b3_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
@@ -4895,6 +6111,31 @@
    }
   },
   {
+   "id": "6a7cf60ba33138f99b7fc42e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-12T22:26:21.000Z",
+   "sentDate": "2026-08-12",
+   "weekday": "Wed",
+   "hourUTC": 22,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3962392911602233600",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a7cf60ba33138f99b7fc42e_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-13T22:16:22.303Z",
+   "metrics": {
+    "views": 17,
+    "reach": 15,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
    "id": "6a7d0c67ce30ffbc66de5502",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -4961,7 +6202,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7951419a5d80dd9a04762d/c371df7d1b664ed25d99c82413dbc72f.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
@@ -5117,7 +6358,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a75661cb3574542ce0ec8fa/b18f39780609b68d517a206969cb43fac3df5bd4_254ada407bdda44fd054381ce25476daa700b50e_thumbnail",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -5201,6 +6442,31 @@
    "metrics": {
     "views": 0,
     "reach": 24,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4c3",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T05:56:10.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 5,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960440927391314846",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4c3_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T05:46:11.555Z",
+   "metrics": {
+    "views": 11,
+    "reach": 9,
     "comments": 0,
     "engagementRate": 0,
     "reactions": 0
@@ -5332,6 +6598,213 @@
    }
   },
   {
+   "id": "6a798bd7415d6845b7d9c4c7",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T05:12:52.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 5,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960419133863193402",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4c7_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T05:02:53.457Z",
+   "metrics": {
+    "views": 14,
+    "reach": 10,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a79f221b0669ba9d752536f",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-10T05:12:12.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 5,
+   "text": "Rainy day ? Kids bouncing off the walls? \ud83d\ude05\ud83e\udd23\n\nTurn screen time into MOVE time \ud83c\udfc3\ud83c\udffb\u200d\u2642\ufe0f\n\nSimply \u2b07\ufe0f\n\n1. Choose your adventure \n2. Press play \n\nAnd let their imagination run wild ! \u2728\n\n#minimonstarsapp #rainydayactivities #activekids #kids #indooractivitiesforkids",
+   "link": "https://www.instagram.com/reel/Db2OohMzFVQ/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a79f221b0669ba9d752536f_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.161Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 2.16,
+    "views": 218,
+    "shares": 1,
+    "saves": 0,
+    "totalTimeWatched": 16.05,
+    "averageTimeWatched": 4.65,
+    "reach": 185
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4cb",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T04:10:17.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960387638322732554",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4cb_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T04:00:18.503Z",
+   "metrics": {
+    "views": 12,
+    "reach": 9,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4c5",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T04:10:10.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960387578000256627",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4c5_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T04:00:12.453Z",
+   "metrics": {
+    "views": 12,
+    "reach": 10,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4cf",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T04:10:00.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960387489081003460",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4cf_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T04:00:01.243Z",
+   "metrics": {
+    "views": 12,
+    "reach": 10,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4c9",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T04:09:48.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960387395891992328",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4c9_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T03:59:49.000Z",
+   "metrics": {
+    "views": 17,
+    "reach": 13,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a798bd7415d6845b7d9c4cd",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-10T04:09:41.000Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3960387333547828440",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a798bd7415d6845b7d9c4cd_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-11T03:59:42.237Z",
+   "metrics": {
+    "views": 18,
+    "reach": 13,
+    "comments": 0,
+    "engagementRate": 0,
+    "reactions": 0
+   }
+  },
+  {
+   "id": "6a7946017cfac889462757a0",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-10T04:00:50.663Z",
+   "sentDate": "2026-08-10",
+   "weekday": "Mon",
+   "hourUTC": 4,
+   "text": "We\u2019ll admit it\u2026 we\u2019ve been sleeping on this one! \ud83d\udc40\n\nRe-introducing the Mini Monstars App \ud83d\udcf1\u2b50 Packed with fun adventures, challenges and activities designed to get little bodies UP, MOVING and having FUN! \n\nScreen time just got a serious upgrade. \ud83d\udc4f\n\n#MiniMonstars #KidsActivities #A",
+   "link": "https://www.instagram.com/p/Db2GxLoEZxX/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a7943ba888ee77c930e829d/97146bddb8d2ee5136f089bd8a160c9e.original.png",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.163Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 12.96,
+    "views": 276,
+    "shares": 5,
+    "saves": 0,
+    "follows": 1,
+    "reach": 54
+   }
+  },
+  {
    "id": "6a795dad14efa85dc1dfe701",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -5372,7 +6845,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6a79b8b0bf3e7dc424873289_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
@@ -5477,7 +6950,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/67903222a47cb1ac5b0c97f9/6a75545ef1467b2d94051ac4/7d4a5de37c107368eee80505adee9795.original.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-09-06T03:05:44.569Z",
+   "metricsUpdatedAt": "2026-09-07T02:05:53.765Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
@@ -5591,6 +7064,60 @@
     "impressions": 122,
     "shares": 0,
     "clicks": 4
+   }
+  },
+  {
+   "id": "6a75940cede21b10aa990f0e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "story",
+   "via": "network",
+   "sentAt": "2026-08-07T05:46:25.000Z",
+   "sentDate": "2026-08-07",
+   "weekday": "Fri",
+   "hourUTC": 5,
+   "text": "",
+   "link": "https://www.instagram.com/stories/minimonstarsapp/3958261692454769835",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a75940cede21b10aa990f0e_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-08-08T05:36:26.194Z",
+   "metrics": {
+    "views": 15,
+    "reach": 10,
+    "comments": 0,
+    "engagementRate": 10,
+    "reactions": 1
+   }
+  },
+  {
+   "id": "6a761f0da4489bbd5b955a8a",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-07T05:44:07.000Z",
+   "sentDate": "2026-08-07",
+   "weekday": "Fri",
+   "hourUTC": 5,
+   "text": "Parents: have you touched your toes lately, without bending your knees ? Or has that ship sailed ? \n\nTry our new stretch class today \u2728\n\n1. Hit play \n2. Have a go \n3. Cheer your kid on when they beat you \ud83e\udd23\ud83d\ude05\n\nFull challenge link in bio \n\n#app #kidsapp #activeliving #bendandstretch",
+   "link": "https://www.instagram.com/reel/DbukNcYzKoj/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a761f0da4489bbd5b955a8a_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.132Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 2.56,
+    "views": 101,
+    "shares": 0,
+    "saves": 0,
+    "totalTimeWatched": 5.13,
+    "averageTimeWatched": 3.62,
+    "reach": 78
    }
   },
   {
@@ -6393,6 +7920,35 @@
    }
   },
   {
+   "id": "6a73981979ac3882ac5e7029",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-04T23:00:06.000Z",
+   "sentDate": "2026-08-04",
+   "weekday": "Tue",
+   "hourUTC": 23,
+   "text": "Can your mini gymnast do THIS? \ud83e\udd38\ud83d\udc40 \n\nThe new Monstars challenge is up ! For full video click the link in bio \n\n#kids #app #gymnastics #fun",
+   "link": "https://www.instagram.com/reel/DbosggThvXd/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a73981979ac3882ac5e7029_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.152Z",
+   "metrics": {
+    "reactions": 4,
+    "comments": 0,
+    "engagementRate": 2.9,
+    "views": 159,
+    "shares": 0,
+    "saves": 0,
+    "totalTimeWatched": 16.6,
+    "averageTimeWatched": 6.6,
+    "reach": 138
+   }
+  },
+  {
    "id": "6a7144289ab0942e750f1e18",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -6501,6 +8057,35 @@
    }
   },
   {
+   "id": "6a72549fbd67821653667fae",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2026-08-04T04:35:58.000Z",
+   "sentDate": "2026-08-04",
+   "weekday": "Tue",
+   "hourUTC": 4,
+   "text": "Fair warning\u2026 living rooms may become gymnastics arenas. \ud83e\udd38\ud83d\ude05\n\nThe Splits Challenge is our latest Monstar Challenge and the kids are obsessed! Stretching, giggling, and cheering each other on to get a little closer every time.\n\nCoach Rhi will show you ways to improve your flexibili",
+   "link": "https://www.instagram.com/reel/Dbmt215TaXb/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a72549fbd67821653667fae_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.155Z",
+   "metrics": {
+    "reactions": 4,
+    "comments": 0,
+    "engagementRate": 2.46,
+    "views": 276,
+    "shares": 1,
+    "saves": 0,
+    "totalTimeWatched": 21.38,
+    "averageTimeWatched": 5.39,
+    "reach": 203
+   }
+  },
+  {
    "id": "6a7143c18aee7dcc2d056035",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -6554,6 +8139,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 109
+   }
+  },
+  {
+   "id": "6a6ffceb1409c264210ebd01",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-08-03T07:00:28.980Z",
+   "sentDate": "2026-08-03",
+   "weekday": "Mon",
+   "hourUTC": 7,
+   "text": "Don't you love how toddlers can touch their ears with their toes?!\ud83e\udd23 \n\nIt's incredible to see their flexibility at such a young age, we want to keep that up!\nIntroducing\u2026 the Splits Challenge!\n\nOur newest Monstar Challenge built to get little bodies stretching, wobbling, and giggl",
+   "link": "https://www.instagram.com/p/DbkZx1FFjbj/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6a6ffceb1409c264210ebd01/79d840d7195b0f0c628b76cca611ec3c84ca166c_7a6196655ea8d6a926f3c0ce3a9b1d01195c4993_thumbnail",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.175Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 7.14,
+    "views": 58,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 28
    }
   },
   {
@@ -8281,6 +9894,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed14",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-11T07:01:33.000Z",
+   "sentDate": "2026-06-11",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "\ud83d\ude43 A lot of us parents think kids' movement is just about \u2018burning energy.\u2019\n\nBut movement actually supports \u2b07\ufe0f \n\nemotional regulation\nbrain development\ncoordination\nconfidence\nsocial interaction\nattention and focus\n\nThe earlier movement becomes FUN \ud83d\ude1b  and normal\u2026 the more benefits",
+   "link": "https://www.instagram.com/p/DZb7yU_kZjx/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed14_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.196Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 24,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 14
+   }
+  },
+  {
    "id": "6a2797221815df2b1707a788",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -8363,6 +10004,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed4c",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-10T07:00:38.000Z",
+   "sentDate": "2026-06-10",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "Our NEW Wild West Challenge is LIVE on YouTube \ud83d\udc0e \n\nPerfect for \u2b07\ufe0f \n\u2705\ufe0f rainy days\n\u2705\ufe0f daycare movement breaks\n\u2705\ufe0f after-school energy bursts\n\u2705\ufe0f school holiday boredom\n\u2705\ufe0f parents needing 5 minutes while kids MOVE\n\nKids can follow along at home while building: \n\n\u2714 coordination \u2714 balan",
+   "link": "https://www.instagram.com/p/DZZW4xMndgd/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed4c_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.157Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 8.33,
+    "views": 28,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
+   }
+  },
+  {
    "id": "6a261c2a8c9a767891006434",
    "channelId": "67997c68a31978b79c616ae4",
    "channel": "Mini Monstars",
@@ -8386,6 +10055,34 @@
     "impressions": 116,
     "shares": 0,
     "clicks": 2
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed20",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-09T07:01:23.000Z",
+   "sentDate": "2026-06-09",
+   "weekday": "Tue",
+   "hourUTC": 7,
+   "text": "Last week one of our Area Manager's Troy led one of our regular team-building, feedback and upskilling sessions with some our coaches.\n\nThese sessions give us the opportunity to share ideas, celebrate wins, learn from one another and continue growing as a team.\n\n\u2764\ufe0f Because when o",
+   "link": "https://www.instagram.com/p/DZWyLjIDJJC/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed20_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.186Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 11.11,
+    "views": 33,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 18
    }
   },
   {
@@ -8471,6 +10168,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed12",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-08T07:00:15.000Z",
+   "sentDate": "2026-06-08",
+   "weekday": "Mon",
+   "hourUTC": 7,
+   "text": "Awesome work to Coach Ash, training and upskilling Coach Jess in our Gymnastics curriculum,  at Eden Academy in Elwood last week \u2764\ufe0f \n\nWe love seeing our Coaches thrive and bring joy to our centres nationwide! \ud83e\udd70",
+   "link": "https://www.instagram.com/p/DZUNQFIGitY/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed12_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.179Z",
+   "metrics": {
+    "reactions": 5,
+    "comments": 0,
+    "engagementRate": 6.9,
+    "views": 150,
+    "shares": 1,
+    "saves": 0,
+    "follows": 0,
+    "reach": 87
+   }
+  },
+  {
    "id": "6a13d95521ddada8fc0110b1",
    "channelId": "67997c68a31978b79c616ae4",
    "channel": "Mini Monstars",
@@ -8494,6 +10219,34 @@
     "impressions": 83,
     "shares": 0,
     "clicks": 0
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed24",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-05T22:01:53.000Z",
+   "sentDate": "2026-06-05",
+   "weekday": "Fri",
+   "hourUTC": 22,
+   "text": "If you\u2019re in that \u201cthey\u2019re climbing the walls, I just need 5 minutes of peace\u201d moment: this is for you. \u2b07\ufe0f \u2b07\ufe0f \n\n\u2705\ufe0f No prep. No overthinking. Just press play and let them move.\n\nWe\u2019ve kept it super simple so you can literally:\n\ud83d\udc49 click the YouTube link in our bio\n\ud83d\udc49 set them up in f",
+   "link": "https://www.instagram.com/p/DZOGDeioN6J/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed24_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.147Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 8.33,
+    "views": 21,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -8548,6 +10301,34 @@
     "impressions": 86,
     "shares": 0,
     "clicks": 0
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed16",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-05T07:01:54.000Z",
+   "sentDate": "2026-06-05",
+   "weekday": "Fri",
+   "hourUTC": 7,
+   "text": "The biggest misconception about kids' SPORT classes? \u2b07\ufe0f \n\n\u274c\ufe0f That they\u2019re only about athletic ability. \n\nThis couldn't be more WRONG\n\nWhat we\u2019re actually helping your children develop:\n\n\u2705\ufe0f confidence in new environments\n\u2705\ufe0f social interaction & friendships\n\u2705\ufe0f emotional resilience\n",
+   "link": "https://www.instagram.com/p/DZMfDuYjz8J/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed16_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.138Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 17,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -8630,6 +10411,34 @@
     "impressions": 504,
     "shares": 2,
     "clicks": 32
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed32",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-06-03T07:01:42.000Z",
+   "sentDate": "2026-06-03",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "We know it can often feel easier to manage big energy and emotions with quiet time but\u2026\n\nFor kids, movement supports:\n\ud83d\ude0d Emotional regulation (lessens the extremes of big feelings)\n\n\ud83e\udd70 Confidence, so they can go make new friends at school!\n\n\ud83d\ude01 Coordination, so that they can tie up t",
+   "link": "https://www.instagram.com/p/DZHVcjXHJeH/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed32_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.199Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 10,
+    "views": 32,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 10
    }
   },
   {
@@ -8848,6 +10657,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed22",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-28T07:01:29.000Z",
+   "sentDate": "2026-05-28",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "Most kids don\u2019t hate movement.\u2b07\ufe0f \n\nThey hate:\n\n\ud83d\ude12 feeling behind with trying a new ball skill\n\n\ud83d\ude42\u200d\u2195\ufe0f being embarrassed, because they couldn't catch or hit the ball \n\nbeing watched, fear of failure \n\n\ud83d\ude10\ufe0f feeling \u201cnot good enough\u201d while others are excelling in front of them\n\nAnd hones",
+   "link": "https://www.instagram.com/p/DY34psGD5iI/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed22_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.222Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 13.33,
+    "views": 22,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 15
+   }
+  },
+  {
    "id": "6a13d24b1b2945034206da6b",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -8923,6 +10760,34 @@
     "impressions": 92,
     "shares": 0,
     "clicks": 1
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed1e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-27T07:01:31.000Z",
+   "sentDate": "2026-05-27",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "Here\u2019s how Mini Monstars uses music to teach confidence, coordination and courage\ud83d\udc47\n\n\u2728 Confidence\n\nSinging, clapping, and taking turns in a group helps kids feel safe to be seen\nThey start putting their hand up, joining in, and having a go without fear\n\n\ud83c\udfaf Coordination\n\nActions wit",
+   "link": "https://www.instagram.com/p/DY1T1dhIJWA/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed1e_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.227Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 14,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 8
    }
   },
   {
@@ -9028,6 +10893,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed30",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-25T07:01:35.000Z",
+   "sentDate": "2026-05-25",
+   "weekday": "Mon",
+   "hourUTC": 7,
+   "text": "Confidence starts with movement. \ud83e\udd38\u200d\u2640\ufe0f\n\nYour little Monstars don't just learn to roll, land, and balance. They build the body awareness and control that fuels every sport, every game, and every adventure ahead.\n\nBecause gymnastics isn't just a class. It's the foundation for everyt",
+   "link": "https://www.instagram.com/p/DYwKRhYIIxO/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed30_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.126Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 18,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 11
+   }
+  },
+  {
    "id": "69f827cb683346f1f20d9a2a",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -9103,6 +10996,34 @@
     "impressions": 126,
     "shares": 0,
     "clicks": 4
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed3a",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-21T07:02:49.000Z",
+   "sentDate": "2026-05-21",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "Building confident kids! One movement challenge at a time \ud83d\udc0e",
+   "link": "https://www.instagram.com/p/DYl3PKLGetf/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed3a_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.209Z",
+   "metrics": {
+    "reactions": 3,
+    "comments": 0,
+    "engagementRate": 25,
+    "views": 25,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -9188,6 +11109,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed46",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-20T07:01:53.000Z",
+   "sentDate": "2026-05-20",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "\ud83d\ude0d Shoutout to our coaches Ash and Lorena for the fantastic energy, effort and joy you bring to your Mini Monstars incursions.\n\nOur Coaches love seeing all of their centres each week, it really makes their day! \u2764\ufe0f",
+   "link": "https://www.instagram.com/p/DYjSUwYoG1U/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed46_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.298Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 18,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 13
+   }
+  },
+  {
    "id": "69f826a174132f935200082a",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -9213,6 +11162,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 134
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed1a",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-18T07:01:29.000Z",
+   "sentDate": "2026-05-18",
+   "weekday": "Mon",
+   "hourUTC": 7,
+   "text": "It's teaching presence \ud83e\uddd8\u200d\u2640\ufe0f \n\nOur incursions take children on an imaginative journey; through jungles, oceans, farms, and forests, using yoga as the vehicle. Along the way, children develop:\n\n- Mindfulness\n- Story Telling\n- Strength and Balance\n- Self Expression \n- Emotional Regu",
+   "link": "https://www.instagram.com/p/DYeItBHDloE/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed1a_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.235Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 14,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -9263,6 +11240,34 @@
     "comments": 0,
     "engagementRate": 0,
     "views": 2109
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed36",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-15T07:02:05.000Z",
+   "sentDate": "2026-05-15",
+   "weekday": "Fri",
+   "hourUTC": 7,
+   "text": "\ud83d\ude0d Great work to our little legends at Sparrow Early Learning Swanbourne.\n\nAll of the kids enjoyed their Monstars incursion with Coach Leah: where they got to learn about Basketball skill, drills and dropped some cool hoop skills!\ud83c\udfc0",
+   "link": "https://www.instagram.com/p/DYWaW_Wlp9H/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed36_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.177Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 6.67,
+    "views": 19,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 15
    }
   },
   {
@@ -9374,6 +11379,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed4a",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-14T07:02:03.000Z",
+   "sentDate": "2026-05-14",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "That \"horsing around\" thats drives us crazy, is actually how your kid builds confidence !\ud83d\udc0e",
+   "link": "https://www.instagram.com/p/DYT1luCl2WQ/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed4a_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.181Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 14.29,
+    "views": 28,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 14
+   }
+  },
+  {
    "id": "6a0422f91c307ad270f84222",
    "channelId": "67997c68a31978b79c616ae4",
    "channel": "Mini Monstars",
@@ -9480,6 +11513,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 113
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed26",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-13T07:01:43.000Z",
+   "sentDate": "2026-05-13",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "Children don\u2019t just listen and play an instrument in our music classes...we do things differently around here \n\nThey participate, create, and lead, because that's when their confidence and imagination truly shines. \n\nOur early learning music sessions include:\n\n\ud83c\udfb5 Body Percussion &",
+   "link": "https://www.instagram.com/p/DYRQtqXDsec/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed26_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.220Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 11,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 8
    }
   },
   {
@@ -9676,6 +11737,62 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed38",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-10T21:45:10.000Z",
+   "sentDate": "2026-05-10",
+   "weekday": "Sun",
+   "hourUTC": 21,
+   "text": "Amazing work to our coaches for always providing a fun, energetic and hands on session for our Mini Monstars! \ud83d\udc97 \ud83d\ude04",
+   "link": "https://www.instagram.com/p/DYLHeKYjp-p/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed38_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.167Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 22.22,
+    "views": 15,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 9
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed44",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-08T07:02:21.000Z",
+   "sentDate": "2026-05-08",
+   "weekday": "Fri",
+   "hourUTC": 7,
+   "text": "Sport and games isn't just about our little ones throwing a ball around! \u2b07\ufe0f \n\n\u2705\ufe0f Each session follows a carefully planned progression plan that builds skills step by step, ensuring children are engaged, challenged appropriately and supported at every stage. \n\n\u2764\ufe0f Our sessions crea",
+   "link": "https://www.instagram.com/p/DYEY0IvjiqP/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed44_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.224Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 12.5,
+    "views": 11,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 8
+   }
+  },
+  {
    "id": "69f823cb4452f9f1560c516b",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -9730,6 +11847,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed3e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-06T07:01:39.000Z",
+   "sentDate": "2026-05-06",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "\ud83d\ude0d Thank you to the educators and team over at Sparrow Early Learning Swanbourne for allowing us to join in the FUN at your centre! \n\nCoach Leah loves teaching the kids about movement and sports! \ud83c\udfc0 \ud83c\udfb6",
+   "link": "https://www.instagram.com/p/DX_PJwdDhk-/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed3e_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.213Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 7.14,
+    "views": 24,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 14
+   }
+  },
+  {
    "id": "69f82310172f14d0a1007141",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -9781,6 +11926,34 @@
     "impressions": 125,
     "shares": 0,
     "clicks": 2
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed40",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-05-04T08:00:32.000Z",
+   "sentDate": "2026-05-04",
+   "weekday": "Mon",
+   "hourUTC": 8,
+   "text": "Our little legends over at Sparrow Early Learning Swanbourne enjoyed their movement and basketball sessions with Coach leah, they always have so much fun!!\n\nCoach Leah got the kids\n\ud83c\udfc0  bouncing the ball with both hands and then progressed to one hand dribbles\n\ud83c\udfc0 shooting hoops\n\ud83c\udfb6 mo",
+   "link": "https://www.instagram.com/p/DX6MUyijnHg/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed40_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-06T11:50:14.301Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 9.09,
+    "views": 14,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 11
    }
   },
   {
@@ -9913,6 +12086,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 73
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed42",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-30T07:02:23.000Z",
+   "sentDate": "2026-04-30",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "Confidence doesn\u2019t come from saying\n \u201cgood job\u201d 100 times\u2026\n\nIt comes from what your kids actually do \ud83d\udc47\n\nTaking the swing (even if they miss) \u26f3\ufe0f\n\nTrying again instead of giving up\n\nFinally getting it\u2026 and lighting up with pride and excitement\n \nThat\u2019s the stuff that builds confide",
+   "link": "https://www.instagram.com/p/DXvyeXBjg_r/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed42_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-05T12:50:04.684Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 18.18,
+    "views": 18,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 11
    }
   },
   {
@@ -10120,6 +12321,34 @@
     "impressions": 69,
     "shares": 0,
     "clicks": 0
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed0e",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-25T00:01:41.000Z",
+   "sentDate": "2026-04-25",
+   "weekday": "Sat",
+   "hourUTC": 0,
+   "text": "\ud83d\ude0d Kids don\u2019t need perfect equipment\u2026\n\nThey just need a reason to move!\n\nThat's why coach Rhi created the golf adventure challenge \nAre you going to get out your clubs ?\ud83d\udc47\n\nshow us your best \u201cgolf move\u201d \u26f3\ufe0f its time to tee off! \n\n#kidsfun #kidsactivities #minimonstars #kidsgolf",
+   "link": "https://www.instagram.com/p/DXiKYKxjdAQ/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed0e_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-04T13:49:55.329Z",
+   "metrics": {
+    "reactions": 2,
+    "comments": 0,
+    "engagementRate": 16.67,
+    "views": 19,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -10342,6 +12571,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed3c",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-21T07:01:29.000Z",
+   "sentDate": "2026-04-21",
+   "weekday": "Tue",
+   "hourUTC": 7,
+   "text": "\ud83d\ude0d Coach Rhi had a ball teeing up this new adventure for you and your kids at home!\n\nThis one?\n \u2714 gets them off the couch (bye bye ipad kids)\n \u2714 builds confidence so they can give new things a go MORE often! Without feeling scared\n \u2714 burns energy = guaranteed sleep time ease! (wit",
+   "link": "https://www.instagram.com/p/DXYnPYPDqF8/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed3c_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-03T14:49:46.180Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 15,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 10
+   }
+  },
+  {
    "id": "69d8809d2e3c5a81070d6827",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -10421,6 +12678,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 127
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed48",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-20T07:01:11.000Z",
+   "sentDate": "2026-04-20",
+   "weekday": "Mon",
+   "hourUTC": 7,
+   "text": "\u26f3\ufe0f Something FUN is about to swing into your home!\n\nCoach Rhi had a ball teeing up this new adventure for you and your kids at home! \n\n#kidsactivities #kidsfunathome #kidsmovement",
+   "link": "https://www.instagram.com/p/DXWCaO5Dyfv/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed48_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-03T14:49:46.256Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 11.11,
+    "views": 11,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 9
    }
   },
   {
@@ -10504,6 +12789,34 @@
    }
   },
   {
+   "id": "6a6838cf77f9f4356262ed93",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-17T07:01:14.000Z",
+   "sentDate": "2026-04-17",
+   "weekday": "Fri",
+   "hourUTC": 7,
+   "text": "\ud83d\ude0d These little legends showed up and gave everything this week!\n\nConfidence. Big jumps. Even bigger smiles.\n\nTag us in your Mini Monstars moments, we love featuring our little stars. \ud83d\ude80\n\n#minimonstars #kidsactivities #storyhousemernda",
+   "link": "https://www.instagram.com/p/DXOUB_6DFr-/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed93_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-03T14:49:46.490Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "views": 17,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
+   }
+  },
+  {
    "id": "69dc43fccfbcfe6e040b56f1",
    "channelId": "67903bd2a31978b79c3f7cb5",
    "channel": "minimonstars",
@@ -10529,6 +12842,34 @@
     "saves": 0,
     "follows": 0,
     "reach": 83
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed80",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-16T07:01:40.000Z",
+   "sentDate": "2026-04-16",
+   "weekday": "Thu",
+   "hourUTC": 7,
+   "text": "The Space warm-up looks like pure chaos and fun, and that's kind of the point.\n\nBut underneath all that jumping and balancing? We're building coordination, listening skills, confidence, and body awareness > one rocket jump at a time!\n\n \u2714 Coordination\n \u2714 Listening\n \u2714 Confidence\n \u2714",
+   "link": "https://www.instagram.com/p/DXLvSbpDioq/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed80_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-03T14:49:46.493Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 0,
+    "engagementRate": 8.33,
+    "views": 25,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 12
    }
   },
   {
@@ -10581,6 +12922,34 @@
     "impressions": 210,
     "shares": 1,
     "clicks": 12
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed95",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-04-15T07:01:15.000Z",
+   "sentDate": "2026-04-15",
+   "weekday": "Wed",
+   "hourUTC": 7,
+   "text": "\ud83d\udc7d Alien Walk Challenge \ud83d\udc7d\n\nThink your little one has what it takes?\n\nSlow motion. Big steps. Zero gravity arms.\n\nTag us, we'll feature your little astronaut \ud83d\ude80\n\nSee the full challenge here \u27a1\ufe0f https://www.youtube.com/watch?v=6-5x448fGuI \n\n#kidsactivities #kidsfun #kidsathomefun",
+   "link": "https://www.instagram.com/p/DXJKcWGl24T/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed95_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-02T15:49:37.179Z",
+   "metrics": {
+    "reactions": 1,
+    "comments": 1,
+    "engagementRate": 13.33,
+    "views": 21,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 15
    }
   },
   {
@@ -13618,6 +15987,35 @@
     "saves": 11,
     "follows": 10,
     "reach": 2851
+   }
+  },
+  {
+   "id": "6a6838cf77f9f4356262ed28",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "reel",
+   "via": "network",
+   "sentAt": "2025-10-12T23:01:25.000Z",
+   "sentDate": "2025-10-12",
+   "weekday": "Sun",
+   "hourUTC": 23,
+   "text": "Happy Monday MONSTARS!\nWho checked out the new WARM UP SONG over the weekend?\n\n\ud83c\udfa5 https://www.youtube.com/watch?v=flqHCIUUjjg \n\n\ud83e\udde0 What kids will learn:\nCounting 1-2-3-4 in time with the beat \ud83e\udd41\nFollowing rhythm and timing\ud83c\udfb6\nFull-body warm-up movements to get ready for learning \ud83d\udd7a\ud83d\udc83\nLi",
+   "link": "https://www.instagram.com/reel/DPuhOJfj2ds/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/6a6838cc4b2d03035f54093e/6a6838cf77f9f4356262ed28_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-09-02T15:49:37.059Z",
+   "metrics": {
+    "reactions": 4,
+    "comments": 0,
+    "engagementRate": 13.64,
+    "views": 61,
+    "shares": 2,
+    "saves": 0,
+    "totalTimeWatched": 0,
+    "averageTimeWatched": 0,
+    "reach": 44
    }
   },
   {
