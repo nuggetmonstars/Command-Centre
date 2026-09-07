@@ -1283,6 +1283,13 @@ body::before {
 .ledger-pts.zero { color: #cbd5e0; }
 .ledger-running { font-size: calc(11px * var(--fs)); color: var(--muted); font-weight: 700; text-align: right; padding-top: 2px; }
 .ledger-flag { text-align: center; cursor: help; padding-top: 1px; }
+.ledger-tag {
+  display: inline-block; margin-left: 6px; vertical-align: 1px;
+  font-size: 8.5px; font-weight: 900; letter-spacing: 0.3px;
+  padding: 2px 5px; border-radius: 4px; line-height: 1.25; white-space: nowrap;
+}
+.ledger-tag.accepted { background: rgba(156,39,176,0.11); color: var(--purple); }
+.ledger-tag.offer    { background: #edf2f7; color: var(--muted); }
 .ledger-section-hdr { padding: 10px 14px; font-size: 10px; font-weight: 900; letter-spacing: 0.6px; text-transform: uppercase; }
 .ledger-section-hdr.earned { background: linear-gradient(90deg, rgba(255,215,0,0.25), rgba(255,215,0,0.08)); color: #7b341e; border-bottom: 1px solid var(--line); }
 .ledger-section-hdr.pending { background: #f7fafc; color: var(--muted); border-bottom: 1px solid var(--line); border-top: 1px solid var(--line); }
@@ -6091,6 +6098,32 @@ window.__initSales = function(){
     });
   }
 
+  /* Ledger row markers. `kind` is stamped onto every row at build time (kind:e.kind).
+     Test the VALUE explicitly - rows from the baked payload-data blob carry no `kind`
+     key at all, so a `!== "sale"` test would mislabel every one of them. */
+  var LEDGER_TAGS = {
+    conversion: { cls:'accepted', text:'OFFER ACCEPTED',
+      title:'Acceptance of an earlier offer \u2014 points only. The sale was already counted when the offer was made.' },
+    offer: { cls:'offer', text:'OFFER',
+      title:'Offer made \u2014 counts as a sale.' }
+  };
+  function ledgerTagSpec(kind){
+    if (kind === 'conversion') return LEDGER_TAGS.conversion;
+    if (kind === 'offer')      return LEDGER_TAGS.offer;
+    return null;                                   /* sale, or no kind at all */
+  }
+  function ledgerTagEl(kind){
+    var t = ledgerTagSpec(kind); if (!t) return null;
+    var s = document.createElement('span');
+    s.className = 'ledger-tag ' + t.cls; s.textContent = t.text; s.title = t.title;
+    return s;
+  }
+  function ledgerTagHTML(kind){
+    var t = ledgerTagSpec(kind); if (!t) return '';
+    return '<span class="ledger-tag ' + t.cls + '" title="' + t.title + '">' + t.text + '</span>';
+  }
+  window.ledgerTagHTML = ledgerTagHTML;            /* the module block renders the CRM tab */
+
   function buildRepCard(r) {
     // tier on the rep card uses fair avg
     var tier = tierFor(repFair(r));
@@ -6182,7 +6215,10 @@ window.__initSales = function(){
     // sales ledger
     var hasSessionDates = r.has_session_dates;
     var lh = document.createElement('div'); lh.className = 'ledger-h';
-    lh.innerHTML = '\ud83d\udcd2 Sales Ledger <span style="color:var(--muted);font-weight:700;font-size:11px;">(' + r.sales_ledger.length + ' centres' + (hasSessionDates ? ' \u00b7 sorted by session start' : '') + ')</span>';
+    lh.innerHTML = '\ud83d\udcd2 Sales Ledger <span style="color:var(--muted);font-weight:700;font-size:11px;">('
+      + (r.sales === undefined || r.sales === null ? r.sales_ledger.length : Number(r.sales).toFixed(0)) + ' sales \u00b7 '
+      + r.sales_ledger.length + ' ledger entries'
+      + (hasSessionDates ? ' \u00b7 sorted by session start' : '') + ')</span>';
     body.appendChild(lh);
 
     var ledger = document.createElement('div'); ledger.className = 'ledger';
@@ -6238,6 +6274,7 @@ window.__initSales = function(){
         var dt = document.createElement('div'); dt.className = 'ledger-date'; dt.textContent = formatDate(e.date);
         var nm2 = document.createElement('div'); nm2.className = 'ledger-centre';
         nm2.textContent = (isCrossing ? '\ud83c\udfaf ' : '') + e.centre;
+        try { var lt = ledgerTagEl(e.kind); if (lt) nm2.appendChild(lt); } catch(_tagErr){}
         var sd = document.createElement('div'); sd.className = 'ledger-start';
         if (e.start_raw) {
           sd.textContent = e.start_raw;
@@ -6807,7 +6844,7 @@ function buildEverything(sales, offers, activity, asOf){
     weekly:{},weeklyCentres:{},monthlyCentres:Array(12).fill(0),
     sales_by_city:{A:0,P:0,B:0,S:0,M:0},tcc_by_city:{A:0,P:0,B:0,S:0,M:0},
     totalCalls:0,totalNewCalls:0,totalReCalls:0,tclSales:0,callCats:{},offersCount:0,ongoingCount:0,lostCount:0,pendingCount:0,
-    directSales:0,newDirectSales:0,activeDays:new Set()});
+    directSales:0,newDirectSales:0,newOffers:0,activeDays:new Set()});
   CALL_CATS.forEach(cat=>repNames.forEach(n=>byRep[n].callCats[cat]=0));
 
   // point events
@@ -6823,6 +6860,7 @@ function buildEverything(sales, offers, activity, asOf){
   });
   // pipeline tallies
   offers.forEach(o=>{ const r=byRep[o.rep]; if(!r)return; r.offersCount++;
+    if(o.source!=="seed") r.newOffers++;   // post-cutover offers only: the pre-ledger period is already inside tclSales
     if(o.status==="ongoing") r.ongoingCount++; else if(o.status==="lost") r.lostCount++; else r.pendingCount++; });
   // activity tallies (full model: counts[CAT][STATE])
   const sumCat=(counts,cat)=>{ const o=(counts||{})[cat]||{}; return Object.values(o).reduce((a,b)=>a+(Number(b)||0),0); };
@@ -6857,7 +6895,11 @@ function buildEverything(sales, offers, activity, asOf){
     const inactive=INACTIVE.has(r.name);
     const tier=fair_avg>=TIER_THRESHOLDS.gold?"gold":fair_avg>=TIER_THRESHOLDS.green?"green":fair_avg>=TIER_THRESHOLDS.blue?"blue":"red";
     const eligible=!inactive&&fair_avg>=ELIG;
-    const salesCount = (r.tclSales||0) + (r.newDirectSales||0) + r.ongoingCount; // T-Cl historical + new CRM direct sales + conversions
+    // An offer IS a sale, counted on the day it was made. Its later acceptance is the SAME
+    // sale, so a conversion adds points but never a second count. The pre-ledger period stays
+    // on the imported tclSales figure, and pre-ledger offers are already inside it - only
+    // post-cutover offers (newOffers) are added here.
+    const salesCount = (r.tclSales||0) + (r.newDirectSales||0) + (r.newOffers||0);
     const callsPerSale=salesCount?r2(r.totalCalls/salesCount):null;
     const callsPerOffer=r.offersCount?r2(r.totalCalls/r.offersCount):null;
     const pointsPerSale=salesCount?r2(ytd_total/salesCount):null;
@@ -7884,7 +7926,7 @@ function repLedgerDate(s){
 }
 function repSalesLedger(rep){
   const led=(rep.sales_ledger||[]).slice();
-  const title=`📒 ${crmEsc(rep.name)}'s Sales Ledger <span style="color:var(--muted);font-weight:700;font-size:11px;">(${led.length} centre${led.length===1?'':'s'})</span>`;
+  const title=`📒 ${crmEsc(rep.name)}'s Sales Ledger <span style="color:var(--muted);font-weight:700;font-size:11px;">(${Number(rep.sales||0).toFixed(0)} sales \u00b7 ${led.length} ledger entr${led.length===1?'y':'ies'})</span>`;
   if(!led.length){
     return `<section class="panel active"><div class="ledger-h">${title}</div><div class="ledger"><div class="ledger-row empty">No centres signed yet</div></div></section>`;
   }
@@ -7897,7 +7939,7 @@ function repSalesLedger(rep){
   const earned=led.filter(e=>e.running_total>=100), pending=led.filter(e=>e.running_total<100);
   const row=(e,crossing)=>`<div class="ledger-row${crossing?' crossing':''}">`
     +`<div class="ledger-date">${repLedgerDate(e.date)}</div>`
-    +`<div class="ledger-centre">${crossing?'🎯 ':''}${crmEsc(e.centre)}</div>`
+    +`<div class="ledger-centre">${crossing?'🎯 ':''}${crmEsc(e.centre)}${(window.ledgerTagHTML?window.ledgerTagHTML(e.kind):'')}</div>`
     +`<div class="ledger-start tbc">—</div>`
     +`<div class="ledger-city">${crmEsc(e.city||'—')}</div>`
     +`<div class="ledger-pts${(Number(e.points)===0)?' zero':''}">${(Number(e.points)||0).toFixed(1)}</div>`
