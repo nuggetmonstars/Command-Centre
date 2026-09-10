@@ -6689,6 +6689,12 @@ document.addEventListener('DOMContentLoaded', function(){
 .cc-delbtn:hover{filter:brightness(1.08);}
 .cc-delbtn:disabled{opacity:.55;cursor:default;}
 .cc-dumsg{font-size:12px;color:var(--muted);}
+.cc-cbbtn{font-family:var(--font);font-size:13px;background:var(--blue);color:#fff;border:none;border-radius:30px;padding:8px 16px;cursor:pointer;box-shadow:var(--shadow);}
+.cc-cbbtn:hover{filter:brightness(1.08);}
+.cc-cbbtn:disabled{opacity:.55;cursor:default;}
+.cc-cbbtn.clear{background:var(--orange);}
+.cc-cbmovewrap{display:none;align-items:flex-end;gap:8px;margin:6px 0 2px;flex-wrap:wrap;}
+.cc-cbmovewrap.open{display:flex;}
 /* Log Call callback-date day-load indicator */
 .cc-cbload{display:block;font-size:11.5px;margin-top:3px;color:var(--muted);}
 .cc-cbload.ok{color:var(--green);}
@@ -6738,7 +6744,7 @@ document.addEventListener('DOMContentLoaded', function(){
 <script type="module">
 import { initializeApp, getApp, getApps } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, getDocs, getDoc, query, where, addDoc, deleteDoc, updateDoc, doc, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, getDocs, getDoc, query, where, addDoc, deleteDoc, updateDoc, doc, writeBatch, deleteField } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
@@ -7167,6 +7173,7 @@ const ccSTATUS = {
 };
 function ccKey(c){ if(c.doubleUp) return "double_up"; return ccSTATUS[c.status]?c.status:"new"; }
 let ccCENTRES=[], ccFilter="all", ccPinRep=null, ccInited=false;
+let ccCbDayIso=null;   // iso currently shown by the callbacks-on-a-day popup
 let ccToday={id:null,counts:{}}, ccBookedToday=0;
 const ccEl = id => document.getElementById(id);
 
@@ -7184,7 +7191,7 @@ function ccInit(){
   // counter expand toggle
   ccEl("cc-counter-toggle").addEventListener("click",()=>{ const g=ccEl("cc-counter-grid"); const open=g.style.display==="none"; g.style.display=open?"":"none"; ccEl("cc-counter-toggle").innerHTML=(open?"&#9662;":"&#9656;")+" Today's breakdown"; });
   // delegated: result change (callback auto-fill + session toggle) and Log Call save
-  ccEl("cc-list").addEventListener("change", e=>{ const sel=e.target.closest("[data-logresult]"); if(sel){ ccOnResultChange(sel); return; } const ss=e.target.closest("[data-logsession]"); if(ss){ ccSyncCustomPts(ss.getAttribute("data-logsession")); return; } const cb=e.target.closest("[data-logcb]"); if(cb) ccCallbackDayLoad(cb.getAttribute("data-logcb")); });
+  ccEl("cc-list").addEventListener("change", e=>{ const mv=e.target.closest("[data-cbmoveinput]"); if(mv){ ccMoveDayLoad(mv.getAttribute("data-cbmoveinput"), mv); return; } const sel=e.target.closest("[data-logresult]"); if(sel){ ccOnResultChange(sel); return; } const ss=e.target.closest("[data-logsession]"); if(ss){ ccSyncCustomPts(ss.getAttribute("data-logsession")); return; } const cb=e.target.closest("[data-logcb]"); if(cb) ccCallbackDayLoad(cb.getAttribute("data-logcb")); });
   ccEl("cc-list").addEventListener("click", e=>{ const b=e.target.closest("[data-logsave]"); if(b) ccLogCall(b.getAttribute("data-logsave")); });
   // callbacks filter toggle (today + overdue only)
   ccEl("cc-cbfilter").addEventListener("click",()=>{ ccFilter=(ccFilter==="callbacks")?"all":"callbacks"; ccRenderChips(); ccRenderList(); });
@@ -7197,7 +7204,16 @@ function ccInit(){
   // popup rows act exactly like the main list: derive num from the row's own data-toggle
   // (NOT getElementById — popup rows share id="cc-row-{num}"), close the popup to avoid stacked
   // modals, then reuse ccGoto() — the same reveal+open+scroll the main list uses to expose Log Call.
+  ccEl("cc-cbday-list").addEventListener("change", e=>{
+    const mv=e.target.closest("[data-cbmoveinput]"); if(mv) ccMoveDayLoad(mv.getAttribute("data-cbmoveinput"), mv);
+  });
   ccEl("cc-cbday-list").addEventListener("click", e=>{
+    // callback actions work inside the popup too — intercepted before the row-open
+    // handler so acting on a callback does not close the popup and jump to the list.
+    const cbc=e.target.closest("[data-cbclear]"); if(cbc){ ccClearCallback(cbc.getAttribute("data-cbclear"), cbc); return; }
+    const cbm=e.target.closest("[data-cbmove]"); if(cbm){ ccToggleMoveCallback(cbm.getAttribute("data-cbmove"), cbm, true); return; }
+    const cbs=e.target.closest("[data-cbmovesave]"); if(cbs){ ccSaveMoveCallback(cbs.getAttribute("data-cbmovesave"), cbs); return; }
+    const cbx=e.target.closest("[data-cbmovecancel]"); if(cbx){ ccToggleMoveCallback(cbx.getAttribute("data-cbmovecancel"), cbx, false); return; }
     const head=e.target.closest("[data-toggle]"); if(!head) return;
     const num=head.getAttribute("data-toggle");
     ccEl("cc-cbday-overlay").classList.remove("open");
@@ -7212,6 +7228,10 @@ function ccInit(){
     const cx=e.target.closest("[data-canceledit]"); if(cx){ ccCancelEdit(cx.getAttribute("data-canceledit")); return; }
     const oa=e.target.closest("[data-offeraccept]"); if(oa){ ccOfferAccept(oa.getAttribute("data-offeraccept")); return; }
     const du=e.target.closest("[data-doubleup]"); if(du){ ccToggleDoubleUp(du.getAttribute("data-doubleup")); return; }
+    const cbc=e.target.closest("[data-cbclear]"); if(cbc){ ccClearCallback(cbc.getAttribute("data-cbclear"), cbc); return; }
+    const cbm=e.target.closest("[data-cbmove]"); if(cbm){ ccToggleMoveCallback(cbm.getAttribute("data-cbmove"), cbm, true); return; }
+    const cbs=e.target.closest("[data-cbmovesave]"); if(cbs){ ccSaveMoveCallback(cbs.getAttribute("data-cbmovesave"), cbs); return; }
+    const cbx=e.target.closest("[data-cbmovecancel]"); if(cbx){ ccToggleMoveCallback(cbx.getAttribute("data-cbmovecancel"), cbx, false); return; }
     const dl=e.target.closest("[data-ccdelete]"); if(dl){ ccDeleteCentre(dl.getAttribute("data-ccdelete")); return; }
     const he=e.target.closest("[data-histedit]"); if(he){ ccHistEdit(he.getAttribute("data-hn"), he.getAttribute("data-hi"), true); return; }
     const hsv=e.target.closest("[data-histsave]"); if(hsv){ ccSaveHistNote(hsv.getAttribute("data-hn"), hsv.getAttribute("data-hi")); return; }
@@ -7587,10 +7607,22 @@ function ccActions(c){
   const on=!!c.doubleUp;
   const del = ccFilter==="double_up"
     ? `<button class="cc-delbtn" type="button" data-ccdelete="${num}">&#128465; Delete</button>` : "";
+  // Callback actions only exist when there IS a callback to act on.
+  const cbBtns = c.callbackDate ? `
+    <button class="cc-cbbtn clear" type="button" data-cbclear="${num}">&#10005; Clear callback</button>
+    <button class="cc-cbbtn" type="button" data-cbmove="${num}">&#128197; Change date</button>` : "";
+  const cbMove = c.callbackDate ? `
+  <div class="cc-cbmovewrap" data-cbmovewrap="${num}">
+    <div class="cc-logfield"><label>New callback date</label>
+      <input type="date" value="${crmEsc(c.callbackDate)}" data-cbmoveinput="${num}">
+      <span class="cc-cbload" data-cbmoveload="${num}"></span></div>
+    <button class="cc-cbbtn" type="button" data-cbmovesave="${num}">Save</button>
+    <button class="cc-dubtn" type="button" data-cbmovecancel="${num}">Cancel</button>
+  </div>` : "";
   return `<div class="cc-actions">
     <button class="cc-dubtn${on?" on":""}" type="button" data-doubleup="${num}">${on?"&#10005; Remove Double Up":"&#8681; Mark as Double Up"}</button>
-    ${del}<span class="cc-dumsg" data-dumsg="${num}"></span>
-  </div>`;
+    ${cbBtns}${del}<span class="cc-dumsg" data-dumsg="${num}"></span>
+  </div>${cbMove}`;
 }
 async function ccToggleDoubleUp(num){
   const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
@@ -7608,6 +7640,86 @@ async function ccToggleDoubleUp(num){
     console.error("ccToggleDoubleUp",e);
     if(btn) btn.disabled=false;
     if(msg){ msg.style.color="var(--red)"; msg.textContent="Save failed"; }
+  }
+}
+// ---- Callback row actions: clear / change date -------------------------------
+// FLAG-ONLY writes, exactly like ccToggleDoubleUp above: they touch ONLY callbackDate
+// and callbackSource. Nothing writes history, crmCallCount, status, lastResult,
+// daily-activity, sales-entries or offer-centres, and no part of ccLogCall is reached
+// from here — so using these never logs a call. Clearing callbackSource also drops any
+// "offer-agent" tag, so the nightly agent no longer treats the date as its own.
+function ccCbRow(el,num){
+  // popup rows share id="cc-row-{num}" with the main list, so prefer the clicked
+  // element's own row and only fall back to the id lookup.
+  try{ if(el && el.closest){ const r=el.closest(".cc-row"); if(r) return r; } }catch(e){}
+  return document.getElementById("cc-row-"+num);
+}
+function ccCbMsg(row,num,text,colour){
+  const m=row?row.querySelector(`[data-dumsg="${num}"]`):null;
+  if(m){ m.style.color=colour||"var(--muted)"; m.textContent=text||""; }
+}
+function ccAfterCallbackWrite(){
+  ccRenderChips(); ccRenderList();
+  // ccRenderCbDay is NOT called by ccRenderList — refresh the popup too, or a cleared
+  // or moved row lingers in it.
+  try{
+    const ov=ccEl("cc-cbday-overlay");
+    if(ov && ov.classList.contains("open") && ccCbDayIso) ccRenderCbDay(ccCbDayIso);
+  }catch(e){ console.error("ccAfterCallbackWrite",e); }
+}
+async function ccClearCallback(num, srcEl){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
+  const row=ccCbRow(srcEl,num);
+  const btn=row?row.querySelector(`[data-cbclear="${num}"]`):null;
+  if(btn) btn.disabled=true;
+  ccCbMsg(row,num,"Saving\u2026");
+  try{
+    await updateDoc(doc(db, ccCOLLECTION, c.id), {callbackDate:null, callbackSource:deleteField()});
+    c.callbackDate=null; delete c.callbackSource;   // keep the local copy in step
+    ccAfterCallbackWrite();
+  }catch(e){
+    console.error("ccClearCallback",e);
+    if(btn) btn.disabled=false;
+    ccCbMsg(row,num,"Clear failed","var(--red)");
+  }
+}
+function ccToggleMoveCallback(num, srcEl, show){
+  const row=ccCbRow(srcEl,num); if(!row) return;
+  const w=row.querySelector(`[data-cbmovewrap="${num}"]`); if(!w) return;
+  w.classList.toggle("open", !!show);
+  if(show){ const i=w.querySelector(`[data-cbmoveinput="${num}"]`); if(i) try{ i.focus(); }catch(e){} }
+  else ccCbMsg(row,num,"");
+}
+// day-load warning for the move picker — mirrors ccCallbackDayLoad, in-memory only.
+function ccMoveDayLoad(num, srcEl){
+  const row=ccCbRow(srcEl,num); if(!row) return;
+  const inp=row.querySelector(`[data-cbmoveinput="${num}"]`);
+  const msg=row.querySelector(`[data-cbmoveload="${num}"]`);
+  if(!inp||!msg) return;
+  const d=(inp.value||"").trim();
+  if(!d){ msg.textContent=""; msg.className="cc-cbload"; return; }
+  const n=ccCENTRES.filter(x=>String(x.callbackDate||"")===d && String(x.num)!==String(num)).length;
+  if(n===0){ msg.textContent="No other callbacks on this day"; msg.className="cc-cbload ok"; }
+  else if(n<5){ msg.textContent=`\u{1F4C5} ${n} other callback${n===1?'':'s'} on this day`; msg.className="cc-cbload"; }
+  else { msg.textContent=`\u{1F4C5} ${n} other callbacks on this day \u2014 consider another date`; msg.className="cc-cbload warn"; }
+}
+async function ccSaveMoveCallback(num, srcEl){
+  const c=ccCENTRES.find(x=>String(x.num)===String(num)); if(!c) return;
+  const row=ccCbRow(srcEl,num);
+  const inp=row?row.querySelector(`[data-cbmoveinput="${num}"]`):null;
+  const iso=((inp&&inp.value)||"").trim();
+  if(!iso){ ccCbMsg(row,num,"Pick a date.","var(--red)"); return; }
+  const btn=row?row.querySelector(`[data-cbmovesave="${num}"]`):null;
+  if(btn) btn.disabled=true;
+  ccCbMsg(row,num,"Saving\u2026");
+  try{
+    await updateDoc(doc(db, ccCOLLECTION, c.id), {callbackDate:iso, callbackSource:deleteField()});
+    c.callbackDate=iso; delete c.callbackSource;
+    ccAfterCallbackWrite();
+  }catch(e){
+    console.error("ccSaveMoveCallback",e);
+    if(btn) btn.disabled=false;
+    ccCbMsg(row,num,"Save failed","var(--red)");
   }
 }
 async function ccDeleteCentre(num){
@@ -7647,6 +7759,7 @@ function ccRenderCbDay(iso){
 }
 function ccOpenCbDay(){
   const iso=ccEl("cc-cbday").value; if(!iso) return;
+  ccCbDayIso=iso;                     // remembered so a clear/move can refresh this popup
   ccRenderCbDay(iso);
   ccEl("cc-cbday-overlay").classList.add("open");
 }
