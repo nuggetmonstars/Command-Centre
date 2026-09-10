@@ -6855,7 +6855,7 @@ const IS_PLACEHOLDER = FIREBASE_CONFIG.apiKey.startsWith("PASTE");
 const IS_FILE = location.protocol === "file:";
 let DATA = FALLBACK_DATA, benchLive = null;
 let db = null, LIVE = false, CANDS = [];
-let NEEDS = []; let fNeedStatus = "open"; let fNeedUrg = "All";
+let NEEDS = []; let fNeedStatus = "open"; let fNeedUrg = "All"; let needRaisedSort = null;
 const NEEDS_COLL = "recruitment-needs";
 const COLL = "recruitment-pipeline";
 const TABS = ["Overview","Pipeline","Open Needs","Outcomes","Bench","Ad Spend"];
@@ -7099,7 +7099,14 @@ function render(){
     const shown = NEEDS.filter(n=> fNeedStatus==='all' ? true : (n.status||'open')===fNeedStatus)
                        .filter(n=> fState==='All' || n.state===fState)
                        .filter(passUrg)
-                       .sort((a,b)=>(URGRANK[(b.urgency||'').toLowerCase()]||0)-(URGRANK[(a.urgency||'').toLowerCase()]||0));
+                       .sort((a,b)=>{
+                         if(needRaisedSort){
+                           const da=a.dateRaised||'', db=b.dateRaised||'';
+                           if(!da&&!db) return 0; if(!da) return 1; if(!db) return -1;
+                           return needRaisedSort==='desc' ? db.localeCompare(da) : da.localeCompare(db);
+                         }
+                         return (URGRANK[(b.urgency||'').toLowerCase()]||0)-(URGRANK[(a.urgency||'').toLowerCase()]||0);
+                       });
     const by = {}; openU.forEach(n=>{ if(n.state) by[n.state]=(by[n.state]||0)+1; });
     const stateBtns = ["All","VIC","NSW","QLD","SA","WA"].map(s=>{
       const nn = s==="All"? openU.length : openU.filter(n=>n.state===s).length;
@@ -7116,7 +7123,7 @@ function render(){
       <button class="fbtn on" style="margin-left:auto;background:var(--green);border-color:var(--green)" onclick="openAddNeed()">+ Add need</button></div>`;
     v += `<div class="filterbar"><span style="font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)">Urgency:</span>${urgBtns}<span style="width:12px"></span><span style="font-family:'MarkerFelt',cursive;font-size:13px;color:var(--ink)">Status:</span>${statusBtns}</div>`;
     v += `<div class="card"><h3>Open needs by state (${openU.length})</h3>${bars(by)}</div>`;
-    v += `<div class="card"><h3>The list (${shown.length})</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th>Raised</th><th>Reason</th><th>Status</th></tr></thead><tbody>`;
+    v += `<div class="card"><h3>The list (${shown.length})</h3><table><thead><tr><th>State</th><th>Location</th><th>Programs</th><th>Need</th><th>Urgency</th><th onclick="toggleRaisedSort()" style="cursor:pointer;user-select:none" title="Click to sort by date raised">Raised ${needRaisedSort==='desc'?'\u25BC':needRaisedSort==='asc'?'\u25B2':'\u21C5'}</th><th>Reason</th><th>Status</th></tr></thead><tbody>`;
     shown.forEach(n=>{ const st=(n.status||'open');
       v+=`<tr style="cursor:pointer" onclick="openNeed('${n.id}')"><td><span class="pill b">${esc(n.state||'-')}</span></td><td>${esc(n.location)}</td><td style="font-size:12px">${esc(n.programs)}</td>
       <td>${n.coachesNeeded!=null?n.coachesNeeded:'<span class="s">set</span>'}</td>
@@ -7320,6 +7327,7 @@ window.submitAdd = function(){
 window.closeCard = function(){ document.getElementById('modalHost').innerHTML=''; };
 
 window.setNeedStatus = function(s){ fNeedStatus=s; render(); };
+window.toggleRaisedSort = function(){ needRaisedSort = (needRaisedSort==='desc') ? 'asc' : 'desc'; render(); };
 window.setNeedUrg = function(u){ fNeedUrg=u; render(); };
 const URG = ["High","Medium","Low"];
 const PROGRAMS = ["Sports","Music","Yoga","Gymnastics","Sensory Fusion","All"];
