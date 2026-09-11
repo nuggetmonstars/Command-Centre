@@ -208,6 +208,10 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
   <div style="margin-bottom:10px">
     <input type="text" id="coachSearch" placeholder="🔍 Search coaches by name..." oninput="renderCoaches()" style="width:100%;padding:10px 14px;border:1px solid #E0E0E0;border-radius:8px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box">
   </div>
+  <div class="filt" id="rfilt">
+    <button class="sf on" onclick="fRoster('active',this)">Active roster</button>
+    <button class="sf" onclick="fRoster('inactive',this)">Gear to return <span id="rf-inact-n"></span></button>
+  </div>
   <div class="filt" id="sfilt">
     <button class="sf on" onclick="fst('all',this)">All States</button>
     <button class="sf" onclick="fst('VIC',this)">VIC</button>
@@ -371,6 +375,7 @@ var COACHES = [];   // Populated from Firestore by loadFromDb() after sign-in (w
 var ITEMS = [{"id":"i01","name":"AFL Footballs","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i02","name":"Basketballs","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i03","name":"Cricket Bats","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i04","name":"Rugby/NFL Balls","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i05","name":"Soccer Balls","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i06","name":"Tennis Rackets","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i07","name":"Hockey Sticks","cat":"Sports","stock":0,"min":0,"reorder":0},{"id":"i08","name":"Tambourines","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i09","name":"Xylophones","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i10","name":"Rhythm Sticks","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i11","name":"Shakers","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i12","name":"Triangles","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i13","name":"Castanets","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i14","name":"Wrist Bells","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i15","name":"Ukulele","cat":"Music","stock":0,"min":0,"reorder":0},{"id":"i16","name":"Panel Mats","cat":"Gymnastics","stock":0,"min":0,"reorder":0},{"id":"i17","name":"Foam Balance Beam","cat":"Gymnastics","stock":0,"min":0,"reorder":0},{"id":"i18","name":"Wedge","cat":"Gymnastics","stock":0,"min":0,"reorder":0},{"id":"i19","name":"Yoga Mats","cat":"Yoga","stock":0,"min":0,"reorder":0},{"id":"i20","name":"Tennis Balls","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i21","name":"Bean Bags","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i22","name":"Hoops","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i23","name":"Cones","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i24","name":"Hurdles","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i25","name":"Wheelie Bag","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i26","name":"Net Bags","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i27","name":"MP3 Player","cat":"Other","stock":0,"min":0,"reorder":0},{"id":"i28","name":"Mikey Monstar","cat":"Other","stock":0,"min":0,"reorder":0}];
 var ORDERS = [{"id": "o01", "item": "Cricket Bats", "supplier": "Leko Sports", "qty": 0, "cost": 0, "ordered": "2026-02-02", "received": "2026-03-19", "notes": "First order - 45 day lead time"}];
 var activeState = "all";
+var activeRoster = "active";   // Coaches & Bags tab: "active" roster vs "inactive" (holds gear, off roster)
 var coachFilters = {};
 var xferHistory = [];   // Populated from Firestore by loadFromDb() (window.xferHistory = xfers). Empty at rest for the same reason as COACHES: every transfer row names a coach.
 var editingId = null;
@@ -413,6 +418,16 @@ function goTab(id, btn) {
   for (var i = 0; i < btns.length; i++) btns[i].classList.remove("on");
   document.getElementById("view-" + id).classList.add("on");
   if (btn) btn.classList.add("on");
+}
+// Coaches & Bags roster tab. Active is the landing view; Inactive lists coaches who are
+// off the roster but still hold equipment (reconcile already drops off-roster coaches with
+// nothing). Stockroom is pinned first on BOTH tabs — it is the central pool, not a coach.
+function fRoster(v, btn) {
+  activeRoster = v;
+  var rs = document.querySelectorAll("#rfilt .sf");
+  for (var i = 0; i < rs.length; i++) rs[i].classList.remove("on");
+  if (btn) btn.classList.add("on");
+  renderCoaches();
 }
 function fst(s, btn) {
   activeState = s;
@@ -522,6 +537,8 @@ function renderCoaches() {
   for (var i = 0; i < COACHES.length; i++) {
     var c = COACHES[i];
     if (c && c.name === 'Stockroom') { stock = c; continue; }
+    // roster tab: Active shows on-roster coaches, Inactive shows off-roster gear holders
+    if (activeRoster === "inactive" ? !c._inactive : !!c._inactive) continue;
     if (activeState !== "all" && c.state !== activeState) continue;
     if (q && (c.name || "").toLowerCase().indexOf(q) === -1) continue;
     list.push(c);
@@ -531,9 +548,21 @@ function renderCoaches() {
   var html = "";
   for (var i = 0; i < ordered.length; i++) html += buildCard(ordered[i]);
   if (!ordered.length) {
-    html = '<div style="grid-column:1/-1;text-align:center;padding:24px;color:#888">No coaches match your filters.</div>';
+    html = '<div style="grid-column:1/-1;text-align:center;padding:24px;color:#888">'
+         + (activeRoster === "inactive"
+              ? 'No off-roster coaches are holding equipment.'
+              : 'No coaches match your filters.')
+         + '</div>';
   }
   document.getElementById("cgrid").innerHTML = html;
+  // count badge on the Inactive tab
+  var nInact = 0;
+  for (var k = 0; k < COACHES.length; k++) {
+    var cc = COACHES[k];
+    if (cc && cc.name !== 'Stockroom' && cc._inactive) nInact++;
+  }
+  var badge = document.getElementById("rf-inact-n");
+  if (badge) badge.textContent = nInact ? "(" + nInact + ")" : "";
 }
 
 // Collapsible cards (view-only): show/hide a card's equipment body; the card header stays visible.
@@ -667,7 +696,13 @@ function doTransfer() {
       if (iname === name) {
         var cur = pQ(sep > -1 ? fi[i].substring(sep + 1) : "");
         var nt = pN(sep > -1 ? fi[i].substring(sep + 1) : "");
-        fi[i] = name + ":" + Math.max(0, cur - qty) + (nt ? " " + nt : "");
+        var left = cur - qty;
+        if (left > 0) {
+          fi[i] = name + ":" + left + (nt ? " " + nt : "");
+        } else {
+          fi.splice(i, 1);                              // item hits 0 → drop the line, never leave "Name:0"
+          if (fi.length === 0) delete from.eq[prog];    // tidy an emptied program bucket (mirrors set_item)
+        }
         break;
       }
     }
@@ -1277,14 +1312,22 @@ function stateOf(u) {
 async function readActiveRoster() {
   const snap = await getDocs(collection(db, "users"));   // read all, filter client-side (no index)
   const roster = [];
+  // State for EVERY coach on the users roster, whatever their status. Inactive coaches
+  // still hold gear, and their tracker-equipment `state` field goes stale when they move
+  // — the users roster is the source of truth for state, active or not.
+  const stateByName = new Map();
   snap.forEach(d => {
     const u = d.data() || {};
-    if (u.role !== "coach" || u.status !== "Active") return;
+    if (u.role !== "coach") return;
     const name = `${(u.firstName || "").trim()} ${(u.lastName || "").trim()}`.trim();
-    if (!name || ROSTER_EXCLUDED.has(name.toLowerCase())) return;
-    roster.push({ name, state: stateOf(u) });
+    if (!name) return;
+    const st = stateOf(u);
+    if (st && st !== "—") stateByName.set(normName(name), st);
+    if (u.status !== "Active") return;
+    if (ROSTER_EXCLUDED.has(name.toLowerCase())) return;
+    roster.push({ name, state: st });
   });
-  return roster;
+  return { roster, stateByName };
 }
 function hasGear(c) {
   return c.eq && Object.keys(c.eq).some(p => (c.eq[p] || []).length);
@@ -1295,7 +1338,7 @@ function hasGear(c) {
 //  • equip doc NOT on roster but holds gear -> shown, flagged _inactive (for return/reconcile)
 //  • equip doc NOT on roster, empty         -> dropped (departed, nothing to track)
 //  • Stockroom                              -> always shown
-function reconcile(equipCoaches, roster) {
+function reconcile(equipCoaches, roster, stateByName) {
   const stock = equipCoaches.find(c => normName(c.name) === "stockroom" || c._docId === "stockroom");
   const byName = new Map();
   equipCoaches.forEach(c => { if (c !== stock) byName.set(normName(c.name), c); });
@@ -1322,7 +1365,16 @@ function reconcile(equipCoaches, roster) {
   });
   equipCoaches.forEach(c => {
     if (c === stock || used.has(c)) return;
-    if (hasGear(c)) { c._inactive = true; if (!c.id) c.id = c._docId; out.push(c); }
+    if (hasGear(c)) {
+      c._inactive = true;
+      // Display-only: trust the users roster for state when the coach is on it at all,
+      // and fall back to the (possibly stale) tracker-equipment state only when there is
+      // no users match. Nothing is written back to the coach doc.
+      const rs = stateByName ? stateByName.get(normName(c.name)) : null;
+      if (rs) c.state = rs;
+      if (!c.id) c.id = c._docId;
+      out.push(c);
+    }
   });
   return out;
 }
@@ -1333,8 +1385,8 @@ async function loadFromDb() {
   const equipCoaches = [];
   cs.forEach(d => equipCoaches.push(docToCoach(d.id, d.data())));
   equipCoaches.sort((a, b) => a.idx - b.idx);
-  const roster = await readActiveRoster();
-  window.COACHES = reconcile(equipCoaches, roster);
+  const { roster, stateByName } = await readActiveRoster();
+  window.COACHES = reconcile(equipCoaches, roster, stateByName);
 
   const ts = await getDocs(collection(db, XFERS));
   const xfers = [];
