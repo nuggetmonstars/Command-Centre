@@ -1,1 +1,17 @@
 *.csv
+
+# Screenshot / debug scratch — never commit.
+# Screenshot copies of pages carry an auth bootstrap that signs in as a real
+# account. Take screenshots outside the repo; these rules are a backstop only.
+shots/
+**/shots/
+*.png
+*.screenshot.html
+*.bootstrap.html
+token.txt
+*.token
+
+# Local backups of pages (already numerous and untracked)
+*.BACKUP.*.html
+*.bak
+*.bak.*

@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+"""Add searchable coach picker (filled by) to needs. Run from ~/Command-Centre."""
+import base64
+f="recruitment.html"
+s=open(f,encoding="utf-8").read()
+P=[
+  ("coachOpts","ICBjb25zdCBvcHQgPSAoY3VyLGFycik9PmFyci5tYXAoeD0+YDxvcHRpb24gJHt4PT09Y3VyPydzZWxlY3RlZCc6Jyd9PiR7eH08L29wdGlvbj5gKS5qb2luKCcnKTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnbW9kYWxIb3N0JykuaW5uZXJIVE1MID0gYDxkaXYgY2xhc3M9Im1vZGFsYmciIG9uY2xpY2s9ImlmKGV2ZW50LnRhcmdldD09PXRoaXMpY2xvc2VDYXJkKCkiPg==","ICBjb25zdCBvcHQgPSAoY3VyLGFycik9PmFyci5tYXAoeD0+YDxvcHRpb24gJHt4PT09Y3VyPydzZWxlY3RlZCc6Jyd9PiR7eH08L29wdGlvbj5gKS5qb2luKCcnKTsKICBjb25zdCBjb2FjaE9wdHMgPSBbLi4ubmV3IFNldCgoQ0FORFN8fFtdKS5tYXAoYz0+Yy5uYW1lKS5maWx0ZXIoQm9vbGVhbikpXS5zb3J0KChhLGIpPT5hLmxvY2FsZUNvbXBhcmUoYikpLm1hcChubT0+YDxvcHRpb24gdmFsdWU9IiR7ZXNjKG5tKX0iPmApLmpvaW4oJycpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdtb2RhbEhvc3QnKS5pbm5lckhUTUwgPSBgPGRpdiBjbGFzcz0ibW9kYWxiZyIgb25jbGljaz0iaWYoZXZlbnQudGFyZ2V0PT09dGhpcyljbG9zZUNhcmQoKSI+"),
+  ("filledByField","ICAgICAgPGRpdiBzdHlsZT0ibWFyZ2luLXRvcDoxNHB4Ij4KICAgICAgICAkeyhuLnN0YXR1c3x8J29wZW4nKT09PSdvcGVuJwogICAgICAgICAgPyBgPGJ1dHRvbiBjbGFzcz0ibWNsb3NlIiBzdHlsZT0iYmFja2dyb3VuZDp2YXIoLS1ncmVlbikiIG9uY2xpY2s9InNhdmVOZWVkKCcke2lkfScse3N0YXR1czonZmlsbGVkJ30pO2Nsb3NlQ2FyZCgpIj5NYXJrIGZpbGxlZDwvYnV0dG9uPg==","ICAgICAgPGRpdiBjbGFzcz0ibXJvdyIgc3R5bGU9Im1hcmdpbi10b3A6OHB4Ij48Yj5GaWxsZWQgYnkgKGNvYWNoKTwvYj48L2Rpdj4KICAgICAgPGlucHV0IGNsYXNzPSJmc2VsIiBsaXN0PSJjb2FjaE5hbWVzXyR7aWR9IiBzdHlsZT0id2lkdGg6MTAwJTttYXgtd2lkdGg6MTAwJSIgcGxhY2Vob2xkZXI9IlNlYXJjaCBjb2FjaCBuYW1lIiB2YWx1ZT0iJHtlc2Mobi5maWxsZWRCeXx8JycpfSIgb25jaGFuZ2U9InNhdmVOZWVkKCcke2lkfScse2ZpbGxlZEJ5OnRoaXMudmFsdWV9KSI+CiAgICAgIDxkYXRhbGlzdCBpZD0iY29hY2hOYW1lc18ke2lkfSI+JHtjb2FjaE9wdHN9PC9kYXRhbGlzdD4KICAgICAgPGRpdiBzdHlsZT0ibWFyZ2luLXRvcDoxNHB4Ij4KICAgICAgICAkeyhuLnN0YXR1c3x8J29wZW4nKT09PSdvcGVuJwogICAgICAgICAgPyBgPGJ1dHRvbiBjbGFzcz0ibWNsb3NlIiBzdHlsZT0iYmFja2dyb3VuZDp2YXIoLS1ncmVlbikiIG9uY2xpY2s9InNhdmVOZWVkKCcke2lkfScse3N0YXR1czonZmlsbGVkJ30pO2Nsb3NlQ2FyZCgpIj5NYXJrIGZpbGxlZDwvYnV0dG9uPg=="),
+  ("listFilledBy","ICAgICAgPHRkIHN0eWxlPSJmb250LXNpemU6MTJweDtjb2xvcjojN2E4Yjk4O21heC13aWR0aDoyNDBweCI+JHtlc2Mobi5yZWFzb258fCcnKX08L3RkPg==","ICAgICAgPHRkIHN0eWxlPSJmb250LXNpemU6MTJweDtjb2xvcjojN2E4Yjk4O21heC13aWR0aDoyNDBweCI+JHtlc2Mobi5yZWFzb258fCcnKX0ke24uZmlsbGVkQnk/YDxkaXYgc3R5bGU9ImNvbG9yOnZhcigtLWdyZWVuKTtmb250LXdlaWdodDpib2xkIj7inJMgJHtlc2Mobi5maWxsZWRCeSl9PC9kaXY+YDonJ308L3RkPg=="),
+]
+done=[];miss=[]
+for n,ob,nb in P:
+    o=base64.b64decode(ob).decode();w=base64.b64decode(nb).decode()
+    if w in s: done.append(n+"(already)")
+    elif o in s: s=s.replace(o,w,1);done.append(n)
+    else: miss.append(n)
+if miss: print("COULD NOT FIND:",miss)
+else:
+    open(f,"w",encoding="utf-8").write(s)
+    print("patched OK:",done)
+    print("filledBy field:", s.count("Filled by (coach)"), "| datalist:", s.count("coachNames_"))
