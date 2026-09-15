@@ -2501,6 +2501,7 @@ h1,h2,h3,h4,h5,.mf,
         <option value="1hr+ fortnightly">1hr+ fortnightly · 5</option>
         <option value="40min fortnightly">40min fortnightly · 4</option>
         <option value="Offer">Offer · 1</option>
+        <option value="One Off">One Off · 0.25</option>
         <option value="Custom">Custom · type points</option>
       </select>
       <input class="filter-input" id="as-custompts" type="number" step="0.1" min="0.1" placeholder="Points…" style="min-width:110px; display:none;">
@@ -5896,6 +5897,7 @@ window.__initSales = function(){
     var sl = document.createElement('div'); sl.className = 'r-statline';
     sl.innerHTML =
       '<span><b>' + r.sales.toFixed(0) + '</b> sales</span>' +
+      '<span><b>' + (r.oneOffCount || 0) + '</b> one-off</span>' +
       '<span><b>' + r.trials.toFixed(0) + '</b> trials</span>' +
       '<span><b>' + r.tcc.toFixed(0) + '</b> calls</span>' +
       '<span><b>' + r.ytd_total.toFixed(1) + '</b> YTD pts</span>' +
@@ -6178,6 +6180,7 @@ window.__initSales = function(){
     [
       ['Total Points', r.ytd_total.toFixed(1)],
       ['Total Sales', r.sales.toFixed(0)],
+      ['One-off Sales', (r.oneOffCount || 0).toFixed(0)],
       ['Trials', r.trials.toFixed(0)],
       ['Fair Avg/Mo', (r.fair_avg !== undefined ? r.fair_avg.toFixed(2) : r.ytd_avg.toFixed(2)) + (r.months_active ? ' (' + r.months_active + 'mo)' : '')]
     ].forEach(function(s){
@@ -6445,6 +6448,8 @@ window.__initSales = function(){
           msg('Custom points must be a number greater than 0 (decimals OK).', '#c0392b');
           return;   // nothing written
         }
+      } else if (session === 'One Off'){
+        points = 0.25;                      // fixed; One Off is not in the POINTS map
       } else {
         points = POINTS[session];
       }
@@ -6800,7 +6805,8 @@ function buildPointEvents(sales, offers){
   sales.forEach(s=>{
     if(!s.date) return;
     ev.push({rep:s.rep,date:s.date,centre:s.centre,points:Number(s.points)||0,
-             city:s.city||pickCity(s.citySplit),kind:"sale",source:s.source||"crm"});
+             city:s.city||pickCity(s.citySplit),kind:"sale",source:s.source||"crm",
+             sessionType:s.sessionType||null});   // needed to split One Offs out of the sale count
   });
   offers.forEach(o=>{
     if(o.offerDate){
@@ -6865,7 +6871,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
     weekly:{},weeklyCentres:{},monthlyCentres:Array(12).fill(0),
     sales_by_city:{A:0,P:0,B:0,S:0,M:0},tcc_by_city:{A:0,P:0,B:0,S:0,M:0},
     totalCalls:0,totalNewCalls:0,totalReCalls:0,tclSales:0,callCats:{},offersCount:0,ongoingCount:0,lostCount:0,pendingCount:0,
-    directSales:0,newDirectSales:0,newOffers:0,activeDays:new Set()});
+    directSales:0,newDirectSales:0,newOffers:0,oneOffCount:0,activeDays:new Set()});
   CALL_CATS.forEach(cat=>repNames.forEach(n=>byRep[n].callCats[cat]=0));
 
   // point events
@@ -6877,7 +6883,12 @@ function buildEverything(sales, offers, activity, asOf, settings){
       if(wk){ r.weekly[wk]=(r.weekly[wk]||0)+e.points; r.weeklyCentres[wk]=(r.weeklyCentres[wk]||0)+1; }
       r.monthlyCentres[d.getMonth()]+=1; }
     if(e.city && r.sales_by_city[e.city]!==undefined) r.sales_by_city[e.city]+=e.points;
-    if(e.kind==="sale"){ r.directSales++; if(e.source!=="seed") r.newDirectSales++; }
+    if(e.kind==="sale"){
+      // A One Off is a booking, not a sale: it earns its 0.25 points above but is tallied
+      // separately and never reaches newDirectSales, so salesCount excludes it by construction.
+      if(e.sessionType==="One Off"){ r.oneOffCount++; }
+      else { r.directSales++; if(e.source!=="seed") r.newDirectSales++; }
+    }
   });
   // pipeline tallies
   offers.forEach(o=>{ const r=byRep[o.rep]; if(!r)return; r.offersCount++;
@@ -6969,7 +6980,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
     loggedDays.forEach(ld=>{ if(!ld.date) return;
       const wk=weekMondaySyd(ld.date); if(wk) weeklyCalls[wk]=(weeklyCalls[wk]||0)+(ld.totalCalls||0);
       const md=new Date(ld.date+"T00:00:00"); if(!isNaN(md)) monthlyCalls[md.getMonth()]+=(ld.totalCalls||0); });
-    return {name:r.name,sales:salesCount,sales_by_city:r.sales_by_city,trials:r.offersCount,
+    return {name:r.name,sales:salesCount,oneOffCount:r.oneOffCount,sales_by_city:r.sales_by_city,trials:r.offersCount,
       trials_by_city:{A:0,P:0,B:0,S:0,M:0},tcc:r.totalCalls,tcc_by_city:r.tcc_by_city,
       top_territory:CITY_FULL[top_code],top_territory_code:top_code,daily,sales_ledger,
       weekly:r.weekly,weeklyCentres:r.weeklyCentres,weeklyCalls,monthlyCentres:r.monthlyCentres,monthlyCalls,
@@ -6980,6 +6991,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
       // NEW activity metrics
       loggedDays,metrics:{totalCalls:r.totalCalls,totalNewCalls:r.totalNewCalls,totalReCalls:r.totalReCalls,callCats:r.callCats,offersCount:r.offersCount,
         pending:r.pendingCount,ongoing:r.ongoingCount,lost:r.lostCount,directSales:r.directSales,
+        oneOffCount:r.oneOffCount,
         salesCount,callsPerSale,callsPerOffer,pointsPerSale,salePerDay,conversionRate,
         activeDays:r.activeDays.size,
         interested,notInterested,pickupRate,followUpRatio,avgCallsPerDay,pointsPerCall,
@@ -7085,6 +7097,9 @@ window.__sales = { collection, addDoc, deleteDoc, updateDoc, doc, COLLECTION };
    (styled with the page's CSS vars only). No new fonts/colours.
    ============================================================ */
 const CRM_SESSIONS = {"1hr+ weekly":10,"40min weekly":8,"1hr+ fortnightly":5,"40min fortnightly":4};
+// One Off: a booking-only session type. Fixed 0.25 pts, deliberately NOT in CRM_SESSIONS so it
+// never reaches the offer-convert dropdown. Counted in its own oneOffCount, not the sales count.
+const ONE_OFF_POINTS = 0.25;
 const CRM_CITIES   = ["A","P","B","S","M"];
 const CRM_CITYNAME = {A:"Adelaide",P:"Perth",B:"Brisbane",S:"Sydney",M:"Melbourne"};
 const CRM_CATS     = ["TCC","NC","NC-NA","NC-In","NC-N In","FUC","FUC-NA","FUC-NIn","FU-RC"];
@@ -7815,7 +7830,11 @@ function ccLogForm(c){
     .map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("");
   // "Custom" is appended here, NOT added to CRM_SESSIONS — that map also feeds the offer
   // pipeline's convert dropdown (repPipeline), where a Custom type has no points to resolve.
+  // "One Off" is appended literally for the SAME reason as Custom: CRM_SESSIONS also feeds
+  // repPipeline's offer-convert dropdown, and a One Off conversion would compute
+  // full(0.25) - 1 = -0.75 and be silently dropped. One Off is booking-only.
   const sessOpts=Object.keys(CRM_SESSIONS).map(s=>`<option value="${crmEsc(s)}">${crmEsc(s)} · ${CRM_SESSIONS[s]}pt</option>`).join("")
+    +`<option value="One Off">One Off · ${ONE_OFF_POINTS}pt</option>`
     +`<option value="Custom">Custom · type points</option>`;
   return `<div class="cc-logform">
     <div class="cc-tlh">Log Call</div>
@@ -7916,7 +7935,9 @@ async function ccLogCall(num){
       const session=sessionSel;
       // points is resolved FIRST, then citySplit is built from that same variable — so a
       // Custom value always lands in both, and the two can never disagree.
-      const points = session==="Custom" ? customPts : (CRM_SESSIONS[session]||0);
+      const points = session==="Custom" ? customPts
+                   : session==="One Off" ? ONE_OFF_POINTS
+                   : (CRM_SESSIONS[session]||0);
       await addDoc(collection(db,"sales-entries"),{rep:ccPinRep, centre:c.name, date, points, city:CITY, citySplit:{[CITY]:points}, sessionType:session, source:"crm"});
       if(date===ccTodayISO()) ccBookedToday++;
     } else if(result==="booked_offer"){
