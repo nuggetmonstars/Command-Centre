@@ -6929,12 +6929,15 @@ async function loadCands(){
   }
 }
 async function loadNeeds(){
+  console.log('[needs] LIVE=', LIVE, ' db=', !!db);
   if (LIVE && db){
     try {
       const snap = await getDocs(collection(db, NEEDS_COLL));
       NEEDS = []; snap.forEach(d => NEEDS.push({ id:d.id, ...d.data() }));
-    } catch(e){ NEEDS = []; }
+      console.log('[needs] live read OK, count=', NEEDS.length);
+    } catch(e){ NEEDS = []; console.error('[needs] LIVE READ FAILED:', e && e.message, e); }
     if (NEEDS.length === 0){
+      console.warn('[needs] falling back to STATIC snapshot (DATA.needs)');
       NEEDS = (DATA.needs||[]).map((n,i)=>({ id:'snap-'+i, state:n.state, location:n.location, programs:n.programs,
         coachesNeeded:n.coachesNeeded, urgency:n.urgency, dateRaised:n.dateNeedRaised, reason:n.reason, status:'open' }));
     }
