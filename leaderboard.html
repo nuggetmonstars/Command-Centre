@@ -7177,6 +7177,7 @@ const ccCOLLECTION = "sales-crm-centres";
 const ccSTATUS = {
   very_interested: { label:"Very interested", bar:"#F5C400", tint:"#FFF7DA" },
   interested:      { label:"Interested",      bar:"#FF9933", tint:"#FFEFDD" },
+  interested_inhouse:{ label:"In-House Interested", bar:"#12A08C", tint:"#DFF4F0" },
   call_eoy:        { label:"Call EOY",         bar:"#F0837C", tint:"#FCE9E7" },
   not_interested:  { label:"Not interested",   bar:"#B23A2E", tint:"#F3E0DC" },
   booked:          { label:"Booked",           bar:"#5FB63C", tint:"#E7F6DD" },
@@ -7826,7 +7827,7 @@ function ccRenderCounter(){
 }
 function ccLogForm(c){
   const today=ccTodayISO(), num=crmEsc(c.num);
-  const resultOpts=[["","— pick result —"],["very_interested","Very interested"],["interested","Interested"],["not_interested","Not interested"],["call_eoy","Call EOY"],["no_answer","No answer"],["booked_sale","Booked sale"],["booked_offer","Booked offer"],["followup_nc","Follow-up (no status change)"]]
+  const resultOpts=[["","— pick result —"],["very_interested","Very interested"],["interested","Interested"],["interested_inhouse","Interested - In-House Solution"],["not_interested","Not interested"],["call_eoy","Call EOY"],["no_answer","No answer"],["booked_sale","Booked sale"],["booked_offer","Booked offer"],["followup_nc","Follow-up (no status change)"]]
     .map(o=>`<option value="${o[0]}">${o[1]}</option>`).join("");
   // "Custom" is appended here, NOT added to CRM_SESSIONS — that map also feeds the offer
   // pipeline's convert dropdown (repPipeline), where a Custom type has no points to resolve.
@@ -7900,7 +7901,7 @@ async function ccLogCall(num){
     // (a) centre doc
     const entry={date, text:desc, result, source:"crm"};
     const history=Array.isArray(c.history)?c.history.slice():[]; history.push(entry);
-    const STATUSMAP={very_interested:"very_interested",interested:"interested",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
+    const STATUSMAP={very_interested:"very_interested",interested:"interested",interested_inhouse:"interested_inhouse",not_interested:"not_interested",call_eoy:"call_eoy",no_answer:"no_answer",booked_sale:"booked",booked_offer:"offer"};   // offer = purple (pending); booked = green (confirmed sale only)
     const patch={history, status:STATUSMAP[result]||c.status, crmCallCount:(c.crmCallCount||0)+1, lastResult:result};
     if(cb) patch.callbackDate=cb;
     else if(result!=="followup_nc") patch.callbackDate=null;
