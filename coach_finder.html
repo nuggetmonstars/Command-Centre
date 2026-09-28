@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Monstars — Coach Finder</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--sky:#29ABE2;--yellow:#FFD700;--red:#E31E24;--green:#4CAF50;--orange:#F7941D;--navy:#1a1a2e;--card:#fff;--ink:#243746;--font:'Nunito',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh;font-family:var(--font);background:var(--sky);color:var(--ink)}
+.wrap{max-width:1000px;margin:0 auto;padding:20px 16px 60px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;color:#fff}
+.brand{font-weight:900;font-size:22px}
+.brand span{color:var(--yellow)}
+#who{font-size:13px;color:#fff}#who a{color:var(--yellow);cursor:pointer;text-decoration:underline;margin-left:6px}
+.card{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.12);margin-bottom:18px}
+h2{color:var(--red);font-size:20px;margin-bottom:14px}
+label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:#6a7a88;margin:10px 0 4px}
+input,select{width:100%;padding:11px 12px;border:2px solid #e2e8ee;border-radius:10px;font-family:var(--font);font-size:15px;font-weight:600}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+button.go{margin-top:16px;width:100%;background:var(--red);color:#fff;border:none;border-radius:12px;padding:14px;font-family:var(--font);font-weight:900;font-size:16px;cursor:pointer}
+button.go:disabled{opacity:.5;cursor:default}
+.res{border-top:1px solid #eef2f5;padding:12px 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.res .nm{font-weight:800;font-size:16px}
+.res .meta{font-size:13px;color:#6a7a88}
+.pill{background:#eef7ef;color:#2e7d32;font-weight:800;font-size:12px;padding:3px 9px;border-radius:20px}
+.pill.far{background:#fdeaea;color:#c62828}
+.pill.exp{background:#eef3fb;color:#1f6fd6}
+.muted{color:#6a7a88;font-size:14px}
+.sub{font-size:13px;color:#6a7a88;margin-bottom:8px}
+#status{font-size:14px;color:#6a7a88;margin:8px 0}
+details{margin-top:14px;border-top:2px dashed #e2e8ee;padding-top:12px}
+summary{cursor:pointer;font-weight:800;color:var(--orange)}
+a.ct{color:#1f6fd6;text-decoration:none;font-weight:700;font-size:13px}
+/* gate */
+#gate{position:fixed;inset:0;background:var(--sky);display:flex;align-items:center;justify-content:center;z-index:1000}
+.gatebox{background:#fff;border-radius:22px;padding:34px 30px;width:330px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.gatebox h1{color:var(--red);font-size:22px;margin-bottom:2px}
+.gatebox .s{font-size:12px;color:#999;margin-bottom:18px}
+#gateErr{color:var(--red);font-size:13px;margin-top:8px;min-height:16px}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div id="gate">
+  <div class="gatebox">
+    <h1>Coach Finder</h1>
+    <div class="s" id="gateTitle">Mini Monstars — sign in</div>
+    <div id="loginForm">
+      <input id="email" type="email" placeholder="Email" autocomplete="username"><div style="height:8px"></div>
+      <input id="pass" type="password" placeholder="Password" autocomplete="current-password">
+      <button class="go" onclick="doLogin()">Sign in</button>
+      <div id="gateErr"></div>
+    </div>
+    <div id="lockMsg" class="hidden muted"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="brand">MINI MONST<span>★</span>RS · Coach Finder</div>
+    <div id="who"></div>
+  </header>
+
+  <div class="card">
+    <h2>Find a coach</h2>
+    <div class="sub">Enter the centre, day, program plus start time. Shows coaches who do that program, are within 30 minutes drive, plus are free (or can get there in time from an earlier session).</div>
+    <div class="grid">
+      <div><label>Centre name</label><input id="fCentre" list="centreList" placeholder="Start typing a centre"><datalist id="centreList"></datalist></div>
+      <div><label>Postcode (backup)</label><input id="fPost" placeholder="e.g. 4000"></div>
+    </div>
+    <div class="grid3">
+      <div><label>Day</label><select id="fDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
+      <div><label>Program</label><select id="fProg"><option>Sport</option><option>Music</option><option>Yoga</option><option>Gymnastics</option><option>Sensory</option></select></div>
+      <div><label>Start time</label><input id="fTime" type="time" value="09:30"></div>
+    </div>
+    <button class="go" id="goBtn" onclick="runSearch()">Search coaches</button>
+    <div id="status"></div>
+  </div>
+
+  <div class="card hidden" id="resCard">
+    <h2 id="resTitle">Available coaches</h2>
+    <div id="results"></div>
+    <details id="closestWrap" class="hidden">
+      <summary>No full match — show closest coaches anyway</summary>
+      <div id="closest"></div>
+    </details>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut }
+  from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, collection, getDocs }
+  from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCpLhBjI2qAwQ6zDWdLXRcR2WqVbOG3kug",
+  authDomain: "mini-monstars-au.firebaseapp.com",
+  projectId: "mini-monstars-au",
+  storageBucket: "mini-monstars-au.appspot.com",
+  messagingSenderId: "1020303504267",
+  appId: "1:1020303504267:web:9d7417231c76b0f351b58e"
+};
+const MAPS_KEY = 'AIzaSyDVqVtl_XzcMsG-BTTyvV0jqwEacP6lI9Y';
+const DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4};
+const DRIVE_LIMIT_MIN = 30;
+const PREFILTER_KM = 40;         // straight-line pre-filter before paid drive-time calls
+const $ = s => document.querySelector(s);
+const show = (el,on=true)=> el.classList.toggle('hidden', !on);
+
+let db=null, LIVE=false;
+let COACHES=[], CENTRES=[], EVENTS=[];
+
+const app = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(app);
+db = getFirestore(app);
+window.doLogin = () => { $('#gateErr').textContent="";
+  signInWithEmailAndPassword(auth, $('#email').value.trim(), $('#pass').value)
+    .catch(()=> $('#gateErr').textContent="Sign in failed. Check your details."); };
+window.doLogout = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  if (user){
+    show($('#gate'), false);
+    $('#who').innerHTML = user.email + ' <a onclick="doLogout()">sign out</a>';
+    LIVE = true;
+    $('#status').textContent = "Loading coaches, centres plus rosters…";
+    await loadAll();
+    $('#status').textContent = `Ready — ${COACHES.length} active coaches loaded.`;
+  } else { show($('#gate'), true); }
+});
+
+function toDate(v){ if(!v) return null; try{ const s=String(v); return new Date(s.includes('T')?s:s+'T00:00:00'); }catch(e){ return null; } }
+function haversineKm(a,b){ if(!a||!b) return 1e9; const R=6371,dLat=(b.lat-a.lat)*Math.PI/180,dLng=(b.lng-a.lng)*Math.PI/180;
+  const x=Math.sin(dLat/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLng/2)**2;
+  return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)); }
+
+async function loadAll(){
+  const [uSnap,cSnap,eSnap] = await Promise.all([
+    getDocs(collection(db,'users')),
+    getDocs(collection(db,'education-centers')),
+    getDocs(collection(db,'events')),
+  ]);
+  COACHES=[];
+  uSnap.forEach(d=>{ const u=d.data();
+    if((u.role||'')!=='coach' || (u.status||'')!=='Active') return;
+    const geo=u.addressGeo||{};
+    COACHES.push({id:d.id, name:((u.firstName||'')+' '+(u.lastName||'')).trim()||u.name||'',
+      cats:(u.categories||[]).map(x=>String(x).toLowerCase()), phone:u.phone||'', email:u.email||'',
+      suburb:u.town||'', state:(u.city||'').toUpperCase(),
+      lat:geo.lat, lng:geo.lng, sessions:0});
+  });
+  CENTRES=[]; const centreById={};
+  cSnap.forEach(d=>{ const c=d.data(); const geo=c.addressGeo||{};
+    const rec={id:d.id,name:c.name||'',lat:geo.lat,lng:geo.lng,state:(c.city||'').toUpperCase()};
+    CENTRES.push(rec); centreById[d.id]=rec; });
+  // datalist of centre names
+  $('#centreList').innerHTML = CENTRES.filter(c=>c.name).map(c=>`<option value="${c.name.replace(/"/g,'&quot;')}">`).join('');
+  // events -> per-coach session count + per-coach weekday roster (centre + end time)
+  const cnt={}; const roster={};   // roster[coachId][weekday] = [{centreId,end}]
+  const today=new Date();
+  eSnap.forEach(d=>{ const e=d.data(); const sd=toDate(e.start); if(!sd) return;
+    const wd=(sd.getDay()+6)%7;   // JS Sun=0 -> Mon=0
+    (e.coaches||[]).forEach(el=>{ const uid=(el&&el.value)?el.value:el; if(!uid) return;
+      if(sd<=today) cnt[uid]=(cnt[uid]||0)+1;                 // past sessions = experience
+      if(wd<=4 && sd>=today){                                  // upcoming roster for the day logic
+        (roster[uid]=roster[uid]||{});(roster[uid][wd]=roster[uid][wd]||[]);
+        roster[uid][wd].push({centreId:e.educationCenter, end:toDate(e.end)});
+      }
+    });
+  });
+  window._roster=roster; window._centreById=centreById;
+  COACHES.forEach(c=> c.sessions=cnt[c.id]||0);
+}
+
+function mapsDrive(origin, dest){    // returns minutes via DistanceMatrix, or null
+  return new Promise(resolve=>{
+    try{
+      const svc=new google.maps.DistanceMatrixService();
+      svc.getDistanceMatrix({origins:[origin],destinations:[dest],travelMode:'DRIVING',
+        drivingOptions:{departureTime:new Date(Date.now()+3600000)}, unitSystem:google.maps.UnitSystem.METRIC},
+        (resp,status)=>{
+          if(status!=='OK'){ resolve(null); return; }
+          const el=resp.rows[0].elements[0];
+          if(el.status!=='OK'){ resolve(null); return; }
+          resolve(Math.round((el.duration_in_traffic?.value||el.duration.value)/60));
+        });
+    }catch(e){ resolve(null); }
+  });
+}
+
+window.runSearch = async function(){
+  if(!LIVE){ return; }
+  const cname=$('#fCentre').value.trim(), post=$('#fPost').value.trim();
+  const day=$('#fDay').value, prog=$('#fProg').value.toLowerCase(), stime=$('#fTime').value||'09:30';
+  const wd=DAY_IDX[day]; const startMin=parseInt(stime.split(':')[0])*60+parseInt(stime.split(':')[1]);
+  $('#goBtn').disabled=true; $('#status').textContent="Locating centre…"; show($('#resCard'),false);
+  // find the centre location: match by name, else geocode postcode
+  let cLoc=null, cLabel=cname||post;
+  const match=CENTRES.find(c=>c.name && c.name.toLowerCase()===cname.toLowerCase())
+           || CENTRES.find(c=>c.name && cname && c.name.toLowerCase().includes(cname.toLowerCase()));
+  if(match && match.lat!=null){ cLoc={lat:match.lat,lng:match.lng}; cLabel=match.name; }
+  else if(post){ cLoc = await geocodePost(post); }
+  if(!cLoc){ $('#status').textContent="Couldn't locate that centre. Check the name, or enter a postcode."; $('#goBtn').disabled=false; return; }
+
+  // program + straight-line pre-filter
+  $('#status').textContent="Checking coaches…";
+  const near=[];
+  for(const c of COACHES){
+    if(c.lat==null||c.lng==null) continue;
+    if(!c.cats.some(x=>x.includes(prog))) continue;              // MUST do the program
+    const km=haversineKm(cLoc,{lat:c.lat,lng:c.lng});
+    if(km>PREFILTER_KM) continue;                                // too far even straight-line
+    near.push({c,km});
+  }
+  near.sort((a,b)=>a.km-b.km);
+
+  // drive-time + roster/time logic
+  const matches=[], closest=[];
+  for(const {c,km} of near){
+    const mins = await mapsDrive(cLoc,{lat:c.lat,lng:c.lng});
+    const driveMin = mins==null ? Math.round(km/0.8) : mins;     // fallback est if API fails
+    const within = driveMin<=DRIVE_LIMIT_MIN;
+    // roster check for that weekday
+    const todays=(window._roster[c.id]&&window._roster[c.id][wd])||[];
+    let clash=false, reason="free";
+    if(todays.length){
+      // can they make it? need to finish an earlier session AND drive from there in time
+      let ok=false;
+      for(const s of todays){
+        if(!s.end){ clash=true; continue; }
+        const endMin=s.end.getHours()*60+s.end.getMinutes();
+        if(endMin<=startMin){
+          // drive from that centre to the new centre
+          const prev=window._centreById[s.centreId];
+          if(prev&&prev.lat!=null){
+            const ab=await mapsDrive({lat:prev.lat,lng:prev.lng},cLoc);
+            const abMin=ab==null?999:ab;
+            if(endMin+abMin<=startMin){ ok=true; reason=`after ${fmt(endMin)} at nearby centre`; }
+          }
+        }
+      }
+      clash=!ok;
+    }
+    const row={c,driveMin,within,clash,reason};
+    if(within && !clash) matches.push(row); else closest.push(row);
+  }
+  matches.sort((a,b)=>a.driveMin-b.driveMin);
+  closest.sort((a,b)=>a.driveMin-b.driveMin);
+
+  // render
+  show($('#resCard'),true);
+  $('#resTitle').textContent = `Available coaches for ${cLabel} — ${day} ${prog} ${stime}`;
+  $('#results').innerHTML = matches.length ? matches.map(rowHtml).join('') :
+    '<div class="muted">No coach fully matches (program + within 30 min + free that day). See closest below.</div>';
+  show($('#closestWrap'), closest.length>0);
+  $('#closest').innerHTML = closest.map(r=>rowHtml(r,true)).join('');
+  $('#status').textContent=`Done — ${matches.length} full match(es), ${closest.length} other nearby.`;
+  $('#goBtn').disabled=false;
+};
+
+function fmt(m){ const h=Math.floor(m/60),mm=m%60; return `${(h%12)||12}:${String(mm).padStart(2,'0')}${h<12?'am':'pm'}`; }
+function rowHtml(r,isClosest=false){
+  const c=r.c; const drivePill = r.within?`<span class="pill">${r.driveMin} min</span>`:`<span class="pill far">${r.driveMin} min</span>`;
+  const clashNote = r.clash?`<span class="pill far">already booked ${r.c._d||''}</span>`:(r.reason&&r.reason!=='free'?`<span class="pill">${r.reason}</span>`:``);
+  return `<div class="res">
+    <div style="flex:1;min-width:200px">
+      <div class="nm">${esc(c.name)} <span class="pill exp">${c.sessions} sessions</span></div>
+      <div class="meta">${esc(c.suburb||c.state||'')}</div>
+    </div>
+    ${drivePill} ${clashNote}
+    <div style="min-width:150px">
+      ${c.phone?`<a class="ct" href="tel:${c.phone}">${c.phone}</a><br>`:''}
+      ${c.email?`<a class="ct" href="mailto:${c.email}">${c.email}</a>`:''}
+    </div>
+  </div>`;
+}
+function esc(s){ return String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+
+function geocodePost(post){ return new Promise(resolve=>{
+  try{ const g=new google.maps.Geocoder();
+    g.geocode({address:post+' Australia', componentRestrictions:{country:'AU'}},(res,st)=>{
+      if(st==='OK'&&res[0]){ const l=res[0].geometry.location; resolve({lat:l.lat(),lng:l.lng()}); }
+      else resolve(null);
+    });
+  }catch(e){ resolve(null); }
+}); }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDVqVtl_XzcMsG-BTTyvV0jqwEacP6lI9Y&libraries=geometry" async defer></script>
+</body>
+</html>
