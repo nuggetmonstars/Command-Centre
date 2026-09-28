@@ -17,6 +17,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .card{background:var(--card);border-radius:16px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.12);margin-bottom:18px}
 h2{color:var(--red);font-size:20px;margin-bottom:14px}
 label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.4px;color:#6a7a88;margin:10px 0 4px}
+.ck{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink);margin:0}
+.ck input{width:auto}
 input,select{width:100%;padding:11px 12px;border:2px solid #e2e8ee;border-radius:10px;font-family:var(--font);font-size:15px;font-weight:600}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
@@ -67,14 +69,18 @@ a.ct{color:#1f6fd6;text-decoration:none;font-weight:700;font-size:13px}
   <div class="card">
     <h2>Find a coach</h2>
     <div class="sub">Enter the centre, day, program plus start time. Shows coaches who do that program, are within 30 minutes drive, plus are free (or can get there in time from an earlier session).</div>
+    <div><label>Centre name</label><input id="fCentre" list="centreList" placeholder="Start typing a centre"><datalist id="centreList"></datalist></div>
     <div class="grid">
-      <div><label>Centre name</label><input id="fCentre" list="centreList" placeholder="Start typing a centre"><datalist id="centreList"></datalist></div>
-      <div><label>Postcode (backup)</label><input id="fPost" placeholder="e.g. 4000"></div>
-    </div>
-    <div class="grid3">
       <div><label>Day</label><select id="fDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
-      <div><label>Program</label><select id="fProg"><option>Sport</option><option>Music</option><option>Yoga</option><option>Gymnastics</option><option>Sensory</option></select></div>
       <div><label>Start time</label><input id="fTime" type="time" value="09:30"></div>
+    </div>
+    <label>Programs (pick any)</label>
+    <div style="display:flex;flex-wrap:wrap;gap:16px;padding:6px 0 2px">
+      <label class="ck"><input type="checkbox" class="prog" value="sport" checked> Sport</label>
+      <label class="ck"><input type="checkbox" class="prog" value="music"> Music</label>
+      <label class="ck"><input type="checkbox" class="prog" value="yoga"> Yoga</label>
+      <label class="ck"><input type="checkbox" class="prog" value="gymnastics"> Gymnastics</label>
+      <label class="ck"><input type="checkbox" class="prog" value="sensory"> Sensory</label>
     </div>
     <button class="go" id="goBtn" onclick="runSearch()">Search coaches</button>
     <div id="status"></div>
@@ -195,24 +201,25 @@ function mapsDrive(origin, dest){    // returns minutes via DistanceMatrix, or n
 
 window.runSearch = async function(){
   if(!LIVE){ return; }
-  const cname=$('#fCentre').value.trim(), post=$('#fPost').value.trim();
-  const day=$('#fDay').value, prog=$('#fProg').value.toLowerCase(), stime=$('#fTime').value||'09:30';
+  const cname=$('#fCentre').value.trim();
+  const progs=[...document.querySelectorAll('.prog:checked')].map(x=>x.value);
+  const day=$('#fDay').value, stime=$('#fTime').value||'09:30';
+  if(!progs.length){ $('#status').textContent="Pick at least one program."; return; }
   const wd=DAY_IDX[day]; const startMin=parseInt(stime.split(':')[0])*60+parseInt(stime.split(':')[1]);
   $('#goBtn').disabled=true; $('#status').textContent="Locating centre…"; show($('#resCard'),false);
   // find the centre location: match by name, else geocode postcode
-  let cLoc=null, cLabel=cname||post;
+  let cLoc=null, cLabel=cname;
   const match=CENTRES.find(c=>c.name && c.name.toLowerCase()===cname.toLowerCase())
            || CENTRES.find(c=>c.name && cname && c.name.toLowerCase().includes(cname.toLowerCase()));
   if(match && match.lat!=null){ cLoc={lat:match.lat,lng:match.lng}; cLabel=match.name; }
-  else if(post){ cLoc = await geocodePost(post); }
-  if(!cLoc){ $('#status').textContent="Couldn't locate that centre. Check the name, or enter a postcode."; $('#goBtn').disabled=false; return; }
+  if(!cLoc){ $('#status').textContent="Couldn't locate that centre. Check the name against the list."; $('#goBtn').disabled=false; return; }
 
   // program + straight-line pre-filter
   $('#status').textContent="Checking coaches…";
   const near=[];
   for(const c of COACHES){
     if(c.lat==null||c.lng==null) continue;
-    if(!c.cats.some(x=>x.includes(prog))) continue;              // MUST do the program
+    if(!c.cats.some(cat=>progs.some(p=>cat.includes(p)))) continue;   // does ANY selected program
     const km=haversineKm(cLoc,{lat:c.lat,lng:c.lng});
     if(km>PREFILTER_KM) continue;                                // too far even straight-line
     near.push({c,km});
@@ -254,7 +261,7 @@ window.runSearch = async function(){
 
   // render
   show($('#resCard'),true);
-  $('#resTitle').textContent = `Available coaches for ${cLabel} — ${day} ${prog} ${stime}`;
+  $('#resTitle').textContent = `Available coaches for ${cLabel} — ${day} ${stime} — ${progs.join(', ')}`;
   $('#results').innerHTML = matches.length ? matches.map(rowHtml).join('') :
     '<div class="muted">No coach fully matches (program + within 30 min + free that day). See closest below.</div>';
   show($('#closestWrap'), closest.length>0);
