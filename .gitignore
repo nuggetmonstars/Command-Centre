@@ -15,3 +15,5 @@ token.txt
 *.BACKUP.*.html
 *.bak
 *.bak.*
+*.bak*
+profit_data.json
