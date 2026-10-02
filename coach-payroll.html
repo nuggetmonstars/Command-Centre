@@ -137,6 +137,16 @@
   .ic-searchclear:hover{background:var(--blue)}
   .ic-nomatch{font-family:'MarkerFelt',cursive;font-size:14px;color:var(--blue);opacity:.85;padding:14px 4px}
   .ic-sec-h{font-family:'MarkerFelt',cursive;font-size:19px;color:var(--red);margin:6px 0 10px}
+  /* Last refreshed banner — greys under 24h, ambers to 48h, reds past that. */
+  .ic-refresh{font-family:'MarkerFelt',cursive;font-size:13px;display:flex;align-items:center;gap:8px;
+    border-radius:12px;padding:8px 14px;margin-bottom:12px;border:2px solid var(--line);
+    background:var(--white);color:var(--ink);opacity:.85;box-shadow:var(--shadow)}
+  .ic-refresh .ic-rdot{width:9px;height:9px;border-radius:50%;background:var(--lightblue);flex:none}
+  .ic-refresh.stale{border-color:var(--yellow);background:#fffdf0;color:#8a6d00;opacity:1}
+  .ic-refresh.stale .ic-rdot{background:var(--yellow)}
+  .ic-refresh.failed{border-color:var(--red);background:#fff6f5;color:var(--red);opacity:1}
+  .ic-refresh.failed .ic-rdot{background:var(--red)}
+  .ic-rwarn{font-family:'Pencil',cursive;font-size:12.5px;opacity:.95}
   .ic-subtabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
   .ic-subtab{font-family:'MarkerFelt',cursive;font-size:14px;background:var(--white);color:var(--blue);border:2px solid var(--lightblue);border-radius:30px;padding:8px 16px;cursor:pointer;opacity:.75}
   .ic-subtab.active{opacity:1;background:var(--blue);color:#fff;border-color:var(--blue)}
@@ -944,6 +954,30 @@
   const IC_RESULTS = [{v:'sent_email',l:'Sent email'},{v:'no_answer',l:'No answer'},{v:'email_then_phone',l:'Email followed up by phone'},{v:'promised',l:'Promise to pay'},{v:'disputing',l:'Disputing'}];
   const IC_CB_OFFSET = {sent_email:3, email_then_phone:5, promised:7, disputing:14};   // callback = today + N days (no_answer handled as +1 business day)
   const icResultLabel = v => (IC_RESULTS.find(r=>r.v===v)||{}).l || v || '';
+  // generatedAt is written by the agent as an ISO-8601 STRING. The older footer below
+  // only handled a Firestore Timestamp (.toDate), so it never rendered. Accept both.
+  function icGeneratedAt(){
+    const g = IC_DOC && IC_DOC.generatedAt;
+    if(!g) return null;
+    if(g.toDate){ try{ return g.toDate(); }catch(e){ return null; } }
+    const d = new Date(String(g));
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function icRefreshHtml(){
+    const gen = icGeneratedAt();
+    if(!gen) return `<div class="ic-refresh failed"><span class="ic-rdot"></span>`
+      + `<span>Last refreshed — unknown. <span class="ic-rwarn">the nightly agent may have failed</span></span></div>`;
+    const hrs = (Date.now() - gen.getTime()) / 36e5;
+    const when = gen.toLocaleString('en-AU', { timeZone:'Australia/Melbourne',
+      day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true });
+    const ago = hrs < 1 ? 'less than an hour ago'
+              : `${Math.floor(hrs)} hour${Math.floor(hrs)===1?'':'s'} ago`;
+    let cls='', warn='';
+    if(hrs >= 48){ cls=' failed'; warn = ` <span class="ic-rwarn">the nightly agent may have failed</span>`; }
+    else if(hrs >= 24){ cls=' stale'; }
+    return `<div class="ic-refresh${cls}"><span class="ic-rdot"></span>`
+      + `<span>Last refreshed ${esc(when)} (${ago})${warn}</span></div>`;
+  }
   function icTodayAU(){
     const p=new Intl.DateTimeFormat('en-CA',{timeZone:'Australia/Sydney',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
     const g=t=>p.find(x=>x.type===t).value; return `${g('year')}-${g('month')}-${g('day')}`;
@@ -1050,7 +1084,7 @@
     ];
     bands.forEach(b=>{b.count=0;b.amt=0;});
     all.forEach(c=>c.invoices.forEach(i=>{ if(i.days>=15){ const b=bands.find(x=>i.days>=x.lo&&i.days<=x.hi); if(b){b.count++;b.amt+=i.amount;} } }));
-    const gen = IC_DOC.generatedAt && IC_DOC.generatedAt.toDate ? IC_DOC.generatedAt.toDate() : null;
+    const gen = icGeneratedAt();
     const head = `<div class="ic-headline">
       <div class="ic-hitem"><span class="ic-hlabel">Total Unpaid</span><span class="ic-hval">${ic0(totalUnpaid)}</span></div>
       <div class="ic-hitem"><span class="ic-hlabel">Overdue</span><span class="ic-hval red">${ic0(ovAmt)} <small>(${ovCount})</small></span></div>
@@ -1130,7 +1164,7 @@
       : `<div class="empty">${emptyMsg}.</div>`;
 
     const noMatch = `<div class="ic-nomatch" id="ic-nomatch" style="display:none">No centres match "<span id="ic-nomatch-q"></span>".</div>`;
-    $('ic-body').innerHTML = head + dueHtml + bandsHtml + pills + subtabs + searchBar + listHtml + noMatch
+    $('ic-body').innerHTML = icRefreshHtml() + head + dueHtml + bandsHtml + pills + subtabs + searchBar + listHtml + noMatch
       + (gen?`<div class="xhead" style="margin-top:14px">Generated ${gen.toLocaleString('en-AU')}${IC_DOC.date?` · data date ${esc(IC_DOC.date)}`:''}.</div>`:'');
     icApplySearch();   // re-apply any persisted search filter to the freshly-rendered rows
   }
