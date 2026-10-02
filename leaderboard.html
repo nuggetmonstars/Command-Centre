@@ -6267,14 +6267,14 @@ window.__initSales = function(){
           if (a.start_tbc && !b.start_tbc) return -1;
           if (!a.start_tbc && b.start_tbc) return 1;
           // Among TBC: sort by signed date desc (newest first)
-          if (a.start_tbc && b.start_tbc) return (b.date || '').localeCompare(a.date || '');
+          if (a.start_tbc && b.start_tbc) return (window.ledgerKeyCmp ? window.ledgerKeyCmp(b, a) : (b.date || '').localeCompare(a.date || ''));
           // Among dated: latest start date at top
           if (a.start_iso && b.start_iso) return b.start_iso.localeCompare(a.start_iso);
           if (a.start_iso && !b.start_iso) return 1;
           if (!a.start_iso && b.start_iso) return -1;
-          return (b.date || '').localeCompare(a.date || '');
+          return (window.ledgerKeyCmp ? window.ledgerKeyCmp(b, a) : (b.date || '').localeCompare(a.date || ''));
         }
-        return (b.date || '').localeCompare(a.date || '');
+        return (window.ledgerKeyCmp ? window.ledgerKeyCmp(b, a) : (b.date || '').localeCompare(a.date || ''));
       }
 
       var sortedAll = r.sales_ledger.slice().sort(ledgerSort);
@@ -6793,6 +6793,20 @@ const COLLECTION = "sales-entries";
      daily-activity : {rep, date, counts:{TCC:{A,P,B,S,M}, NC:{...}, ...}}
    ============================================================ */
 const SESSION_POINTS={"40min weekly":8,"1hr+ weekly":10,"40min fortnightly":4,"1hr+ fortnightly":5,"Offer":1};
+/* Deterministic ledger order — IDENTICAL to commission_agent (2026-10-02): date, then document creation
+   time (createdAt), then document id. The old comparator (a.date<b.date?-1:1) never returned 0, so same-day
+   rows landed arbitrarily and the 100-point crossing could change between renders. */
+function _ledgerCreatedKey(e){ const c=(e._created!==undefined)?e._created:e.created;
+  if(c===null||c===undefined) return null;
+  if(typeof c==="object" && c.seconds!==undefined) return String(c.seconds).padStart(12,"0")+"."+String(c.nanoseconds||0).padStart(9,"0");
+  return String(c); }
+function ledgerKeyCmp(a,b){
+  const da=a.date||"", db_=b.date||""; if(da!==db_) return da<db_?-1:1;
+  const ca=_ledgerCreatedKey(a), cb=_ledgerCreatedKey(b);
+  if(ca!==cb){ if(ca===null) return 1; if(cb===null) return -1; return ca<cb?-1:1; }
+  const ia=String((a._id!==undefined?a._id:a.id)||""), ib=String((b._id!==undefined?b._id:b.id)||"");
+  return ia<ib?-1:(ia>ib?1:0); }
+if(typeof window!=="undefined") window.ledgerKeyCmp=ledgerKeyCmp;
 /* Resolve an entry's full point value from its sessionType, falling back to its OWN stored
    points when the type isn't in the map ("Custom", or any legacy/blank type). A Custom entry
    must never resolve to 0 just because the map has no key for it. */
@@ -6817,13 +6831,13 @@ function buildPointEvents(sales, offers){
   const ev=[]; // {rep,date,centre,points,city,kind}
   sales.forEach(s=>{
     if(!s.date) return;
-    ev.push({rep:s.rep,date:s.date,centre:s.centre,points:Number(s.points)||0,
+    ev.push({rep:s.rep,date:s.date,centre:s.centre,points:Number(s.points)||0,id:s.id,created:s.createdAt||null,
              city:s.city||pickCity(s.citySplit),kind:"sale",source:s.source||"crm",
              sessionType:s.sessionType||null});   // needed to split One Offs out of the sale count
   });
   offers.forEach(o=>{
     if(o.offerDate){
-      ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer"});
+      ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer",id:o.id,created:o.createdAt||null});
     }
     if(o.status==="ongoing" && o.conversionDate && o.sessionType){
       // "Custom" (and any type not in the map) has no map value — fall back to the entry's
@@ -6832,7 +6846,7 @@ function buildPointEvents(sales, offers){
       const full = sessionPointsFor(o);
       const remain=full-1;
       if(remain>0) ev.push({rep:o.rep,date:o.conversionDate,centre:o.centre,points:remain,
-                            city:o.city||null,kind:"conversion"});
+                            city:o.city||null,kind:"conversion",id:o.id,created:o.createdAt||null});
     }
   });
   return ev;
@@ -6888,7 +6902,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
   CALL_CATS.forEach(cat=>repNames.forEach(n=>byRep[n].callCats[cat]=0));
 
   // point events
-  events.filter(e=>e.date).sort((a,b)=>a.date<b.date?-1:1).forEach(e=>{
+  events.filter(e=>e.date).sort(ledgerKeyCmp).forEach(e=>{
     const r=byRep[e.rep]; if(!r) return;
     const d=new Date(e.date+"T00:00:00"); if(isNaN(d)) return;
     r.events.push(e); r.monthly[d.getMonth()]+=e.points;
@@ -6925,7 +6939,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
     let running=0;
     const sales_ledger=r.events.map(e=>{ running=r2(running+e.points);
       return {date:e.date,centre:e.centre,city:e.city||null,city_full:e.city?CITY_FULL[e.city]||"":"",
-        points:e.points,running_total:running,kind:e.kind,
+        points:e.points,running_total:running,kind:e.kind,_id:e.id,_created:e.created,
         flag:null,start_raw:"",start_iso:null,start_tbc:true};
     });
     const ytd_total=r2(r.monthly.reduce((a,b)=>a+b,0));
@@ -8102,7 +8116,7 @@ function repSalesLedger(rep){
     return `<section class="panel active"><div class="ledger-h">${title}</div><div class="ledger"><div class="ledger-row empty">No centres signed yet</div></div></section>`;
   }
   // CRM ledgers carry no session dates: sort newest-first, recompute running totals oldest->newest (same as buildRepCard)
-  led.sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  led.sort((a,b)=>ledgerKeyCmp(b,a));
   let cum=0;
   for(let i=led.length-1;i>=0;i--){ cum=Math.round((cum+(Number(led[i].points)||0))*100)/100; led[i].running_total=cum; }
   let crossed=false;
