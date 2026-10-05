@@ -190,6 +190,40 @@
   .note b{color:var(--red)}
   .note .tag{font-family:'MarkerFelt',cursive;display:inline-block;background:var(--blue);color:#fff;font-size:11px;padding:3px 10px;border-radius:30px;letter-spacing:.5px;text-transform:uppercase;margin-right:8px}
 
+  /* ---- gap: no sessions next calendar month ---- */
+  .tile.gap{border-color:var(--pink)}
+  .badge.gap{background:var(--pink)}
+  .card.gap{border-color:var(--pink)}
+  .card.gap.triaged{border-style:dashed;opacity:.94}
+  .dot.gap{background:var(--pink)}
+  .pill.gap{background:var(--pink)}
+  .pill.gapclosing{background:var(--red)}
+  .pill.gapcalerror{background:var(--orange)}
+  .pill.gapbrk{background:var(--blue)}
+  .triage-btns{display:flex;gap:8px;flex-wrap:wrap;width:100%;margin-top:4px}
+  .tbtn{font-family:'MarkerFelt',cursive;font-size:12.5px;border:2px solid;background:#fff;border-radius:30px;padding:6px 13px;cursor:pointer;transition:all .13s ease}
+  .tbtn.closing{border-color:var(--red);color:var(--red)}
+  .tbtn.closing:hover,.tbtn.closing.on{background:var(--red);color:#fff}
+  .tbtn.calerror{border-color:var(--orange);color:var(--orange)}
+  .tbtn.calerror:hover,.tbtn.calerror.on{background:var(--orange);color:#fff}
+  .tbtn.brk{border-color:var(--blue);color:var(--blue)}
+  .tbtn.brk:hover,.tbtn.brk.on{background:var(--blue);color:#fff}
+  .tbtn.clr{border-color:#cdd9e1;color:#7a8a96}
+  .tbtn.clr:hover{background:#f2f6f9}
+  .gapout{border-radius:13px;padding:10px 13px;margin:0 0 13px;font-size:14px;color:var(--ink);line-height:1.45}
+  .gapout b{font-family:'MarkerFelt',cursive;font-size:11.5px;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:3px}
+  .gapout.closing{background:#fff0ef;border:2px solid var(--red)} .gapout.closing b{color:var(--red)}
+  .gapout.calerror{background:#fff6ec;border:2px solid var(--orange)} .gapout.calerror b{color:var(--orange)}
+  .gapout.brk{background:#eef9ff;border:2px solid var(--blue)} .gapout.brk b{color:var(--blue)}
+  /* gap cards keep the pink identity instead of inheriting the tier header */
+  .card.gap .ctop,.card.gap.amber .ctop,.card.gap.red .ctop,.card.gap.green .ctop{background:var(--pink);color:#fff}
+  .card.gap .ctop h3,.card.gap .ctop .meta,.card.gap .ctop .meta b,.card.gap .ctop .lst-info,.card.gap .ctop .lst-reason,.card.gap .ctop .lst-age{color:#fff}
+  .card.gap .ctop .pill{background:#fff;color:var(--pink)}
+  .card.gap .ctop .pill.gapclosing{background:#fff;color:var(--red)}
+  .card.gap .ctop .pill.gapcalerror{background:#fff;color:var(--orange)}
+  .card.gap .ctop .pill.gapbrk{background:#fff;color:var(--blue)}
+  .card.gap .dot{background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25)}
+
   #zoombar{position:fixed;right:18px;bottom:18px;z-index:80;background:rgba(36,55,70,0.97);border:3px solid var(--yellow);border-radius:40px;padding:8px 10px;display:flex;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(0,0,0,0.28)}
   #zoombar .zlabel{font-family:'MarkerFelt',cursive;color:var(--yellow);font-size:12px;padding:0 6px 0 4px;text-transform:uppercase}
   #zoombar .zbtn{font-family:'Pencil',cursive;font-size:14px;border:2px solid var(--lightblue);background:#fff;color:var(--blue);border-radius:30px;padding:6px 12px;cursor:pointer;line-height:1}
@@ -728,6 +762,21 @@ const SAMPLE_CENTRES=[
   {name:"Milestones Forest Lake",mgr:"Katie",state:"QLD",cadence:"Weekly",coach:"Fanta",state_:"saved",tier:"green",savedDate:"20th May",
    signals:[{c:"ok",t:"Saved"}],
    timeline:[{d:"20/5",t:"Loved Fanta plus the sessions, cancelled on budget. Happy to revisit in new financial year."}]}
+  ,
+  // ---- no sessions booked for the next calendar month ----
+  // state_:"gap" is emitted by the engine; these three are sample rows only.
+  {name:"Toowoomba Tiny Tigers",mgr:"Katie",state:"QLD",cadence:"Weekly",coach:"Fanta",state_:"gap",tier:"amber",severity:60,situation:"gap_untriaged",lastContactDays:12,
+   signals:[{c:"bad",t:"0 sessions next month"},{c:"warn",t:"4 ran this month"},{c:"ok",t:"Last session 23/10"}],
+   reasons:["No events booked for the next calendar month. Four sessions ran this month."],
+   timeline:[]},
+  {name:"Harbour Kids Manly",mgr:"Viki",state:"NSW",cadence:"Weekly",coach:"Emilio",state_:"gap",tier:"amber",severity:58,situation:"gap_untriaged",lastContactDays:6,
+   signals:[{c:"bad",t:"0 sessions next month"},{c:"warn",t:"4 ran this month"},{c:"ok",t:"Last session 30/10"}],
+   reasons:["No events booked for the next calendar month. Four sessions ran this month."],
+   timeline:[]},
+  {name:"Adelaide Acorns ELC",mgr:"Troy",state:"SA",cadence:"Fortnightly",coach:"Olivia",state_:"gap",tier:"amber",severity:52,situation:"gap_untriaged",lastContactDays:19,
+   signals:[{c:"bad",t:"0 sessions next month"},{c:"warn",t:"2 ran this month"},{c:"ok",t:"Last session 21/10"}],
+   reasons:["No events booked for the next calendar month. Two sessions ran this month."],
+   timeline:[]}
 ];
 
 var CENTRES = SAMPLE_CENTRES;   // becomes live data once churn_data.json loads
@@ -780,6 +829,7 @@ function renderSecTabs(){
     watch:  v.filter(c=>eff_(c).state_==="watch").length,
     reminder:v.filter(c=>eff_(c).state_==="reminder").length,
     missed: v.filter(c=>eff_(c).state_==="missed").length,
+    gap:    v.filter(c=>eff_(c).state_==="gap").length,
   };
   const tabs=[
     {k:"all",lbl:"All", n:counts.all},
@@ -787,6 +837,7 @@ function renderSecTabs(){
     {k:"missed",lbl:"🔁 Missed/Resched", n:counts.missed},
     {k:"watch",lbl:"❤ Watchlist", n:counts.watch},
     {k:"reminder",lbl:"⏰ Reminders", n:counts.reminder},
+    {k:"gap",lbl:"📅 No sessions", n:counts.gap},
   ];
   document.getElementById("sectabs").innerHTML=tabs.map(t=>`<button class="stab ${activeSection===t.k?'on':''}" data-sec="${t.k}">${t.lbl} <span class="tn">${t.n}</span></button>`).join("");
   document.querySelectorAll("#sectabs .stab").forEach(el=>el.onclick=()=>{activeSection=el.dataset.sec;renderSecTabs();renderSections();});
@@ -801,7 +852,8 @@ function renderTiles(){
     {cls:"notice",num:f("notice"),lbl:"Given notice",sub:"Save process"},
     {cls:"red",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="red").length,lbl:"Red \u00B7 Urgent",sub:"Watchlist"},
     {cls:"blue",num:f("reminder"),lbl:"Cadence reminders",sub:"Call due, no concerns"},
-    {cls:"amber",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="amber").length,lbl:"Yellow \u00B7 Watch",sub:"Watchlist"}
+    {cls:"amber",num:v.filter(c=>eff(c).state_==="watch"&&eff(c).tier==="amber").length,lbl:"Yellow \u00B7 Watch",sub:"Watchlist"},
+    {cls:"gap",num:v.filter(c=>eff(c).state_==="gap"&&!((store[c.name]||{}).gapOutcome)).length,lbl:"No sessions",sub:NEXT_MONTH_M+" \u00B7 to call"}
   ];
   // Saved tile switches to the Saved tab IN-PAGE (no navigation away).
   const savedTile=`<div class="tile saved" id="saved-tile" style="cursor:pointer"><div class="num">${savedN}</div><div class="lbl">Saved</div><div class="sub">Open Saved tab \u2192</div></div>`;
@@ -921,8 +973,10 @@ function cardHTML(c){
   const open=store[c.name]&&store[c.name].open;
   const tl=timelineOf(c);
   const dotcls=st==="paused"?"paused":tier;
-  const pillcls=st==="notice"?"notice":st==="reminder"?"paused":st==="paused"?"paused":tier;
+  let pillcls=st==="notice"?"notice":st==="reminder"?"paused":st==="paused"?"paused":tier;
   let pilltxt=st==="notice"?"Notice":st==="reminder"?"Call due":st==="paused"?"Paused":st==="saved"?"Saved":tierLabel(tier);
+  const gapOut=(store[c.name]||{}).gapOutcome||"";
+  if(st==="gap"){pilltxt=gapOut?GAP_LABEL[gapOut]:"Needs a call";pillcls=gapOut?("gap"+gapOut):"gap";}
   // New-relationship situation labels (display only — engine-emitted situations).
   const SIT_LABEL={new_coach_cadence:"New coach · call due",new_centre_cadence:"New centre · call due",new_coach_positive:"New coach · positive",missed_resched:"Missed / rescheduled"};
   if(st!=="saved"&&SIT_LABEL[c.situation])pilltxt=SIT_LABEL[c.situation];
@@ -981,8 +1035,9 @@ function cardHTML(c){
       ${c.savePlan ? `<p class="section-lbl">Tailored action plan for ${c.name}</p>
         <div class="actions sp-tailored"><ol>${c.savePlan.split(/\n+/).filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[-\u2022\d\.)\s]+/,"")}</li>`).join("")}</ol>
         <div class="sp-meta">Based on this centre's feedback + contact history${c.contactStats?` \u00B7 ${c.contactStats.last30||0} contacts last 30d (vs ${c.contactStats.prev30||0} the 30 before)`:""}</div></div>` :
-      (ACTIONS[c.situation||"watch_other"]?`<p class="section-lbl">${ACTIONS[c.situation||"watch_other"].title}</p>
-        <div class="actions"><ol>${ACTIONS[c.situation||"watch_other"].steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`:"")}
+      (()=>{const sk=(eff(c).state_==="gap")?("gap_"+(((store[c.name]||{}).gapOutcome)||"untriaged")):(c.situation||"watch_other");
+        const A=ACTIONS[sk]||ACTIONS["watch_other"];
+        return A?`<p class="section-lbl">${A.title}</p><div class="actions"><ol>${A.steps.map(s=>`<li>${s}</li>`).join("")}</ol></div>`:"";})()}
 
       <p class="section-lbl">${c.mgr} notes</p>
       <div class="mgr-notes">
@@ -1001,7 +1056,13 @@ function cardHTML(c){
       </div>
     </div></div>
     <div class="cfoot">
-      <span class="ov-lbl">${st==="saved"?"Win record":st==="reminder"?"Reminder · log the call":"State manager review"}</span>
+      <span class="ov-lbl">${st==="saved"?"Win record":st==="reminder"?"Reminder · log the call":st==="gap"?"Why are there no sessions?":"State manager review"}</span>
+      ${st==="gap"?`<div class="triage-btns">
+        <button class="tbtn closing ${gapOut==="closing"?"on":""}" data-gapset="closing" data-c="${c.name}">Closing</button>
+        <button class="tbtn calerror ${gapOut==="calerror"?"on":""}" data-gapset="calerror" data-c="${c.name}">Calendar error</button>
+        <button class="tbtn brk ${gapOut==="brk"?"on":""}" data-gapset="brk" data-c="${c.name}">Known break</button>
+        ${gapOut?`<button class="tbtn clr" data-gapclear="${c.name}">Clear</button>`:""}
+      </div>`:""}
       ${st==="watch"?`
         <button class="btn set-green ${tier==='green'?'on':''}" data-set="green" data-c="${c.name}">Green</button>
         <button class="btn set-amber ${tier==='amber'?'on':''}" data-set="amber" data-c="${c.name}">Yellow</button>
@@ -1017,7 +1078,8 @@ const SECTIONS=[
   {key:"notice",badge:"notice",title:"\u26A0\uFE0F Given Notice",hint:"4-session save process. Work it now."},
   {key:"missed",badge:"missed",title:"\uD83D\uDD01 Missed / Rescheduled",hint:"2+ missed or rescheduled sessions in the last 70 days \u2014 get to the bottom of it."},
   {key:"watch",badge:"watch",title:"\u2764 Watchlist",hint:"Red plus yellow centres being actively worked."},
-  {key:"reminder",badge:"reminder",title:"\u23F0 Cadence Reminders",hint:"Healthy centres, just due for a check-in call."}
+  {key:"reminder",badge:"reminder",title:"\u23F0 Cadence Reminders",hint:"Healthy centres, just due for a check-in call."},
+  {key:"gap",badge:"gap",title:"\uD83D\uDCC5 No Sessions Next Month",hint:"Nothing booked for the coming month. Either they are closing plus need closing off, or the calendar has stopped by mistake."}
   // Saved centres moved to saved-centres.html \u2014 no Saved section here.
 ];
 
@@ -1098,7 +1160,50 @@ function renderSections(){
   wireManagerWatch();
 }
 
+const NEXT_MONTH_M=(()=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()+1);return d.toLocaleDateString("en-AU",{month:"long"});})();
+const GAP_LABEL={closing:"Closing",calerror:"Calendar error",brk:"Known break"};
+ACTIONS.gap_untriaged={title:"No sessions booked \u00B7 find out which it is",steps:[
+  "Call the centre. Do they know their sessions stop next month?",
+  "If they are stopping, mark Closing plus work the close-off steps.",
+  "If they expect sessions, mark Calendar error. That is ours to fix, fast.",
+  "If it is a planned break, mark Known break plus note the return date."]};
+ACTIONS.gap_closing={title:"Closing \u00B7 close the centre off properly",steps:[
+  "Confirm the final session date with the centre in writing.",
+  "Book equipment collection, or confirm what stays on site.",
+  "Raise the final invoice plus check nothing is outstanding.",
+  "Send the offboarding email. Thank them, leave the door open.",
+  "Set a future contact date so they get a call before the next budget."]};
+ACTIONS.gap_calendar={title:"Calendar error \u00B7 sessions should be running",steps:[
+  "Check the roster against the calendar. Did the recurring series just end?",
+  "Call the centre plus confirm they still expect sessions.",
+  "Rebuild the month on the calendar plus assign the coach.",
+  "Verify the first rebuilt session shows for the coach before it runs."]};
+ACTIONS.gap_calerror=ACTIONS.gap_calendar;
+ACTIONS.gap_brk={title:"Known break \u00B7 keep the relationship warm",steps:[
+  "Note the return date so the centre is not chased as a lapse.",
+  "Diarise a call two weeks before they are due back.",
+  "Confirm the coach plus day before the first session back."]};
+
 function wireCards(root){
+  root.querySelectorAll("[data-gapset]").forEach(b=>b.onclick=()=>{
+    const n=b.dataset.c,out=b.dataset.gapset;
+    if(((store[n]||{}).gapOutcome)===out) return;
+    const reason=prompt(`${n} \u2014 ${GAP_LABEL[out]}. What did the centre say? (required)`);
+    if(!reason||!reason.trim()) return;
+    store[n]=store[n]||{};
+    store[n].gapOutcome=out;
+    if(out==="brk"){const r=prompt("Date they are back (e.g. 2/2). Leave blank if unknown.");store[n].gapReturn=(r||"").trim();}
+    store[n].history=store[n].history||[];
+    store[n].history.unshift({date:new Date().toISOString().slice(0,10),source:"manager",tier:"",state:"gap:"+out,reason:reason.trim()});
+    window.persistOverride && window.persistOverride(n);
+    renderAll();
+  });
+  root.querySelectorAll("[data-gapclear]").forEach(b=>b.onclick=()=>{
+    const n=b.dataset.gapclear;
+    store[n]=store[n]||{}; store[n].gapOutcome=""; store[n].gapReturn="";
+    window.persistOverride && window.persistOverride(n);
+    renderAll();
+  });
   root.querySelectorAll("[data-zoom]").forEach(b=>b.onclick=()=>{const n=b.dataset.zoom;store[n]=store[n]||{};store[n].open=!store[n].open;renderSections();});
   root.querySelectorAll("[data-pm]").forEach(b=>b.onclick=(e)=>{
     e.stopPropagation();
@@ -1730,7 +1835,9 @@ function adaptLive(rows){
     name: c.name, mgr: c.mgr, state: c.state,
     cadence: c.cadence || "—",
     coach: c.coach || "—",
-    state_: (c.state_ === "notice" || c.state_ === "reminder" || c.state_ === "saved") ? c.state_ : "watch",
+    // "missed" and "gap" were previously collapsed to "watch", which left both
+    // sections permanently empty on live data. Both now pass through.
+    state_: (c.state_ === "notice" || c.state_ === "reminder" || c.state_ === "saved" || c.state_ === "missed" || c.state_ === "gap") ? c.state_ : "watch",
     tier: c.tier || "amber",
     savedDate: c.savedDate || "",
     noticeReason: c.noticeReason || "",
@@ -1822,6 +1929,8 @@ async function loadOverrides(){
     if(o.mgrNotes) cur.mgrNotes = o.mgrNotes;
     if(o.timelineExtra) cur.timelineExtra = o.timelineExtra;
     if(o.keepActive) cur.keepActive = o.keepActive;
+    if(o.gapOutcome) cur.gapOutcome = o.gapOutcome;
+    if(o.gapReturn) cur.gapReturn = o.gapReturn;
     window.store[o.name] = cur;
   });
 }
@@ -1839,6 +1948,8 @@ async function persistOverride(name){
   if(sObj.mgrNotes && sObj.mgrNotes.length) data.mgrNotes = sObj.mgrNotes;
   if(sObj.timelineExtra && sObj.timelineExtra.length) data.timelineExtra = sObj.timelineExtra;
   if(sObj.keepActive) data.keepActive = sObj.keepActive;
+  if(sObj.gapOutcome) data.gapOutcome = sObj.gapOutcome;
+  if(sObj.gapReturn) data.gapReturn = sObj.gapReturn;
   try { await setDoc(doc(db, OVERRIDES, slug(name)), data); }
   catch(e){ console.error('persistOverride failed for', name, e); }
 }
