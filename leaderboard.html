@@ -2524,6 +2524,14 @@ h1,h2,h3,h4,h5,.mf,
         <option value="B">Brisbane · B</option>
         <option value="P">Perth · P</option>
         <option value="A">Adelaide · A</option>
+        <option value="O">Other · O</option>
+      </select>
+      <!-- true state (same list as CC_STATES); required — written as state + stateSource:"manual" -->
+      <select class="filter-select" id="as-state">
+        <option value="">— state —</option>
+        <option value="NSW">NSW</option><option value="VIC">VIC</option><option value="QLD">QLD</option>
+        <option value="SA">SA</option><option value="WA">WA</option><option value="TAS">TAS</option>
+        <option value="ACT">ACT</option><option value="NT">NT</option>
       </select>
       <span id="as-points" style="font-weight:900; color:var(--navy); padding:0 4px;">10 pts</span>
       <button id="as-submit" style="background:var(--navy); color:#fff; border:none; border-radius:50px; padding:9px 20px; font-size:13px; font-weight:800; font-family:var(--font); cursor:pointer;">Add sale</button>
@@ -6441,6 +6449,10 @@ window.__initSales = function(){
     if (sessEl) sessEl.addEventListener('change', preview);
     if (cpEl) cpEl.addEventListener('input', preview);
     preview();
+    // Picking the true state also sets the matching city letter (still overridable); TAS/ACT/NT -> O.
+    var AS_STATE_CITY = {NSW:'S', VIC:'M', QLD:'B', SA:'A', WA:'P', TAS:'O', ACT:'O', NT:'O'};
+    var stEl = document.getElementById('as-state'), cityEl = document.getElementById('as-city');
+    if (stEl) stEl.addEventListener('change', function(){ if (cityEl && AS_STATE_CITY[stEl.value]) cityEl.value = AS_STATE_CITY[stEl.value]; });
     var msgEl = document.getElementById('as-msg');
     function msg(t,c){ if (msgEl){ msgEl.textContent = t; msgEl.style.color = c || 'var(--muted)'; } }
     var btn = document.getElementById('as-submit'); if (!btn) return;
@@ -6450,7 +6462,9 @@ window.__initSales = function(){
       var date   = (document.getElementById('as-date')||{}).value;
       var session= (document.getElementById('as-session')||{}).value;
       var city   = (document.getElementById('as-city')||{}).value;
+      var state  = ((document.getElementById('as-state')||{}).value || '').toUpperCase();
       if (!rep || !centre || !date){ msg('Rep, centre and date are required.', '#c0392b'); return; }
+      if (!AS_STATE_CITY[state]){ msg('Pick the centre’s state.', '#c0392b'); return; }   // nothing written without a true state
       if (!window.__sales || !window.__db || !window.__loadLiveData){ msg('Not connected — sign in and reload.', '#c0392b'); return; }
       // points resolved BEFORE the citySplit object is built below, so Custom lands in both.
       var points;
@@ -6470,14 +6484,15 @@ window.__initSales = function(){
       try {
         await window.__sales.addDoc(
           window.__sales.collection(window.__db, window.__sales.COLLECTION),
-          { rep:rep, centre:centre, date:date, sessionType:session, points:points, city:city, citySplit:{[city]:points}, startDate:null, source:"crm" }
+          { rep:rep, centre:centre, date:date, sessionType:session, points:points, city:city, citySplit:{[city]:points}, startDate:null, source:"crm", state:state, stateSource:"manual" }
         );
         var live = await window.__loadLiveData();
         window.__setDATA(live);
         document.getElementById('payload-data').textContent = JSON.stringify(live);
         window.__rerenderSales();
         var ce = document.getElementById('as-centre'); if (ce) ce.value = '';
-        msg('Added '+points+' pts · '+rep+' · '+centre+' ✓', '#1a8b3a');
+        if (stEl) stEl.value = '';   // next centre needs its own state pick
+        msg('Added '+points+' pts · '+rep+' · '+state+' · '+centre+' ✓', '#1a8b3a');
       } catch(e){ console.error('add sale failed', e); msg('Save failed: '+((e&&e.message)||e), '#c0392b'); }
       finally { btn.disabled = false; }
     });
@@ -7540,10 +7555,37 @@ function ccCallbackDayLoad(num){
   else if(n<5){ msg.textContent=`📅 ${n} other callback${n===1?'':'s'} on this day`; msg.className="cc-cbload"; }
   else { msg.textContent=`📅 ${n} other callbacks on this day — consider another date`; msg.className="cc-cbload warn"; }
 }
-const CC_STATES=["NSW","VIC","QLD","SA","WA"];   // valid states for the state dropdown
+const CC_STATES=["NSW","VIC","QLD","SA","WA","TAS","ACT","NT"];   // valid states for the state dropdown + booking picker
+function ccPostcodeState(pc){                    // AU postcode -> state (same ranges as the backfill)
+  const p=Number(pc); if(!Number.isFinite(p)) return null;
+  if(p>=200&&p<=299) return "ACT";               // ACT PO boxes
+  if(p>=800&&p<=999) return "NT";
+  if((p>=2600&&p<=2618)||(p>=2900&&p<=2920)) return "ACT";
+  if(p>=2000&&p<=2999) return "NSW";
+  if((p>=3000&&p<=3999)||(p>=8000&&p<=8999)) return "VIC";
+  if((p>=4000&&p<=4999)||(p>=9000&&p<=9999)) return "QLD";
+  if(p>=5000&&p<=5999) return "SA";
+  if(p>=6000&&p<=6999) return "WA";
+  if(p>=7000&&p<=7999) return "TAS";
+  return null;
+}
 function ccDeriveState(address){                 // pull a state token out of an address string
-  const m=String(address||"").toUpperCase().match(/\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\b/g);
-  return m ? m[m.length-1] : null;               // last match = nearest the postcode
+  const a=String(address||"");
+  const m=a.toUpperCase().match(/\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\b/g);
+  if(m) return m[m.length-1];                    // last match = nearest the postcode
+  if(/tasmania/i.test(a)) return "TAS";
+  const pc=a.match(/(?:^|[^\d-])(\d{4})\s*(?:,?\s*australia)?\s*$/i);   // postcode must END the address (not a street no.); no lookbehind (old Safari)
+  return pc ? ccPostcodeState(pc[1]) : null;
+}
+// True state for a CRM centre at log time -> {state, source}. Same order as the backfill:
+// a single real CRM state, else the centre's own address (token / postcode). "SA/WA" or blank
+// with no usable address -> {state:null}: a booking must then pick one (ccLogCall).
+function ccResolveState(c){
+  const s=String((c&&c.state)||"").toUpperCase().trim();
+  if(CC_STATES.includes(s)) return {state:s, source:"crm"};
+  const a=ccDeriveState(c&&c.address);
+  if(a) return {state:a, source:"address"};
+  return {state:null, source:"unresolved"};
 }
 function ccRefreshMeta(c,num){ const m=document.querySelector(`#cc-row-${num} .cc-meta`); if(m) m.textContent=`${c.state||"—"} · ${c.phone||"no phone"}`; }
 function ccFieldLink(field,val){
@@ -7816,10 +7858,13 @@ function ccTodayISO(){
   return `${g('year')}-${g('month')}-${g('day')}`;
 }
 function ccDateAU(iso){ const [y,m,d]=String(iso||"").split('-'); return `${d}-${m}-${y}`; }   // display only (DD-MM-YYYY)
-const CC_CITYMAP = {NSW:"S", VIC:"M", QLD:"B", SA:"A", WA:"P", "SA/WA":"A"};
+// City letter (feeds citySplit + daily-activity counts). SA and WA are distinct; the combined
+// "SA/WA" label is NOT a state, so it maps to nothing (-> "O") rather than guessing Adelaide.
+const CC_CITYMAP = {NSW:"S", VIC:"M", QLD:"B", SA:"A", WA:"P", TAS:"O", ACT:"O", NT:"O"};
 function ccCity(state){
   const s=String(state||"").toUpperCase().trim();
   if(CC_CITYMAP[s]) return CC_CITYMAP[s];
+  if(s.includes("/")) return "";                 // combined label (e.g. SA/WA) -> ambiguous, no letter
   const first=s.split(/[\/ ,]/)[0];
   return CC_CITYMAP[first]||"";
 }
@@ -7872,6 +7917,7 @@ function ccLogForm(c){
       <div class="cc-logfield"><label>Callback date</label><input type="date" data-logcb="${num}"><span class="cc-cbload" data-cbload="${num}"></span></div>
       <div class="cc-logfield" data-logsessionwrap="${num}" style="display:none"><label>Session</label><select data-logsession="${num}">${sessOpts}</select></div>
       <div class="cc-logfield" data-logcustomwrap="${num}" style="display:none"><label>Custom points</label><input type="number" step="0.1" min="0.1" placeholder="e.g. 27 or 7.4" data-logcustompts="${num}"></div>
+      <div class="cc-logfield" data-logstatewrap="${num}" style="display:none"><label>State (centre is ${c.state?crmEsc(c.state):"blank"} — pick)</label><select data-logstate="${num}">${[""].concat(CC_STATES).map(s=>`<option value="${s}">${s||"— pick state —"}</option>`).join("")}</select></div>
     </div>
     <div class="cc-logrow" style="align-items:stretch"><div class="cc-logfield" style="flex:1;width:100%"><label>Description</label><textarea data-logdesc="${num}" placeholder="What happened on the call…"></textarea></div></div>
     <div><button class="cc-logsave" data-logsave="${num}">Log Call</button><span class="cc-logmsg" data-logmsg="${num}"></span></div>
@@ -7887,6 +7933,10 @@ function ccOnResultChange(sel){
   const sw=row.querySelector(`[data-logsessionwrap="${num}"]`);
   if(sw) sw.style.display = val==="booked_sale" ? "" : "none";
   ccSyncCustomPts(num);            // Custom points field follows the session choice
+  // State picker: only for a booking on a centre whose state can't be resolved (SA/WA / blank, no address)
+  const stw=row.querySelector(`[data-logstatewrap="${num}"]`);
+  const c=ccCENTRES.find(x=>String(x.num)===String(num));
+  if(stw) stw.style.display = ((val==="booked_sale"||val==="booked_offer") && c && !ccResolveState(c).state) ? "" : "none";
 }
 // Show the Custom points input only when result=booked_sale AND session=Custom.
 function ccSyncCustomPts(num){
@@ -7920,7 +7970,21 @@ async function ccLogCall(num){
       return;   // nothing written
     }
   }
-  const CITY=ccCity(c.state) || "O";   // default unknown/blank state to "O" (Other) so stateless calls still count
+  // ---- True state: resolve, and for a BOOKING require a pick BEFORE ANY WRITE ----
+  // Clear CRM state (or one derivable from the centre's address) resolves silently. A booking on
+  // an "SA/WA" / blank centre is blocked until the rep picks the real state (stateSource "manual").
+  const BOOKING = result==="booked_sale" || result==="booked_offer";
+  let ST=ccResolveState(c);
+  if(BOOKING && !ST.state){
+    const picked=String((q(`[data-logstate="${num}"]`)||{}).value||"").toUpperCase().trim();
+    if(!CC_STATES.includes(picked)){
+      const stw=q(`[data-logstatewrap="${num}"]`); if(stw) stw.style.display="";
+      if(msg){ msg.style.color="var(--red)"; msg.textContent=`Centre state is ${c.state?"“"+c.state+"”":"blank"} — pick the actual state before booking.`; }
+      return;   // nothing written
+    }
+    ST={state:picked, source:"manual"};
+  }
+  const CITY=ccCity(ST.state) || "O";   // letter from the TRUE state; unknown / SA/WA (non-booking call) -> "O" (Other) so it still counts
   const NEWCALL = (c.crmCallCount||0)===0 && !(Array.isArray(c.history) && c.history.length>0);
   const save=q(`[data-logsave="${num}"]`); if(save) save.disabled=true;
   if(msg){ msg.style.color="var(--muted)"; msg.textContent="Saving…"; }
@@ -7966,10 +8030,10 @@ async function ccLogCall(num){
       const points = session==="Custom" ? customPts
                    : session==="One Off" ? ONE_OFF_POINTS
                    : (CRM_SESSIONS[session]||0);
-      await addDoc(collection(db,"sales-entries"),{rep:ccPinRep, centre:c.name, date, points, city:CITY, citySplit:{[CITY]:points}, sessionType:session, source:"crm"});
+      await addDoc(collection(db,"sales-entries"),{rep:ccPinRep, centre:c.name, date, points, city:CITY, citySplit:{[CITY]:points}, sessionType:session, source:"crm", state:ST.state, stateSource:ST.source});
       if(date===ccTodayISO()) ccBookedToday++;
     } else if(result==="booked_offer"){
-      await addDoc(collection(db,"offer-centres"),{rep:ccPinRep, centre:c.name, city:CITY, offerDate:date, status:"pending", sessionType:null, conversionDate:null});
+      await addDoc(collection(db,"offer-centres"),{rep:ccPinRep, centre:c.name, city:CITY, offerDate:date, status:"pending", sessionType:null, conversionDate:null, state:ST.state, stateSource:ST.source});
       if(date===ccTodayISO()) ccBookedToday++;
     }
     // refresh counter + browse list (collapses this row, updates colour + snippet)
