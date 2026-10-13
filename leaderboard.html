@@ -2460,6 +2460,11 @@ h1,h2,h3,h4,h5,.mf,
 .wm-tile-l{font-size:8.5px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
 .wm-tile-v{font-size:16px;font-weight:900;color:var(--navy);margin-top:2px;}
 .wm-tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.wm-mix{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin:0 0 6px;}
+.wm-mix-l{font-size:8.5px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-right:2px;min-width:34px;}
+.wm-chip{background:#f7fafc;border:1px solid var(--line);border-radius:999px;padding:1px 8px;font-size:10.5px;font-weight:800;color:var(--navy);white-space:nowrap;}
+.wm-chip b{font-weight:900;}
+.wm-mixes{margin-bottom:10px;}
 .wm-tbl th{font-size:8.5px;font-weight:900;text-transform:uppercase;color:var(--muted);text-align:right;padding:3px 5px;border-bottom:1px solid var(--line);}
 .wm-tbl th:first-child{text-align:left;}
 .wm-tbl td{padding:3px 5px;text-align:right;font-weight:800;color:var(--navy);border-bottom:1px solid #f2f2f2;}
@@ -5780,6 +5785,24 @@ window.__initSales = function(){
       + '<div class="wm-tile"><div class="wm-tile-l">Points</div><div class="wm-tile-v">'+wmFmtPts(t.p)+'</div></div>'
       + '<div class="wm-tile"><div class="wm-tile-l">Centres</div><div class="wm-tile-v">'+t.c+'</div></div>'
       + '<div class="wm-tile"><div class="wm-tile-l">Calls</div><div class="wm-tile-v">'+t.k+'</div></div></div>'; }
+    // What KIND of sale made up the period: type chips, TEAM level (summed over reps), zero types hidden.
+    // Counts distinct sales (a conversion is not a second sale), so it is informational and is NOT
+    // expected to equal the Centres tile, which counts every point event including conversions.
+    // Never allowed to break the board: the baked payload has no breakdown fields (default {}), and any
+    // error renders nothing here rather than throwing out of renderWMStats.
+    function mix(kind){
+      try {
+        var ty = {};
+        reps.forEach(function(r){
+          var t = kind==='wk' ? ((r.weeklyType || {})[selMon] || {}) : ((r.monthlyType || [])[selMonthIdx] || {});
+          Object.keys(t).forEach(function(k){ ty[k] = (ty[k]||0) + (Number(t[k])||0); });
+        });
+        var order = window.WM_TYPE_ORDER || ["Weekly","Fortnightly","Offer","Custom","One Off","Unknown"];
+        var chips = order.filter(function(k){ return ty[k]; })
+          .map(function(k){ return '<span class="wm-chip">'+crmEsc(k)+' <b>'+ty[k]+'</b></span>'; }).join('');
+        return chips ? '<div class="wm-mixes" data-wm-mix="'+kind+'"><div class="wm-mix"><span class="wm-mix-l">Type</span>'+chips+'</div></div>' : '';
+      } catch(e){ console.error('wm-stats breakdown render failed:', e); return ''; }
+    }
     function table(kind){
       var rows = reps.map(function(r){
         var p = kind==='wk'? wk(r,'weekly')        : mo(r,'monthly');
@@ -5796,12 +5819,12 @@ window.__initSales = function(){
       + '<div><div class="wm-title">'+(atCurrent?'This Week':'Week')+'</div><div class="wm-range">'+weekRangeLabel(selMon)+'</div></div>'
       + '<div class="wm-nav"><button class="wm-arrow" data-wmprev title="Previous week">◀</button>'
       + '<button class="wm-arrow" data-wmnext title="Next week"'+(atCurrent?' disabled':'')+'>▶</button></div>'
-      + '</div>'+tiles(wT)+table('wk')+'</div>';
+      + '</div>'+tiles(wT)+mix('wk')+table('wk')+'</div>';
     var monthCard = '<div class="wm-card"><div class="wm-h">'
       + '<div><div class="wm-title">'+(atCurrentMonth?'This Month':'Month')+'</div><div class="wm-range">'+(monthName+' '+curYear+(atCurrentMonth?' · running':''))+'</div></div>'
       + '<div class="wm-nav"><button class="wm-arrow" data-wmmprev title="Previous month"'+(selMonthIdx<=0?' disabled':'')+'>◀</button>'
       + '<button class="wm-arrow" data-wmmnext title="Next month"'+(atCurrentMonth?' disabled':'')+'>▶</button></div>'
-      + '</div>'+tiles(mT)+table('mo')+'</div>';
+      + '</div>'+tiles(mT)+mix('mo')+table('mo')+'</div>';
     host.innerHTML = weekCard + monthCard;
     var pv = host.querySelector('[data-wmprev]'), nx = host.querySelector('[data-wmnext]');
     if (pv) pv.onclick = function(){ wmOffset -= 1; renderWMStats(); };   // older week -> re-read buckets for new selMon
@@ -6848,11 +6871,13 @@ function buildPointEvents(sales, offers){
     if(!s.date) return;
     ev.push({rep:s.rep,date:s.date,centre:s.centre,points:Number(s.points)||0,id:s.id,created:s.createdAt||null,
              city:s.city||pickCity(s.citySplit),kind:"sale",source:s.source||"crm",
-             sessionType:s.sessionType||null});   // needed to split One Offs out of the sale count
+             sessionType:s.sessionType||null,     // needed to split One Offs out of the sale count
+             state:s.state||null});               // weekly/monthly state breakdown (wmStateKey)
   });
   offers.forEach(o=>{
     if(o.offerDate){
-      ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer",id:o.id,created:o.createdAt||null});
+      ev.push({rep:o.rep,date:o.offerDate,centre:o.centre,points:1,city:o.city||null,kind:"offer",id:o.id,created:o.createdAt||null,
+               state:o.state||null});           // weekly/monthly state breakdown (wmStateKey)
     }
     if(o.status==="ongoing" && o.conversionDate && o.sessionType){
       // "Custom" (and any type not in the map) has no map value — fall back to the entry's
@@ -6905,12 +6930,27 @@ window.weekRangeLabel = weekRangeLabel;
 window.ccTodayISO     = window.ccTodayISO || ccTodayISO;
 window.crmEsc         = window.crmEsc || crmEsc;
 
+// ---- Weekly/monthly composition: what KIND of sale, and in which STATE (counts distinct sales) ----
+const WM_TYPE_GROUP={"1hr+ weekly":"Weekly","40min weekly":"Weekly","1hr+ fortnightly":"Fortnightly",
+  "40min fortnightly":"Fortnightly","Offer":"Offer","Custom":"Custom","One Off":"One Off"};
+const WM_TYPE_ORDER=["Weekly","Fortnightly","Offer","Custom","One Off","Unknown"];
+const WM_STATES=["VIC","NSW","QLD","SA","WA","TAS"];          // anything else (null, ACT, NT) -> "Other"
+const WM_STATE_ORDER=WM_STATES.concat(["Other"]);
+function wmTypeKey(e){                                         // an offer event is an Offer whatever its type
+  if(e.kind==="offer") return "Offer";
+  return WM_TYPE_GROUP[e.sessionType]||"Unknown";               // null/"" (seed rows) -> Unknown
+}
+function wmStateKey(st){ return WM_STATES.indexOf(st)>=0 ? st : "Other"; }
+function wmBump(bucket,key,cat){ const b=bucket[key]||(bucket[key]={}); b[cat]=(b[cat]||0)+1; }
+window.WM_TYPE_ORDER=WM_TYPE_ORDER; window.WM_STATE_ORDER=WM_STATE_ORDER;   // renderWMStats is a classic script
+
 function buildEverything(sales, offers, activity, asOf, settings){
   const events=buildPointEvents(sales, offers);
   const repNames=new Set([...events.map(e=>e.rep),...offers.map(o=>o.rep),...activity.map(a=>a.rep)]);
   const byRep={};
   repNames.forEach(n=>byRep[n]={name:n,events:[],monthly:Array(12).fill(0),
     weekly:{},weeklyCentres:{},monthlyCentres:Array(12).fill(0),
+    weeklyType:{},weeklyState:{},monthlyType:Array.from({length:12},()=>({})),monthlyState:Array.from({length:12},()=>({})),
     sales_by_city:{A:0,P:0,B:0,S:0,M:0},tcc_by_city:{A:0,P:0,B:0,S:0,M:0},
     totalCalls:0,totalNewCalls:0,totalReCalls:0,tclSales:0,callCats:{},offersCount:0,ongoingCount:0,lostCount:0,pendingCount:0,
     directSales:0,newDirectSales:0,newOffers:0,oneOffCount:0,activeDays:new Set()});
@@ -6923,7 +6963,15 @@ function buildEverything(sales, offers, activity, asOf, settings){
     r.events.push(e); r.monthly[d.getMonth()]+=e.points;
     { const wk=weekMondaySyd(e.date);                 // week buckets: points + centres-sold count
       if(wk){ r.weekly[wk]=(r.weekly[wk]||0)+e.points; r.weeklyCentres[wk]=(r.weeklyCentres[wk]||0)+1; }
-      r.monthlyCentres[d.getMonth()]+=1; }
+      r.monthlyCentres[d.getMonth()]+=1;
+      // Type/state composition counts DISTINCT sales: a conversion adds the rest of an offer's points
+      // but is not a second sale (the offer was counted when it happened). Informational only: the
+      // Centres tile above counts every point event, conversions included, so the two need not match.
+      if(e.kind!=="conversion"){
+        const tk=wmTypeKey(e), sk=wmStateKey(e.state), mi=d.getMonth();
+        if(wk){ wmBump(r.weeklyType,wk,tk); wmBump(r.weeklyState,wk,sk); }
+        wmBump(r.monthlyType,mi,tk); wmBump(r.monthlyState,mi,sk);
+      } }
     if(e.city && r.sales_by_city[e.city]!==undefined) r.sales_by_city[e.city]+=e.points;
     if(e.kind==="sale"){
       // A One Off is a booking, not a sale: it earns its 0.25 points above but is tallied
@@ -7026,6 +7074,7 @@ function buildEverything(sales, offers, activity, asOf, settings){
       trials_by_city:{A:0,P:0,B:0,S:0,M:0},tcc:r.totalCalls,tcc_by_city:r.tcc_by_city,
       top_territory:CITY_FULL[top_code],top_territory_code:top_code,daily,sales_ledger,
       weekly:r.weekly,weeklyCentres:r.weeklyCentres,weeklyCalls,monthlyCentres:r.monthlyCentres,monthlyCalls,
+      weeklyType:r.weeklyType,weeklyState:r.weeklyState,monthlyType:r.monthlyType,monthlyState:r.monthlyState,
       has_session_dates:false,monthly:r.monthly,ytd_total,ytd_avg,current_month:r2(r.monthly[asOf.getMonth()]),
       eligible,reason:eligible?`YTD avg ${ytd_avg.toFixed(2)} ≥ 50`:`${ytd_avg.toFixed(2)} YTD avg`,
       tier,is_new_rep:(days_active<=14&&ytd_total<30&&!inactive),start_date,fair_avg,months_active,days_active,
