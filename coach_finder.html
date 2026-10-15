@@ -68,8 +68,12 @@ a.ct{color:#1f6fd6;text-decoration:none;font-weight:700;font-size:13px}
 
   <div class="card">
     <h2>Find a coach</h2>
-    <div class="sub">Enter the centre, day, program plus start time. Shows coaches who do that program, are within 30 minutes drive, plus are free (or can get there in time from an earlier session).</div>
+    <div class="sub">Enter the centre, start date, frequency, program plus start time. Shows coaches who do that program, are within 30 minutes drive, plus are free on every session date over the next 8 weeks (or can get there in time from an earlier session).</div>
     <div><label>Centre name</label><input id="fCentre" list="centreList" placeholder="Start typing a centre"><datalist id="centreList"></datalist></div>
+    <div class="grid">
+      <div><label>Start date</label><input id="fStart" type="date" required></div>
+      <div><label>Frequency</label><select id="fFreq"><option value="weekly" selected>Weekly</option><option value="fortnightly">Fortnightly</option></select></div>
+    </div>
     <div class="grid">
       <div><label>Day</label><select id="fDay"><option>Monday</option><option>Tuesday</option><option>Wednesday</option><option>Thursday</option><option>Friday</option></select></div>
       <div><label>Start time</label><input id="fTime" type="time" value="09:30"></div>
@@ -88,6 +92,7 @@ a.ct{color:#1f6fd6;text-decoration:none;font-weight:700;font-size:13px}
 
   <div class="card hidden" id="resCard">
     <h2 id="resTitle">Available coaches</h2>
+    <div id="depthNote" class="hidden" style="background:#fff6cc;border:2px solid var(--yellow);border-radius:10px;padding:10px 12px;margin-bottom:10px;font-weight:700;font-size:14px"></div>
     <div id="results"></div>
     <details id="closestWrap" class="hidden">
       <summary>No full match — show closest coaches anyway</summary>
@@ -140,7 +145,64 @@ onAuthStateChanged(auth, async user => {
   } else { show($('#gate'), true); }
 });
 
-function toDate(v){ if(!v) return null; try{ const s=String(v); return new Date(s.includes('T')?s:s+'T00:00:00'); }catch(e){ return null; } }
+// --- date-clash core (pure: no DOM, no Firebase) ---
+const DOW3=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MON3=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const HORIZON_WEEKS = 8;
+function toDate(v){ if(!v) return null; try{ if(typeof v.toDate==='function') return v.toDate();   // Firestore Timestamp
+  const s=String(v); const d=new Date(s.includes('T')?s:s+'T00:00:00'); return isNaN(d)?null:d; }catch(e){ return null; } }
+function dateKey(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }   // local date
+function parseKey(k){ const [y,m,d]=k.split('-').map(Number); return new Date(y,m-1,d); }
+function fmtShort(k){ const d=parseKey(k); return d.getDate()+' '+MON3[d.getMonth()]; }
+function fmtLong(k){ return DOW3[parseKey(k).getDay()]+' '+fmtShort(k); }
+function fmt(m){ const h=Math.floor(m/60),mm=m%60; return `${(h%12)||12}:${String(mm).padStart(2,'0')}${h<12?'am':'pm'}`; }
+// new centre's session dates: weekly = 8 dates, fortnightly = 4 dates
+function occurrenceDates(startKey, freq){
+  const s=parseKey(startKey), step=freq==='fortnightly'?14:7, out=[];
+  for(let k=0;k<HORIZON_WEEKS*7;k+=step) out.push(dateKey(new Date(s.getFullYear(),s.getMonth(),s.getDate()+k)));
+  return out;
+}
+// events -> per-coach past-session count, per-coach roster by actual date, latest event date loaded
+function buildRoster(events, now){
+  const cnt={}, roster={}; let lastKey='';   // roster[coachId]["YYYY-MM-DD"] = [{centreId,start,end}]
+  for(const e of events){ const sd=toDate(e.start); if(!sd) continue;
+    const k=dateKey(sd); if(k>lastKey) lastKey=k;
+    (e.coaches||[]).forEach(el=>{ const uid=(el&&el.value)?el.value:el; if(!uid) return;
+      if(sd<=now) cnt[uid]=(cnt[uid]||0)+1;                  // past sessions = experience
+      if(sd>=now){ const r=(roster[uid]=roster[uid]||{}); (r[k]=r[k]||[]).push({centreId:e.educationCenter, start:sd, end:toDate(e.end)}); }
+    });
+  }
+  return {cnt, roster, lastKey};
+}
+// existing clash rule, per date: free if no sessions that date, or if a session ends by the start
+// time and the drive from that centre (abDrive, cached by caller) still gets them there in time
+async function checkDay(sessions, startMin, abDrive){
+  if(!sessions.length) return {state:'free', note:''};
+  let ok=false, note='';
+  for(const s of sessions){
+    if(!s.end) continue;
+    const endMin=s.end.getHours()*60+s.end.getMinutes();
+    if(endMin<=startMin){
+      const abMin=await abDrive(s.centreId);
+      if(abMin!=null && endMin+abMin<=startMin){ ok=true; note=`after ${fmt(endMin)} at nearby centre`; }
+    }
+  }
+  return ok ? {state:'free', note} : {state:'clash', note:''};
+}
+// only sessions on each exact occurrence date count; dates past the loaded data are 'unknown'
+async function checkDates(byDate, dates, lastKey, startMin, abDrive){
+  const days=[];
+  for(const k of dates){
+    if(!lastKey || k>lastKey){ days.push({key:k, state:'unknown', note:''}); continue; }
+    days.push({key:k, ...(await checkDay(byDate[k]||[], startMin, abDrive))});
+  }
+  const clashes=days.filter(d=>d.state==='clash').map(d=>d.key);
+  const unknown=days.filter(d=>d.state==='unknown').length;
+  const free=days.filter(d=>d.state==='free').length;
+  const note=(days.find(d=>d.note)||{}).note||'';
+  return {days, clashes, unknown, free, checked:days.length-unknown, note};
+}
+// --- end date-clash core ---
 function haversineKm(a,b){ if(!a||!b) return 1e9; const R=6371,dLat=(b.lat-a.lat)*Math.PI/180,dLng=(b.lng-a.lng)*Math.PI/180;
   const x=Math.sin(dLat/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dLng/2)**2;
   return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x)); }
@@ -166,22 +228,20 @@ async function loadAll(){
     CENTRES.push(rec); centreById[d.id]=rec; });
   // datalist of centre names
   $('#centreList').innerHTML = CENTRES.filter(c=>c.name).map(c=>`<option value="${c.name.replace(/"/g,'&quot;')}">`).join('');
-  // events -> per-coach session count + per-coach weekday roster (centre + end time)
-  const cnt={}; const roster={};   // roster[coachId][weekday] = [{centreId,end}]
-  const today=new Date();
-  eSnap.forEach(d=>{ const e=d.data(); const sd=toDate(e.start); if(!sd) return;
-    const wd=(sd.getDay()+6)%7;   // JS Sun=0 -> Mon=0
-    (e.coaches||[]).forEach(el=>{ const uid=(el&&el.value)?el.value:el; if(!uid) return;
-      if(sd<=today) cnt[uid]=(cnt[uid]||0)+1;                 // past sessions = experience
-      if(wd<=4 && sd>=today){                                  // upcoming roster for the day logic
-        (roster[uid]=roster[uid]||{});(roster[uid][wd]=roster[uid][wd]||[]);
-        roster[uid][wd].push({centreId:e.educationCenter, end:toDate(e.end)});
-      }
-    });
-  });
-  window._roster=roster; window._centreById=centreById;
+  // events -> per-coach session count + per-coach roster keyed by actual date
+  const evs=[]; eSnap.forEach(d=>evs.push(d.data()));
+  const {cnt, roster, lastKey}=buildRoster(evs, new Date());
+  window._roster=roster; window._centreById=centreById; window._lastEventKey=lastKey;
   COACHES.forEach(c=> c.sessions=cnt[c.id]||0);
 }
+
+const DAY_NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+$('#fStart').addEventListener('change', ()=>{
+  const v=$('#fStart').value; if(!v) return;
+  const dn=DAY_NAMES[parseKey(v).getDay()];
+  if(dn in DAY_IDX){ $('#fDay').value=dn; $('#status').textContent=''; }
+  else $('#status').textContent=`${fmtLong(v)} is a ${dn}. Pick a weekday start date.`;
+});
 
 function mapsDrive(origin, dest){    // returns minutes via DistanceMatrix, or null
   return new Promise(resolve=>{
@@ -204,8 +264,15 @@ window.runSearch = async function(){
   const cname=$('#fCentre').value.trim();
   const progs=[...document.querySelectorAll('.prog:checked')].map(x=>x.value);
   const day=$('#fDay').value, stime=$('#fTime').value||'09:30';
+  const startKey=$('#fStart').value, freq=$('#fFreq').value||'weekly';
+  if(!startKey){ $('#status').textContent="Pick a start date."; return; }
+  const startDay=DAY_NAMES[parseKey(startKey).getDay()];
+  if(!(startDay in DAY_IDX)){ $('#status').textContent=`${fmtLong(startKey)} is a ${startDay}. Pick a weekday start date.`; return; }
+  if(startDay!==day){ $('#status').textContent=`${fmtLong(startKey)} is a ${startDay}, but Day says ${day}. Fix one so they match.`; return; }
   if(!progs.length){ $('#status').textContent="Pick at least one program."; return; }
-  const wd=DAY_IDX[day]; const startMin=parseInt(stime.split(':')[0])*60+parseInt(stime.split(':')[1]);
+  const startMin=parseInt(stime.split(':')[0])*60+parseInt(stime.split(':')[1]);
+  const dates=occurrenceDates(startKey, freq), lastKey=window._lastEventKey||'';
+  const unknownDates=dates.filter(k=>!lastKey || k>lastKey);
   $('#goBtn').disabled=true; $('#status').textContent="Locating centre…"; show($('#resCard'),false);
   // find the centre location: match by name, else geocode postcode
   let cLoc=null, cLabel=cname;
@@ -226,54 +293,45 @@ window.runSearch = async function(){
   }
   near.sort((a,b)=>a.km-b.km);
 
-  // drive-time + roster/time logic
+  // drive-time + per-date roster/time logic
   const matches=[], closest=[];
+  const abCache=new Map();   // prev centreId -> Promise(minutes to new centre); one lookup per centre per search
+  const abDrive=id=>{
+    if(!abCache.has(id)){ const prev=window._centreById[id];
+      abCache.set(id, prev&&prev.lat!=null ? mapsDrive({lat:prev.lat,lng:prev.lng},cLoc).then(m=>m==null?999:m) : Promise.resolve(null)); }
+    return abCache.get(id);
+  };
   for(const {c,km} of near){
     const mins = await mapsDrive(cLoc,{lat:c.lat,lng:c.lng});
     const driveMin = mins==null ? Math.round(km/0.8) : mins;     // fallback est if API fails
     const within = driveMin<=DRIVE_LIMIT_MIN;
-    // roster check for that weekday
-    const todays=(window._roster[c.id]&&window._roster[c.id][wd])||[];
-    let clash=false, reason="free";
-    if(todays.length){
-      // can they make it? need to finish an earlier session AND drive from there in time
-      let ok=false;
-      for(const s of todays){
-        if(!s.end){ clash=true; continue; }
-        const endMin=s.end.getHours()*60+s.end.getMinutes();
-        if(endMin<=startMin){
-          // drive from that centre to the new centre
-          const prev=window._centreById[s.centreId];
-          if(prev&&prev.lat!=null){
-            const ab=await mapsDrive({lat:prev.lat,lng:prev.lng},cLoc);
-            const abMin=ab==null?999:ab;
-            if(endMin+abMin<=startMin){ ok=true; reason=`after ${fmt(endMin)} at nearby centre`; }
-          }
-        }
-      }
-      clash=!ok;
-    }
-    const row={c,driveMin,within,clash,reason};
-    if(within && !clash) matches.push(row); else closest.push(row);
+    const chk=await checkDates(window._roster[c.id]||{}, dates, lastKey, startMin, abDrive);
+    const clash=chk.clashes.length>0;
+    const reason = clash ? `Clashes ${chk.clashes.map(fmtShort).join(', ')} · free ${chk.free} of ${dates.length} dates`
+                 : (within ? chk.note : `Free ${chk.free} of ${dates.length} dates${chk.note?' · '+chk.note:''}`);
+    const row={c,driveMin,within,clash,reason,unknown:chk.unknown};
+    if(within && !clash && chk.checked>0) matches.push(row); else closest.push(row);
   }
   matches.sort((a,b)=>a.driveMin-b.driveMin);
   closest.sort((a,b)=>a.driveMin-b.driveMin);
 
   // render
   show($('#resCard'),true);
-  $('#resTitle').textContent = `Available coaches for ${cLabel} — ${day} ${stime} — ${progs.join(', ')}`;
+  $('#resTitle').textContent = `Available coaches for ${cLabel} — ${fmtLong(startKey)}, ${freq} (${dates.map(fmtShort).join(', ')}) ${stime} — ${progs.join(', ')}`;
+  $('#depthNote').textContent = unknownDates.length ? `Bookings only loaded up to ${lastKey?fmtLong(lastKey)+' '+lastKey.slice(0,4):'(none)'}, later dates can't be checked (${unknownDates.map(fmtShort).join(', ')} marked unknown).` : '';
+  show($('#depthNote'), unknownDates.length>0);
   $('#results').innerHTML = matches.length ? matches.map(rowHtml).join('') :
-    '<div class="muted">No coach fully matches (program + within 30 min + free that day). See closest below.</div>';
+    '<div class="muted">No coach fully matches (program + within 30 min + free on every date). See closest below.</div>';
   show($('#closestWrap'), closest.length>0);
   $('#closest').innerHTML = closest.map(r=>rowHtml(r,true)).join('');
   $('#status').textContent=`Done — ${matches.length} full match(es), ${closest.length} other nearby.`;
   $('#goBtn').disabled=false;
 };
 
-function fmt(m){ const h=Math.floor(m/60),mm=m%60; return `${(h%12)||12}:${String(mm).padStart(2,'0')}${h<12?'am':'pm'}`; }
 function rowHtml(r,isClosest=false){
   const c=r.c; const drivePill = r.within?`<span class="pill">${r.driveMin} min</span>`:`<span class="pill far">${r.driveMin} min</span>`;
-  const clashNote = r.clash?`<span class="pill far">already booked ${r.c._d||''}</span>`:(r.reason&&r.reason!=='free'?`<span class="pill">${r.reason}</span>`:``);
+  const clashNote = r.clash?`<span class="pill far">${esc(r.reason)}</span>`:(r.reason?`<span class="pill">${esc(r.reason)}</span>`:``)
+    + (r.unknown?` <span class="pill" style="background:#fff6cc;color:#7a5d00">${r.unknown} date${r.unknown>1?'s':''} unknown</span>`:'');
   return `<div class="res">
     <div style="flex:1;min-width:200px">
       <div class="nm">${esc(c.name)} <span class="pill exp">${c.sessions} sessions</span></div>
