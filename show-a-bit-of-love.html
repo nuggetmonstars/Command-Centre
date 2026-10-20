@@ -715,16 +715,16 @@
 </div><!-- /#app -->
 
 <script>
-const MGRS=["Troy","Viki","Katie"];
-const STATE_MGR={VIC:"Troy",WA:"Troy",SA:"Troy",NSW:"Viki",QLD:"Katie"};
+const MGRS=["Ashlee","Viki","Katie"];
+const STATE_MGR={VIC:"Ashlee",TAS:"Ashlee",NSW:"Viki",SA:"Viki",WA:"Viki",QLD:"Katie"};
 
 // ---- sample centres: tier, plus lifecycle state (watch/notice/paused/saved) ----
 const SAMPLE_CENTRES=[
-  {name:"Kool Kidz Charlemont",mgr:"Troy",state:"VIC",cadence:"Weekly",coach:"Ella",state_:"notice",tier:"red",
+  {name:"Kool Kidz Charlemont",mgr:"Ashlee",state:"VIC",cadence:"Weekly",coach:"Ella",state_:"notice",tier:"red",
    noticeReason:"Felt the coach plus program did not live up to expectations. Open to a different coach during the 4 weeks.",sessionsLeft:3,
    signals:[{c:"bad",t:"4-session notice"},{c:"bad",t:"Low engagement feedback"}],
    timeline:[{d:"13/5",t:"4 weeks notice. Feedback consistent with Geelong plus Ocean Grove, lacked energy plus engagement."},{d:"20/5",t:"No answer, emailed. Ella also sick this week."}]},
-  {name:"Little Flyers",mgr:"Troy",state:"VIC",cadence:"Fortnightly",coach:"Lorena",state_:"notice",tier:"red",
+  {name:"Little Flyers",mgr:"Ashlee",state:"VIC",cadence:"Fortnightly",coach:"Lorena",state_:"notice",tier:"red",
    noticeReason:"Coach late for first session plus engagement was poor.",sessionsLeft:2,
    signals:[{c:"bad",t:"4-session notice"},{c:"warn",t:"Need permanent coach"}],
    timeline:[{d:"5/5",t:"One session with Bianca then gave 4 weeks notice."},{d:"13/5",t:"Lorena session went well, permanent coach still needed."}]},
@@ -733,13 +733,13 @@ const SAMPLE_CENTRES=[
    signals:[{c:"bad",t:"4-session notice"},{c:"ok",t:"Loved the coach"}],
    timeline:[{d:"12/5",t:"4 weeks notice, budget. They love Emilio, would have us back when budget allows."},{d:"20/5",t:"Still love Emilio, can't afford it now. Will consider us first when budget returns."}]},
 
-  {name:"Highpoint Kinder Haven",mgr:"Troy",state:"VIC",cadence:"Fortnightly",coach:"Bianca",state_:"watch",tier:"amber",lastContactDays:7,
+  {name:"Highpoint Kinder Haven",mgr:"Ashlee",state:"VIC",cadence:"Fortnightly",coach:"Bianca",state_:"watch",tier:"amber",lastContactDays:7,
    signals:[{c:"warn",t:"Missed plus rescheduled"},{c:"warn",t:"Coach not locked"}],
    timeline:[{d:"28/4",t:"Missed one session, rescheduled another over first 4. After consistency."},{d:"20/5",t:"Bianca strong engagement but same equipment again. Happy to continue if variety improves."}]},
-  {name:"Geelong",mgr:"Troy",state:"VIC",cadence:"Weekly",coach:"Ella",state_:"watch",tier:"amber",lastContactDays:5,
+  {name:"Geelong",mgr:"Ashlee",state:"VIC",cadence:"Weekly",coach:"Ella",state_:"watch",tier:"amber",lastContactDays:5,
    signals:[{c:"warn",t:"Pace too slow"},{c:"warn",t:"Enthusiasm feedback"}],
    timeline:[{d:"30/3",t:"Sessions progressing too slowly. Ash had a call with Ella re rolls etc."},{d:"20/5",t:"A little better. Requested fewer poses for older groups, no waiting in line for 3yo."}]},
-  {name:"Box Hill North",mgr:"Troy",state:"VIC",cadence:"Weekly",coach:"Jesse",state_:"watch",tier:"red",lastContactDays:3,
+  {name:"Box Hill North",mgr:"Ashlee",state:"VIC",cadence:"Weekly",coach:"Jesse",state_:"watch",tier:"red",lastContactDays:3,
    signals:[{c:"bad",t:"3 of 5 missed"},{c:"ok",t:"Sessions covered"}],
    timeline:[{d:"9/2",t:"Coach Jesse inconsistent, missed 3 of first 5. All covered, positive feedback, worth watching."}]},
   {name:"Milestones Toronto",mgr:"Viki",state:"NSW",cadence:"Weekly",coach:"Farrah",state_:"watch",tier:"amber",lastContactDays:9,
@@ -750,10 +750,10 @@ const SAMPLE_CENTRES=[
    timeline:[{d:"12/3",t:"Willow advised re arriving early plus finishing on time. Coach Aia to shadow next session for training."},{d:"27/5",t:"Action in place, they are happy. Follow up the session that ran yesterday, Aia shadowed Willow."}]},
 
     
-  {name:"Mayfield Macedon",mgr:"Troy",state:"VIC",cadence:"Weekly",coach:"Olivia",state_:"saved",tier:"green",savedDate:"23rd Mar",
+  {name:"Mayfield Macedon",mgr:"Ashlee",state:"VIC",cadence:"Weekly",coach:"Olivia",state_:"saved",tier:"green",savedDate:"23rd Mar",
    signals:[{c:"ok",t:"Saved"}],
    timeline:[{d:"23/3",t:"Wrong equipment, several basketball sessions in a row. Offered bonus session Thursday."},{d:"30/3",t:"Great chat with director, ran bonus session, off the list with good feedback."}]},
-  {name:"Aussie Kids Sunbury",mgr:"Troy",state:"VIC",cadence:"Fortnightly",coach:"—",state_:"saved",tier:"green",savedDate:"16th Feb",
+  {name:"Aussie Kids Sunbury",mgr:"Ashlee",state:"VIC",cadence:"Fortnightly",coach:"—",state_:"saved",tier:"green",savedDate:"16th Feb",
    signals:[{c:"ok",t:"Saved"}],
    timeline:[{d:"16/2",t:"One missed plus one rescheduled this year, new coach. Off the list with positive initial feedback."}]},
   {name:"Little Beginnings Maryville",mgr:"Viki",state:"NSW",cadence:"Weekly",coach:"Farrah",state_:"saved",tier:"green",savedDate:"13th Apr",
@@ -773,7 +773,7 @@ const SAMPLE_CENTRES=[
    signals:[{c:"bad",t:"0 sessions next month"},{c:"warn",t:"4 ran this month"},{c:"ok",t:"Last session 30/10"}],
    reasons:["No events booked for the next calendar month. Four sessions ran this month."],
    timeline:[]},
-  {name:"Adelaide Acorns ELC",mgr:"Troy",state:"SA",cadence:"Fortnightly",coach:"Olivia",state_:"gap",tier:"amber",severity:52,situation:"gap_untriaged",lastContactDays:19,
+  {name:"Adelaide Acorns ELC",mgr:"Viki",state:"SA",cadence:"Fortnightly",coach:"Olivia",state_:"gap",tier:"amber",severity:52,situation:"gap_untriaged",lastContactDays:19,
    signals:[{c:"bad",t:"0 sessions next month"},{c:"warn",t:"2 ran this month"},{c:"ok",t:"Last session 21/10"}],
    reasons:["No events booked for the next calendar month. Two sessions ran this month."],
    timeline:[]}
