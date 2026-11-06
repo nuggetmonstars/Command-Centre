@@ -57,6 +57,9 @@ main{padding:22px 22px 0;max-width:1500px;margin:0 auto}
 .cc.open .cc-body{display:block}
 .cc{background:var(--white);border-radius:18px;border:3px solid #e7eef3;overflow:hidden;box-shadow:var(--shadow)}
 .cc.iss{border:4px solid var(--red);box-shadow:6px 8px 0 rgba(229,37,32,0.18)}
+.cc.dmg{border:3px dashed #9ca3af;background:#f6f7f8}
+.cc.dmg .eqn,.cc.dmg .eqq{color:#6b7280!important}
+td.dmgc,th.dmgc{background:#f3f4f6;color:#6b7280}
 .ch{padding:13px 15px;color:#fff;cursor:pointer;user-select:none}
 .cn{font-family:'MarkerFelt',cursive;font-size:16px}
 .cs{font-size:10px;opacity:.85;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
@@ -315,7 +318,7 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
     </select>
   </div>
   <div style="overflow-x:auto;border-radius:10px;border:1px solid #E0E0E0;background:white">
-    <table class="tbl"><thead><tr><th>Item</th><th>Category</th><th>Stockroom</th><th>With Coaches</th><th>Total</th><th>Min</th><th>Reorder</th><th>Status</th></tr></thead>
+    <table class="tbl"><thead><tr><th>Item</th><th>Category</th><th>Stockroom</th><th>With Coaches</th><th>Total</th><th class="dmgc" title="Written off: tracked, not counted in Total or Status">Damaged</th><th>Min</th><th>Reorder</th><th>Status</th></tr></thead>
     <tbody id="sbody"></tbody></table>
   </div>
 </div>
@@ -324,7 +327,8 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
   <div class="g5 mb">
     <div class="kpi" style="border-top-color:#CC0000"><div class="kl">With Coaches</div><div class="kv" style="color:#CC0000" id="kv-coach-total2">0</div><div class="ks">Total items out</div></div>
     <div class="kpi" style="border-top-color:#111111"><div class="kl">In Stockroom</div><div class="kv" style="color:#111111" id="kv-stock-total2">0</div><div class="ks">Total items held</div></div>
-    <div class="kpi" style="border-top-color:#6699CC"><div class="kl">Grand Total</div><div class="kv" style="color:#6699CC" id="kv-grand-total2">0</div><div class="ks">All items combined</div></div>
+    <div class="kpi" style="border-top-color:#6699CC"><div class="kl">Grand Total</div><div class="kv" style="color:#6699CC" id="kv-grand-total2">0</div><div class="ks">All usable items</div></div>
+    <div class="kpi" style="border-top-color:#9ca3af"><div class="kl">Damaged</div><div class="kv" style="color:#6b7280" id="kv-damaged-total2">0</div><div class="ks">Written off, not in Grand Total</div></div>
   </div>
   <div id="totals-content"></div>
 </div>
@@ -380,6 +384,14 @@ var coachFilters = {};
 var xferHistory = [];   // Populated from Firestore by loadFromDb() (window.xferHistory = xfers). Empty at rest for the same reason as COACHES: every transfer row names a coach.
 var editingId = null;
 
+// Pools are central holdings, not coaches: the Stockroom (usable stock) and Damaged (written off:
+// tracked, never counted as usable). Both are tracker-equipment docs identified by name, doc ids
+// 'stockroom' and 'damaged'. Every "is this a coach?" test goes through isPool().
+function poolId(c) { var n = ((c && c.name) || "").trim().toLowerCase(); return (n === "stockroom" || n === "damaged") ? n : ""; }
+function isPool(c) { return !!poolId(c); }
+function isStockroom(c) { return poolId(c) === "stockroom"; }
+function isDamaged(c) { return poolId(c) === "damaged"; }
+function findById(id) { for (var i = 0; i < COACHES.length; i++) { if (COACHES[i].id === id) return COACHES[i]; } return null; }
 function pQ(s) {
   var m = (s || "").match(/^(\d+)/);
   return m ? parseInt(m[1]) : 0;
@@ -441,8 +453,8 @@ function closeM() { document.getElementById("editModal").classList.remove("open"
 
 function renderOverview() {
   var issues = [];
-  for (var i = 0; i < COACHES.length; i++) { if (COACHES[i].name !== "Stockroom" && hasIssue(COACHES[i])) issues.push(COACHES[i]); }
-  document.getElementById("kv-coaches").textContent = COACHES.filter(function(c){ return c.name !== "Stockroom" && !c._inactive; }).length;
+  for (var i = 0; i < COACHES.length; i++) { if (!isPool(COACHES[i]) && hasIssue(COACHES[i])) issues.push(COACHES[i]); }
+  document.getElementById("kv-coaches").textContent = COACHES.filter(function(c){ return !isPool(c) && !c._inactive; }).length;
   document.getElementById("kv-x").textContent = xferHistory.length;
   document.getElementById("kv-i").textContent = issues.length;
   document.getElementById("kv-o").textContent = ORDERS.length;
@@ -464,7 +476,7 @@ function renderOverview() {
   for (var i = 0; i < states.length; i++) {
     var s = states[i];
     var cnt = 0;
-    for (var j = 0; j < COACHES.length; j++) { if (COACHES[j].state === s) cnt++; }
+    for (var j = 0; j < COACHES.length; j++) { if (!isPool(COACHES[j]) && COACHES[j].state === s) cnt++; }
     ss += '<div class="srow"><span style="font-weight:700">' + s + '</span><span style="background:' + SC[s] + ';color:white;padding:2px 10px;border-radius:10px;font-size:11px;font-weight:700">' + cnt + ' coaches</span></div>';
   }
   document.getElementById("ov-st").innerHTML = ss;
@@ -486,7 +498,7 @@ function buildEq(c, filt) {
       var qstr = ci > -1 ? raw.substring(ci + 1).trim() : "";
       var qty = pQ(qstr);
       var note = pN(qstr);
-      var low = !!(MINS[name] && qty < MINS[name]);
+      var low = !isDamaged(c) && !!(MINS[name] && qty < MINS[name]);   // written-off stock is never "low"
       var dispQ = qstr || "n/a";
       html += '<div class="eqr' + (low ? " low" : "") + '">';
       html += '<span class="eqn ' + prog + '">' + name;
@@ -505,7 +517,8 @@ function buildEq(c, filt) {
 function buildCard(c) {
   var filt = coachFilters[c.id] || "all";
   var progs = Object.keys(c.eq);
-  var issue = hasIssue(c);
+  var dmg = isDamaged(c);
+  var issue = !dmg && hasIssue(c);   // Damaged is never "low": it is not usable stock
   var tabs = '<div class="ptabs">';
   tabs += '<button class="pt all" onclick="setF(\'' + c.id + '\',\'all\',this)">All</button>';
   for (var i = 0; i < progs.length; i++) {
@@ -516,15 +529,19 @@ function buildCard(c) {
   tabs += '</div>';
   var eq = buildEq(c, filt);
   var note = c.notes ? '<div class="cnote">' + c.notes + '</div>' : '';
-  var html = '<div class="cc' + (issue ? " iss" : "") + (c._inactive ? " inactive" : "") + '" id="card-' + c.id + '"' + (c._inactive ? ' style="opacity:.62"' : '') + '>';
-  html += '<div class="ch" style="background:' + (SC[c.state] || "#888") + '" onclick="toggleCard(this)">';
+  var html = '<div class="cc' + (issue ? " iss" : "") + (dmg ? " dmg" : "") + (c._inactive ? " inactive" : "") + '" id="card-' + c.id + '"' + (c._inactive ? ' style="opacity:.62"' : '') + '>';
+  html += '<div class="ch" style="background:' + (dmg ? "#6b7280" : (SC[c.state] || "#888")) + '" onclick="toggleCard(this)">';
   html += '<div class="cn"><span class="cc-caret">&#9656;</span>' + c.name + (issue ? " (!)" : "") + (c._inactive ? ' <span style="background:#6b7280;color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;vertical-align:middle;letter-spacing:.5px">INACTIVE</span>' : '') + '</div>';
-  html += '<div class="cs">' + c.state + ' &middot; ' + c.condition + (c._inactive ? ' &middot; not on active roster' : '') + '</div></div>';
+  html += '<div class="cs">' + (dmg ? 'Written off &middot; tracked, not counted as usable stock' : c.state + ' &middot; ' + c.condition + (c._inactive ? ' &middot; not on active roster' : '')) + '</div></div>';
   html += '<div class="cc-body">';
   html += tabs + eq + note;
   html += '<div class="cbtns">';
-  html += '<button class="cbtn xf" onclick="quickXfer(\'' + c.id + '\')">Transfer</button>';
-  html += '<button class="cbtn ed" onclick="openEdit(\'' + c.id + '\')">Edit</button>';
+  if (dmg) {   // the only way out of Damaged is back to the Stockroom
+    html += '<button class="cbtn xf" onclick="quickXfer(\'' + c.id + '\')">Return to Stockroom</button>';
+  } else {
+    html += '<button class="cbtn xf" onclick="quickXfer(\'' + c.id + '\')">Transfer</button>';
+    html += '<button class="cbtn ed" onclick="openEdit(\'' + c.id + '\')">Edit</button>';
+  }
   html += '</div></div></div>';
   return html;
 }
@@ -532,11 +549,12 @@ function buildCard(c) {
 function renderCoaches() {
   var searchEl = document.getElementById("coachSearch");
   var q = searchEl ? searchEl.value.trim().toLowerCase() : "";
-  // Stockroom pinned first (central pool, not a coach); coaches sorted A-Z by name.
-  var stock = null, list = [];
+  // Pools pinned first on both tabs (Stockroom, then Damaged); coaches sorted A-Z by name.
+  var stock = null, damaged = null, list = [];
   for (var i = 0; i < COACHES.length; i++) {
     var c = COACHES[i];
-    if (c && c.name === 'Stockroom') { stock = c; continue; }
+    if (isStockroom(c)) { stock = c; continue; }
+    if (isDamaged(c)) { damaged = c; continue; }
     // roster tab: Active shows on-roster coaches, Inactive shows off-roster gear holders
     if (activeRoster === "inactive" ? !c._inactive : !!c._inactive) continue;
     if (activeState !== "all" && c.state !== activeState) continue;
@@ -544,7 +562,7 @@ function renderCoaches() {
     list.push(c);
   }
   list.sort(function (a, b) { return (a.name || "").toLowerCase().localeCompare((b.name || "").toLowerCase()); });
-  var ordered = stock ? [stock].concat(list) : list;
+  var ordered = [stock, damaged].filter(Boolean).concat(list);
   var html = "";
   for (var i = 0; i < ordered.length; i++) html += buildCard(ordered[i]);
   if (!ordered.length) {
@@ -559,7 +577,7 @@ function renderCoaches() {
   var nInact = 0;
   for (var k = 0; k < COACHES.length; k++) {
     var cc = COACHES[k];
-    if (cc && cc.name !== 'Stockroom' && cc._inactive) nInact++;
+    if (cc && !isPool(cc) && cc._inactive) nInact++;
   }
   var badge = document.getElementById("rf-inact-n");
   if (badge) badge.textContent = nInact ? "(" + nInact + ")" : "";
@@ -595,13 +613,27 @@ function setF(id, prog, btn) {
   }
 }
 
+function selLabel(c) { return isDamaged(c) ? "Damaged (written off)" : isStockroom(c) ? "Stockroom" : c.name + ' (' + c.state + ')'; }
+function poolsThenCoaches() {
+  var dmg = COACHES.filter(isDamaged), st = COACHES.filter(isStockroom), co = COACHES.filter(function (c) { return !isPool(c); });
+  return { dmg: dmg, st: st, co: co };
+}
 function populateSels() {
-  var opts = '<option value="">Choose coach...</option>';
-  for (var i = 0; i < COACHES.length; i++) {
-    opts += '<option value="' + COACHES[i].id + '">' + COACHES[i].name + ' (' + COACHES[i].state + ')</option>';
-  }
+  var g = poolsThenCoaches(), opts = '<option value="">Choose coach...</option>';
+  g.st.concat(g.dmg, g.co).forEach(function (c) { opts += '<option value="' + c.id + '">' + selLabel(c) + '</option>'; });
   document.getElementById("xf-from").innerHTML = opts;
-  document.getElementById("xf-to").innerHTML = opts;
+  fillTo("");
+}
+// TO list: "Damaged (written off)" at the top, then Stockroom, then coaches. From Damaged the only
+// destination offered is the Stockroom (un-write-off); the FROM entry itself is never offered.
+function fillTo(fromId) {
+  var g = poolsThenCoaches(), from = findById(fromId), keep = document.getElementById("xf-to").value;
+  var list = from && isDamaged(from) ? g.st : g.dmg.concat(g.st, g.co);
+  var opts = '<option value="">' + (from && isDamaged(from) ? 'Return to...' : 'Choose coach...') + '</option>';
+  list.forEach(function (c) { if (c.id !== fromId) opts += '<option value="' + c.id + '">' + selLabel(c) + '</option>'; });
+  var el = document.getElementById("xf-to");
+  el.innerHTML = opts;
+  el.value = list.some(function (c) { return c.id === keep && c.id !== fromId; }) ? keep : "";
 }
 
 function loadFrom() {
@@ -609,6 +641,7 @@ function loadFrom() {
   var s2 = document.getElementById("step2");
   var s3 = document.getElementById("step3");
   document.getElementById("xprev").style.display = "none";
+  fillTo(id);
   if (!id) {
     s2.style.opacity = ".4"; s2.style.pointerEvents = "none";
     s3.style.opacity = ".4"; s3.style.pointerEvents = "none";
@@ -654,11 +687,8 @@ function upSum() {
   var cbs = document.querySelectorAll("#from-items input[type=checkbox]:checked");
   var prev = document.getElementById("xprev");
   if (!fromId || !toId || fromId === toId || !cbs.length) { prev.style.display = "none"; return; }
-  var from = null; var to = null;
-  for (var i = 0; i < COACHES.length; i++) {
-    if (COACHES[i].id === fromId) from = COACHES[i];
-    if (COACHES[i].id === toId) to = COACHES[i];
-  }
+  var from = findById(fromId), to = findById(toId);
+  if (!from || !to || xferBlocked(from, to)) { prev.style.display = "none"; return; }
   var lines = "";
   for (var i = 0; i < cbs.length; i++) {
     var cb = cbs[i];
@@ -670,25 +700,52 @@ function upSum() {
     lines += '<span style="color:' + (PC[prog] || "#888") + ';font-weight:600">' + name + '</span>';
     lines += '<span><strong>' + qty + '</strong> unit' + (qty !== 1 ? "s" : "") + '</span></div>';
   }
-  document.getElementById("xsumbox").innerHTML = '<div style="font-weight:700;margin-bottom:7px">Transfer summary</div><div style="font-size:12px;color:#888;margin-bottom:7px"><strong style="color:#111">' + from.name + '</strong> &rarr; <strong style="color:#111">' + to.name + '</strong></div>' + lines;
+  var kind = isDamaged(to) ? '<div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:7px">Write-off: these items leave usable stock.</div>'
+           : isDamaged(from) ? '<div style="font-size:12px;font-weight:700;color:#6b7280;margin-bottom:7px">Un-write-off: these items go back into the Stockroom.</div>' : '';
+  document.getElementById("xsumbox").innerHTML = kind + '<div style="font-weight:700;margin-bottom:7px">Transfer summary</div><div style="font-size:12px;color:#888;margin-bottom:7px"><strong style="color:#111">' + from.name + '</strong> &rarr; <strong style="color:#111">' + to.name + '</strong></div>' + lines;
   prev.style.display = "block";
 }
 
+// Damaged only ever sends back to the Stockroom.
+function xferBlocked(from, to) { return from === to || (isDamaged(from) && !isStockroom(to)); }
+// RECEIVING-side lookup, same rule as the agent's get_item_exact(): the destination's line with
+// EXACTLY this name (case-insensitive) in ANY program section, else null. Never a partial match,
+// and never a second line for an item the destination already holds in another section.
+function findLineExact(c, name) {
+  var il = (name || "").trim().toLowerCase();
+  for (var p in c.eq) {
+    var arr = c.eq[p] || [];
+    for (var i = 0; i < arr.length; i++) {
+      var sep = arr[i].lastIndexOf(":");
+      var en = (sep > -1 ? arr[i].substring(0, sep) : arr[i]).trim();
+      if (en.toLowerCase() === il) return { prog: p, idx: i, name: en };
+    }
+  }
+  return null;
+}
 function doTransfer() {
   var fromId = document.getElementById("xf-from").value;
   var toId = document.getElementById("xf-to").value;
-  var from = null; var to = null;
-  for (var i = 0; i < COACHES.length; i++) {
-    if (COACHES[i].id === fromId) from = COACHES[i];
-    if (COACHES[i].id === toId) to = COACHES[i];
-  }
+  var from = findById(fromId), to = findById(toId);
+  if (!from || !to) { alert("Choose who the equipment is coming FROM and going TO."); return; }
+  if (xferBlocked(from, to)) { alert(from === to ? "FROM and TO are the same." : "Items in Damaged can only go back to the Stockroom."); return; }
   var cbs = document.querySelectorAll("#from-items input[type=checkbox]:checked");
+  if (!cbs.length) { alert("Tick at least one item."); return; }
+  if (isDamaged(to) || isDamaged(from)) {
+    var n = 0;
+    for (var k = 0; k < cbs.length; k++) { var cbk = cbs[k]; n += parseInt(document.getElementById("xq-" + fromId + "-" + cbk.dataset.prog + "-" + cbk.id.split("-").pop()).value) || 1; }
+    var msg = isDamaged(to)
+      ? "Write off " + n + " item" + (n !== 1 ? "s" : "") + " from " + from.name + " to Damaged?\n\nThey leave usable stock but stay tracked in the Damaged pool."
+      : "Return " + n + " item" + (n !== 1 ? "s" : "") + " from Damaged to the Stockroom?\n\nThey become usable stock again.";
+    if (!confirm(msg)) return;
+  }
   for (var ci2 = 0; ci2 < cbs.length; ci2++) {
     var cb = cbs[ci2];
     var prog = cb.dataset.prog;
     var name = cb.dataset.name;
     var idx = cb.id.split("-").pop();
     var qty = parseInt(document.getElementById("xq-" + fromId + "-" + prog + "-" + idx).value) || 1;
+    var moved = 0;
     var fi = from.eq[prog] || [];
     for (var i = 0; i < fi.length; i++) {
       var sep = fi[i].lastIndexOf(":");
@@ -696,6 +753,8 @@ function doTransfer() {
       if (iname === name) {
         var cur = pQ(sep > -1 ? fi[i].substring(sep + 1) : "");
         var nt = pN(sep > -1 ? fi[i].substring(sep + 1) : "");
+        if (qty > cur) qty = cur;                        // never move more than the sender holds
+        moved = qty;
         var left = cur - qty;
         if (left > 0) {
           fi[i] = name + ":" + left + (nt ? " " + nt : "");
@@ -706,27 +765,24 @@ function doTransfer() {
         break;
       }
     }
-    if (!to.eq[prog]) to.eq[prog] = [];
-    var ti = to.eq[prog];
-    var found = false;
-    for (var i = 0; i < ti.length; i++) {
-      var sep = ti[i].lastIndexOf(":");
-      var iname = sep > -1 ? ti[i].substring(0, sep).trim() : "";
-      if (iname === name) {
-        var cur = pQ(sep > -1 ? ti[i].substring(sep + 1) : "");
-        var nt = pN(sep > -1 ? ti[i].substring(sep + 1) : "");
-        ti[i] = name + ":" + (cur + qty) + (nt ? " " + nt : "");
-        found = true; break;
-      }
+    if (moved <= 0) continue;                           // sender no longer holds it: nothing moves, nothing logged
+    var hit = findLineExact(to, name);
+    if (hit) {
+      var tl = to.eq[hit.prog], tsep = tl[hit.idx].lastIndexOf(":");
+      var tcur = pQ(tsep > -1 ? tl[hit.idx].substring(tsep + 1) : "");
+      var tnt = pN(tsep > -1 ? tl[hit.idx].substring(tsep + 1) : "");
+      tl[hit.idx] = hit.name + ":" + (tcur + qty) + (tnt ? " " + tnt : "");
+    } else {
+      if (!to.eq[prog]) to.eq[prog] = [];
+      to.eq[prog].push(name + ":" + qty);
     }
-    if (!found) ti.push(name + ":" + qty);
     xferHistory.unshift({item:name,qty:qty,from:from.name,to:to.name,prog:prog,date:todayISO()});
     if (window.__persistTransfer) window.__persistTransfer(xferHistory[0], true);
   }
   if (window.__persistCoach) { window.__persistCoach(from); window.__persistCoach(to); }
   resetXfer();
   renderCoaches(); renderOverview(); renderHistory();
-  alert("Transfer complete!");
+  alert(isDamaged(to) ? "Written off to Damaged." : isDamaged(from) ? "Returned to the Stockroom." : "Transfer complete!");
 }
 
 function resetXfer() {
@@ -983,11 +1039,11 @@ function renderStock(cat) {
 
   // Aggregate quantities by item name: Stockroom (name === 'Stockroom') vs all other coaches.
   // Remember the eq category each name came from, for names not in the catalogue ITEMS.
-  var stockroom = {}, withCoaches = {}, catByName = {};
+  var stockroom = {}, withCoaches = {}, damaged = {}, catByName = {};
   for (var ci = 0; ci < COACHES.length; ci++) {
     var c = COACHES[ci];
     if (!c || !c.eq) continue;
-    var isStock = c.name === 'Stockroom';
+    var isStock = isStockroom(c), isDmg = isDamaged(c);
     for (var prog in c.eq) {
       var arr = c.eq[prog] || [];
       for (var ii = 0; ii < arr.length; ii++) {
@@ -995,6 +1051,7 @@ function renderStock(cat) {
         if (!pe.name) continue;
         if (catByName[pe.name] === undefined) catByName[pe.name] = prog;
         if (isStock) stockroom[pe.name] = (stockroom[pe.name] || 0) + pe.qty;
+        else if (isDmg) damaged[pe.name] = (damaged[pe.name] || 0) + pe.qty;
         else withCoaches[pe.name] = (withCoaches[pe.name] || 0) + pe.qty;
       }
     }
@@ -1013,6 +1070,7 @@ function renderStock(cat) {
   var present = {};
   Object.keys(stockroom).forEach(function (n) { present[n] = true; });
   Object.keys(withCoaches).forEach(function (n) { present[n] = true; });
+  Object.keys(damaged).forEach(function (n) { present[n] = true; });
   Object.keys(present).forEach(function (n) {
     if (seen[n]) return;
     seen[n] = true;
@@ -1027,7 +1085,8 @@ function renderStock(cat) {
     var item = list[i];
     var stockQty = stockroom[item.name] || 0;
     var coachQty = withCoaches[item.name] || 0;
-    var total = stockQty + coachQty;
+    var total = stockQty + coachQty;                    // usable only: Damaged is shown, never counted
+    var dmgQty = damaged[item.name] || 0;
     var s = total === 0 ? "None" : (item.min > 0 && stockQty <= item.min ? "Low" : "OK");
     var pill = s === "OK" ? '<span class="pill pg">OK</span>' : s === "Low" ? '<span class="pill pa">Low</span>' : '<span class="pill pb">None in stock</span>';
     html += '<tr' + (s === "Low" ? ' style="background:#fffbf0"' : s === "None" ? ' style="background:#fdecea"' : '') + '>';
@@ -1036,6 +1095,7 @@ function renderStock(cat) {
     html += '<td style="font-weight:700;color:#111">' + stockQty + '</td>';
     html += '<td style="color:#888">' + coachQty + '</td>';
     html += '<td style="font-weight:700">' + total + '</td>';
+    html += '<td class="dmgc">' + (dmgQty || '') + '</td>';
     html += '<td style="color:#888">' + item.min + '</td><td style="color:#888">' + item.reorder + '</td><td>' + pill + '</td></tr>';
   }
   document.getElementById("sbody").innerHTML = html;
@@ -1053,7 +1113,8 @@ function calcStats() {
     var coachTotal = 0;
     var stockroomTotal = 0;
     COACHES.forEach(function(c) {
-        var isStock = c.name === 'Stockroom';
+        if (isDamaged(c)) return;                       // written off: not in any usable total
+        var isStock = isStockroom(c);
         Object.values(c.eq || {}).forEach(function(items) {
             items.forEach(function(entry) {
                 var ci = entry.lastIndexOf(':');
@@ -1076,8 +1137,9 @@ window.addEventListener('load', calcStats);
 function buildTotals() {
     var programs = {};
     var stockroom = {};
+    var damaged = {};
     COACHES.forEach(function(c) {
-        var isStock = c.name === 'Stockroom';
+        var isStock = isStockroom(c), isDmg = isDamaged(c);
         Object.keys(c.eq || {}).forEach(function(prog) {
             c.eq[prog].forEach(function(entry) {
                 var ci = entry.lastIndexOf(':');
@@ -1085,6 +1147,8 @@ function buildTotals() {
                 var qty = ci > -1 ? (parseInt(entry.substring(ci+1)) || 0) : 0;
                 if (isStock) {
                     stockroom[name] = (stockroom[name] || 0) + qty;
+                } else if (isDmg) {
+                    damaged[name] = (damaged[name] || 0) + qty;
                 } else {
                     if (!programs[prog]) programs[prog] = {};
                     programs[prog][name] = (programs[prog][name] || 0) + qty;
@@ -1096,6 +1160,10 @@ function buildTotals() {
     var coachTotal = 0, stockTotal = 0;
     Object.values(programs).forEach(function(items) { Object.values(items).forEach(function(q) { coachTotal += q; }); });
     Object.values(stockroom).forEach(function(q) { stockTotal += q; });
+    var damagedTotal = 0;
+    Object.values(damaged).forEach(function(q) { damagedTotal += q; });
+    var el4 = document.getElementById('kv-damaged-total2');
+    if (el4) el4.textContent = damagedTotal;
 
     var el1 = document.getElementById('kv-coach-total2');
     var el2 = document.getElementById('kv-stock-total2');
@@ -1113,7 +1181,7 @@ function buildTotals() {
         if (!programs[prog]) return;
         html += '<div class="card" style="margin-bottom:20px"><div class="card-title">' + prog + '</div>';
         html += '<table style="width:100%;border-collapse:collapse">';
-        html += '<tr style="background:#111;color:#fff"><th style="padding:8px;text-align:left">Item</th><th style="padding:8px;text-align:center">With Coaches</th><th style="padding:8px;text-align:center">Stockroom</th><th style="padding:8px;text-align:center">Grand Total</th></tr>';
+        html += '<tr style="background:#111;color:#fff"><th style="padding:8px;text-align:left">Item</th><th style="padding:8px;text-align:center">With Coaches</th><th style="padding:8px;text-align:center">Stockroom</th><th style="padding:8px;text-align:center">Grand Total</th><th style="padding:8px;text-align:center;background:#6b7280">Damaged</th></tr>';
         var items = Object.keys(programs[prog]).sort();
         items.forEach(function(item, i) {
             var coaches_qty = programs[prog][item] || 0;
@@ -1125,6 +1193,7 @@ function buildTotals() {
             html += '<td style="padding:8px;text-align:center">' + coaches_qty + '</td>';
             html += '<td style="padding:8px;text-align:center">' + stock_qty + '</td>';
             html += '<td style="padding:8px;text-align:center;font-weight:bold">' + total + '</td>';
+            html += '<td style="padding:8px;text-align:center;color:#6b7280;background:#f3f4f6">' + (damaged[item] || '') + '</td>';
             html += '</tr>';
         });
         html += '</table></div>';
@@ -1237,10 +1306,11 @@ let seqHi = 0, seqLo = 0;   // transfer ordering (front = highest seq)
 let ordHi = 0, ordLo = 0;   // order ordering (front = highest seq)
 
 // ---- serialisers (preserve the in-memory shape exactly) ----
-function coachDocId(c) { return c.id || "stockroom"; }
+// Pools resolve by name first, so neither pool can ever be written to the other's doc.
+function coachDocId(c) { return poolId(c) || c.id || "stockroom"; }
 function coachToDoc(c) {
   return {
-    id: (c.id == null ? null : c.id),
+    id: (isStockroom(c) || c.id == null ? null : c.id),   // Stockroom's stored id stays null (agent contract); its id is in-memory only
     name: c.name,
     state: c.state,
     condition: (c.condition == null ? null : c.condition),
@@ -1340,10 +1410,14 @@ function hasGear(c) {
 //  • Stockroom                              -> always shown
 function reconcile(equipCoaches, roster, stateByName) {
   const stock = equipCoaches.find(c => normName(c.name) === "stockroom" || c._docId === "stockroom");
+  const damaged = equipCoaches.find(c => normName(c.name) === "damaged" || c._docId === "damaged");
+  const pool = c => c === stock || c === damaged;
   const byName = new Map();
-  equipCoaches.forEach(c => { if (c !== stock) byName.set(normName(c.name), c); });
+  equipCoaches.forEach(c => { if (!pool(c)) byName.set(normName(c.name), c); });   // pools are never roster-matched
   const out = [];
-  if (stock) { stock._inactive = false; out.push(stock); }
+  // In-memory ids so both pools work as transfer FROM/TO (the stored Stockroom doc keeps id:null).
+  if (stock) { stock.id = "stockroom"; stock._inactive = false; out.push(stock); }
+  if (damaged) { damaged.id = "damaged"; damaged._inactive = false; out.push(damaged); }
   const used = new Set();
   roster.forEach(r => {
     const key = normName(r.name);
@@ -1364,7 +1438,7 @@ function reconcile(equipCoaches, roster, stateByName) {
     }
   });
   equipCoaches.forEach(c => {
-    if (c === stock || used.has(c)) return;
+    if (pool(c) || used.has(c)) return;
     if (hasGear(c)) {
       c._inactive = true;
       // Display-only: trust the users roster for state when the coach is on it at all,
