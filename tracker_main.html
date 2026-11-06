@@ -307,7 +307,7 @@ label{font-family:'MarkerFelt',cursive;font-size:11px;color:var(--blue);display:
 
 <div class="view" id="view-stock">
   <div style="margin-bottom:10px">
-    <select onchange="renderStock(this.value)" style="width:auto;min-width:180px">
+    <select id="stock-cat" onchange="renderStock(this.value)" style="width:auto;min-width:180px">
       <option value="all">All Categories</option>
       <option value="Sports">Sports</option>
       <option value="Music">Music</option>
@@ -781,8 +781,15 @@ function doTransfer() {
   }
   if (window.__persistCoach) { window.__persistCoach(from); window.__persistCoach(to); }
   resetXfer();
-  renderCoaches(); renderOverview(); renderHistory();
+  renderCoaches(); renderOverview(); renderHistory(); redrawStock();
   alert(isDamaged(to) ? "Written off to Damaged." : isDamaged(from) ? "Returned to the Stockroom." : "Transfer complete!");
+}
+
+// Stock Levels + Totals after anything that changes quantities (transfer, intake, edit), so they never
+// show stale numbers until a reload. Keeps the category chosen in the Stock Levels dropdown.
+function redrawStock() {
+  var sc = document.getElementById("stock-cat");
+  renderStock(sc ? sc.value : "all"); buildTotals(); calcStats();
 }
 
 function resetXfer() {
@@ -890,7 +897,7 @@ function saveEdit() {
   c.notes = document.getElementById("em-notes").value;
   if (window.__persistCoach) window.__persistCoach(c);
   closeM();
-  renderCoaches(); renderOverview();
+  renderCoaches(); renderOverview(); redrawStock();
 }
 
 function logOrder() {
@@ -1238,8 +1245,7 @@ function addIntake() {
   renderHistory();
   renderCoaches();
   renderOverview();
-  buildTotals();
-  calcStats();
+  redrawStock();
   alert("Added to Stockroom!");
 }
 
