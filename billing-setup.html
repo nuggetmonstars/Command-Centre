@@ -133,8 +133,8 @@ body::before {
 <div id="denied" style="display:none">
   <div class="al-loginbox">
     <div class="al-logo">MINI MONST<span style="color:var(--yellow-dark)">&#9733;</span>RS</div>
-    <p style="margin:14px 0 6px;font-family:var(--mf);color:var(--red);font-size:18px">This page is for the accounts login only</p>
-    <p class="muted">Signed in as <b id="denied-em"></b>. Sign out and sign in as accounts@minimonstars.com.</p>
+    <p style="margin:14px 0 6px;font-family:var(--mf);color:var(--red);font-size:18px">This page is for the billing logins only</p>
+    <p class="muted">Signed in as <b id="denied-em"></b>. Sign out and sign in as accounts@minimonstars.com or info@minimonstars.com.</p>
     <button class="al-btn" id="denied-out" style="margin-top:14px">Sign out</button>
   </div>
 </div>
@@ -184,8 +184,9 @@ const app = initializeApp({
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Display gate only. The Firestore rules (billing rules v2) are the real control: they allow this UID alone.
-const ACCOUNTS_UID = "1kgGf56Jh5PYeeID3aYSg8PXDgC2";
+// Display gate only. The Firestore rules (isBillingUser) are the real control; keep this list in step with them.
+const BILLING_UIDS = ["1kgGf56Jh5PYeeID3aYSg8PXDgC2",   // accounts@minimonstars.com
+                      "MTwMy3KrSIVP8lyPoskVzflprdk2"];  // info@minimonstars.com
 const DRAFTS = "billing-profile-drafts", PROFILES = "billing-profiles";
 const MODELS = [["per_session","Per session"],["fixed_monthly","Fixed monthly"],["term","Per term"],["offer","Offer"],["one_off","One off"]];
 const MODEL_KEYS = MODELS.map(m => m[0]);
@@ -458,7 +459,7 @@ async function load(){
 onAuthStateChanged(auth, user => {
   $("login-screen").style.display = "none"; $("app").style.display = "none"; $("denied").style.display = "none";
   if (!user){ $("login-screen").style.display = "flex"; return; }
-  if (user.uid !== ACCOUNTS_UID){ $("denied-em").textContent = user.email || user.uid; $("denied").style.display = "flex"; return; }
+  if (!BILLING_UIDS.includes(user.uid)){ $("denied-em").textContent = user.email || user.uid; $("denied").style.display = "flex"; return; }
   ME = user; $("hdr-email").textContent = user.email || ""; $("app").style.display = "block"; load();
 });
 $("login-btn").addEventListener("click", async () => {
