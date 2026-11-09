@@ -99,6 +99,18 @@ body::before {
 .bs-input:focus,.bs-select:focus,.bs-text:focus{border-color:var(--sky);}
 .bs-text{min-height:60px;resize:vertical;font-size:14px;}
 .bs-nocontact{background:#fbeceb;color:#8a1c18;border-radius:10px;padding:10px 12px;font-size:14px;}
+.bs-why{display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;}
+.why{font-size:11px;border-radius:20px;padding:1px 8px;background:#e3f4da;color:#2f6b1a;}
+.why.sim{background:#eef2f5;color:var(--slate);}
+.why.warn{background:#fdecc8;color:#6b4a00;}
+.why.bad{background:#fbeceb;color:#8a1c18;}
+.bs-xsearch{margin-top:8px;}
+.bs-xsearch input{width:100%;font-family:var(--font);font-size:14px;border:2px solid var(--line);border-radius:10px;padding:7px 10px;outline:none;color:var(--ink);}
+.bs-xsearch input:focus{border-color:var(--sky);}
+.bs-xres{margin-top:4px;max-height:220px;overflow:auto;}
+.bs-xhit{display:block;width:100%;text-align:left;font-family:var(--font);font-size:13px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:5px 8px;margin:3px 0;cursor:pointer;color:var(--ink);}
+.bs-xhit:hover{background:#f3f8fc;}
+.bs-xhit .cid{display:block;font-size:11px;color:var(--muted);font-family:monospace;}
 .bs-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px;}
 .bs-msg{font-size:13px;white-space:pre-wrap;}
 .bs-msg.bad{color:var(--red);}
@@ -198,6 +210,8 @@ const esc = s => String(s==null?"":s).replace(/[&<>"']/g, m => ({"&":"&amp;","<"
 const money = v => (v==null || v==="") ? "" : "$" + Number(v).toFixed(2);
 
 let ME = null, D = {}, P = {}, FORM = {}, TAB = "NOW", SEARCH = "", BULK_RUNNING = false;
+let XC = [], XC_BY = {};                     // every Xero contact, from billing-profile-drafts/_xero-contacts
+const XC_DOC = "_xero-contacts";
 
 // ---- plain-English review reasons ----
 function reasonBadge(r){
@@ -219,6 +233,33 @@ function reasonBadge(r){
     return `<span class="bdg info" title="The app has a closed date for this centre but it is still running. Not for accounts to fix.">&#8505;&#65039; Tell the state manager</span>`;
   const hit = map.find(([re]) => re.test(r));
   return `<span class="bdg">${esc(hit ? hit[1] : r)}</span>`;
+}
+
+// ---- why a Xero contact is a candidate (signals written by billing_drafts.py) ----
+function whyChips(c){
+  const out = [], shared = (c.signals || []).includes("email_shared");   // a shared email says little about THIS centre
+  for (const x of (c.signals || [])){
+    const [k, v] = x.split(":");
+    if (k === "email") out.push([shared ? "warn" : "", v === "onboardingDetails.invoiceEmail" ? "same invoice email" : "same email as the centre"]);
+    else if (k === "billing_name") out.push(["", "billing name matches"]);
+    else if (k === "centre_name") out.push(["", "centre name matches"]);
+    else if (k === "repeating_invoice") out.push(["", "on their repeating invoice"]);
+    else if (k === "invoice_history") out.push(["", "invoiced for this centre before"]);
+    else if (k === "staff_email") out.push(["sim", "staff email matches"]);
+    else if (k === "email_domain") out.push(["sim", "same email domain"]);
+    else if (k === "similar") out.push(["sim", "similar name " + v + "%"]);
+    else if (k === "email_shared") out.push(["warn", "email shared by several contacts"]);
+  }
+  if (c.generic) out.push(["warn", "group-level contact, check this centre is billed here"]);
+  if (c.archived) out.push(["bad", "archived in Xero"]);
+  if (c.fromSearch) out.push(["sim", "picked from search"]);
+  const seen = new Set();
+  return out.filter(([, t]) => !seen.has(t) && seen.add(t)).map(([cl, t]) => `<span class="why ${cl}">${esc(t)}</span>`).join("");
+}
+function searchContacts(q){
+  q = q.trim().toLowerCase();
+  if (q.length < 2) return [];
+  return XC.filter(c => (c.name || "").toLowerCase().includes(q) || (c.email || "").toLowerCase().includes(q)).slice(0, 12);
 }
 
 // ---- which tab a centre belongs to ----
@@ -245,6 +286,7 @@ function initForm(id){
     rate: rate == null ? "" : String(rate),
     model: p ? p.billingModel : (MODEL_KEYS.includes(d.billingModel) ? d.billingModel : ""),
     notes: p ? (p.notes || "") : "",
+    extra: null,                             // a contact picked with "Search all Xero contacts"
   };
   return FORM[id];
 }
@@ -252,7 +294,9 @@ function candidatesOf(id){
   const d = D[id] || {}, p = P[id];
   const c = (d.xeroCandidates || []).slice();
   if (p && p.xeroContactId && !c.some(x => x.contactId === p.xeroContactId))
-    c.unshift({ contactId: p.xeroContactId, name: p.xeroContactName || "(saved contact)" });
+    c.unshift({ ...(XC_BY[p.xeroContactId] || {}), contactId: p.xeroContactId, name: p.xeroContactName || "(saved contact)" });
+  const ex = (FORM[id] || {}).extra;
+  if (ex && !c.some(x => x.contactId === ex.contactId)) c.push(ex);
   return c;
 }
 
@@ -269,8 +313,7 @@ function parseRate(s){
 function buildPayload(id){
   const f = initForm(id), errs = [];
   const cand = candidatesOf(id).find(c => c.contactId === f.contactId);
-  if (!candidatesOf(id).length) errs.push("No Xero contact yet: create it in Xero first.");
-  else if (!f.contactId) errs.push("Pick the Xero contact.");
+  if (!f.contactId || !cand) errs.push(candidatesOf(id).length ? "Pick the Xero contact." : "Pick the Xero contact: use \"Search all Xero contacts\".");
   else if (!UUID_RE.test(f.contactId)) errs.push("That Xero contact ID is not in Xero's ID format; it can't be saved.");
   const r = parseRate(f.rate); if (r.err) errs.push(r.err);
   if (!MODEL_KEYS.includes(f.model)) errs.push("Choose the billing model.");
@@ -297,10 +340,13 @@ function card(id){
   const reasons = (d.reviewReasons || []);
   const notes = d.sheetNotes || {};
   const rateFromSuggest = !p && d.rateExGst == null && d.rateSuggested != null;
-  const radios = cands.length ? cands.map(c => `
+  const radios = (cands.length ? cands.map(c => `
       <label class="bs-radio"><input type="radio" name="x-${esc(id)}" data-id="${esc(id)}" data-k="contactId" value="${esc(c.contactId)}" ${c.contactId===f.contactId?"checked":""}>
-        <span>${esc(c.name || "(no name)")}<span class="cid">${esc(c.contactId)}</span></span></label>`).join("")
-    : `<div class="bs-nocontact">Create this contact in Xero; it will appear after the next refresh.</div>`;
+        <span>${esc(c.name || "(no name)")}${c.email ? ` <span class="muted">&middot; ${esc(c.email)}</span>` : ""}<span class="cid">${esc(c.contactId)}</span>
+          <span class="bs-why">${whyChips(c)}</span></span></label>`).join("")
+    : `<div class="muted">No likely Xero contact found. Search below; if it isn't in Xero, create it there and it will appear after the next refresh.</div>`)
+    + `<div class="bs-xsearch"><input type="search" data-xsearch="${esc(id)}" placeholder="Search all Xero contacts (name or email)">
+         <div class="bs-xres" id="xres-${esc(id)}"></div></div>`;
   const modelOpts = `<option value="" ${f.model?"":"selected"}>Choose&hellip;</option>` +
     MODELS.map(([k,l]) => `<option value="${k}" ${f.model===k?"selected":""}>${l}</option>`).join("");
   const xeroRep = (d.repeatingUnitAmount != null) ? `<div><span class="lab">Xero repeating invoice (draft):</span> ${esc(money(d.repeatingUnitAmount))}${d.rateCheck==="DIFFERENT"?" &mdash; differs from the sheet":""}</div>` : "";
@@ -335,7 +381,7 @@ function card(id){
     <div class="bs-field"><label class="bs-label">Notes</label>
       <textarea class="bs-text" maxlength="2000" data-id="${esc(id)}" data-k="notes" placeholder="Optional">${esc(f.notes)}</textarea></div>
     <div class="bs-actions">
-      <button class="al-btn" data-save="${esc(id)}" ${cands.length && !BULK_RUNNING ? "" : "disabled"}>${p ? "Save changes" : "Save"}</button>
+      <button class="al-btn" data-save="${esc(id)}" ${!BULK_RUNNING ? "" : "disabled"}>${p ? "Save changes" : "Save"}</button>
       <span class="bs-msg" id="msg-${esc(id)}"></span>
     </div>
   </div>`;
@@ -433,7 +479,24 @@ async function saveOne(id, btn){
 // ---- events (delegated, so re-rendering never loses handlers) ----
 $("list").addEventListener("input", e => { const t = e.target; if (t.dataset && t.dataset.id) initForm(t.dataset.id)[t.dataset.k] = t.value; });
 $("list").addEventListener("change", e => { const t = e.target; if (t.dataset && t.dataset.id) initForm(t.dataset.id)[t.dataset.k] = t.value; });
-$("list").addEventListener("click", e => { const b = e.target.closest("[data-save]"); if (b && !b.disabled) saveOne(b.dataset.save, b); });
+$("list").addEventListener("click", e => {
+  const b = e.target.closest("[data-save]"); if (b && !b.disabled) { saveOne(b.dataset.save, b); return; }
+  const h = e.target.closest("[data-xpick]");
+  if (h){                                     // pick a contact from "Search all Xero contacts"
+    const id = h.dataset.xpick, c = XC_BY[h.dataset.cid]; if (!c) return;
+    const f = initForm(id);
+    if (!(D[id] && (D[id].xeroCandidates || []).some(x => x.contactId === c.contactId))) f.extra = { ...c, fromSearch: true, signals: [] };
+    f.contactId = c.contactId;
+    const el = $("card-" + id); if (el) el.outerHTML = card(id);
+  }
+});
+$("list").addEventListener("input", e => {
+  const t = e.target; if (!t.dataset || !t.dataset.xsearch) return;
+  const id = t.dataset.xsearch, box = $("xres-" + id), hits = searchContacts(t.value);
+  box.innerHTML = t.value.trim().length < 2 ? "" : hits.length ? hits.map(c =>
+    `<button type="button" class="bs-xhit" data-xpick="${esc(id)}" data-cid="${esc(c.contactId)}">${esc(c.name || "(no name)")}${c.email ? ` &middot; ${esc(c.email)}` : ""}${c.archived ? ` <span class="why bad">archived in Xero</span>` : ""}<span class="cid">${esc(c.contactId)}</span></button>`).join("")
+    : `<div class="muted">No Xero contact matches. If it isn't in Xero, create it there; it will appear after the next refresh.</div>`;
+});
 $("tabs").addEventListener("click", e => { const b = e.target.closest(".bs-tab"); if (b && !BULK_RUNNING){ TAB = b.dataset.tab; render(); } });
 $("q").addEventListener("input", e => { SEARCH = e.target.value.trim(); render(); });
 
@@ -443,11 +506,16 @@ async function load(){
   try {
     const [ds, ps] = await Promise.all([getDocs(collection(db, DRAFTS)), getDocs(collection(db, PROFILES))]);
     D = {}; P = {}; FORM = {};
-    ds.forEach(x => D[x.id] = x.data());
+    XC = []; XC_BY = {};
+    ds.forEach(x => {
+      if (x.id === XC_DOC){ XC = (x.data().contacts || []); XC.forEach(c => XC_BY[c.contactId] = c); return; }   // never a centre
+      if (x.id.startsWith("_")) return;
+      D[x.id] = x.data();
+    });
     ps.forEach(x => P[x.id] = x.data());
     const gens = Object.values(D).map(d => d.generatedAt && d.generatedAt.toDate ? d.generatedAt.toDate() : null).filter(Boolean);
     $("gen-line").textContent = gens.length ? "Drafts last refreshed " + new Date(Math.max(...gens)).toLocaleString("en-AU") + "." : "";
-    if (!ds.size && !ps.size){ $("list").innerHTML = `<div class="al-empty">No billing drafts yet. They appear after the drafts agent runs.</div>`; render(); return; }
+    if (!Object.keys(D).length && !ps.size){ $("list").innerHTML = `<div class="al-empty">No billing drafts yet. They appear after the drafts agent runs.</div>`; render(); return; }
     render();
   } catch (e) {
     $("list").innerHTML = `<div class="al-card"><div class="al-h">Couldn't load billing data</div><div class="al-err">${esc(e.message || e)}</div>
