@@ -616,6 +616,7 @@ function setF(id, prog, btn) {
 function selLabel(c) { return isDamaged(c) ? "Damaged (written off)" : isStockroom(c) ? "Stockroom" : c.name + ' (' + c.state + ')'; }
 function poolsThenCoaches() {
   var dmg = COACHES.filter(isDamaged), st = COACHES.filter(isStockroom), co = COACHES.filter(function (c) { return !isPool(c); });
+  co.sort(function (a, b) { return (a.name || "").toLowerCase().localeCompare((b.name || "").toLowerCase()); });
   return { dmg: dmg, st: st, co: co };
 }
 function populateSels() {
