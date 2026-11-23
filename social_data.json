@@ -1,7 +1,7 @@
 {
- "generated": "2026-11-22T06:20:00Z",
+ "generated": "2026-11-23T01:14:52Z",
  "windowDays": 365,
- "windowStart": "2025-11-22T06:20:00Z",
+ "windowStart": "2025-11-23T01:14:52Z",
  "orgId": "6790322299197b9b6809ecd3",
  "requestsUsed": 26,
  "channels": {
@@ -16,7 +16,7 @@
      "seen": 430,
      "nonzero": 249,
      "max": 65,
-     "avg": 2.8,
+     "avg": 2.82,
      "confidence": "high"
     },
     "comments": {
@@ -29,15 +29,15 @@
     "engagementRate": {
      "seen": 430,
      "nonzero": 253,
-     "max": 13.11,
-     "avg": 1.78,
+     "max": 35.29,
+     "avg": 1.85,
      "confidence": "high"
     },
     "views": {
      "seen": 430,
      "nonzero": 322,
      "max": 2795,
-     "avg": 187.23,
+     "avg": 186.51,
      "confidence": "high"
     },
     "shares": {
@@ -54,11 +54,25 @@
      "avg": 0.2,
      "confidence": "low"
     },
+    "follows": {
+     "seen": 139,
+     "nonzero": 4,
+     "max": 2,
+     "avg": 0.04,
+     "confidence": "unreliable"
+    },
+    "reach": {
+     "seen": 430,
+     "nonzero": 430,
+     "max": 2196,
+     "avg": 142.07,
+     "confidence": "high"
+    },
     "totalTimeWatched": {
      "seen": 145,
      "nonzero": 114,
      "max": 482.92,
-     "avg": 34.46,
+     "avg": 34.49,
      "confidence": "high"
     },
     "averageTimeWatched": {
@@ -67,20 +81,6 @@
      "max": 30.39,
      "avg": 6.32,
      "confidence": "high"
-    },
-    "reach": {
-     "seen": 430,
-     "nonzero": 430,
-     "max": 2196,
-     "avg": 142.37,
-     "confidence": "high"
-    },
-    "follows": {
-     "seen": 139,
-     "nonzero": 4,
-     "max": 2,
-     "avg": 0.04,
-     "confidence": "unreliable"
     }
    }
   },
@@ -89,7 +89,7 @@
    "service": "instagram",
    "name": "minimonstarsapp",
    "disconnected": false,
-   "postCount": 215,
+   "postCount": 216,
    "metrics": {
     "views": {
      "seen": 207,
@@ -168,52 +168,52 @@
    "service": "facebook",
    "name": "Mini Monstars",
    "disconnected": false,
-   "postCount": 240,
+   "postCount": 241,
    "metrics": {
     "reactions": {
-     "seen": 240,
+     "seen": 241,
      "nonzero": 159,
      "max": 11,
      "avg": 1.21,
      "confidence": "high"
     },
     "comments": {
-     "seen": 240,
+     "seen": 241,
      "nonzero": 2,
      "max": 1,
      "avg": 0.01,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 236,
+     "seen": 237,
      "nonzero": 198,
      "max": 16.42,
-     "avg": 2.64,
+     "avg": 2.68,
      "confidence": "high"
     },
     "impressions": {
-     "seen": 236,
+     "seen": 237,
      "nonzero": 229,
      "max": 1342,
-     "avg": 160.6,
+     "avg": 159.42,
      "confidence": "high"
     },
     "reach": {
-     "seen": 240,
-     "nonzero": 50,
-     "max": 306,
-     "avg": 19.21,
+     "seen": 241,
+     "nonzero": 51,
+     "max": 307,
+     "avg": 19.36,
      "confidence": "low"
     },
     "shares": {
-     "seen": 240,
+     "seen": 241,
      "nonzero": 16,
      "max": 2,
      "avg": 0.08,
      "confidence": "unreliable"
     },
     "clicks": {
-     "seen": 236,
+     "seen": 237,
      "nonzero": 163,
      "max": 61,
      "avg": 2.61,
@@ -246,14 +246,14 @@
      "seen": 122,
      "nonzero": 34,
      "max": 11.11,
-     "avg": 0.42,
+     "avg": 0.41,
      "confidence": "low"
     },
     "views": {
      "seen": 122,
      "nonzero": 121,
      "max": 22859,
-     "avg": 519.02,
+     "avg": 519.4,
      "confidence": "high"
     }
    }
@@ -300,45 +300,45 @@
    "service": "linkedin",
    "name": "minimonstars",
    "disconnected": false,
-   "postCount": 101,
+   "postCount": 102,
    "metrics": {
     "reactions": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 10,
      "max": 2,
      "avg": 0.11,
      "confidence": "unreliable"
     },
     "comments": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 2,
      "max": 3,
      "avg": 0.04,
      "confidence": "unreliable"
     },
     "engagementRate": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 45,
      "max": 55.73770491803278,
-     "avg": 5.62,
+     "avg": 5.57,
      "confidence": "low"
     },
     "impressions": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 101,
      "max": 284,
-     "avg": 32.99,
+     "avg": 32.67,
      "confidence": "high"
     },
     "reach": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 101,
      "max": 98,
-     "avg": 18.85,
+     "avg": 18.67,
      "confidence": "high"
     },
     "shares": {
-     "seen": 101,
+     "seen": 102,
      "nonzero": 5,
      "max": 2,
      "avg": 0.06,
@@ -378,6 +378,133 @@
  },
  "posts": [
   {
+   "id": "6ad5c03db924c571fe3d6e19",
+   "channelId": "6a6838cc4b2d03035f54093e",
+   "channel": "minimonstarsapp",
+   "service": "instagram",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-11-23T01:03:33.186Z",
+   "sentDate": "2026-11-23",
+   "weekday": "Mon",
+   "hourUTC": 1,
+   "text": "Organising engaging experiences for your centre shouldn't feel like another mountain of work! \ud83d\udcdd\n\nBetween daily routines, programming and caring for children, educators already have plenty on their plates.\n\nThat's why Mini Monstars brings the movement experience to YOU!\n\nOur coach",
+   "link": "https://www.instagram.com/p/DgEJ77Ukfmm/",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5c02ad7f5995ac8a8e837",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-10-19T07:01:17.618Z",
+   "metrics": {}
+  },
+  {
+   "id": "6ad5c03db924c571fe3d6e1a",
+   "channelId": "679b1442a31978b79c2ada52",
+   "channel": "minimonstars",
+   "service": "linkedin",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-11-23T01:02:45.902Z",
+   "sentDate": "2026-11-23",
+   "weekday": "Mon",
+   "hourUTC": 1,
+   "text": "Organising engaging experiences for your centre shouldn't feel like another mountain of work! \ud83d\udcdd\n\nBetween daily routines, programming and caring for children, educators already have plenty on their plates.\n\nThat's why Mini Monstars brings the movement experience to YOU!\n\nOur coach",
+   "link": "https://www.linkedin.com/feed/update/urn:li:share:7530435639381504000",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5c02ad7f5995ac8a8e837",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-10-19T07:01:17.618Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0
+   }
+  },
+  {
+   "id": "6ad5c03db924c571fe3d6e18",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "buffer",
+   "sentAt": "2026-11-23T01:02:27.699Z",
+   "sentDate": "2026-11-23",
+   "weekday": "Mon",
+   "hourUTC": 1,
+   "text": "Organising engaging experiences for your centre shouldn't feel like another mountain of work! \ud83d\udcdd\n\nBetween daily routines, programming and caring for children, educators already have plenty on their plates.\n\nThat's why Mini Monstars brings the movement experience to YOU!\n\nOur coach",
+   "link": "https://www.facebook.com/1416893109688950/posts/2034647204580201",
+   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5c02ad7f5995ac8a8e837",
+   "author": "info",
+   "tags": [],
+   "metricsUpdatedAt": "2026-11-23T01:03:31.158Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 0,
+    "impressions": 0,
+    "reach": 0,
+    "shares": 0,
+    "clicks": 0
+   }
+  },
+  {
+   "id": "6b03710a65ee06c42c9ff073",
+   "channelId": "67997c68a31978b79c616ae4",
+   "channel": "Mini Monstars",
+   "service": "facebook",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-11-22T22:46:29.000Z",
+   "sentDate": "2026-11-22",
+   "weekday": "Sun",
+   "hourUTC": 22,
+   "text": "Meet Coach Leah \u2728\n\n#meettheteam #coaching #kidscoaching #childdevelopment",
+   "link": "https://www.facebook.com/1416893109688950/posts/2034553007922954",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6b03710a65ee06c42c9ff073_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-11-23T00:25:43.874Z",
+   "metrics": {
+    "reactions": 0,
+    "comments": 0,
+    "engagementRate": 15.38,
+    "impressions": 13,
+    "reach": 7,
+    "shares": 0,
+    "clicks": 2
+   }
+  },
+  {
+   "id": "6b037e06cc56905ca721cdfd",
+   "channelId": "67903bd2a31978b79c3f7cb5",
+   "channel": "minimonstars",
+   "service": "instagram",
+   "format": "post",
+   "via": "network",
+   "sentAt": "2026-11-22T22:46:20.000Z",
+   "sentDate": "2026-11-22",
+   "weekday": "Sun",
+   "hourUTC": 22,
+   "text": "Meet Coach Leah \u2728\n\n#meettheteam #coaching #kidscoaching #childdevelopment",
+   "link": "https://www.instagram.com/p/DgD6SOUo24Y/",
+   "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6b037e06cc56905ca721cdfd_thumbnail.jpg",
+   "author": null,
+   "tags": [],
+   "metricsUpdatedAt": "2026-11-22T23:43:02.883Z",
+   "metrics": {
+    "reactions": 6,
+    "comments": 0,
+    "engagementRate": 35.29,
+    "views": 57,
+    "shares": 0,
+    "saves": 0,
+    "follows": 0,
+    "reach": 17
+   }
+  },
+  {
    "id": "6affc9dd8780e994fe5244c3",
    "channelId": "67997c68a31978b79c616ae4",
    "channel": "Mini Monstars",
@@ -393,13 +520,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6affc9dd8780e994fe5244c3_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.22,
-    "impressions": 164,
-    "reach": 146,
+    "engagementRate": 1.19,
+    "impressions": 168,
+    "reach": 148,
     "shares": 0,
     "clicks": 2
    }
@@ -420,17 +547,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6b00daf39c52f248b0e368cd_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.061Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.828Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 3.09,
-    "views": 122,
+    "engagementRate": 2.91,
+    "views": 129,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 5.37,
-    "averageTimeWatched": 3.13,
-    "reach": 97
+    "totalTimeWatched": 5.62,
+    "averageTimeWatched": 3.12,
+    "reach": 103
    }
   },
   {
@@ -474,13 +601,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6aff8cc75b852ae54a8ba98d_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.37,
-    "impressions": 273,
-    "reach": 247,
+    "engagementRate": 0.36,
+    "impressions": 281,
+    "reach": 254,
     "shares": 0,
     "clicks": 0
    }
@@ -501,17 +628,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6b00daf39c52f248b0e368eb_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.109Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.840Z",
    "metrics": {
-    "reactions": 5,
+    "reactions": 6,
     "comments": 0,
-    "engagementRate": 3.36,
-    "views": 203,
+    "engagementRate": 3.82,
+    "views": 212,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 14.57,
-    "averageTimeWatched": 5.64,
-    "reach": 149
+    "totalTimeWatched": 14.85,
+    "averageTimeWatched": 5.43,
+    "reach": 157
    }
   },
   {
@@ -584,13 +711,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6aff672b5b83ae76b678ae7d_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 4.76,
-    "impressions": 126,
-    "reach": 87,
+    "engagementRate": 4.35,
+    "impressions": 138,
+    "reach": 92,
     "shares": 0,
     "clicks": 3
    }
@@ -611,16 +738,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6aff896996bc7348600dfdef_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.073Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.886Z",
    "metrics": {
-    "reactions": 3,
+    "reactions": 4,
     "comments": 0,
-    "engagementRate": 7.27,
-    "views": 95,
+    "engagementRate": 7.58,
+    "views": 113,
     "shares": 1,
     "saves": 0,
     "follows": 0,
-    "reach": 55
+    "reach": 66
    }
   },
   {
@@ -667,13 +794,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6afe4b95e98aa286ac2aeada_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0.66,
-    "impressions": 301,
-    "reach": 221,
+    "impressions": 304,
+    "reach": 222,
     "shares": 0,
     "clicks": 2
    }
@@ -694,17 +821,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6aff896996bc7348600dfe13_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.048Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.864Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 8.96,
-    "views": 142,
+    "engagementRate": 8.11,
+    "views": 156,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 7.94,
-    "averageTimeWatched": 6.19,
-    "reach": 67
+    "totalTimeWatched": 8.53,
+    "averageTimeWatched": 6.02,
+    "reach": 74
    }
   },
   {
@@ -768,13 +895,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5bf76f5ab488896ca237a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 34,
-    "reach": 22,
+    "impressions": 39,
+    "reach": 25,
     "shares": 0,
     "clicks": 0
    }
@@ -795,13 +922,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6afe32ea50766f3c8bdb3ee9_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
     "engagementRate": 0.36,
-    "impressions": 274,
-    "reach": 229,
+    "impressions": 276,
+    "reach": 230,
     "shares": 0,
     "clicks": 0
    }
@@ -822,17 +949,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6afe358af5a18262cc7d91c5_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.052Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.861Z",
    "metrics": {
     "reactions": 13,
     "comments": 2,
-    "engagementRate": 5.44,
-    "views": 453,
+    "engagementRate": 5.32,
+    "views": 461,
     "shares": 3,
     "saves": 1,
-    "totalTimeWatched": 36.03,
-    "averageTimeWatched": 6.16,
-    "reach": 349
+    "totalTimeWatched": 36.56,
+    "averageTimeWatched": 6.13,
+    "reach": 357
    }
   },
   {
@@ -983,13 +1110,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6afbd57c2ab93d6757f78f2e_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0.91,
-    "impressions": 110,
-    "reach": 53,
+    "engagementRate": 0.89,
+    "impressions": 112,
+    "reach": 54,
     "shares": 0,
     "clicks": 1
    }
@@ -1010,17 +1137,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6afce654a2ebd6783a7a5d08_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.043Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.857Z",
    "metrics": {
     "reactions": 11,
     "comments": 0,
-    "engagementRate": 4.3,
-    "views": 588,
+    "engagementRate": 4.18,
+    "views": 598,
     "shares": 4,
     "saves": 0,
-    "totalTimeWatched": 32.92,
-    "averageTimeWatched": 5.32,
-    "reach": 349
+    "totalTimeWatched": 33.39,
+    "averageTimeWatched": 5.3,
+    "reach": 359
    }
   },
   {
@@ -1113,13 +1240,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5bea9892911ef68f0b2d3",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.92,
-    "impressions": 52,
-    "reach": 33,
+    "engagementRate": 1.89,
+    "impressions": 53,
+    "reach": 34,
     "shares": 0,
     "clicks": 1
    }
@@ -1223,13 +1350,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6afa32c2623618d060e90e38_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.89,
-    "impressions": 225,
-    "reach": 206,
+    "engagementRate": 0.88,
+    "impressions": 227,
+    "reach": 207,
     "shares": 0,
     "clicks": 1
    }
@@ -1250,17 +1377,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6afa433faf8625b04602b1a9_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.083Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.875Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
-    "engagementRate": 2.93,
-    "views": 284,
+    "engagementRate": 2.86,
+    "views": 289,
     "shares": 1,
     "saves": 0,
-    "totalTimeWatched": 18.48,
-    "averageTimeWatched": 4.95,
-    "reach": 205
+    "totalTimeWatched": 18.72,
+    "averageTimeWatched": 4.93,
+    "reach": 210
    }
   },
   {
@@ -1524,13 +1651,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5bdc19a83b21d6399d9de",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.67,
-    "impressions": 60,
-    "reach": 41,
+    "engagementRate": 1.64,
+    "impressions": 61,
+    "reach": 42,
     "shares": 0,
     "clicks": 0
    }
@@ -1577,13 +1704,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5bc739a83b21d6399d22b",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.85,
-    "impressions": 54,
-    "reach": 30,
+    "engagementRate": 1.82,
+    "impressions": 55,
+    "reach": 31,
     "shares": 0,
     "clicks": 0
    }
@@ -1604,16 +1731,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5bc739a83b21d6399d22b",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.134Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.832Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.18,
-    "views": 148,
+    "engagementRate": 1.15,
+    "views": 150,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 85
+    "reach": 87
    }
   },
   {
@@ -1632,16 +1759,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20261026-202509-more-than-movement-ep-9/carousels/20261026-202509-more-than-movement-ep-9-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.107Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.877Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 3.39,
-    "views": 141,
+    "engagementRate": 3.33,
+    "views": 142,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 59
+    "reach": 60
    }
   },
   {
@@ -1660,13 +1787,13 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20261026-202509-more-than-movement-ep-9/carousels/20261026-202509-more-than-movement-ep-9-c08/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.69,
-    "impressions": 59,
-    "reach": 27,
+    "engagementRate": 1.67,
+    "impressions": 60,
+    "reach": 28,
     "shares": 0,
     "clicks": 1
    }
@@ -1741,13 +1868,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6af50559cfb3bb3bf9857bcc_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0.54,
-    "impressions": 367,
-    "reach": 283,
+    "impressions": 369,
+    "reach": 284,
     "shares": 0,
     "clicks": 2
    }
@@ -1768,17 +1895,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6af64ea15c6c5ae925cb5bf3_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.050Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.826Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.69,
-    "views": 226,
+    "engagementRate": 1.65,
+    "views": 229,
     "shares": 1,
     "saves": 0,
-    "totalTimeWatched": 21.05,
-    "averageTimeWatched": 6.83,
-    "reach": 178
+    "totalTimeWatched": 21.11,
+    "averageTimeWatched": 6.74,
+    "reach": 182
    }
   },
   {
@@ -1797,17 +1924,17 @@
    "thumb": "https://images.buffer.com/thumbnail/u4UwIsgcI0VSA-Wgscoa0xUFQU7mS9uYqrwV1sm8noc?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261026-202509-more-than-movement-ep-9%2Fclips%2F20261026-202509-more-than-movement-ep-9-c03.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.046Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.867Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.74,
-    "views": 176,
+    "engagementRate": 0.73,
+    "views": 177,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 21.97,
-    "averageTimeWatched": 9.28,
-    "reach": 136
+    "totalTimeWatched": 22.97,
+    "averageTimeWatched": 9.64,
+    "reach": 137
    }
   },
   {
@@ -1875,13 +2002,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6af40412633f37245d9a7eb0_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.26,
-    "impressions": 133,
-    "reach": 100,
+    "engagementRate": 2.24,
+    "impressions": 134,
+    "reach": 101,
     "shares": 0,
     "clicks": 1
    }
@@ -1902,16 +2029,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6af41667c2201767296b66de_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.079Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.890Z",
    "metrics": {
     "reactions": 9,
     "comments": 2,
-    "engagementRate": 8.09,
-    "views": 305,
+    "engagementRate": 7.91,
+    "views": 314,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 136
+    "reach": 139
    }
   },
   {
@@ -1957,16 +2084,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b9f7883339f3b841af3a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.051Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.830Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.72,
-    "views": 112,
+    "engagementRate": 1.64,
+    "views": 115,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 58
+    "reach": 61
    }
   },
   {
@@ -1985,13 +2112,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b9f7883339f3b841af3a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 4.08,
-    "impressions": 49,
-    "reach": 27,
+    "engagementRate": 4,
+    "impressions": 50,
+    "reach": 28,
     "shares": 0,
     "clicks": 0
    }
@@ -2113,13 +2240,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6af29b06fc3e8c1ce44e20ec_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 0.98,
-    "impressions": 306,
-    "reach": 224,
+    "engagementRate": 0.97,
+    "impressions": 308,
+    "reach": 225,
     "shares": 0,
     "clicks": 3
    }
@@ -2140,17 +2267,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6af3ab8dd8612fbd37899f40_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.059Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.865Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
-    "engagementRate": 2.96,
-    "views": 551,
+    "engagementRate": 2.93,
+    "views": 555,
     "shares": 2,
     "saves": 0,
-    "totalTimeWatched": 34.41,
+    "totalTimeWatched": 34.6,
     "averageTimeWatched": 5.75,
-    "reach": 338
+    "reach": 341
    }
   },
   {
@@ -2219,17 +2346,17 @@
    "thumb": "https://images.buffer.com/thumbnail/A7bdEK0QCokWsqwpoKtIPgqiQjU88a-gxAt1E8sW4oA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261026-202509-more-than-movement-ep-9%2Fclips%2F20261026-202509-more-than-movement-ep-9-c08.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.096Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.852Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 1.52,
-    "views": 229,
+    "engagementRate": 1.5,
+    "views": 234,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 31.72,
-    "averageTimeWatched": 9.66,
-    "reach": 197
+    "totalTimeWatched": 31.92,
+    "averageTimeWatched": 9.57,
+    "reach": 200
    }
   },
   {
@@ -2302,13 +2429,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6af15cb303a87241ea707970_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.772Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 2.86,
-    "impressions": 105,
-    "reach": 70,
+    "engagementRate": 2.83,
+    "impressions": 106,
+    "reach": 71,
     "shares": 0,
     "clicks": 0
    }
@@ -2329,16 +2456,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6af25a03b15e37797faa69a4_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.038Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.882Z",
    "metrics": {
     "reactions": 7,
     "comments": 0,
-    "engagementRate": 5.67,
-    "views": 273,
+    "engagementRate": 5.52,
+    "views": 283,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 141
+    "reach": 145
    }
   },
   {
@@ -2357,16 +2484,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b96f892911ef68f09632",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.126Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.851Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.67,
-    "views": 127,
+    "engagementRate": 1.61,
+    "views": 129,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 60
+    "reach": 62
    }
   },
   {
@@ -2385,13 +2512,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b96f892911ef68f09632",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.52,
-    "impressions": 66,
-    "reach": 38,
+    "engagementRate": 1.49,
+    "impressions": 67,
+    "reach": 39,
     "shares": 0,
     "clicks": 0
    }
@@ -2438,17 +2565,17 @@
    "thumb": "https://images.buffer.com/thumbnail/3tnpHjt0BEkk5zeQ8EBf5NJez5LA7-ADeuDGvE4lpeU?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261026-202509-more-than-movement-ep-9%2Fclips%2F20261026-202509-more-than-movement-ep-9-c02.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.067Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.839Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 1.96,
-    "views": 125,
+    "engagementRate": 1.92,
+    "views": 127,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 16.88,
-    "averageTimeWatched": 9.47,
-    "reach": 102
+    "totalTimeWatched": 16.96,
+    "averageTimeWatched": 9.34,
+    "reach": 104
    }
   },
   {
@@ -2680,17 +2807,17 @@
    "thumb": "https://images.buffer.com/thumbnail/YBAR0WaExypLBQ_tqmF3hI6U83ROHP6hliq1v6aExnQ?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261026-202509-more-than-movement-ep-9%2Fclips%2F20261026-202509-more-than-movement-ep-9-c04.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.113Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.862Z",
    "metrics": {
     "reactions": 4,
     "comments": 0,
-    "engagementRate": 3.11,
-    "views": 184,
+    "engagementRate": 3.09,
+    "views": 185,
     "shares": 0,
     "saves": 1,
-    "totalTimeWatched": 14.56,
-    "averageTimeWatched": 5.17,
-    "reach": 161
+    "totalTimeWatched": 14.57,
+    "averageTimeWatched": 5.14,
+    "reach": 162
    }
   },
   {
@@ -2815,12 +2942,12 @@
    "thumb": "https://i.ytimg.com/vi/pRqJytGrDXk/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T21:39:03.529Z",
+   "metricsUpdatedAt": "2026-11-22T21:57:30.919Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 41
+    "views": 43
    }
   },
   {
@@ -2865,13 +2992,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b8e9f9e15e0973e73f4a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 68,
-    "reach": 42,
+    "impressions": 69,
+    "reach": 43,
     "shares": 0,
     "clicks": 0
    }
@@ -2892,13 +3019,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6aebbc38260743b8f7aba428_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 8.33,
-    "impressions": 96,
-    "reach": 56,
+    "engagementRate": 8.16,
+    "impressions": 98,
+    "reach": 57,
     "shares": 0,
     "clicks": 5
    }
@@ -2919,16 +3046,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6aebc25237d77dfe69332d7a_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.040Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.859Z",
    "metrics": {
     "reactions": 8,
     "comments": 0,
-    "engagementRate": 5.41,
-    "views": 362,
+    "engagementRate": 5.37,
+    "views": 364,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 148
+    "reach": 149
    }
   },
   {
@@ -2947,16 +3074,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b8e9f9e15e0973e73f4a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.081Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.842Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 5,
-    "views": 89,
+    "engagementRate": 4.92,
+    "views": 90,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 60
+    "reach": 61
    }
   },
   {
@@ -2975,16 +3102,16 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20261026-202509-more-than-movement-ep-9/carousels/20261026-202509-more-than-movement-ep-9-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.042Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.837Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.82,
-    "views": 136,
+    "engagementRate": 1.75,
+    "views": 138,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 55
+    "reach": 57
    }
   },
   {
@@ -3029,13 +3156,13 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20261026-202509-more-than-movement-ep-9/carousels/20261026-202509-more-than-movement-ep-9-c02/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 3.39,
-    "impressions": 59,
-    "reach": 29,
+    "engagementRate": 3.33,
+    "impressions": 60,
+    "reach": 30,
     "shares": 0,
     "clicks": 1
    }
@@ -3130,17 +3257,17 @@
    "thumb": "https://images.buffer.com/thumbnail/qKTuJufbbhI880pegaltEapjynjiPY0il_SIrlGEL28?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261026-202509-more-than-movement-ep-9%2Fclips%2F20261026-202509-more-than-movement-ep-9-c01.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.062Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.833Z",
    "metrics": {
     "reactions": 6,
     "comments": 0,
-    "engagementRate": 4.14,
-    "views": 196,
+    "engagementRate": 4.09,
+    "views": 198,
     "shares": 0,
     "saves": 1,
-    "totalTimeWatched": 21.26,
-    "averageTimeWatched": 7.33,
-    "reach": 169
+    "totalTimeWatched": 21.28,
+    "averageTimeWatched": 7.25,
+    "reach": 171
    }
   },
   {
@@ -3183,16 +3310,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b9f7883339f3b841af3a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.117Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.872Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.79,
-    "views": 95,
+    "engagementRate": 1.75,
+    "views": 96,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 56
+    "reach": 57
    }
   },
   {
@@ -3211,16 +3338,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b83f9a83b21d6399baa9",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.123Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.888Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
-    "engagementRate": 1.61,
-    "views": 103,
+    "engagementRate": 1.59,
+    "views": 104,
     "shares": 0,
     "saves": 1,
     "follows": 0,
-    "reach": 62
+    "reach": 63
    }
   },
   {
@@ -3239,16 +3366,16 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b8e9f9e15e0973e73f4a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.076Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.885Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.85,
-    "views": 91,
+    "engagementRate": 1.82,
+    "views": 92,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 54
+    "reach": 55
    }
   },
   {
@@ -3387,13 +3514,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b83f9a83b21d6399baa9",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.25,
-    "impressions": 80,
-    "reach": 50,
+    "engagementRate": 1.23,
+    "impressions": 81,
+    "reach": 51,
     "shares": 0,
     "clicks": 0
    }
@@ -3438,12 +3565,12 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6ae7e4b25cab131befe2e884_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.67,
-    "impressions": 299,
+    "engagementRate": 0.66,
+    "impressions": 301,
     "reach": 261,
     "shares": 0,
     "clicks": 1
@@ -3465,16 +3592,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ae91f3daec0b52cb4b6a62b_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.091Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.835Z",
    "metrics": {
     "reactions": 5,
     "comments": 0,
     "engagementRate": 2.63,
-    "views": 244,
+    "views": 245,
     "shares": 0,
     "saves": 0,
-    "totalTimeWatched": 17.93,
-    "averageTimeWatched": 5.3,
+    "totalTimeWatched": 17.95,
+    "averageTimeWatched": 5.28,
     "reach": 190
    }
   },
@@ -3519,13 +3646,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6ae7e008b59f5b2bfbb5b4cf_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 4.98,
-    "impressions": 201,
-    "reach": 127,
+    "engagementRate": 4.95,
+    "impressions": 202,
+    "reach": 128,
     "shares": 0,
     "clicks": 8
    }
@@ -3546,16 +3673,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ae91f3daec0b52cb4b6a5ed_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.078Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.873Z",
    "metrics": {
     "reactions": 7,
     "comments": 2,
-    "engagementRate": 4.04,
-    "views": 442,
+    "engagementRate": 4.02,
+    "views": 444,
     "shares": 0,
     "saves": 0,
     "follows": 0,
-    "reach": 223
+    "reach": 224
    }
   },
   {
@@ -3707,13 +3834,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad5b79d892911ef68f08bec",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.97,
-    "impressions": 103,
-    "reach": 59,
+    "engagementRate": 0.96,
+    "impressions": 104,
+    "reach": 60,
     "shares": 0,
     "clicks": 0
    }
@@ -3762,13 +3889,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ae287d74206ae2724dca67a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 3,
     "comments": 1,
-    "engagementRate": 11.5,
-    "impressions": 113,
-    "reach": 68,
+    "engagementRate": 11.4,
+    "impressions": 114,
+    "reach": 69,
     "shares": 0,
     "clicks": 9
    }
@@ -3818,7 +3945,7 @@
    "thumb": "https://images.buffer.com/thumbnail/fg_a0jiMCel52uLhke1Ve1zaUfsbSSqsV-BPcXBy5Zk?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261016-135257-more-than-movement-ep-8%2Fclips%2F20261016-135257-more-than-movement-ep-8-c05.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.137Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.854Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -3899,13 +4026,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ae285e748f0bfcd45af1a17",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 4.29,
-    "impressions": 70,
-    "reach": 40,
+    "engagementRate": 4.23,
+    "impressions": 71,
+    "reach": 41,
     "shares": 0,
     "clicks": 2
    }
@@ -3954,13 +4081,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ae2d7185792806508f29a77",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 85,
-    "reach": 53,
+    "impressions": 86,
+    "reach": 54,
     "shares": 0,
     "clicks": 0
    }
@@ -4010,17 +4137,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ae4342430b1895ffbaba491_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.064Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.880Z",
    "metrics": {
     "reactions": 6,
     "comments": 2,
-    "engagementRate": 2.33,
-    "views": 548,
+    "engagementRate": 2.31,
+    "views": 551,
     "shares": 1,
     "saves": 0,
-    "totalTimeWatched": 74.5,
-    "averageTimeWatched": 10.98,
-    "reach": 386
+    "totalTimeWatched": 74.59,
+    "averageTimeWatched": 10.92,
+    "reach": 389
    }
   },
   {
@@ -4063,12 +4190,12 @@
    "thumb": "https://i.ytimg.com/vi/Trtg4O1Nh0k/hqdefault.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T21:39:03.529Z",
+   "metricsUpdatedAt": "2026-11-22T21:57:30.919Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.7,
-    "views": 74
+    "engagementRate": 2.6,
+    "views": 77
    }
   },
   {
@@ -4112,7 +4239,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc6abb2413d2be7236bde0",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.100Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.849Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -4140,13 +4267,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc6abb2413d2be7236bde0",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 1.52,
-    "impressions": 66,
-    "reach": 48,
+    "engagementRate": 1.49,
+    "impressions": 67,
+    "reach": 49,
     "shares": 0,
     "clicks": 0
    }
@@ -4195,7 +4322,7 @@
    "thumb": "https://images.buffer.com/thumbnail/E61nryJY8Q7i1ZkEQqOsB5R4-05yFp97go8X8N3KD24?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261016-135257-more-than-movement-ep-8%2Fclips%2F20261016-135257-more-than-movement-ep-8-c03.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.145Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.893Z",
    "metrics": {
     "reactions": 6,
     "comments": 1,
@@ -4403,13 +4530,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad6fb0dea8f270c6c832a2d",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 54,
-    "reach": 40,
+    "impressions": 55,
+    "reach": 41,
     "shares": 0,
     "clicks": 0
    }
@@ -4487,13 +4614,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ae284ac9dbabf6a5294171a",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.63,
-    "impressions": 76,
-    "reach": 50,
+    "engagementRate": 2.6,
+    "impressions": 77,
+    "reach": 51,
     "shares": 0,
     "clicks": 0
    }
@@ -4615,17 +4742,17 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ae1635b29800c266c26968b_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.105Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.891Z",
    "metrics": {
     "reactions": 8,
     "comments": 3,
-    "engagementRate": 5.31,
-    "views": 357,
+    "engagementRate": 5.28,
+    "views": 358,
     "shares": 1,
     "saves": 1,
-    "totalTimeWatched": 32.42,
+    "totalTimeWatched": 32.54,
     "averageTimeWatched": 7.45,
-    "reach": 245
+    "reach": 246
    }
   },
   {
@@ -4644,13 +4771,13 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67997c68a31978b79c616ae4/6ae1566d1e71bced86fa0e4d_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 0.74,
-    "impressions": 408,
-    "reach": 306,
+    "engagementRate": 0.73,
+    "impressions": 410,
+    "reach": 307,
     "shares": 0,
     "clicks": 2
    }
@@ -4671,7 +4798,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc697cebf02a033dbaf42f",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.102Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.870Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
@@ -4699,13 +4826,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc697cebf02a033dbaf42f",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 3.03,
-    "impressions": 66,
-    "reach": 43,
+    "engagementRate": 2.99,
+    "impressions": 67,
+    "reach": 44,
     "shares": 0,
     "clicks": 1
    }
@@ -4779,13 +4906,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad6fa3c9476d79c2dfc4098",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
-    "engagementRate": 10.67,
-    "impressions": 75,
-    "reach": 52,
+    "engagementRate": 10.53,
+    "impressions": 76,
+    "reach": 53,
     "shares": 0,
     "clicks": 5
    }
@@ -4806,7 +4933,7 @@
    "thumb": "https://images.buffer.com/thumbnail/ghbNkKUWIbaYdW3prkErnSkoP1wjrp9f90hL-C2mBKA?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261016-135257-more-than-movement-ep-8%2Fclips%2F20261016-135257-more-than-movement-ep-8-c07.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.085Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.843Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -4859,16 +4986,16 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ae136013db2b182ee982270_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.087Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.975Z",
    "metrics": {
     "reactions": 14,
     "comments": 1,
     "engagementRate": 0.99,
-    "views": 2627,
+    "views": 2629,
     "shares": 0,
     "saves": 1,
-    "totalTimeWatched": 361.9,
-    "averageTimeWatched": 11.85,
+    "totalTimeWatched": 361.92,
+    "averageTimeWatched": 11.83,
     "reach": 1820
    }
   },
@@ -4966,13 +5093,13 @@
    "thumb": "https://storage.googleapis.com/mini-monstars-au.appspot.com/content/20261016-135257-more-than-movement-ep-8/carousels/20261016-135257-more-than-movement-ep-8-c03/slide-01.png",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "impressions": 55,
-    "reach": 33,
+    "impressions": 56,
+    "reach": 34,
     "shares": 0,
     "clicks": 0
    }
@@ -4993,7 +5120,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc68592413d2be7236b868",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.119Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.855Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -5021,13 +5148,13 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6acc68592413d2be7236b868",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.875Z",
    "metrics": {
     "reactions": 2,
     "comments": 0,
-    "engagementRate": 2.3,
-    "impressions": 87,
-    "reach": 57,
+    "engagementRate": 2.27,
+    "impressions": 88,
+    "reach": 58,
     "shares": 0,
     "clicks": 0
    }
@@ -5048,7 +5175,7 @@
    "thumb": "https://buffer-updates-media-backfill-bucket.s3.amazonaws.com/6790322299197b9b6809ecd3/67903bd2a31978b79c3f7cb5/6ade92effea630925556cf7d_thumbnail.jpg",
    "author": null,
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.118Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.845Z",
    "metrics": {
     "reactions": 7,
     "comments": 1,
@@ -5077,7 +5204,7 @@
    "thumb": "https://images.buffer.com/thumbnail/sJFAbRPck3_RquU0lAguxokRYgST2OGqvT-hknvySM8?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20261016-135257-more-than-movement-ep-8%2Fclips%2F20261016-135257-more-than-movement-ep-8-c01.mp4&offset=1000",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-21T23:42:53.089Z",
+   "metricsUpdatedAt": "2026-11-22T23:43:02.978Z",
    "metrics": {
     "reactions": 3,
     "comments": 0,
@@ -5158,7 +5285,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad6f87bea8f270c6c831ef2",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.876Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
@@ -5213,7 +5340,7 @@
    "thumb": "https://buffer-media-uploads.s3.amazonaws.com/6790322299197b9b6809ecd3/6ad6f70a5636f989c036ba37",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-11-22T01:25:30.773Z",
+   "metricsUpdatedAt": "2026-11-23T00:25:43.876Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
@@ -11104,12 +11231,12 @@
    "thumb": "https://images.buffer.com/thumbnail/4pWMs9CiVTafT67TrB0He6mWDpGx98jKxAC4gWXFfH4?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260907-093418-gymnastics-circus-adventure-app%2Fclips%2F20260907-093418-gymnastics-circus-adventure-app-c09.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-10-23T16:48:23.123Z",
+   "metricsUpdatedAt": "2026-11-22T21:57:30.919Z",
    "metrics": {
     "reactions": 0,
     "comments": 0,
     "engagementRate": 0,
-    "views": 45
+    "views": 54
    }
   },
   {
@@ -11215,12 +11342,12 @@
    "thumb": "https://images.buffer.com/thumbnail/25BNQkhpXFN4yUpbXJoKvfmN3iXA4t0otqpzCKAz74U?url=https%3A%2F%2Fstorage.googleapis.com%2Fmini-monstars-au.appspot.com%2Fcontent%2F20260907-093418-gymnastics-circus-adventure-app%2Fclips%2F20260907-093418-gymnastics-circus-adventure-app-c08.mp4",
    "author": "info",
    "tags": [],
-   "metricsUpdatedAt": "2026-10-23T16:48:23.123Z",
+   "metricsUpdatedAt": "2026-11-22T21:57:30.919Z",
    "metrics": {
     "reactions": 1,
     "comments": 0,
-    "engagementRate": 2.08,
-    "views": 48
+    "engagementRate": 1.23,
+    "views": 81
    }
   },
   {
@@ -32448,61 +32575,6 @@
     "comments": 0,
     "engagementRate": 0,
     "reactions": 0
-   }
-  },
-  {
-   "id": "69200e269bded0a2f0048fab",
-   "channelId": "67903bd2a31978b79c3f7cb5",
-   "channel": "minimonstars",
-   "service": "instagram",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-11-22T10:01:13.183Z",
-   "sentDate": "2025-11-22",
-   "weekday": "Sat",
-   "hourUTC": 10,
-   "text": "JOIN US AT 10am for a MINI GYMNASTICS INCURSION!\nThis is a fun one!\ud83e\udd38\u200d\u2642\ufe0f \n\n\ud83c\udfa5 https://www.youtube.com/watch?v=31HHef29IXQ \n\n#kids #fun #learn #gymnastics #health #warmup",
-   "link": "https://www.instagram.com/p/DRWshVAjZ25/",
-   "thumb": "https://buffer-media-uploads.s3.amazonaws.com/69200e269bded0a2f0048fab/5239924e03318a7a54b7c6f031d7523bbd323998_cfbbd650a31a1fd27e036eb06c22a52074f6633b_thumbnail",
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2026-05-28T16:29:20.809Z",
-   "metrics": {
-    "reactions": 1,
-    "comments": 0,
-    "engagementRate": 0.411522633744856,
-    "views": 499,
-    "shares": 0,
-    "saves": 0,
-    "follows": 0,
-    "reach": 243
-   }
-  },
-  {
-   "id": "69200e250c9a4aa13b00a307",
-   "channelId": "67997c68a31978b79c616ae4",
-   "channel": "Mini Monstars",
-   "service": "facebook",
-   "format": "post",
-   "via": "buffer",
-   "sentAt": "2025-11-22T10:00:39.325Z",
-   "sentDate": "2025-11-22",
-   "weekday": "Sat",
-   "hourUTC": 10,
-   "text": "JOIN US AT 10am for a MINI GYMNASTICS INCURSION!\nThis is a fun one!\ud83e\udd38\u200d\u2642\ufe0f \n\n\ud83c\udfa5 https://www.youtube.com/watch?v=31HHef29IXQ \n\n#kids #fun #learn #gymnastics #health #warmup",
-   "link": "https://www.facebook.com/1416893109688950/posts/1683525056359086",
-   "thumb": null,
-   "author": "info",
-   "tags": [],
-   "metricsUpdatedAt": "2026-06-11T23:48:13.969Z",
-   "metrics": {
-    "reactions": 0,
-    "comments": 0,
-    "engagementRate": 0.49,
-    "impressions": 203,
-    "reach": 0,
-    "shares": 0,
-    "clicks": 1
    }
   }
  ],
